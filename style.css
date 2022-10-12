@@ -3,18 +3,26 @@
     --header-height-small: 46px;
 }
 
+h1, h2, h3, h4, h5, h6, p {
+    margin-top: 0;
+}
 
+.body-general {
+    margin: 0;
+    font-family: 'Roboto', 'sans-serif';
+    font-size: 16px;
+    line-height: 20px;
+}
 
 .wrapper {
-    max-width: 1450px;
+
     display: grid;
     background: #EDEEF0;
     grid-template-areas:
             "h h h"
             "t a s";
     grid-template-rows: var(--header-height) 1fr;
-    grid-template-columns: 150px 1fr 300px;
-    margin: 0;
+    grid-template-columns: 150px minmax(393px, 1fr) 400px;
 }
 
 .header {
@@ -32,6 +40,7 @@
 }
 
 .header_small {
+    /* Как у РИА новости */
     height: var(--header-height-small);
     transition: 0.5s;
 }
@@ -56,6 +65,7 @@
 }
 .icon_container{
     display: flex;
+    position: relative;
     justify-content: center;
     height: 45px;
     width: 45px;
@@ -71,6 +81,9 @@
 .icon_img:hover {
     height: 40px;
 }
+
+
+
 
 
 .dropdown {
@@ -305,17 +318,141 @@
 
 }
 
-.articles {
+.main {
     grid-area: a;
-    background: rosybrown;
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px; /* Не нужен снизу, ведь статьи будут нескончаемыми */
+    gap: 20px;
+}
+
+.article {  /* Статьи будут в контейнере как у pg13.ru */
+    background-color: white;
+    border-radius: 10px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.article-date {
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 400;
+}
+
+.article-date-update {
+    color: midnightblue;
+}
+
+.article-title-main {
+    font-size: 36px;
+    line-height: 45px;
+    font-weight: 700;
+}
+
+.article-title-second {
+    display: block;
+    font-size: 16px;
+    padding-top: 10px;
+    font-weight: normal;
+    color: #5e5e5e;
+}
+
+.article-photo {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.article-photo-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+
+.article-photo-text {
+    display: inline-block;
+    font-size: 12px;
+    line-height: 13px;
+    vertical-align: top;
+}
+
+
+.article-body {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+
+.article-body-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 10px 0 10px 0;
 }
 
 .suggested {
     grid-area: s;
-    background: gray;
+    padding: 20px;
 }
 
+.suggested-container { /* Как у ТАСС */
+    display: block;
+    position: sticky;
+    top: 90px;
+    height: calc(100vh - 9em);
+    background-color: white;
+    border-radius: 20px;
+    margin: 0 auto;
+    padding: 15px;
+    overflow: scroll;
+    -ms-overflow-style: none;  /* IE и Edge */
+    scrollbar-width: none;  /* Firefox */
+}
 
+.suggested-container::-webkit-scrollbar {
+    display: none; /* Safari */
+}
+
+.suggested-news {
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 20px 0;
+    color: black;
+    overflow-wrap: anywhere;
+}
+
+.suggested-news-time {
+    flex: none;
+    width: 40px;
+    padding-top: 7px;
+    color: #767676;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: -.02em;
+    text-align: left;
+}
+
+.suggested-news-title {
+    font-weight: 700;
+    font-size: 19px;
+    font-family: Inter,sans-serif;
+    line-height: 24px;
+    letter-spacing: -.02em;
+    flex: 3;
+}
+
+.suggested-news + .suggested-news {
+    border-top: 1px solid #333333;
+}
 
 
 .scroll-button {
@@ -351,4 +488,58 @@
 
 .spacer {
     flex: 1;
+}
+
+@media screen and (max-width: 1500px){
+    .wrapper {
+        grid-template-columns: 150px minmax(393px, 1fr) 300px;
+    }
+}
+
+@media screen and (max-width: 1200px){
+    .wrapper {
+        grid-template-areas:
+            "h h"
+            "t a";
+        grid-template-rows: var(--header-height) 1fr;
+        grid-template-columns: 60px minmax(393px, 1fr);
+    }
+    .scroll-button {
+        width: 40px;
+    }
+    .main {
+         padding-right: 20px;
+     }
+    .suggested {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 768px){
+    .wrapper {
+        grid-template-areas:
+            "h"
+            "a";
+        grid-template-rows: var(--header-height) 1fr;
+        grid-template-columns: minmax(393px, 1fr); /* Pixel 5 */
+    }
+    .scroll {
+        display: none;
+    }
+    .main {
+        padding: 0;
+    }
+    .header_small {
+        transition: height 0s;
+    }
+    .logo_img_small {
+        transition: height 0s;
+    }
+    .article {
+        border-radius: 0;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
 }
