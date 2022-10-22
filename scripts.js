@@ -8,35 +8,35 @@ const bigHeader = 50;
 arrowTop = document.getElementById("arrowTop")
 arrowBottom = document.getElementById("arrowBottom")
 
-/* Найти способ скрывать попапы при клике вне их */
+/* Найти НАДЕЖНЫЙ способ скрывать попапы при клике вне их */
 
 /* Следующие четыре функции - открытие/закрытие попапов для иконок хедера */
 document.getElementById("user").addEventListener('click', function () {
 
-        document.querySelector('.modal_area').style.display = 'flex';
+        document.querySelector('.modal-area').style.display = 'flex';
         document.querySelector('.body-general').classList.add('modal-opened');
 });
 
-document.getElementById("modal_close").addEventListener('click', function () {
-        document.querySelector('.modal_area').style.display = 'none';
+document.getElementById("modal-close").addEventListener('click', function () {
+        document.querySelector('.modal-area').style.display = 'none';
         document.querySelector('.body-general').classList.remove('modal-opened');
 });
 
 document.getElementById("search").addEventListener('click', function () {
-    if (document.querySelector('.search').style.display === 'block') {
-        document.querySelector('.search').style.display = 'none';
+    if (document.querySelector('.search-window').style.display === 'block') {
+        document.querySelector('.search-window').style.display = 'none';
     }
     else {
-        document.querySelector('.search').style.display = 'block';
+        document.querySelector('.search-window').style.display = 'block';
     }
 });
 
 document.getElementById("dropdown").addEventListener('click', function () {
-    if (document.querySelector('.dropdown').style.display === 'block') {
-        document.querySelector('.dropdown').style.display = 'none';
+    if (document.querySelector('.category-dropdown').style.display === 'block') {
+        document.querySelector('.category-dropdown').style.display = 'none';
     }
     else {
-        document.querySelector('.dropdown').style.display = 'block';
+        document.querySelector('.category-dropdown').style.display = 'block';
     }
 });
 
@@ -44,13 +44,13 @@ document.getElementById("dropdown").addEventListener('click', function () {
 
 /* Вынес для устранения повтора */
 function SetBigHeader() {
-    document.querySelector('.header').classList.remove('header_small');
-    document.querySelector('.logo_img').classList.remove('logo_img_small');
+    document.querySelector('.header').classList.remove('header--small');
+    document.querySelector('.header__logo-img').classList.remove('header__logo-img--small');
 }
 
 function SetSmallHeader() {
-    document.querySelector('.header').classList.add('header_small');
-    document.querySelector('.logo_img').classList.add('logo_img_small');
+    document.querySelector('.header').classList.add('header--small');
+    document.querySelector('.header__logo-img').classList.add('header__logo-img--small');
 }
 
 function CalculateHeader() {

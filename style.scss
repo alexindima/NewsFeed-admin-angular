@@ -1,0 +1,87 @@
+@import "styles/utils";
+@import "styles/layout";
+@import "styles/article";
+@import "styles/header";
+@import "styles/search";
+@import "styles/category";
+@import "styles/user";
+@import "styles/main";
+@import "styles/suggested";
+@import "styles/scroll";
+
+h1, h2, h3, h4, h5, h6, p {
+  margin-top: 0;
+}
+
+:root {
+  --primary-bg-color: #EDEEF0;
+  --secondary-bg-color: #27AE60;
+  --text-color: #27AE60;
+  --border-color: #eee;
+  --divider-color: #edc;
+  --header-height: 60px;
+  --header-height-small: 46px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media screen and (max-width: 1500px){
+  .layout {
+    grid-template-columns: 150px minmax(393px, 1fr) 300px;
+  }
+}
+
+@media screen and (max-width: 1200px){
+  .layout {
+    grid-template-areas:
+            "head head"
+            "scro main";
+    grid-template-rows: var(--header-height) 1fr;
+    grid-template-columns: 60px minmax(393px, 1fr);
+  }
+  .scroll-button {
+    width: 40px;
+  }
+  .main {
+    padding-right: 20px;
+  }
+  .layout-suggested {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768px){
+  .layout {
+    grid-template-areas:
+            "head"
+            "main";
+    grid-template-rows: var(--header-height) 1fr;
+    grid-template-columns: minmax(393px, 1fr); /* Pixel 5 */
+  }
+  .layout-scroll {
+    display: none;
+  }
+  .main {
+    padding: 0;
+  }
+
+}

@@ -1,0 +1,57 @@
+
+/* Нужно блочить скролл страницы при наведении, но не через overflow: hidden; найти нормальный способ */
+.suggested {
+  padding: 20px;
+}
+
+.suggested-container { /* Как у ТАСС */
+  display: block;
+  position: sticky;
+  top: 90px;
+  height: calc(100vh - 9em);
+  background-color: white;
+  border-radius: 20px;
+  margin: 0 auto;
+  padding: 15px;
+  overflow: scroll;
+  -ms-overflow-style: none;  /* IE и Edge */
+  scrollbar-width: none;  /* Firefox */
+  &::-webkit-scrollbar {
+    display: none; /* Safari */
+  }
+}
+
+.suggested-news {
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 20px 0;
+  color: black;
+  overflow-wrap: anywhere;
+  &__time {
+    flex: none;
+    width: 40px;
+    padding-top: 7px;
+    color: #767676;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: -.02em;
+    text-align: left;
+  }
+  &__title {
+    font-weight: 700;
+    font-size: 19px;
+    font-family: Inter,sans-serif;
+    line-height: 24px;
+    letter-spacing: -.02em;
+    flex: 3;
+  }
+}
+
+.suggested-news + .suggested-news {
+  border-top: 1px solid #333333;
+}

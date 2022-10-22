@@ -1,545 +1,557 @@
-:root {
-    --header-height: 60px;
-    --header-height-small: 46px;
-}
-
-h1, h2, h3, h4, h5, h6, p {
-    margin-top: 0;
-}
-
-.body-general {
-    margin: 0;
-    font-family: 'Roboto', 'sans-serif';
-    font-size: 16px;
-    line-height: 20px;
-}
-
-.wrapper {
-
-    display: grid;
-    background: #EDEEF0;
-    grid-template-areas:
-            "h h h"
-            "t a s";
-    grid-template-rows: var(--header-height) 1fr;
-    grid-template-columns: 150px minmax(393px, 1fr) 400px;
-}
-
-.header {
-    height: var(--header-height); /* если не указать, не будет плавности*/
-    grid-area: h;
-    display: flex;
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    border-bottom: 2px solid silver;
-    background: white;
-    transition: height 0.1s;
-    padding: 0 20px;
-    z-index: 1;
-}
-
-.header_small {
-    /* Как у РИА новости */
-    height: var(--header-height-small);
-    transition: 0.5s;
-}
-.logo {
-    position: relative;
-}
-.logo_img {
-    height: 54px;
-    transition: height 0.1s;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.logo_img_small {
-    height: 40px;
-    transition: height 0.5s;
-}
-.icons{
-    display: flex;
-    align-items: center;
-}
-.icon_container{
-    display: flex;
-    position: relative;
-    justify-content: center;
-    height: 45px;
-    width: 45px;
-}
-.icon_img {
-    height: 30px;
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.icon_img:hover {
-    height: 40px;
-}
-
-
-
-
-
-.dropdown {
-    display: none;
-    position: absolute;
-    top: 45px;
-    right: 0;
-    background-color: #f1f1f1;
-    border: 1px solid gray;;
-    min-width: 150px;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-    z-index: 2;
-}
-
-.search {
-    box-sizing: border-box;
-    display: none;
-    position: absolute;
-    padding: 20px;
-    top: 45px;
-    right: 0;
-    background-color: #f1f1f1;
-    border: 1px solid gray;;
-    min-width: 260px;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-    z-index: 2;
-}
-
-.search_form{
-    display: flex;
-}
-
-.search_input {
-    line-height: 21px;
-    padding: 3px 9px;
-    border-radius: 0;
-}
-
-.search_button {
-    color: #fff;
-    background-color: gray;
-    border: none;
-
-}
-
-.search_button:hover {
-    background-color: #333333;
-}
-
-.dropdown-element {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdown-element + .dropdown-element {
-    border-top: 1px solid gray;
-}
-
-.modal-opened {
-    overflow: hidden;
-}
-
-.modal_area {
-    display: none;
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(0,0,0,0.6);
-    z-index: 9999;
-}
-
-.modal_area:after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
-    z-index: 1;
-}
-
-.modal {
-    position: relative;
-    width: 480px;
-    padding: 20px;
-    background: white;
-    z-index: 2;
-}
-
-.modal_close {
-    position: absolute;
-    cursor: pointer;
-    top: 10px;
-    right: 10px;
-    width: 30px;
-    height: 30px;
-}
-
-.modal_close_img {
-    width: 30px;
-    height: 30px;
-}
-
-.main_title {
-    margin-bottom: 40px;
-    text-align: center;
-    font-size: 32px;
-    font-weight: bold;
-    line-height: normal;
-}
-
-.second_title {
-    margin-bottom: 40px;
-    text-align: center;
-    font-size: 24px;
-    font-weight: bold;
-    line-height: normal;
-}
-
-.form_field {
-    position: relative;
-    display: block;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    min-height: 60px;
-    margin-bottom: 10px;
-    padding: 18px 15px 2px;
-    border: 1px solid transparent;
-    border-radius: 3px;
-    background-color: #f2f2f2;
-}
-
-.form-field-title{
-    top: 8px;
-    font-size: 12px;
-    line-height: 14px;
-    padding-right: 45px;
-    position: absolute;
-    z-index: 2;
-    color: #767676;
-    font-weight: 500;
-}
-
-.login_input, .password_input {
-    width: 100%;
-    overflow: hidden;
-    color: #333;
-    border: none;
-    outline: none;
-    background: transparent;
-    font-size: 16px;
-    line-height: 23px;
-    font-weight: 600;
-    min-height: 38px;
-    padding: 7px 0;
-}
-
-.submit_button {
-    width: 100%;
-    height: 60px;
-    padding: 0 10px;
-    text-align: center;
-    color: #fff;
-    border: none;
-    border-radius: 3px;
-    outline: none;
-    background-color: gray;
-    font-family: inherit;
-    font-size: 16px;
-    font-weight: bold;
-    position: relative;
-}
-
-.submit_button:hover {
-    background-color: #333333;
-}
-
-.recover_password {
-    display: block;
-    height: 40px;
-    padding: 20px;
-    cursor: pointer;
-    text-align: right;
-}
-
-.recover_password_link {
-    color: #767676;
-}
-
-.recover_password_link:hover {
-    color: #333333;
-}
-
-.sign_up_button {
-    display: block;
-    cursor: pointer;
-    height: 60px;
-    padding: 0 10px;
-    text-align: center;
-    vertical-align: middle;
-    border: none;
-    border-radius: 3px;
-    outline: none;
-    background-color: gray;
-    font-size: 16px;
-    font-weight: bold;
-    position: relative;
-}
-
-.sign_up_link {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
-    color: white;
-    text-decoration: none;
-}
-
-.sign_up_button:hover {
-    background-color: #333333;
-}
-
-.scroll {
-    grid-area: t;
-    position: relative;
-    z-index: 0;
-
-}
-
-.main {
-    grid-area: a;
-    display: flex;
-    flex-direction: column;
-    padding-top: 20px; /* Не нужен снизу, ведь статьи будут нескончаемыми */
-    gap: 20px;
-}
-
-.article {  /* Статьи будут в контейнере как у pg13.ru */
-    background-color: white;
-    border-radius: 10px;
-    padding: 30px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.article-date {
-    font-size: 14px;
-    line-height: 18px;
-    font-weight: 400;
-}
-
-.article-date-update {
-    color: midnightblue;
-}
-
-.article-title-main {
-    font-size: 36px;
-    line-height: 45px;
-    font-weight: 700;
-}
-
-.article-title-second {
-    display: block;
-    font-size: 16px;
-    padding-top: 10px;
-    font-weight: normal;
-    color: #5e5e5e;
-}
-
-.article-photo {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.article-photo-img {
-    display: block;
-    width: 100%;
-    height: auto;
-    margin: 0 auto;
-}
-
-.article-photo-text {
-    display: inline-block;
-    font-size: 12px;
-    line-height: 13px;
-    vertical-align: top;
-}
-
-
-.article-body {
-    display: block;
-    width: 100%;
-    height: auto;
-    margin: 0 auto;
-}
-
-.article-body-img {
-    display: block;
-    width: 100%;
-    height: auto;
-    margin: 10px 0 10px 0;
-}
-
-.suggested {
-    grid-area: s;
-    padding: 20px;
-}
-
-.suggested-container { /* Как у ТАСС */
-    display: block;
-    position: sticky;
-    top: 90px;
-    height: calc(100vh - 9em);
-    background-color: white;
-    border-radius: 20px;
-    margin: 0 auto;
-    padding: 15px;
-    overflow: scroll;
-    -ms-overflow-style: none;  /* IE и Edge */
-    scrollbar-width: none;  /* Firefox */
-}
-
-.suggested-container::-webkit-scrollbar {
-    display: none; /* Safari */
-}
-
-.suggested-news {
-    display: flex;
-    flex-direction: row;
-    cursor: pointer;
-    align-items: flex-start;
-    justify-content: flex-start;
-    width: 100%;
-    padding: 20px 0;
-    color: black;
-    overflow-wrap: anywhere;
-}
-
-.suggested-news-time {
-    flex: none;
-    width: 40px;
-    padding-top: 7px;
-    color: #767676;
-    font-weight: 700;
-    font-size: 12px;
-    line-height: 16px;
-    letter-spacing: -.02em;
-    text-align: left;
-}
-
-.suggested-news-title {
-    font-weight: 700;
-    font-size: 19px;
-    font-family: Inter,sans-serif;
-    line-height: 24px;
-    letter-spacing: -.02em;
-    flex: 3;
-}
-
-.suggested-news + .suggested-news {
-    border-top: 1px solid #333333;
-}
-
-
-.scroll-button {
-    position: fixed;
-    left:0;
-    width:114px; /* как у ВК*/
-    top: 0;
-    background: rgba(0,0,0,0.1);
-    opacity: 0;
-    color: black;
-    bottom: 0;
-    cursor: pointer;
-    transition: background-color 200ms linear,opacity 200ms linear;
-}
-
-.scroll-button:hover {
-    opacity: 1;
-}
-
-.scroll_img {
-    height: 15px;
-    width: 15px;
-    position: absolute;
-    top: 60px;
-    left: 50%;
-    transform: translateY(-50%) translateX(-50%);
-
-}
-
-.scroll_down_img {
-    top: 74px;
+@charset "UTF-8";
+.hidden { /* Переделать на эту штуку */
+  display: none !important;
 }
 
 .spacer {
-    flex: 1;
+  flex: 1 1 auto;
 }
 
-@media screen and (max-width: 1500px){
-    .wrapper {
-        grid-template-columns: 150px minmax(393px, 1fr) 300px;
-    }
+.body-general {
+  margin: 0;
+  font-family: "Roboto", "sans-serif";
+  font-size: 16px;
+  line-height: 20px;
+  background: var(--primary-bg-color);
 }
 
-@media screen and (max-width: 1200px){
-    .wrapper {
-        grid-template-areas:
-            "h h"
-            "t a";
-        grid-template-rows: var(--header-height) 1fr;
-        grid-template-columns: 60px minmax(393px, 1fr);
-    }
-    .scroll-button {
-        width: 40px;
-    }
-    .main {
-         padding-right: 20px;
-     }
-    .suggested {
-        display: none;
-    }
+.layout {
+  display: grid;
+}
+.layout__header {
+  height: var(--header-height); /* если не указать, не будет плавности*/
+  grid-area: head;
+  top: 0;
+  position: -webkit-sticky;
+  position: sticky;
+  z-index: 1;
+}
+.layout__scroll {
+  grid-area: scro;
+  z-index: 0;
+}
+.layout__main {
+  grid-area: main;
+}
+.layout__suggested {
+  grid-area: sugg;
 }
 
-@media screen and (max-width: 768px){
-    .wrapper {
-        grid-template-areas:
-            "h"
-            "a";
-        grid-template-rows: var(--header-height) 1fr;
-        grid-template-columns: minmax(393px, 1fr); /* Pixel 5 */
-    }
-    .scroll {
-        display: none;
-    }
-    .main {
-        padding: 0;
-    }
-    .header_small {
-        transition: height 0s;
-    }
-    .logo_img_small {
-        transition: height 0s;
-    }
-    .article {
-        border-radius: 0;
-        padding: 15px;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
+@media screen and (max-width: 767px) {
+  .layout {
+    grid-template-areas: "head" "main";
+    grid-template-rows: var(--header-height) 1fr;
+    grid-template-columns: minmax(393px, 1fr); /* Pixel 5 */
+  }
+  .layout__scroll {
+    display: none;
+  }
 }
+@media screen and (min-width: 1501px) {
+  .layout {
+    grid-template-areas: "head head head" "scro main sugg";
+    grid-template-rows: var(--header-height) 1fr;
+    grid-template-columns: 150px minmax(393px, 1fr) 400px; /* Pixel 5 */
+  }
+}
+@media screen and (min-width: 1201px) and (max-width: 1500px) {
+  .layout {
+    grid-template-areas: "head head head" "scro main sugg";
+    grid-template-rows: var(--header-height) 1fr;
+    grid-template-columns: 150px minmax(393px, 1fr) 300px;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 1200px) {
+  .layout {
+    grid-template-areas: "head head" "scro main";
+    grid-template-rows: var(--header-height) 1fr;
+    grid-template-columns: 60px minmax(393px, 1fr);
+  }
+  .layout__suggested {
+    display: none;
+  }
+}
+.article { /* Статьи будут в контейнере как у pg13.ru */
+  background-color: white;
+  border-radius: 10px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.article__boby {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+.article-header__title-main {
+  font-size: 36px;
+  line-height: 45px;
+  font-weight: 700;
+}
+.article-header__title-second {
+  display: block;
+  font-size: 16px;
+  padding-top: 10px;
+  font-weight: normal;
+  color: #5e5e5e;
+}
+.article-header__photo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.article-header-photo__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+.article-header-photo__text {
+  display: inline-block;
+  font-size: 12px;
+  line-height: 13px;
+  vertical-align: top;
+}
+
+.article-date {
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 400;
+}
+.article-date__update {
+  color: midnightblue;
+}
+
+.article-body__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 10px 0 10px 0;
+}
+
+@media screen and (max-width: 767px) {
+  .article {
+    border-radius: 0;
+    padding: 15px;
+  }
+}
+.header {
+  display: flex;
+  border-bottom: 2px solid silver;
+  background: white;
+  transition: height 0.1s;
+  padding: 0 20px;
+}
+.header--small {
+  /* Как у РИА новости */
+  height: var(--header-height-small);
+  transition: 0.5s;
+}
+.header__logo {
+  display: flex;
+  align-items: center;
+}
+.header__logo-img {
+  height: 54px;
+  transition: height 0.1s;
+  display: block; /* Найти почему не применилось выравнивание к инлайн*/
+}
+.header__logo-img--small {
+  height: 40px;
+  transition: height 0.5s;
+}
+
+.icons-container {
+  display: flex;
+  align-items: center;
+}
+
+.icon-wrapper {
+  display: flex;
+  position: relative; /* Чтобы край попапов был под кнопкой */
+  align-items: center;
+  justify-content: center;
+  height: 45px;
+  width: 45px;
+}
+.icon-wrapper__img {
+  height: 30px;
+  cursor: pointer;
+}
+.icon-wrapper__img:hover {
+  height: 40px;
+}
+
+.search-window {
+  box-sizing: border-box;
+  display: none;
+  position: absolute;
+  padding: 20px;
+  top: 45px;
+  right: 0;
+  background-color: #f1f1f1;
+  border: 1px solid gray;
+  min-width: 260px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  z-index: 2;
+}
+
+.search-form {
+  display: flex;
+}
+.search-form__input {
+  line-height: 21px;
+  padding: 3px 9px;
+  border-right: 0;
+  border-radius: 0;
+}
+.search-form__button {
+  color: #fff;
+  background-color: gray;
+  border: none;
+}
+.search-form__button:hover {
+  background-color: #333333;
+}
+
+.category-dropdown {
+  display: none;
+  position: absolute;
+  top: 45px;
+  right: 0;
+  background-color: #f1f1f1;
+  border: 1px solid gray;
+  min-width: 150px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  z-index: 2;
+}
+.category-dropdown__element {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+.category-dropdown__element:hover {
+  background-color: gray;
+}
+
+.category-dropdown__element + .category-dropdown__element {
+  border-top: 1px solid gray;
+}
+
+.modal-opened {
+  overflow: hidden;
+}
+
+.modal-area {
+  display: none;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+}
+.modal-area::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.modal-window {
+  position: relative;
+  width: 480px;
+  padding: 20px;
+  background: white;
+  z-index: 2;
+}
+.modal-window__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+}
+.modal-window__main-title {
+  margin-bottom: 40px;
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+  line-height: normal;
+}
+.modal-window__second-title {
+  margin-bottom: 40px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: normal;
+}
+
+.close-wrapper {
+  cursor: pointer;
+  height: 30px;
+}
+.close-wrapper__img {
+  width: 30px;
+  height: 30px;
+}
+
+.form-field {
+  position: relative;
+  display: block;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  min-height: 60px;
+  margin-bottom: 10px;
+  padding: 18px 15px 2px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  background-color: #f2f2f2;
+}
+.form-field__title {
+  top: 8px;
+  font-size: 12px;
+  line-height: 14px;
+  padding-right: 45px;
+  position: absolute;
+  z-index: 2;
+  color: #767676;
+  font-weight: 500;
+}
+.form-field__input {
+  width: 100%;
+  overflow: hidden;
+  color: #333;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 16px;
+  line-height: 23px;
+  font-weight: 600;
+  min-height: 38px;
+  padding: 7px 0;
+}
+
+.auth-form__submit-button {
+  cursor: pointer;
+  width: 100%;
+  height: 60px;
+  padding: 0 10px;
+  text-align: center;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  outline: none;
+  background-color: gray;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: bold;
+  position: relative;
+}
+.auth-form__submit-button:hover {
+  background-color: #333333;
+}
+
+.recover-password {
+  display: block;
+  height: 40px;
+  padding: 20px;
+  text-align: right;
+}
+.recover-password__link {
+  cursor: pointer;
+  color: #767676;
+}
+.recover-password__link:hover {
+  color: #333333;
+}
+
+.sign-up-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  height: 60px;
+  padding: 0 10px;
+  text-align: center;
+  vertical-align: middle;
+  border: none;
+  border-radius: 3px;
+  outline: none;
+  background-color: gray;
+  font-size: 16px;
+  font-weight: bold;
+}
+.sign-up-button:hover {
+  background-color: #333333;
+}
+.sign-up-button__link {
+  color: white;
+  text-decoration: none;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px; /* Не нужен снизу, ведь статьи будут нескончаемыми */
+  gap: 20px;
+}
+
+@media screen and (max-width: 767px) {
+  .main {
+    padding: 0;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 1200px) {
+  .main {
+    padding-right: 20px;
+  }
+}
+/* Нужно блочить скролл страницы при наведении, но не через overflow: hidden; найти нормальный способ */
+.suggested {
+  padding: 20px;
+}
+
+.suggested-container { /* Как у ТАСС */
+  display: block;
+  position: sticky;
+  top: 90px;
+  height: calc(100vh - 9em);
+  background-color: white;
+  border-radius: 20px;
+  margin: 0 auto;
+  padding: 15px;
+  overflow: scroll;
+  -ms-overflow-style: none; /* IE и Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.suggested-container::-webkit-scrollbar {
+  display: none; /* Safari */
+}
+
+.suggested-news {
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 20px 0;
+  color: black;
+  overflow-wrap: anywhere;
+}
+.suggested-news__time {
+  flex: none;
+  width: 40px;
+  padding-top: 7px;
+  color: #767676;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: -0.02em;
+  text-align: left;
+}
+.suggested-news__title {
+  font-weight: 700;
+  font-size: 19px;
+  font-family: Inter, sans-serif;
+  line-height: 24px;
+  letter-spacing: -0.02em;
+  flex: 3;
+}
+
+.suggested-news + .suggested-news {
+  border-top: 1px solid #333333;
+}
+
+.scroll-button {
+  position: fixed;
+  left: 0;
+  width: 114px; /* как у ВК*/
+  top: 0;
+  background: rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  color: black;
+  bottom: 0;
+  cursor: pointer;
+  transition: background-color 200ms linear, opacity 200ms linear;
+}
+.scroll-button:hover {
+  opacity: 1;
+}
+.scroll-button__img {
+  height: 15px;
+  width: 15px;
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+}
+.scroll-button__img--down {
+  top: 74px;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1200px) {
+  .scroll-button {
+    width: 40px;
+  }
+}
+h1, h2, h3, h4, h5, h6, p {
+  margin-top: 0;
+}
+
+:root {
+  --primary-bg-color: #EDEEF0;
+  --secondary-bg-color: #27AE60;
+  --text-color: #27AE60;
+  --border-color: #eee;
+  --divider-color: #edc;
+  --header-height: 60px;
+  --header-height-small: 46px;
+}
+
+@media screen and (max-width: 1500px) {
+  .layout {
+    grid-template-columns: 150px minmax(393px, 1fr) 300px;
+  }
+}
+@media screen and (max-width: 1200px) {
+  .layout {
+    grid-template-areas: "head head" "scro main";
+    grid-template-rows: var(--header-height) 1fr;
+    grid-template-columns: 60px minmax(393px, 1fr);
+  }
+  .scroll-button {
+    width: 40px;
+  }
+  .main {
+    padding-right: 20px;
+  }
+  .layout-suggested {
+    display: none;
+  }
+}
+@media screen and (max-width: 768px) {
+  .layout {
+    grid-template-areas: "head" "main";
+    grid-template-rows: var(--header-height) 1fr;
+    grid-template-columns: minmax(393px, 1fr); /* Pixel 5 */
+  }
+  .layout-scroll {
+    display: none;
+  }
+  .main {
+    padding: 0;
+  }
+}
+
+/*# sourceMappingURL=style.css.map */

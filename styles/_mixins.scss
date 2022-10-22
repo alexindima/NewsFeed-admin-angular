@@ -1,0 +1,27 @@
+@mixin desktop-wide {
+  @media screen and (min-width: 1501px) {
+    @content;
+  }
+}
+
+@mixin desktop-normal {
+  @media screen and (min-width: 1201px) and (max-width: 1500px) {
+    @content;
+  }
+}
+
+@mixin desktop-small {
+  @media screen and (min-width: 768px) and (max-width: 1200px) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media screen and (max-width: 767px) {
+    @content;
+  }
+}
+
+@mixin transition($property: background-color) {
+  transition: $property .2s linear;
+}

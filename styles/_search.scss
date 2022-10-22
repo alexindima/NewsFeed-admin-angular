@@ -1,0 +1,32 @@
+.search-window {
+  box-sizing: border-box;
+  display: none;
+  position: absolute;
+  padding: 20px;
+  top: 45px;
+  right: 0;
+  background-color: #f1f1f1;
+  border: 1px solid gray;;
+  min-width: 260px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  z-index: 2;
+}
+
+.search-form {
+  display: flex;
+  &__input {
+    line-height: 21px;
+    padding: 3px 9px;
+    border-right: 0;
+    border-radius: 0;
+  }
+  &__button {
+    color: #fff;
+    background-color: gray;
+    border: none;
+    &:hover {
+      background-color: #333333;
+    }
+  }
+}
+

@@ -6,6 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap" rel="stylesheet">
@@ -13,214 +14,233 @@
 </head>
 
 <body class="body-general">
-<div class="wrapper">
-    <header class="header">
-        <div class="logo">
-            <a href="index.html"><img src="img/logo.jpg" alt="Logo" class="logo_img"></a>
+<div class="layout">
+    <header class="layout__header header">
+        <div class="header__logo">
+            <a href="index.html"><img src="img/logo.jpg" alt="Logo" class="header__logo-img"></a>
         </div>
         <div class="spacer"> </div>
-        <div class="icons">
-            <div class="icon_container">
-                <img id="user" src="img/icon-user.png" alt="User" class="icon_img">
+        <div class="header__icons icons-container">
+            <div class="icon-wrapper">
+                <img id="user" src="img/icon-user.png" alt="User" class="icon-wrapper__img" title="User">
             </div>
-            <div class="icon_container">
-                <img id="search" src="img/icon-search.png" alt="Search" class="icon_img">
-                <div class="search">
-                    <form method="get" class="search_form">
+            <div class="icon-wrapper">
+                <img id="search" src="img/icon-search.png" alt="Search" class="icon-wrapper__img" title="Search">
+                <div class="search-window">
+                    <form method="get" class="search-form">
                         <label>
-                            <input type="text" class="search_input">
+                            <input type="text" class="search-form__input" placeholder="Search">
                         </label>
-                        <button type="submit" class="search_button">Search</button>
+                        <button type="submit" class="search-form__button">Search</button>
                     </form>
                 </div>
             </div>
-            <div class="icon_container">
-                <img id="dropdown" src="img/icon-menu.png" alt="Menu" class="icon_img">
-                <div class="dropdown">
-                    <a href="#" class="dropdown-element">Politics</a>
-                    <a href="#" class="dropdown-element">In the world</a>
-                    <a href="#" class="dropdown-element">Economy</a>
-                    <a href="#" class="dropdown-element">Society</a>
-                    <a href="#" class="dropdown-element">Incidents</a>
-                    <a href="#" class="dropdown-element">Army</a>
-                    <a href="#" class="dropdown-element">Science</a>
-                    <a href="#" class="dropdown-element">Sport</a>
-                    <a href="#" class="dropdown-element">Culture</a>
-                    <a href="#" class="dropdown-element">Religion</a>
-                    <a href="#" class="dropdown-element">Tourism</a>
+            <div class="icon-wrapper">
+                <img id="dropdown" src="img/icon-menu.png" alt="Category" class="icon-wrapper__img" title="Category">
+                <div class="category-dropdown">
+                    <a href="#" class="category-dropdown__element">Politics</a>
+                    <a href="#" class="category-dropdown__element">In the world</a>
+                    <a href="#" class="category-dropdown__element">Economy</a>
+                    <a href="#" class="category-dropdown__element">Society</a>
+                    <a href="#" class="category-dropdown__element">Incidents</a>
+                    <a href="#" class="category-dropdown__element">Army</a>
+                    <a href="#" class="category-dropdown__element">Science</a>
+                    <a href="#" class="category-dropdown__element">Sport</a>
+                    <a href="#" class="category-dropdown__element">Culture</a>
+                    <a href="#" class="category-dropdown__element">Religion</a>
+                    <a href="#" class="category-dropdown__element">Tourism</a>
                 </div>
             </div>
         </div>
     </header>
-    <div class="scroll">
-        <div id="arrowTop" class="scroll-button scroll-up-button" hidden>
-            <img src="img/icon-triangle-up.png" alt="Scroll Up" class="scroll_img scroll_up_img">
+    <div class="layout__scroll scroll">
+        <div id="arrowTop" class="scroll-button" hidden>
+            <img src="img/icon-triangle-up.png" alt="Scroll Up" class="scroll-button__img">
         </div>
-        <div id="arrowBottom" class="scroll-button scroll-down-button" hidden>
-            <img src="img/icon-triangle-down.png" alt="Scroll Down" class="scroll_img scroll_down_img">
+        <div id="arrowBottom" class="scroll-button" hidden>
+            <img src="img/icon-triangle-down.png" alt="Scroll Down" class="scroll-button__img scroll-button__img--down">
         </div>
     </div>
-    <div class="main">
-        <div class="article">
-            <div class="article-header">
-                <div class="article-title">
-                    <div class="article-date">22:28 01.01.0000 <span class="article-date-update">(updated 22:30 01.01.0000)</span></div>
-                    <div class="article-title-main">Plug. Frenzied refrigerators are massively attacking cute kittens.</div>
-                    <h1 class="article-title-second">A wedding is a funeral with a cake.</h1>
-                    <div class="article-photo">
-                        <img src="img/plug1.jpg" alt="Plug1" class="article-photo-img">
-                        <span class="article-photo-text">Just do it!</span>
-                    </div>
+    <div class="layout__main main">
+        <article class="article">
+            <div class="article__header article-header">
+                <div class="article-header__date article-date">22:28 01.01.0000 <span class="article-date__update">(updated 22:30 01.01.0000)</span></div>
+                <div class="article-header__title-main">Plug. Frenzied refrigerators are massively attacking cute kittens.</div>
+                <h1 class="article-header__title-second">A wedding is a funeral with a cake.</h1>
+                <div class="article-header__photo article-header-photo">
+                    <img src="img/plug1.jpg" alt="Plug1" class="article-header-photo__img">
+                    <span class="article-header-photo__text">Just do it!</span>
                 </div>
             </div>
-            <div class="article-body">
+            <div class="article__body article-body">
                 The contents of this block will be generated using frameworks. Therefore, let's give free rein to imagination.
                 Rabid penguins attacked the Titanic, bit the commander of the ship and stole the radio. A group of strangers met other strangers.
                 The mobile version of the safe harbor has lost a finger. I'm not Zura, I'm Katsura. A blue squid bit my dog's gills.
-                <img class="article-body-img" src="img/plug2.jpg" alt="plug">
+                <img class="article-body__img" src="img/plug2.jpg" alt="plug">
                 Mario, your princess is in another castle. After each step, make a jump. If you see a red ray, look for a rainbow.
                 Every third person will become the fifth. If you love a table, love a chair. I'll be back. Sasuke, go back to the village.
-                <img class="article-body-img" src="img/plug3.jpg" alt="plug">
+                <img class="article-body__img" src="img/plug3.jpg" alt="plug">
                 If the yellow guitar becomes the sun, the dinosaurs will take over Sweden. Why are you going after a frog? It's not yours.
                 If you report an error, the error will be fixed. But not with this package.
-                <img class="article-body-img" src="img/plug4.jpg" alt="plug">
+                <img class="article-body__img" src="img/plug4.jpg" alt="plug">
                 He said that light is a wave, and he will go to watch music. Next year will be right after that.
-                <img class="article-body-img" src="img/plug5.jpg" alt="plug">
+                <img class="article-body__img" src="img/plug5.jpg" alt="plug">
                 A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher,
                 but the gopher will become a cat.
             </div>
-        </div>
-        <div class="article">
-            <div class="article-header">
-                <div class="article-title">
-                    <div class="article-date">22:28 01.01.0000 <span class="article-date-update">(updated 22:30 01.01.0000)</span></div>
-                    <div class="article-title-main">Plug. Frenzied refrigerators are massively attacking cute kittens.</div>
-                    <h1 class="article-title-second">A wedding is a funeral with a cake.</h1>
-                    <div class="article-photo">
-                        <img src="img/plug1.jpg" alt="Plug1" class="article-photo-img">
-                        <span class="article-photo-text">Just do it!</span>
-                    </div>
+        </article>
+        <article class="article">
+            <div class="article__header article-header">
+                <div class="article-header__date article-date">22:28 01.01.0000 <span class="article-date__update">(updated 22:30 01.01.0000)</span></div>
+                <div class="article-header__title-main">Plug. Frenzied refrigerators are massively attacking cute kittens.</div>
+                <h1 class="article-header__title-second">A wedding is a funeral with a cake.</h1>
+                <div class="article-header__photo article-header-photo">
+                    <img src="img/plug1.jpg" alt="Plug1" class="article-header-photo__img">
+                    <span class="article-header-photo__text">Just do it!</span>
                 </div>
             </div>
-            <div class="article-body">
+            <div class="article__body article-body">
                 The contents of this block will be generated using frameworks. Therefore, let's give free rein to imagination.
                 Rabid penguins attacked the Titanic, bit the commander of the ship and stole the radio. A group of strangers met other strangers.
                 The mobile version of the safe harbor has lost a finger. I'm not Zura, I'm Katsura. A blue squid bit my dog's gills.
-                <img class="article-body-img" src="img/plug2.jpg" alt="plug">
+                <img class="article-body__img" src="img/plug2.jpg" alt="plug">
                 Mario, your princess is in another castle. After each step, make a jump. If you see a red ray, look for a rainbow.
                 Every third person will become the fifth. If you love a table, love a chair. I'll be back. Sasuke, go back to the village.
-                <img class="article-body-img" src="img/plug3.jpg" alt="plug">
+                <img class="article-body__img" src="img/plug3.jpg" alt="plug">
                 If the yellow guitar becomes the sun, the dinosaurs will take over Sweden. Why are you going after a frog? It's not yours.
                 If you report an error, the error will be fixed. But not with this package.
-                <img class="article-body-img" src="img/plug4.jpg" alt="plug">
+                <img class="article-body__img" src="img/plug4.jpg" alt="plug">
                 He said that light is a wave, and he will go to watch music. Next year will be right after that.
-                <img class="article-body-img" src="img/plug5.jpg" alt="plug">
+                <img class="article-body__img" src="img/plug5.jpg" alt="plug">
                 A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher,
                 but the gopher will become a cat.
             </div>
-        </div>
+        </article>
+        <article class="article">
+            <div class="article__header article-header">
+                <div class="article-header__date article-date">22:28 01.01.0000 <span class="article-date__update">(updated 22:30 01.01.0000)</span></div>
+                <div class="article-header__title-main">Plug. Frenzied refrigerators are massively attacking cute kittens.</div>
+                <h1 class="article-header__title-second">A wedding is a funeral with a cake.</h1>
+                <div class="article-header__photo article-header-photo">
+                    <img src="img/plug1.jpg" alt="Plug1" class="article-header-photo__img">
+                    <span class="article-header-photo__text">Just do it!</span>
+                </div>
+            </div>
+            <div class="article__body article-body">
+                The contents of this block will be generated using frameworks. Therefore, let's give free rein to imagination.
+                Rabid penguins attacked the Titanic, bit the commander of the ship and stole the radio. A group of strangers met other strangers.
+                The mobile version of the safe harbor has lost a finger. I'm not Zura, I'm Katsura. A blue squid bit my dog's gills.
+                <img class="article-body__img" src="img/plug2.jpg" alt="plug">
+                Mario, your princess is in another castle. After each step, make a jump. If you see a red ray, look for a rainbow.
+                Every third person will become the fifth. If you love a table, love a chair. I'll be back. Sasuke, go back to the village.
+                <img class="article-body__img" src="img/plug3.jpg" alt="plug">
+                If the yellow guitar becomes the sun, the dinosaurs will take over Sweden. Why are you going after a frog? It's not yours.
+                If you report an error, the error will be fixed. But not with this package.
+                <img class="article-body__img" src="img/plug4.jpg" alt="plug">
+                He said that light is a wave, and he will go to watch music. Next year will be right after that.
+                <img class="article-body__img" src="img/plug5.jpg" alt="plug">
+                A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher,
+                but the gopher will become a cat.
+            </div>
+        </article>
+
     </div>
 
-    <div class="suggested">
+    <div class="layout-suggested suggested">
         <div class="suggested-container">
             <div class="suggested-news">
-                <div class="suggested-news-time">27:68</div>
-                <div class="suggested-news-title">Superluminal underpants are now at a 50% discount!</div>
+                <div class="suggested-news__time">27:68</div>
+                <div class="suggested-news__title">Superluminal underpants are now at a 50% discount!</div>
             </div>
             <div class="suggested-news">
-                <div class="suggested-news-time">27:68</div>
-                <div class="suggested-news-title">Superluminal underpants are now at a 50% discount!</div>
+                <div class="suggested-news__time">27:68</div>
+                <div class="suggested-news__title">Superluminal underpants are now at a 50% discount!</div>
             </div>
             <div class="suggested-news">
-                <div class="suggested-news-time">27:68</div>
-                <div class="suggested-news-title">Superluminal underpants are now at a 50% discount!</div>
+                <div class="suggested-new__time">27:68</div>
+                <div class="suggested-news__title">Superluminal underpants are now at a 50% discount!</div>
             </div>
             <div class="suggested-news">
-                <div class="suggested-news-time">27:68</div>
-                <div class="suggested-news-title">Superluminal underpants are now at a 50% discount!</div>
+                <div class="suggested-news__time">27:68</div>
+                <div class="suggested-news__title">Superluminal underpants are now at a 50% discount!</div>
             </div>
             <div class="suggested-news">
-                <div class="suggested-news-time">27:68</div>
-                <div class="suggested-news-title">Superluminal underpants are now at a 50% discount!</div>
+                <div class="suggested-news__time">27:68</div>
+                <div class="suggested-news__title">Superluminal underpants are now at a 50% discount!</div>
+            </div>
+            <div class="suggested__news">
+                <div class="suggested-news__time">27:68</div>
+                <div class="suggested-news__title">Superluminal underpants are now at a 50% discount!</div>
             </div>
             <div class="suggested-news">
-                <div class="suggested-news-time">27:68</div>
-                <div class="suggested-news-title">Superluminal underpants are now at a 50% discount!</div>
+                <div class="suggested-news__time">27:68</div>
+                <div class="suggested-news__title">Superluminal underpants are now at a 50% discount!</div>
             </div>
             <div class="suggested-news">
-                <div class="suggested-news-time">27:68</div>
-                <div class="suggested-news-title">Superluminal underpants are now at a 50% discount!</div>
+                <div class="suggested-news__time">27:68</div>
+                <div class="suggested-news__title">Superluminal underpants are now at a 50% discount!</div>
             </div>
             <div class="suggested-news">
-                <div class="suggested-news-time">27:68</div>
-                <div class="suggested-news-title">Superluminal underpants are now at a 50% discount!</div>
+                <div class="suggested-news__time">27:68</div>
+                <div class="suggested-news__title">Superluminal underpants are now at a 50% discount!</div>
             </div>
             <div class="suggested-news">
-                <div class="suggested-news-time">27:68</div>
-                <div class="suggested-news-title">Superluminal underpants are now at a 50% discount!</div>
+                <div class="suggested-news__time">27:68</div>
+                <div class="suggested-news__title">Superluminal underpants are now at a 50% discount!</div>
             </div>
             <div class="suggested-news">
-                <div class="suggested-news-time">27:68</div>
-                <div class="suggested-news-title">Superluminal underpants are now at a 50% discount!</div>
+                <div class="suggested-news__time">27:68</div>
+                <div class="suggested-news__title">Superluminal underpants are now at a 50% discount!</div>
             </div>
             <div class="suggested-news">
-                <div class="suggested-news-time">27:68</div>
-                <div class="suggested-news-title">Superluminal underpants are now at a 50% discount!</div>
+                <div class="suggested-news__time">27:68</div>
+                <div class="suggested-news__title">Superluminal underpants are now at a 50% discount!</div>
             </div>
             <div class="suggested-news">
-                <div class="suggested-news-time">27:68</div>
-                <div class="suggested-news-title">Superluminal underpants are now at a 50% discount!</div>
+                <div class="suggested-news__time">27:68</div>
+                <div class="suggested-news__title">Superluminal underpants are now at a 50% discount!</div>
             </div>
             <div class="suggested-news">
-                <div class="suggested-news-time">27:68</div>
-                <div class="suggested-news-title">Superluminal underpants are now at a 50% discount!</div>
+                <div class="suggested-news__time">27:68</div>
+                <div class="suggested-news__title">Superluminal underpants are now at a 50% discount!</div>
             </div>
             <div class="suggested-news">
-                <div class="suggested-news-time">27:68</div>
-                <div class="suggested-news-title">Superluminal underpants are now at a 50% discount!</div>
-            </div>
-            <div class="suggested-news">
-                <div class="suggested-news-time">27:68</div>
-                <div class="suggested-news-title">Superluminal underpants are now at a 50% discount!</div>
+                <div class="suggested-news__time">27:68</div>
+                <div class="suggested-news__title">Superluminal underpants are now at a 50% discount!</div>
             </div>
         </div>
     </div>
-
-    <div id="modalAuth" class="modal_area">
-        <div class="modal">
-            <div class="modal_close">
-                <img id="modal_close" src="img/icon-close.png" alt="Modal Close" class="modal_close_img">
+    <div id="modalAuth" class="modal-area">
+        <div class="modal-window">
+            <div class="modal-window__close close-wrapper">
+                <img id="modal-close" src="img/icon-close.png" alt="Modal Close" class="close-wrapper__img">
             </div>
-            <div class="main_title">
+            <div class="modal-window__main-title">
                 Login to the site
             </div>
-            <div class="form_wrapper">
-                <form class="auth_form">
-                    <label class="form_field">
-                        <div class="form-field-title">Email</div>
-                        <input type="email" class=" login_input" required="required">
-                    </label>
-                    <label class="form_field">
-                        <div class="form-field-title">Password</div>
-                        <input type="password" class=" password_input" required="required">
-                    </label>
-                    <button type="submit" class="submit_button">Log In</button>
-                    <div class="recover_password">
-                        <a href="#" class="recover_password_link">Recover Password</a>
-                    </div>
-                </form>
 
-                <div class="sign_up">
-                    <div class="second_title">
-                        Or
-                    </div>
-                    <div class="sign_up_button">
-                        <a href="#" class="sign_up_link">Sign Up</a>
-                    </div>
-                </div>
+            <form class="modal-window__auth-form auth-form">
+                <label class="auth-form__field form-field">
+                    <span class="form-field__title">Email</span>
+                    <input type="email" class="form-field__input" required="required">
+                </label>
+                <label class="auth-form__field form-field">
+                    <span class="form-field__title">Password</span>
+                    <input type="password" class="form-field__input" required="required">
+                </label>
+                <button type="submit" class="auth-form__submit-button">Log In</button>
+            </form>
+            <div class="modal-window__recover-password recover-password">
+                <a href="#" class="recover-password__link">Recover Password</a>
             </div>
-
+            <div class="modal-window__second-title">
+                Or
+            </div>
+            <div class="modal-window__sign-up-button sign-up-button">
+                <a href="#" class="sign-up-button__link">Sign Up</a>
+            </div>
         </div>
+
     </div>
 </div>
 

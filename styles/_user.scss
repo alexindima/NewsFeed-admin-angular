@@ -1,0 +1,164 @@
+
+.modal-opened {
+  overflow: hidden;
+}
+
+.modal-area {
+  display: none;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0,0,0,0.6);
+  z-index: 9999;
+  &::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1;
+  }
+}
+
+
+.modal-window {
+  position: relative;
+  width: 480px;
+  padding: 20px;
+  background: white;
+  z-index: 2;
+  &__close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+  }
+  &__main-title {
+    margin-bottom: 40px;
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    line-height: normal;
+  }
+  &__second-title {
+    margin-bottom: 40px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: normal;
+  }
+}
+
+.close-wrapper {
+  cursor: pointer;
+  height: 30px;
+  &__img {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+
+
+
+.form-field {
+  position: relative;
+  display: block;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  min-height: 60px;
+  margin-bottom: 10px;
+  padding: 18px 15px 2px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  background-color: #f2f2f2;
+  &__title{
+    top: 8px;
+    font-size: 12px;
+    line-height: 14px;
+    padding-right: 45px;
+    position: absolute;
+    z-index: 2;
+    color: #767676;
+    font-weight: 500;
+  }
+  &__input {
+    width: 100%;
+    overflow: hidden;
+    color: #333;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 16px;
+    line-height: 23px;
+    font-weight: 600;
+    min-height: 38px;
+    padding: 7px 0;
+  }
+}
+
+.auth-form {
+  &__submit-button {
+    cursor: pointer;
+    width: 100%;
+    height: 60px;
+    padding: 0 10px;
+    text-align: center;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    outline: none;
+    background-color: gray;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: bold;
+    position: relative;
+    &:hover {
+      background-color: #333333;
+    }
+  }
+}
+
+.recover-password {
+  display: block;
+  height: 40px;
+  padding: 20px;
+  text-align: right;
+  &__link {
+    cursor: pointer;
+    color: #767676;
+    &:hover {
+      color: #333333;
+    }
+  }
+}
+
+.sign-up-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  height: 60px;
+  padding: 0 10px;
+  text-align: center;
+  vertical-align: middle;
+  border: none;
+  border-radius: 3px;
+  outline: none;
+  background-color: gray;
+  font-size: 16px;
+  font-weight: bold;
+  &:hover {
+    background-color: #333333;
+  }
+  &__link {
+    color: white;
+    text-decoration: none;
+  }
+}
+
+
