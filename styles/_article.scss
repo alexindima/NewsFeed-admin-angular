@@ -1,13 +1,12 @@
 @import "mixins";
 
 .article { /* Статьи будут в контейнере как у pg13.ru */
-  background-color: white;
+  background-color: var(--article-bg-color);
   border-radius: 10px;
   padding: 30px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  &__header {}
   &__boby {
     display: block;
     width: 100%;
@@ -17,7 +16,6 @@
 }
 
 .article-header {
-  &__date {}
   &__title-main {
     font-size: 36px;
     line-height: 45px;
@@ -28,7 +26,7 @@
     font-size: 16px;
     padding-top: 10px;
     font-weight: normal;
-    color: #5e5e5e;
+    color: var(--article-second-title-color);
   }
   &__photo {
     display: flex;
@@ -57,7 +55,7 @@
   line-height: 18px;
   font-weight: 400;
   &__update {
-    color: midnightblue;
+    color: var(--article-date-upd-color);
   }
 }
 

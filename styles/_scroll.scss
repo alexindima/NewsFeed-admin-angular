@@ -5,12 +5,12 @@
   left:0;
   width:114px; /* как у ВК*/
   top: 0;
-  background: rgba(0,0,0,0.1);
+  background: var(--scrl-bg-color);
   opacity: 0;
-  color: black;
+  color: var(--scrl-primary-color);
   bottom: 0;
   cursor: pointer;
-  transition: background-color 200ms linear,opacity 200ms linear;
+  transition: background-color 200ms linear, opacity 200ms linear;
   &:hover {
     opacity: 1;
   }

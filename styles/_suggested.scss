@@ -9,7 +9,7 @@
   position: sticky;
   top: 90px;
   height: calc(100vh - 9em);
-  background-color: white;
+  background-color: var(--sgst-bg-color);
   border-radius: 20px;
   margin: 0 auto;
   padding: 15px;
@@ -25,17 +25,15 @@
   display: flex;
   flex-direction: row;
   cursor: pointer;
-  align-items: flex-start;
-  justify-content: flex-start;
   width: 100%;
   padding: 20px 0;
-  color: black;
+  color: var(--sgst-text-color);
   overflow-wrap: anywhere;
   &__time {
     flex: none;
     width: 40px;
     padding-top: 7px;
-    color: #767676;
+    color: var(--sgst-time-color);
     font-weight: 700;
     font-size: 12px;
     line-height: 16px;

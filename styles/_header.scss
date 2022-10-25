@@ -1,13 +1,13 @@
 .header {
   display: flex;
-  border-bottom: 2px solid silver;
-  background: white;
-  transition: height 0.1s;
+  border-bottom: 2px solid var(--hdr-br-color);
+  background: var(--hdr-bg-color);
+  transition: height var(--hdr-trnst-big);
   padding: 0 20px;
   &--small {
     /* Как у РИА новости */
     height: var(--header-height-small);
-    transition: 0.5s;
+    transition: var(--hdr-trnst-small);
   }
   &__logo {
     display: flex;
@@ -15,11 +15,11 @@
   }
   &__logo-img {
     height: 54px;
-    transition: height 0.1s;
+    transition: height var(--hdr-trnst-big);
     display: block; /* Найти почему не применилось выравнивание к инлайн*/
     &--small {
       height: 40px;
-      transition: height 0.5s;
+      transition: height var(--hdr-trnst-small);
     }
   }
 }

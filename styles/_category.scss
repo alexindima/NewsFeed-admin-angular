@@ -3,8 +3,8 @@
   position: absolute;
   top: 45px;
   right: 0;
-  background-color: #f1f1f1;
-  border: 1px solid gray;;
+  background-color: var(--ctgr-bg-color);
+  border: 1px solid var(--ctgr-bg-hover-color);
   min-width: 150px;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
   z-index: 2;
@@ -14,11 +14,10 @@
     text-decoration: none;
     display: block;
     &:hover {
-      background-color: gray;
+      background-color: var(--ctgr-bg-hover-color);
     }
   }
-}
-
-.category-dropdown__element + .category-dropdown__element {
-  border-top: 1px solid gray;
+  .&__element + &__element {
+    border-top: 1px solid var(--ctgr-bg-hover-color);
+  }
 }
