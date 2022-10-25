@@ -1,13 +1,14 @@
 @import "mixins";
 
 .body-general {
-  margin: 0;
+  //margin: 0; // лишнее, уже есть normalize
   font-family: 'Roboto', 'sans-serif';
   font-size: 16px;
   line-height: 20px;
   background: var(--primary-bg-color);
 }
 
+//это не общий лейаут, у тебя для разных экранов он разный и происходит ненужное переопределение
 .layout {
   display: grid;
   &__header {
@@ -43,6 +44,10 @@
   }
 }
 
+//я не увидел у тебя трёх колонок, это ошибка
+// сама шапка это одна строка через flex, чем общая часть лейаута
+// скролл всё равно сделан через position: fixed вне лейаута
+// Ещё: scro - не надо так сокращать, ничего не выиграл от такого сокращения
 @include desktop-wide {
   .layout {
     grid-template-areas:

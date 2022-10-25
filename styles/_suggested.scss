@@ -1,5 +1,7 @@
 
 /* Нужно блочить скролл страницы при наведении, но не через overflow: hidden; найти нормальный способ */
+
+// TODO этот блок лишний, уже есть suggested-container
 .suggested {
   padding: 20px;
 }
