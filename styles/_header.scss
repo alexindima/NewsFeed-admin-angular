@@ -1,13 +1,14 @@
 .header {
   display: flex;
-  border-bottom: 2px solid var(--hdr-br-color);
-  background: var(--hdr-bg-color);
-  transition: height var(--hdr-trnst-big);
+  box-sizing: border-box;
+  border-bottom: 2px solid var(--border-color);
+  background: var(--secondary-bg-color);
+  transition: height var(--header-transition-time-big);
   padding: 0 20px;
   &--small {
     /* Как у РИА новости */
     height: var(--header-height-small);
-    transition: var(--hdr-trnst-small);
+    transition: var(--header-transition-time--small);
   }
   &__logo {
     display: flex;
@@ -15,11 +16,11 @@
   }
   &__logo-img {
     height: 54px;
-    transition: height var(--hdr-trnst-big);
+    transition: height var(--header-transition-time-big);
     display: block; /* Найти почему не применилось выравнивание к инлайн*/
     &--small {
       height: 40px;
-      transition: height var(--hdr-trnst-small);
+      transition: height var(--header-transition-time--small);
     }
   }
 }
@@ -37,10 +38,10 @@
   height: 45px;
   width: 45px;
   &__img {
-    height: 30px;
+    font-size: 30px;
     cursor: pointer;
     &:hover {
-      height: 40px;
+      font-size: 40px;
     }
   }
 }

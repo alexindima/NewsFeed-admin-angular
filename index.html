@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/1ea698a74c.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -22,10 +23,10 @@
         <div class="spacer"> </div>
         <div class="header__icons icons-container">
             <div class="icon-wrapper">
-                <img id="user" src="img/icon-user.png" alt="User" class="icon-wrapper__img" title="User">
+                <i id="user" class="fa-regular fa-circle-user fa-2xl icon-wrapper__img" title="User"></i>
             </div>
             <div class="icon-wrapper">
-                <img id="search" src="img/icon-search.png" alt="Search" class="icon-wrapper__img" title="Search">
+                <i id="search" class="fa-solid fa-magnifying-glass icon-wrapper__img" title="Search"></i>
                 <div class="search-window">
                     <form method="get" class="search-form">
                         <label>
@@ -36,7 +37,7 @@
                 </div>
             </div>
             <div class="icon-wrapper">
-                <img id="dropdown" src="img/icon-menu.png" alt="Category" class="icon-wrapper__img" title="Category">
+                <i id="dropdown" class="fa-brands fa-ioxhost icon-wrapper__img" title="Category"></i>
                 <div class="category-dropdown">
                     <a href="#" class="category-dropdown__element">Politics</a>
                     <a href="#" class="category-dropdown__element">In the world</a>
@@ -144,72 +145,62 @@
                 but the gopher will become a cat.
             </div>
         </article>
-
     </div>
-
-    <div class="layout-suggested suggested">
+    <div class="layout__suggested suggested">
         <div class="suggested-container">
-<!--            это ссылка, не div, ты ей cursor pointer сделал чтобы кликать, а тег выбрал неверный-->
-            <div class="suggested-news">
+            <a href="#" class="suggested-news">
                 <div class="suggested-news__time">27:68</div>
                 <div class="suggested-news__title">Superluminal underpants are now at a 50% discount!</div>
-            </div>
-            <div class="suggested-news">
+            </a>
+            <a href="#" class="suggested-news">
                 <div class="suggested-news__time">27:68</div>
                 <div class="suggested-news__title">Superluminal underpants are now at a 50% discount!</div>
-            </div>
-            <div class="suggested-news">
+            </a>
+            <a href="#" class="suggested-news">
                 <div class="suggested-news__time">27:68</div>
                 <div class="suggested-news__title">Superluminal underpants are now at a 50% discount!</div>
-            </div>
-            <div class="suggested-news">
+            </a>
+            <a href="#" class="suggested-news">
                 <div class="suggested-news__time">27:68</div>
                 <div class="suggested-news__title">Superluminal underpants are now at a 50% discount!</div>
-            </div>
-            <div class="suggested-news">
+            </a>
+            <a href="#" class="suggested-news">
                 <div class="suggested-news__time">27:68</div>
                 <div class="suggested-news__title">Superluminal underpants are now at a 50% discount!</div>
-            </div>
-            <div class="suggested-news">
+            </a>
+            <a href="#" class="suggested-news">
                 <div class="suggested-news__time">27:68</div>
                 <div class="suggested-news__title">Superluminal underpants are now at a 50% discount!</div>
-            </div>
-            <div class="suggested-news">
+            </a>
+            <a href="#" class="suggested-news">
                 <div class="suggested-news__time">27:68</div>
                 <div class="suggested-news__title">Superluminal underpants are now at a 50% discount!</div>
-            </div>
-            <div class="suggested-news">
+            </a>
+            <a href="#" class="suggested-news">
                 <div class="suggested-news__time">27:68</div>
                 <div class="suggested-news__title">Superluminal underpants are now at a 50% discount!</div>
-            </div>
-            <div class="suggested-news">
+            </a>
+            <a href="#" class="suggested-news">
                 <div class="suggested-news__time">27:68</div>
                 <div class="suggested-news__title">Superluminal underpants are now at a 50% discount!</div>
-            </div>
-            <div class="suggested-news">
+            </a>
+            <a href="#" class="suggested-news">
                 <div class="suggested-news__time">27:68</div>
                 <div class="suggested-news__title">Superluminal underpants are now at a 50% discount!</div>
-            </div>
-            <div class="suggested-news">
+            </a>
+            <a href="#" class="suggested-news">
                 <div class="suggested-news__time">27:68</div>
                 <div class="suggested-news__title">Superluminal underpants are now at a 50% discount!</div>
-            </div>
-            <div class="suggested-news">
+            </a>
+            <a href="#" class="suggested-news">
                 <div class="suggested-news__time">27:68</div>
                 <div class="suggested-news__title">Superluminal underpants are now at a 50% discount!</div>
-            </div>
-            <div class="suggested-news">
+            </a>
+            <a href="#" class="suggested-news">
                 <div class="suggested-news__time">27:68</div>
                 <div class="suggested-news__title">Superluminal underpants are now at a 50% discount!</div>
-            </div>
-            <div class="suggested-news">
-                <div class="suggested-news__time">27:68</div>
-                <div class="suggested-news__title">Superluminal underpants are now at a 50% discount!</div>
-            </div>
-            <div class="suggested-news">
-                <div class="suggested-news__time">27:68</div>
-                <div class="suggested-news__title">Superluminal underpants are now at a 50% discount!</div>
-            </div>
+            </a>
+
         </div>
     </div>
     <div id="modalAuth" class="modal-area">
@@ -224,12 +215,11 @@
             <form class="modal-window__auth-form auth-form">
                 <label class="auth-form__field form-field">
                     <span class="form-field__title">Email</span>
-<!--                    можно просто required                    -->
-                    <input type="email" class="form-field__input" required="required">
+                    <input type="email" class="form-field__input" required>
                 </label>
                 <label class="auth-form__field form-field">
                     <span class="form-field__title">Password</span>
-                    <input type="password" class="form-field__input" required="required">
+                    <input type="password" class="form-field__input" required>
                 </label>
                 <button type="submit" class="auth-form__submit-button">Log In</button>
             </form>

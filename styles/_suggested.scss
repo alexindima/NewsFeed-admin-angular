@@ -2,6 +2,7 @@
 /* Нужно блочить скролл страницы при наведении, но не через overflow: hidden; найти нормальный способ */
 
 // TODO этот блок лишний, уже есть suggested-container
+// ^^^^ но тогда блок .suggested-container прилипнет к статьям, и придется делать маржин слева ему?
 .suggested {
   padding: 20px;
 }
@@ -9,9 +10,9 @@
 .suggested-container { /* Как у ТАСС */
   display: block;
   position: sticky;
-  top: 90px;
+  top: calc(var(--header-height) + var(--header-main-gap));
   height: calc(100vh - 9em);
-  background-color: var(--sgst-bg-color);
+  background-color: var(--secondary-bg-color);
   border-radius: 20px;
   margin: 0 auto;
   padding: 15px;
@@ -29,13 +30,14 @@
   cursor: pointer;
   width: 100%;
   padding: 20px 0;
-  color: var(--sgst-text-color);
+  color: var(--primary-text-color);
   overflow-wrap: anywhere;
+  text-decoration: none;
   &__time {
     flex: none;
     width: 40px;
     padding-top: 7px;
-    color: var(--sgst-time-color);
+    color: var(--secondary-text-color);
     font-weight: 700;
     font-size: 12px;
     line-height: 16px;
@@ -53,5 +55,5 @@
 }
 
 .suggested-news + .suggested-news {
-  border-top: 1px solid #333333;
+  border-top: 1px solid var(--border-color);
 }

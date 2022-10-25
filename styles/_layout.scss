@@ -1,7 +1,6 @@
 @import "mixins";
 
 .body-general {
-  //margin: 0; // лишнее, уже есть normalize
   font-family: 'Roboto', 'sans-serif';
   font-size: 16px;
   line-height: 20px;
@@ -32,13 +31,24 @@
 }
 
 @include mobile {
+  .body-general {
+    overflow: scroll;
+    -ms-overflow-style: none;  /* IE и Edge */
+    scrollbar-width: none;  /* Firefox */
+    &::-webkit-scrollbar {
+      display: none; /* Safari */
+    }
+  }
   .layout {
     grid-template-areas:
             "head"
             "main";
     grid-template-rows: var(--header-height) 1fr;
-    grid-template-columns: minmax(var(--min-scr), 1fr); /* Pixel 5 */
+    grid-template-columns: minmax(var(--min-screen), 1fr);
     &__scroll {
+      display: none;
+    }
+    &__suggested {
       display: none;
     }
   }
@@ -54,7 +64,7 @@
             "head head head"
             "scro main sugg";
     grid-template-rows: var(--header-height) 1fr;
-    grid-template-columns: 150px minmax(var(--min-scr), 1fr) 400px; /* Pixel 5 */
+    grid-template-columns: 150px minmax(var(--min-screen), 1fr) 400px; /* Pixel 5 */
   }
 }
 
@@ -64,7 +74,7 @@
             "head head head"
             "scro main sugg";
     grid-template-rows: var(--header-height) 1fr;
-    grid-template-columns: 150px minmax(var(--min-scr), 1fr) 300px;
+    grid-template-columns: 150px minmax(var(--min-screen), 1fr) 300px;
   }
 }
 
@@ -74,7 +84,7 @@
             "head head"
             "scro main";
     grid-template-rows: var(--header-height) 1fr;
-    grid-template-columns: 60px minmax(var(--min-scr), 1fr);
+    grid-template-columns: 60px minmax(var(--min-screen), 1fr);
     &__suggested {
       display: none;
     }

@@ -3,8 +3,8 @@
 .main {
   display: flex;
   flex-direction: column;
-  padding-top: 20px; /* Не нужен снизу, ведь статьи будут нескончаемыми */ //не совсем, статьи могут окончиться, если апи ответит 404, или 400 или 500, т.е сервер не вернёт ничего далее
-  gap: 20px;
+  padding: 20px 0 20px 0;
+  gap: var(--header-main-gap);
 }
 
 @include mobile {

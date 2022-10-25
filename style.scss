@@ -8,56 +8,45 @@
 @import "styles/main";
 @import "styles/suggested";
 @import "styles/scroll";
+@import "styles/modal";
 
 h1, h2, h3, h4, h5, h6, p {
   margin-top: 0;
 }
 
-// взял очень большую палитру цветов - это плохо, причём есть дублирующиеся цвета, которые надо объединять
-// можно ссылаться в css переменных на другие css переменные
 :root {
   --primary-bg-color: #EDEEF0;
-  --secondary-bg-color: #27AE60;
-  --text-color: #27AE60;
-  --border-color: #eee;
-  --divider-color: #edc;
-  --ctgr-bg-color:#f1f1f1;
-  --ctgr-bg-hover-color: gray;
-  --hdr-bg-color: white;
-  --hdr-br-color: silver; // зачем такие сокрашения, это читается много хуже чем --header-bg-color или --header-border-color, стоит искоренять такой подход раз и навсегда
-  --scrl-bg-color: rgba(0,0,0,0.1);
-  --scrl-primary-color: black;
-  --srch-bg-color: #f1f1f1;
-  --srch-br-color: gray;
-  --srch-shdw-color: rgba(0,0,0,0.2);
-  --srch-btn-text-color: #fff;
-  --srch-btn-bg-color: gray;
-  --srch-btn-bg-hover-color: #333333;
-  --sgst-bg-color: white;
-  --sgst-text-color: black;
-  --sgst-time-color: #767676;
-  --mdl-bg-color: rgba(0,0,0,0.6);
-  --mdl-bg-after-color: rgba(0,0,0,0.5);
-  --usr-bg-color: white;
-  --usr-frm-bg-color: #f2f2f2;
-  --usr-frm-br-color: transparent;
-  --usr-frm-ttl-color: #767676;
-  --usr-frm-inp-bg-color: transparent;
-  --usr-frm-inp-text-color: #333;
-  --usr-btn-bg-color: gray;
-  --usr-btn-bg-hover-color: #333333;
-  --usr-btn-text-color: #fff;
-  --usr-rcv-text-color: #767676;
-  --usr-rcv-text-hover-color: #333333;
+  --secondary-bg-color: white;
+  --primary-text-color: black;
+  --secondary-text-color: #767676;
+  --border-color: gray;
+  --shadow-color: rgba(0,0,0,0.2);
 
-  --article-bg-color: white;
-  --article-second-title-color: #5e5e5e;
-  --article-date-upd-color: midnightblue;
+  --btn-text-color: white;
+  --btn-bg-color: gray;
+  --btn-bg-hover-color: #333333;
 
-  --hdr-trnst-big: 0.1s;
-  --hdr-trnst-small: 0.5s;
+  --popup-bg-color:#f1f1f1;
 
-  --min-scr: 393px;
+  --category-bg-hover-color: var(--border-color);
+
+  --scroll-primary-color: var(--primary-text-color);
+  --scroll-bg-color: rgba(0,0,0,0.1);
+
+  --modal-bg-color: rgba(0,0,0,0.6);
+  --modal-bg-after-color: rgba(0,0,0,0.5);
+
+  --user-form-input-body-color: transparent;
+
+  --article-bg-color: var(--secondary-bg-color);
+  --article-second-title-color: var(--secondary-text-color);
+  --article-update-color: var(--secondary-text-color);
+
+  --header-transition-time-big: 0.1s;
+  --header-transition-time--small: 0.5s;
+
+  --min-screen: 393px;
   --header-height: 60px;
   --header-height-small: 46px;
+  --header-main-gap: 20px;
 }

@@ -6,11 +6,11 @@
   position: absolute;
   padding: 20px;
   top: 45px; // не, так нельзя, ты это взял из-за того что поиск находится в шапке, надо делать относительное позиционирование от иконки которая открывает поиск
-  right: 0;
-  background-color: var(--srch-bg-color);
-  border: 1px solid var(--srch-br-color);
+  right: 0;  //^^^^ немного не понял, у родителя (был .icon-wrapper) задано относительное позиционирование, а значит у попапа будет абсолютное относительно радителя, разве нет?
+  background-color: var(--popup-bg-color);
+  border: 1px solid var(--border-color);
   min-width: 260px;
-  box-shadow: 0 8px 16px 0 var(--srch-shdw-color);
+  box-shadow: 0 8px 16px 0 var(--shadow-color);
   z-index: 2;
 }
 
@@ -23,11 +23,11 @@
     border-radius: 0;
   }
   &__button {
-    color: var(--srch-btn-text-color);
-    background-color: var(--srch-btn-bg-color);
+    color: var(--btn-text-color);
+    background-color: var(--btn-bg-color);
     border: none;
     &:hover {
-      background-color: var(--srch-btn-bg-hover-color);
+      background-color: var(--btn-bg-hover-color);
     }
   }
 }

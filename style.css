@@ -8,7 +8,6 @@
 }
 
 .body-general {
-  margin: 0;
   font-family: "Roboto", "sans-serif";
   font-size: 16px;
   line-height: 20px;
@@ -38,12 +37,23 @@
 }
 
 @media screen and (max-width: 767px) {
+  .body-general {
+    overflow: scroll;
+    -ms-overflow-style: none; /* IE и Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .body-general::-webkit-scrollbar {
+    display: none; /* Safari */
+  }
   .layout {
     grid-template-areas: "head" "main";
     grid-template-rows: var(--header-height) 1fr;
-    grid-template-columns: minmax(var(--min-scr), 1fr); /* Pixel 5 */
+    grid-template-columns: minmax(var(--min-screen), 1fr);
   }
   .layout__scroll {
+    display: none;
+  }
+  .layout__suggested {
     display: none;
   }
 }
@@ -51,21 +61,21 @@
   .layout {
     grid-template-areas: "head head head" "scro main sugg";
     grid-template-rows: var(--header-height) 1fr;
-    grid-template-columns: 150px minmax(var(--min-scr), 1fr) 400px; /* Pixel 5 */
+    grid-template-columns: 150px minmax(var(--min-screen), 1fr) 400px; /* Pixel 5 */
   }
 }
 @media screen and (min-width: 1201px) and (max-width: 1500px) {
   .layout {
     grid-template-areas: "head head head" "scro main sugg";
     grid-template-rows: var(--header-height) 1fr;
-    grid-template-columns: 150px minmax(var(--min-scr), 1fr) 300px;
+    grid-template-columns: 150px minmax(var(--min-screen), 1fr) 300px;
   }
 }
 @media screen and (min-width: 768px) and (max-width: 1200px) {
   .layout {
     grid-template-areas: "head head" "scro main";
     grid-template-rows: var(--header-height) 1fr;
-    grid-template-columns: 60px minmax(var(--min-scr), 1fr);
+    grid-template-columns: 60px minmax(var(--min-screen), 1fr);
   }
   .layout__suggested {
     display: none;
@@ -75,17 +85,16 @@
   background-color: var(--article-bg-color);
   border-radius: 10px;
   padding: 30px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
 }
-.article__boby {
-  display: block;
+.article__body {
   width: 100%;
   height: auto;
   margin: 0 auto;
 }
 
+.article-header {
+  padding-bottom: 20px;
+}
 .article-header__title-main {
   font-size: 36px;
   line-height: 45px;
@@ -123,7 +132,7 @@
   font-weight: 400;
 }
 .article-date__update {
-  color: var(--article-date-upd-color);
+  color: var(--article-update-color);
 }
 
 .article-body__img {
@@ -141,15 +150,16 @@
 }
 .header {
   display: flex;
-  border-bottom: 2px solid var(--hdr-br-color);
-  background: var(--hdr-bg-color);
-  transition: height var(--hdr-trnst-big);
+  box-sizing: border-box;
+  border-bottom: 2px solid var(--border-color);
+  background: var(--secondary-bg-color);
+  transition: height var(--header-transition-time-big);
   padding: 0 20px;
 }
 .header--small {
   /* Как у РИА новости */
   height: var(--header-height-small);
-  transition: var(--hdr-trnst-small);
+  transition: var(--header-transition-time--small);
 }
 .header__logo {
   display: flex;
@@ -157,12 +167,12 @@
 }
 .header__logo-img {
   height: 54px;
-  transition: height var(--hdr-trnst-big);
+  transition: height var(--header-transition-time-big);
   display: block; /* Найти почему не применилось выравнивание к инлайн*/
 }
 .header__logo-img--small {
   height: 40px;
-  transition: height var(--hdr-trnst-small);
+  transition: height var(--header-transition-time--small);
 }
 
 .icons-container {
@@ -179,11 +189,11 @@
   width: 45px;
 }
 .icon-wrapper__img {
-  height: 30px;
+  font-size: 30px;
   cursor: pointer;
 }
 .icon-wrapper__img:hover {
-  height: 40px;
+  font-size: 40px;
 }
 
 .search-window {
@@ -193,10 +203,10 @@
   padding: 20px;
   top: 45px;
   right: 0;
-  background-color: var(--srch-bg-color);
-  border: 1px solid var(--srch-br-color);
+  background-color: var(--popup-bg-color);
+  border: 1px solid var(--border-color);
   min-width: 260px;
-  box-shadow: 0 8px 16px 0 var(--srch-shdw-color);
+  box-shadow: 0 8px 16px 0 var(--shadow-color);
   z-index: 2;
 }
 
@@ -210,12 +220,12 @@
   border-radius: 0;
 }
 .search-form__button {
-  color: var(--srch-btn-text-color);
-  background-color: var(--srch-btn-bg-color);
+  color: var(--btn-text-color);
+  background-color: var(--btn-bg-color);
   border: none;
 }
 .search-form__button:hover {
-  background-color: var(--srch-btn-bg-hover-color);
+  background-color: var(--btn-bg-hover-color);
 }
 
 .category-dropdown {
@@ -223,10 +233,10 @@
   position: absolute;
   top: 45px;
   right: 0;
-  background-color: var(--ctgr-bg-color);
-  border: 1px solid var(--ctgr-bg-hover-color);
+  background-color: var(--popup-bg-color);
+  border: 1px solid var(--category-bg-hover-color);
   min-width: 150px;
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 16px 0 var(--shadow-color);
   z-index: 2;
 }
 .category-dropdown__element {
@@ -236,13 +246,211 @@
   display: block;
 }
 .category-dropdown__element:hover {
-  background-color: var(--ctgr-bg-hover-color);
+  background-color: var(--category-bg-hover-color);
 }
 
 .category-dropdown__element + .category-dropdown__element {
-  border-top: 1px solid var(--ctgr-bg-hover-color);
+  border-top: 1px solid var(--category-bg-hover-color);
 }
 
+.form-field {
+  position: relative;
+  display: block;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  min-height: 60px;
+  margin-bottom: 10px;
+  padding: 18px 15px 2px;
+  border: 1px solid var(--user-form-input-body-color);
+  border-radius: 3px;
+  background-color: var(--primary-bg-color);
+}
+.form-field__title {
+  top: 8px;
+  font-size: 12px;
+  line-height: 14px;
+  padding-right: 45px;
+  position: absolute;
+  z-index: 2;
+  color: var(--secondary-text-color);
+  font-weight: 500;
+}
+.form-field__input {
+  width: 100%;
+  overflow: hidden;
+  color: var(--primary-text-color);
+  border: none;
+  outline: none;
+  background: var(--user-form-input-body-color);
+  font-size: 16px;
+  line-height: 23px;
+  font-weight: 600;
+  min-height: 38px;
+  padding: 7px 0;
+}
+
+.auth-form__submit-button {
+  cursor: pointer;
+  width: 100%;
+  height: 60px;
+  padding: 0 10px;
+  text-align: center;
+  color: var(--btn-text-color);
+  border: none;
+  border-radius: 3px;
+  outline: none;
+  background-color: var(--btn-bg-color);
+  font-size: 16px;
+  font-weight: bold;
+  position: relative;
+}
+.auth-form__submit-button:hover {
+  background-color: var(--btn-bg-hover-color);
+}
+
+.recover-password {
+  display: block;
+  height: 40px;
+  padding: 20px;
+  text-align: right;
+}
+.recover-password__link {
+  cursor: pointer;
+  color: var(--secondary-text-color);
+}
+.recover-password__link:hover {
+  color: var(--btn-bg-hover-color);
+}
+
+.sign-up-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  height: 60px;
+  padding: 0 10px;
+  text-align: center;
+  vertical-align: middle;
+  border: none;
+  border-radius: 3px;
+  outline: none;
+  background-color: var(--btn-bg-color);
+  font-size: 16px;
+  font-weight: bold;
+}
+.sign-up-button:hover {
+  background-color: var(--btn-bg-hover-color);
+}
+.sign-up-button__link {
+  color: var(--btn-text-color);
+  text-decoration: none;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0 20px 0;
+  gap: var(--header-main-gap);
+}
+
+@media screen and (max-width: 767px) {
+  .main {
+    padding: 0;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 1200px) {
+  .main {
+    padding-right: 20px;
+  }
+}
+/* Нужно блочить скролл страницы при наведении, но не через overflow: hidden; найти нормальный способ */
+.suggested {
+  padding: 20px;
+}
+
+.suggested-container { /* Как у ТАСС */
+  display: block;
+  position: sticky;
+  top: calc(var(--header-height) + var(--header-main-gap));
+  height: calc(100vh - 9em);
+  background-color: var(--secondary-bg-color);
+  border-radius: 20px;
+  margin: 0 auto;
+  padding: 15px;
+  overflow: scroll;
+  -ms-overflow-style: none; /* IE и Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.suggested-container::-webkit-scrollbar {
+  display: none; /* Safari */
+}
+
+.suggested-news {
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+  width: 100%;
+  padding: 20px 0;
+  color: var(--primary-text-color);
+  overflow-wrap: anywhere;
+  text-decoration: none;
+}
+.suggested-news__time {
+  flex: none;
+  width: 40px;
+  padding-top: 7px;
+  color: var(--secondary-text-color);
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: -0.02em;
+  text-align: left;
+}
+.suggested-news__title {
+  font-weight: 700;
+  font-size: 19px;
+  font-family: Inter, sans-serif;
+  line-height: 24px;
+  letter-spacing: -0.02em;
+  flex: 3;
+}
+
+.suggested-news + .suggested-news {
+  border-top: 1px solid var(--border-color);
+}
+
+.scroll-button {
+  position: fixed;
+  left: 0;
+  width: 114px; /* как у ВК*/
+  top: 0;
+  background: var(--scroll-bg-color);
+  opacity: 0;
+  color: var(--scroll-primary-color);
+  bottom: 0;
+  cursor: pointer;
+  transition: background-color 200ms linear, opacity 200ms linear;
+}
+.scroll-button:hover {
+  opacity: 1;
+}
+.scroll-button__img {
+  height: 15px;
+  width: 15px;
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+}
+.scroll-button__img--down {
+  top: 74px;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1200px) {
+  .scroll-button {
+    width: 40px;
+  }
+}
 .modal-opened {
   overflow: hidden;
 }
@@ -256,7 +464,7 @@
   left: 0;
   justify-content: center;
   align-items: center;
-  background-color: var(--mdl-bg-color);
+  background-color: var(--modal-bg-color);
   z-index: 9999;
 }
 .modal-area::after {
@@ -264,7 +472,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: var(--mdl-bg-after-color);
+  background-color: var(--modal-bg-after-color);
   z-index: 1;
 }
 
@@ -272,7 +480,7 @@
   position: relative;
   width: 480px;
   padding: 20px;
-  background: var(--usr-bg-color);
+  background: var(--secondary-bg-color);
   z-index: 2;
 }
 .modal-window__close {
@@ -305,249 +513,36 @@
   height: 30px;
 }
 
-.form-field {
-  position: relative;
-  display: block;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  min-height: 60px;
-  margin-bottom: 10px;
-  padding: 18px 15px 2px;
-  border: 1px solid var(--usr-frm-br-color);
-  border-radius: 3px;
-  background-color: var(--usr-frm-bg-color);
-}
-.form-field__title {
-  top: 8px;
-  font-size: 12px;
-  line-height: 14px;
-  padding-right: 45px;
-  position: absolute;
-  z-index: 2;
-  color: var(--usr-frm-ttl-color);
-  font-weight: 500;
-}
-.form-field__input {
-  width: 100%;
-  overflow: hidden;
-  color: var(--usr-frm-inp-text-color);
-  border: none;
-  outline: none;
-  background: var(--usr-frm-inp-bg-color);
-  font-size: 16px;
-  line-height: 23px;
-  font-weight: 600;
-  min-height: 38px;
-  padding: 7px 0;
-}
-
-.auth-form__submit-button {
-  cursor: pointer;
-  width: 100%;
-  height: 60px;
-  padding: 0 10px;
-  text-align: center;
-  color: var(--usr-btn-text-color);
-  border: none;
-  border-radius: 3px;
-  outline: none;
-  background-color: var(--usr-btn-bg-color);
-  font-size: 16px;
-  font-weight: bold;
-  position: relative;
-}
-.auth-form__submit-button:hover {
-  background-color: var(--usr-btn-bg-hover-color);
-}
-
-.recover-password {
-  display: block;
-  height: 40px;
-  padding: 20px;
-  text-align: right;
-}
-.recover-password__link {
-  cursor: pointer;
-  color: var(--usr-rcv-text-color);
-}
-.recover-password__link:hover {
-  color: var(--usr-rcv-text-hover-color);
-}
-
-.sign-up-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  height: 60px;
-  padding: 0 10px;
-  text-align: center;
-  vertical-align: middle;
-  border: none;
-  border-radius: 3px;
-  outline: none;
-  background-color: var(--usr-btn-bg-color);
-  font-size: 16px;
-  font-weight: bold;
-}
-.sign-up-button:hover {
-  background-color: var(--usr-btn-bg-hover-color);
-}
-.sign-up-button__link {
-  color: var(--usr-btn-text-color);
-  text-decoration: none;
-}
-
-.main {
-  display: flex;
-  flex-direction: column;
-  padding-top: 20px; /* Не нужен снизу, ведь статьи будут нескончаемыми */
-  gap: 20px;
-}
-
-@media screen and (max-width: 767px) {
-  .main {
-    padding: 0;
-  }
-}
-@media screen and (min-width: 768px) and (max-width: 1200px) {
-  .main {
-    padding-right: 20px;
-  }
-}
-/* Нужно блочить скролл страницы при наведении, но не через overflow: hidden; найти нормальный способ */
-.suggested {
-  padding: 20px;
-}
-
-.suggested-container { /* Как у ТАСС */
-  display: block;
-  position: sticky;
-  top: 90px;
-  height: calc(100vh - 9em);
-  background-color: var(--sgst-bg-color);
-  border-radius: 20px;
-  margin: 0 auto;
-  padding: 15px;
-  overflow: scroll;
-  -ms-overflow-style: none; /* IE и Edge */
-  scrollbar-width: none; /* Firefox */
-}
-.suggested-container::-webkit-scrollbar {
-  display: none; /* Safari */
-}
-
-.suggested-news {
-  display: flex;
-  flex-direction: row;
-  cursor: pointer;
-  width: 100%;
-  padding: 20px 0;
-  color: var(--sgst-text-color);
-  overflow-wrap: anywhere;
-}
-.suggested-news__time {
-  flex: none;
-  width: 40px;
-  padding-top: 7px;
-  color: var(--sgst-time-color);
-  font-weight: 700;
-  font-size: 12px;
-  line-height: 16px;
-  letter-spacing: -0.02em;
-  text-align: left;
-}
-.suggested-news__title {
-  font-weight: 700;
-  font-size: 19px;
-  font-family: Inter, sans-serif;
-  line-height: 24px;
-  letter-spacing: -0.02em;
-  flex: 3;
-}
-
-.suggested-news + .suggested-news {
-  border-top: 1px solid #333333;
-}
-
-.scroll-button {
-  position: fixed;
-  left: 0;
-  width: 114px; /* как у ВК*/
-  top: 0;
-  background: var(--scrl-bg-color);
-  opacity: 0;
-  color: var(--scrl-primary-color);
-  bottom: 0;
-  cursor: pointer;
-  transition: background-color 200ms linear, opacity 200ms linear;
-}
-.scroll-button:hover {
-  opacity: 1;
-}
-.scroll-button__img {
-  height: 15px;
-  width: 15px;
-  position: absolute;
-  top: 60px;
-  left: 50%;
-  transform: translateY(-50%) translateX(-50%);
-}
-.scroll-button__img--down {
-  top: 74px;
-}
-
-@media screen and (min-width: 768px) and (max-width: 1200px) {
-  .scroll-button {
-    width: 40px;
-  }
-}
 h1, h2, h3, h4, h5, h6, p {
   margin-top: 0;
 }
 
 :root {
   --primary-bg-color: #EDEEF0;
-  --secondary-bg-color: #27AE60;
-  --text-color: #27AE60;
-  --border-color: #eee;
-  --divider-color: #edc;
-  --ctgr-bg-color:#f1f1f1;
-  --ctgr-bg-hover-color: gray;
-  --hdr-bg-color: white;
-  --hdr-br-color: silver;
-  --scrl-bg-color: rgba(0,0,0,0.1);
-  --scrl-primary-color: black;
-  --srch-bg-color: #f1f1f1;
-  --srch-br-color: gray;
-  --srch-shdw-color: rgba(0,0,0,0.2);
-  --srch-btn-text-color: #fff;
-  --srch-btn-bg-color: gray;
-  --srch-btn-bg-hover-color: #333333;
-  --sgst-bg-color: white;
-  --sgst-text-color: black;
-  --sgst-time-color: #767676;
-  --mdl-bg-color: rgba(0,0,0,0.6);
-  --mdl-bg-after-color: rgba(0,0,0,0.5);
-  --usr-bg-color: white;
-  --usr-frm-bg-color: #f2f2f2;
-  --usr-frm-br-color: transparent;
-  --usr-frm-ttl-color: #767676;
-  --usr-frm-inp-bg-color: transparent;
-  --usr-frm-inp-text-color: #333;
-  --usr-btn-bg-color: gray;
-  --usr-btn-bg-hover-color: #333333;
-  --usr-btn-text-color: #fff;
-  --usr-rcv-text-color: #767676;
-  --usr-rcv-text-hover-color: #333333;
-  --article-bg-color: white;
-  --article-second-title-color: #5e5e5e;
-  --article-date-upd-color: midnightblue;
-  --hdr-trnst-big: 0.1s;
-  --hdr-trnst-small: 0.5s;
-  --min-scr: 393px;
+  --secondary-bg-color: white;
+  --primary-text-color: black;
+  --secondary-text-color: #767676;
+  --border-color: gray;
+  --shadow-color: rgba(0,0,0,0.2);
+  --btn-text-color: white;
+  --btn-bg-color: gray;
+  --btn-bg-hover-color: #333333;
+  --popup-bg-color:#f1f1f1;
+  --category-bg-hover-color: var(--border-color);
+  --scroll-primary-color: var(--primary-text-color);
+  --scroll-bg-color: rgba(0,0,0,0.1);
+  --modal-bg-color: rgba(0,0,0,0.6);
+  --modal-bg-after-color: rgba(0,0,0,0.5);
+  --user-form-input-body-color: transparent;
+  --article-bg-color: var(--secondary-bg-color);
+  --article-second-title-color: var(--secondary-text-color);
+  --article-update-color: var(--secondary-text-color);
+  --header-transition-time-big: 0.1s;
+  --header-transition-time--small: 0.5s;
+  --min-screen: 393px;
   --header-height: 60px;
   --header-height-small: 46px;
+  --header-main-gap: 20px;
 }
 
 /*# sourceMappingURL=style.css.map */

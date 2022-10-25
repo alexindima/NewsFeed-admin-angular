@@ -5,9 +5,9 @@
   left:0;
   width:114px; /* как у ВК*/
   top: 0;
-  background: var(--scrl-bg-color);
+  background: var(--scroll-bg-color);
   opacity: 0;
-  color: var(--scrl-primary-color);
+  color: var(--scroll-primary-color);
   bottom: 0;
   cursor: pointer;
   transition: background-color 200ms linear, opacity 200ms linear;
