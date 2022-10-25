@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>News Feed</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -53,6 +53,7 @@
             </div>
         </div>
     </header>
+
     <div class="layout__scroll scroll">
         <div id="arrowTop" class="scroll-button" hidden>
             <img src="img/icon-triangle-up.png" alt="Scroll Up" class="scroll-button__img">
@@ -148,6 +149,7 @@
 
     <div class="layout-suggested suggested">
         <div class="suggested-container">
+<!--            это ссылка, не div, ты ей cursor pointer сделал чтобы кликать, а тег выбрал неверный-->
             <div class="suggested-news">
                 <div class="suggested-news__time">27:68</div>
                 <div class="suggested-news__title">Superluminal underpants are now at a 50% discount!</div>
@@ -222,6 +224,7 @@
             <form class="modal-window__auth-form auth-form">
                 <label class="auth-form__field form-field">
                     <span class="form-field__title">Email</span>
+<!--                    можно просто required                    -->
                     <input type="email" class="form-field__input" required="required">
                 </label>
                 <label class="auth-form__field form-field">

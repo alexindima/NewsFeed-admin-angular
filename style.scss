@@ -13,6 +13,8 @@ h1, h2, h3, h4, h5, h6, p {
   margin-top: 0;
 }
 
+// взял очень большую палитру цветов - это плохо, причём есть дублирующиеся цвета, которые надо объединять
+// можно ссылаться в css переменных на другие css переменные
 :root {
   --primary-bg-color: #EDEEF0;
   --secondary-bg-color: #27AE60;
@@ -22,7 +24,7 @@ h1, h2, h3, h4, h5, h6, p {
   --ctgr-bg-color:#f1f1f1;
   --ctgr-bg-hover-color: gray;
   --hdr-bg-color: white;
-  --hdr-br-color: silver;
+  --hdr-br-color: silver; // зачем такие сокрашения, это читается много хуже чем --header-bg-color или --header-border-color, стоит искоренять такой подход раз и навсегда
   --scrl-bg-color: rgba(0,0,0,0.1);
   --scrl-primary-color: black;
   --srch-bg-color: #f1f1f1;
