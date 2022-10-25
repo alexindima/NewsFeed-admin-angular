@@ -17,7 +17,8 @@
       background-color: var(--ctgr-bg-hover-color);
     }
   }
-  .&__element + &__element {
-    border-top: 1px solid var(--ctgr-bg-hover-color);
-  }
+}
+
+.category-dropdown__element + .category-dropdown__element {
+  border-top: 1px solid var(--ctgr-bg-hover-color);
 }

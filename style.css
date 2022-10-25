@@ -41,7 +41,7 @@
   .layout {
     grid-template-areas: "head" "main";
     grid-template-rows: var(--header-height) 1fr;
-    grid-template-columns: minmax(393px, 1fr); /* Pixel 5 */
+    grid-template-columns: minmax(var(--min-scr), 1fr); /* Pixel 5 */
   }
   .layout__scroll {
     display: none;
@@ -51,28 +51,28 @@
   .layout {
     grid-template-areas: "head head head" "scro main sugg";
     grid-template-rows: var(--header-height) 1fr;
-    grid-template-columns: 150px minmax(393px, 1fr) 400px; /* Pixel 5 */
+    grid-template-columns: 150px minmax(var(--min-scr), 1fr) 400px; /* Pixel 5 */
   }
 }
 @media screen and (min-width: 1201px) and (max-width: 1500px) {
   .layout {
     grid-template-areas: "head head head" "scro main sugg";
     grid-template-rows: var(--header-height) 1fr;
-    grid-template-columns: 150px minmax(393px, 1fr) 300px;
+    grid-template-columns: 150px minmax(var(--min-scr), 1fr) 300px;
   }
 }
 @media screen and (min-width: 768px) and (max-width: 1200px) {
   .layout {
     grid-template-areas: "head head" "scro main";
     grid-template-rows: var(--header-height) 1fr;
-    grid-template-columns: 60px minmax(393px, 1fr);
+    grid-template-columns: 60px minmax(var(--min-scr), 1fr);
   }
   .layout__suggested {
     display: none;
   }
 }
 .article { /* Статьи будут в контейнере как у pg13.ru */
-  background-color: white;
+  background-color: var(--article-bg-color);
   border-radius: 10px;
   padding: 30px;
   display: flex;
@@ -96,7 +96,7 @@
   font-size: 16px;
   padding-top: 10px;
   font-weight: normal;
-  color: #5e5e5e;
+  color: var(--article-second-title-color);
 }
 .article-header__photo {
   display: flex;
@@ -123,7 +123,7 @@
   font-weight: 400;
 }
 .article-date__update {
-  color: midnightblue;
+  color: var(--article-date-upd-color);
 }
 
 .article-body__img {
@@ -141,15 +141,15 @@
 }
 .header {
   display: flex;
-  border-bottom: 2px solid silver;
-  background: white;
-  transition: height 0.1s;
+  border-bottom: 2px solid var(--hdr-br-color);
+  background: var(--hdr-bg-color);
+  transition: height var(--hdr-trnst-big);
   padding: 0 20px;
 }
 .header--small {
   /* Как у РИА новости */
   height: var(--header-height-small);
-  transition: 0.5s;
+  transition: var(--hdr-trnst-small);
 }
 .header__logo {
   display: flex;
@@ -157,12 +157,12 @@
 }
 .header__logo-img {
   height: 54px;
-  transition: height 0.1s;
+  transition: height var(--hdr-trnst-big);
   display: block; /* Найти почему не применилось выравнивание к инлайн*/
 }
 .header__logo-img--small {
   height: 40px;
-  transition: height 0.5s;
+  transition: height var(--hdr-trnst-small);
 }
 
 .icons-container {
@@ -193,10 +193,10 @@
   padding: 20px;
   top: 45px;
   right: 0;
-  background-color: #f1f1f1;
-  border: 1px solid gray;
+  background-color: var(--srch-bg-color);
+  border: 1px solid var(--srch-br-color);
   min-width: 260px;
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 16px 0 var(--srch-shdw-color);
   z-index: 2;
 }
 
@@ -210,12 +210,12 @@
   border-radius: 0;
 }
 .search-form__button {
-  color: #fff;
-  background-color: gray;
+  color: var(--srch-btn-text-color);
+  background-color: var(--srch-btn-bg-color);
   border: none;
 }
 .search-form__button:hover {
-  background-color: #333333;
+  background-color: var(--srch-btn-bg-hover-color);
 }
 
 .category-dropdown {
@@ -223,8 +223,8 @@
   position: absolute;
   top: 45px;
   right: 0;
-  background-color: #f1f1f1;
-  border: 1px solid gray;
+  background-color: var(--ctgr-bg-color);
+  border: 1px solid var(--ctgr-bg-hover-color);
   min-width: 150px;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   z-index: 2;
@@ -236,11 +236,11 @@
   display: block;
 }
 .category-dropdown__element:hover {
-  background-color: gray;
+  background-color: var(--ctgr-bg-hover-color);
 }
 
 .category-dropdown__element + .category-dropdown__element {
-  border-top: 1px solid gray;
+  border-top: 1px solid var(--ctgr-bg-hover-color);
 }
 
 .modal-opened {
@@ -256,7 +256,7 @@
   left: 0;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: var(--mdl-bg-color);
   z-index: 9999;
 }
 .modal-area::after {
@@ -264,7 +264,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--mdl-bg-after-color);
   z-index: 1;
 }
 
@@ -272,7 +272,7 @@
   position: relative;
   width: 480px;
   padding: 20px;
-  background: white;
+  background: var(--usr-bg-color);
   z-index: 2;
 }
 .modal-window__close {
@@ -313,9 +313,9 @@
   min-height: 60px;
   margin-bottom: 10px;
   padding: 18px 15px 2px;
-  border: 1px solid transparent;
+  border: 1px solid var(--usr-frm-br-color);
   border-radius: 3px;
-  background-color: #f2f2f2;
+  background-color: var(--usr-frm-bg-color);
 }
 .form-field__title {
   top: 8px;
@@ -324,16 +324,16 @@
   padding-right: 45px;
   position: absolute;
   z-index: 2;
-  color: #767676;
+  color: var(--usr-frm-ttl-color);
   font-weight: 500;
 }
 .form-field__input {
   width: 100%;
   overflow: hidden;
-  color: #333;
+  color: var(--usr-frm-inp-text-color);
   border: none;
   outline: none;
-  background: transparent;
+  background: var(--usr-frm-inp-bg-color);
   font-size: 16px;
   line-height: 23px;
   font-weight: 600;
@@ -347,18 +347,17 @@
   height: 60px;
   padding: 0 10px;
   text-align: center;
-  color: #fff;
+  color: var(--usr-btn-text-color);
   border: none;
   border-radius: 3px;
   outline: none;
-  background-color: gray;
-  font-family: inherit;
+  background-color: var(--usr-btn-bg-color);
   font-size: 16px;
   font-weight: bold;
   position: relative;
 }
 .auth-form__submit-button:hover {
-  background-color: #333333;
+  background-color: var(--usr-btn-bg-hover-color);
 }
 
 .recover-password {
@@ -369,10 +368,10 @@
 }
 .recover-password__link {
   cursor: pointer;
-  color: #767676;
+  color: var(--usr-rcv-text-color);
 }
 .recover-password__link:hover {
-  color: #333333;
+  color: var(--usr-rcv-text-hover-color);
 }
 
 .sign-up-button {
@@ -387,15 +386,15 @@
   border: none;
   border-radius: 3px;
   outline: none;
-  background-color: gray;
+  background-color: var(--usr-btn-bg-color);
   font-size: 16px;
   font-weight: bold;
 }
 .sign-up-button:hover {
-  background-color: #333333;
+  background-color: var(--usr-btn-bg-hover-color);
 }
 .sign-up-button__link {
-  color: white;
+  color: var(--usr-btn-text-color);
   text-decoration: none;
 }
 
@@ -426,7 +425,7 @@
   position: sticky;
   top: 90px;
   height: calc(100vh - 9em);
-  background-color: white;
+  background-color: var(--sgst-bg-color);
   border-radius: 20px;
   margin: 0 auto;
   padding: 15px;
@@ -442,18 +441,16 @@
   display: flex;
   flex-direction: row;
   cursor: pointer;
-  align-items: flex-start;
-  justify-content: flex-start;
   width: 100%;
   padding: 20px 0;
-  color: black;
+  color: var(--sgst-text-color);
   overflow-wrap: anywhere;
 }
 .suggested-news__time {
   flex: none;
   width: 40px;
   padding-top: 7px;
-  color: #767676;
+  color: var(--sgst-time-color);
   font-weight: 700;
   font-size: 12px;
   line-height: 16px;
@@ -478,9 +475,9 @@
   left: 0;
   width: 114px; /* как у ВК*/
   top: 0;
-  background: rgba(0, 0, 0, 0.1);
+  background: var(--scrl-bg-color);
   opacity: 0;
-  color: black;
+  color: var(--scrl-primary-color);
   bottom: 0;
   cursor: pointer;
   transition: background-color 200ms linear, opacity 200ms linear;
@@ -515,43 +512,42 @@ h1, h2, h3, h4, h5, h6, p {
   --text-color: #27AE60;
   --border-color: #eee;
   --divider-color: #edc;
+  --ctgr-bg-color:#f1f1f1;
+  --ctgr-bg-hover-color: gray;
+  --hdr-bg-color: white;
+  --hdr-br-color: silver;
+  --scrl-bg-color: rgba(0,0,0,0.1);
+  --scrl-primary-color: black;
+  --srch-bg-color: #f1f1f1;
+  --srch-br-color: gray;
+  --srch-shdw-color: rgba(0,0,0,0.2);
+  --srch-btn-text-color: #fff;
+  --srch-btn-bg-color: gray;
+  --srch-btn-bg-hover-color: #333333;
+  --sgst-bg-color: white;
+  --sgst-text-color: black;
+  --sgst-time-color: #767676;
+  --mdl-bg-color: rgba(0,0,0,0.6);
+  --mdl-bg-after-color: rgba(0,0,0,0.5);
+  --usr-bg-color: white;
+  --usr-frm-bg-color: #f2f2f2;
+  --usr-frm-br-color: transparent;
+  --usr-frm-ttl-color: #767676;
+  --usr-frm-inp-bg-color: transparent;
+  --usr-frm-inp-text-color: #333;
+  --usr-btn-bg-color: gray;
+  --usr-btn-bg-hover-color: #333333;
+  --usr-btn-text-color: #fff;
+  --usr-rcv-text-color: #767676;
+  --usr-rcv-text-hover-color: #333333;
+  --article-bg-color: white;
+  --article-second-title-color: #5e5e5e;
+  --article-date-upd-color: midnightblue;
+  --hdr-trnst-big: 0.1s;
+  --hdr-trnst-small: 0.5s;
+  --min-scr: 393px;
   --header-height: 60px;
   --header-height-small: 46px;
-}
-
-@media screen and (max-width: 1500px) {
-  .layout {
-    grid-template-columns: 150px minmax(393px, 1fr) 300px;
-  }
-}
-@media screen and (max-width: 1200px) {
-  .layout {
-    grid-template-areas: "head head" "scro main";
-    grid-template-rows: var(--header-height) 1fr;
-    grid-template-columns: 60px minmax(393px, 1fr);
-  }
-  .scroll-button {
-    width: 40px;
-  }
-  .main {
-    padding-right: 20px;
-  }
-  .layout-suggested {
-    display: none;
-  }
-}
-@media screen and (max-width: 768px) {
-  .layout {
-    grid-template-areas: "head" "main";
-    grid-template-rows: var(--header-height) 1fr;
-    grid-template-columns: minmax(393px, 1fr); /* Pixel 5 */
-  }
-  .layout-scroll {
-    display: none;
-  }
-  .main {
-    padding: 0;
-  }
 }
 
 /*# sourceMappingURL=style.css.map */
