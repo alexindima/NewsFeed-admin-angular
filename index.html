@@ -15,8 +15,8 @@
 </head>
 
 <body class="body-general">
-<div class="layout">
-    <header class="layout__header header">
+<header class="header-wrapper">
+    <div class="header-wrapper__header header">
         <div class="header__logo">
             <a href="index.html"><img src="img/logo.jpg" alt="Logo" class="header__logo-img"></a>
         </div>
@@ -57,7 +57,11 @@
                 </div>
             </div>
         </div>
-    </header>
+    </div>
+
+</header>
+<div class="layout">
+
 
     <div class="layout__main main">
         <div class="scroll">
@@ -210,7 +214,7 @@
     <div id="modalAuth" class="modal-area hidden">
         <div class="modal-window">
             <div class="modal-window__close close-wrapper">
-                <img id="modal-close" src="img/icon-close.png" alt="Modal Close" class="close-wrapper__img">
+                <i id="modal-close" class="fa-regular fa-circle-xmark close-wrapper__img" title="Close"></i>
             </div>
             <div class="modal-window__main-title">
                 Login to the site

@@ -7,43 +7,31 @@
   background: var(--primary-bg-color);
 }
 
-//это не общий лейаут, у тебя для разных экранов он разный и происходит ненужное переопределение
+/*// Мне кажется что после переноса хедера из лейаута теперь просто двухколоночный лайоут и гриды немножк избыточно
+// Поэтому сделаю на флексах. Возможно появятся фичи и гриды будут оптимальнее
 .layout {
   display: grid;
-  &__header {
-    height: var(--header-height); /* если не указать, не будет плавности*/
-    grid-area: head;
-    top: 0;
-    position: -webkit-sticky;
-    position: sticky;
-    z-index: 1;
-  }
-  &__scroll {
-    grid-area: scro;
-
-  }
   &__main {
     grid-area: main;
   }
   &__suggested {
-    grid-area: sugg;
+    grid-area: suggested;
   }
 }
 
 @include mobile {
   .body-general {
     overflow: scroll;
-    -ms-overflow-style: none;  /* IE и Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;  !* IE и Edge *!
+    scrollbar-width: none;  !* Firefox *!
     &::-webkit-scrollbar {
-      display: none; /* Safari */
+      display: none; !* Safari *!
     }
   }
   .layout {
     grid-template-areas:
-            "head"
             "main";
-    grid-template-rows: var(--header-height) 1fr;
+    grid-template-rows:1fr;
     grid-template-columns: minmax(var(--min-screen), 1fr);
     &__suggested {
       display: none;
@@ -51,26 +39,20 @@
   }
 }
 
-//я не увидел у тебя трёх колонок, это ошибка
-// сама шапка это одна строка через flex, чем общая часть лейаута
-// скролл всё равно сделан через position: fixed вне лейаута
-// Ещё: scro - не надо так сокращать, ничего не выиграл от такого сокращения
 @include desktop-wide {
   .layout {
     grid-template-areas:
-            "head head"
-            "main sugg";
-    grid-template-rows: var(--header-height) 1fr;
-    grid-template-columns: minmax(var(--min-screen), 1fr) 400px; /* 150 */
+            "main suggested";
+    grid-template-rows:1fr;
+    grid-template-columns: minmax(var(--min-screen), 1fr) 400px;
   }
 }
 
 @include desktop-normal {
   .layout {
     grid-template-areas:
-            "head head"
-            "main sugg";
-    grid-template-rows: var(--header-height) 1fr;
+            "main suggested";
+    grid-template-rows: 1fr;
     grid-template-columns: minmax(var(--min-screen), 1fr) 300px;
   }
 }
@@ -78,10 +60,61 @@
 @include desktop-small {
   .layout {
     grid-template-areas:
-            "head"
             "main";
-    grid-template-rows: var(--header-height) 1fr;
-    grid-template-columns: minmax(var(--min-screen), 1fr); //60
+    grid-template-rows:1fr;
+    grid-template-columns: minmax(var(--min-screen), 1fr);
+    &__suggested {
+      display: none;
+    }
+  }
+}*/
+
+// На флексах
+.layout {
+  display: flex;
+  &__main {
+    min-width: var(--min-screen);
+    flex: 1 1 auto;
+  }
+  &__suggested {
+    flex-shrink: 0;
+  }
+}
+
+@include mobile {
+  .body-general {
+    overflow: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  .layout {
+    &__suggested {
+      display: none;
+    }
+  }
+}
+
+@include desktop-wide {
+  .layout {
+    &__suggested {
+      flex-basis: 400px;
+    }
+  }
+}
+
+@include desktop-normal {
+  .layout {
+    &__suggested {
+      flex-basis: 300px;
+    }
+  }
+}
+
+@include desktop-small {
+  .layout {
     &__suggested {
       display: none;
     }

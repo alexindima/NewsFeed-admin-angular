@@ -1,4 +1,12 @@
+.header-wrapper {
+  top: 0;
+  position: -webkit-sticky;
+  position: sticky;
+  z-index: 1;
+}
+
 .header {
+  height: var(--header-height); /* если не указать, не будет плавности*/
   display: flex;
   box-sizing: border-box;
   border-bottom: 2px solid var(--border-color);

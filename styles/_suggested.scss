@@ -11,7 +11,7 @@
 .suggested-container { /* Как у ТАСС */
   display: block;
   position: sticky;
-  top: calc(var(--header-height) + var(--header-main-gap));
+  top: calc(var(--header-height) + var(--main-gap));
   height: calc(100vh - 9em);
   background-color: var(--secondary-bg-color);
   border-radius: 20px;

@@ -14,65 +14,102 @@
   background: var(--primary-bg-color);
 }
 
+/*// Мне кажется что после переноса хедера из лейаута теперь просто двухколоночный лайоут и гриды немножк избыточно
+// Поэтому сделаю на флексах. Возможно появятся фичи и гриды будут оптимальнее
 .layout {
   display: grid;
+  &__main {
+    grid-area: main;
+  }
+  &__suggested {
+    grid-area: suggested;
+  }
 }
-.layout__header {
-  height: var(--header-height); /* если не указать, не будет плавности*/
-  grid-area: head;
-  top: 0;
-  position: -webkit-sticky;
-  position: sticky;
-  z-index: 1;
+
+@include mobile {
+  .body-general {
+    overflow: scroll;
+    -ms-overflow-style: none;  !* IE и Edge *!
+    scrollbar-width: none;  !* Firefox *!
+    &::-webkit-scrollbar {
+      display: none; !* Safari *!
+    }
+  }
+  .layout {
+    grid-template-areas:
+            "main";
+    grid-template-rows:1fr;
+    grid-template-columns: minmax(var(--min-screen), 1fr);
+    &__suggested {
+      display: none;
+    }
+  }
 }
-.layout__scroll {
-  grid-area: scro;
+
+@include desktop-wide {
+  .layout {
+    grid-template-areas:
+            "main suggested";
+    grid-template-rows:1fr;
+    grid-template-columns: minmax(var(--min-screen), 1fr) 400px;
+  }
+}
+
+@include desktop-normal {
+  .layout {
+    grid-template-areas:
+            "main suggested";
+    grid-template-rows: 1fr;
+    grid-template-columns: minmax(var(--min-screen), 1fr) 300px;
+  }
+}
+
+@include desktop-small {
+  .layout {
+    grid-template-areas:
+            "main";
+    grid-template-rows:1fr;
+    grid-template-columns: minmax(var(--min-screen), 1fr);
+    &__suggested {
+      display: none;
+    }
+  }
+}*/
+.layout {
+  display: flex;
 }
 .layout__main {
-  grid-area: main;
+  min-width: var(--min-screen);
+  flex: 1 1 auto;
 }
 .layout__suggested {
-  grid-area: sugg;
+  flex-shrink: 0;
 }
 
 @media screen and (max-width: 767px) {
   .body-general {
     overflow: scroll;
-    -ms-overflow-style: none; /* IE и Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
   .body-general::-webkit-scrollbar {
-    display: none; /* Safari */
-  }
-  .layout {
-    grid-template-areas: "head" "main";
-    grid-template-rows: var(--header-height) 1fr;
-    grid-template-columns: minmax(var(--min-screen), 1fr);
+    display: none;
   }
   .layout__suggested {
     display: none;
   }
 }
 @media screen and (min-width: 1501px) {
-  .layout {
-    grid-template-areas: "head head" "main sugg";
-    grid-template-rows: var(--header-height) 1fr;
-    grid-template-columns: minmax(var(--min-screen), 1fr) 400px; /* 150 */
+  .layout__suggested {
+    flex-basis: 400px;
   }
 }
 @media screen and (min-width: 1201px) and (max-width: 1500px) {
-  .layout {
-    grid-template-areas: "head head" "main sugg";
-    grid-template-rows: var(--header-height) 1fr;
-    grid-template-columns: minmax(var(--min-screen), 1fr) 300px;
+  .layout__suggested {
+    flex-basis: 300px;
   }
 }
 @media screen and (min-width: 768px) and (max-width: 1200px) {
-  .layout {
-    grid-template-areas: "head" "main";
-    grid-template-rows: var(--header-height) 1fr;
-    grid-template-columns: minmax(var(--min-screen), 1fr);
-  }
   .layout__suggested {
     display: none;
   }
@@ -142,7 +179,15 @@
     padding: 15px;
   }
 }
+.header-wrapper {
+  top: 0;
+  position: -webkit-sticky;
+  position: sticky;
+  z-index: 1;
+}
+
 .header {
+  height: var(--header-height); /* если не указать, не будет плавности*/
   display: flex;
   box-sizing: border-box;
   border-bottom: 2px solid var(--border-color);
@@ -341,18 +386,24 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px 0 20px 0;
-  gap: var(--header-main-gap);
+  padding-bottom: var(--main-gap);
+  gap: var(--main-gap);
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (min-width: 1501px) {
   .main {
-    padding: 0;
+    padding-left: 150px;
+  }
+}
+@media screen and (min-width: 1201px) and (max-width: 1500px) {
+  .main {
+    padding-left: 150px;
   }
 }
 @media screen and (min-width: 768px) and (max-width: 1200px) {
   .main {
     padding-right: 20px;
+    padding-left: 60px;
   }
 }
 /* Нужно блочить скролл страницы при наведении, но не через overflow: hidden; найти нормальный способ */
@@ -363,7 +414,7 @@
 .suggested-container { /* Как у ТАСС */
   display: block;
   position: sticky;
-  top: calc(var(--header-height) + var(--header-main-gap));
+  top: calc(var(--header-height) + var(--main-gap));
   height: calc(100vh - 9em);
   background-color: var(--secondary-bg-color);
   border-radius: 20px;
@@ -503,11 +554,7 @@
 
 .close-wrapper {
   cursor: pointer;
-  height: 30px;
-}
-.close-wrapper__img {
-  width: 30px;
-  height: 30px;
+  font-size: 30px;
 }
 
 h1, h2, h3, h4, h5, h6, p {
@@ -539,7 +586,7 @@ h1, h2, h3, h4, h5, h6, p {
   --min-screen: 393px;
   --header-height: 60px;
   --header-height-small: 46px;
-  --header-main-gap: 20px;
+  --main-gap: 20px;
   --article-max-width: 1100px;
 }
 
