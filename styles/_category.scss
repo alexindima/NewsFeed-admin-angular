@@ -1,8 +1,4 @@
 .category-dropdown {
-  display: none; // так же как и в search, ты дублируешь функционал
-  position: absolute;
-  top: 45px;
-  right: 0;
   background-color: var(--popup-bg-color);
   border: 1px solid var(--category-bg-hover-color);
   min-width: 150px;

@@ -1,5 +1,5 @@
 @charset "UTF-8";
-.hidden { /* Переделать на эту штуку */
+.hidden {
   display: none !important;
 }
 
@@ -27,7 +27,6 @@
 }
 .layout__scroll {
   grid-area: scro;
-  z-index: 0;
 }
 .layout__main {
   grid-area: main;
@@ -50,92 +49,87 @@
     grid-template-rows: var(--header-height) 1fr;
     grid-template-columns: minmax(var(--min-screen), 1fr);
   }
-  .layout__scroll {
-    display: none;
-  }
   .layout__suggested {
     display: none;
   }
 }
 @media screen and (min-width: 1501px) {
   .layout {
-    grid-template-areas: "head head head" "scro main sugg";
+    grid-template-areas: "head head" "main sugg";
     grid-template-rows: var(--header-height) 1fr;
-    grid-template-columns: 150px minmax(var(--min-screen), 1fr) 400px; /* Pixel 5 */
+    grid-template-columns: minmax(var(--min-screen), 1fr) 400px; /* 150 */
   }
 }
 @media screen and (min-width: 1201px) and (max-width: 1500px) {
   .layout {
-    grid-template-areas: "head head head" "scro main sugg";
+    grid-template-areas: "head head" "main sugg";
     grid-template-rows: var(--header-height) 1fr;
-    grid-template-columns: 150px minmax(var(--min-screen), 1fr) 300px;
+    grid-template-columns: minmax(var(--min-screen), 1fr) 300px;
   }
 }
 @media screen and (min-width: 768px) and (max-width: 1200px) {
   .layout {
-    grid-template-areas: "head head" "scro main";
+    grid-template-areas: "head" "main";
     grid-template-rows: var(--header-height) 1fr;
-    grid-template-columns: 60px minmax(var(--min-screen), 1fr);
+    grid-template-columns: minmax(var(--min-screen), 1fr);
   }
   .layout__suggested {
     display: none;
   }
 }
 .article { /* Статьи будут в контейнере как у pg13.ru */
+  max-width: var(--article-max-width);
   background-color: var(--article-bg-color);
   border-radius: 10px;
   padding: 30px;
 }
-.article__body {
-  width: 100%;
-  height: auto;
-  margin: 0 auto;
-}
-
-.article-header {
+.article__header {
   padding-bottom: 20px;
 }
-.article-header__title-main {
+.article__date {
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 400;
+}
+.article__date--update {
+  color: var(--article-update-color);
+}
+.article__title-main {
   font-size: 36px;
   line-height: 45px;
   font-weight: 700;
 }
-.article-header__title-second {
+.article__title-second {
   display: block;
   font-size: 16px;
   padding-top: 10px;
   font-weight: normal;
   color: var(--article-second-title-color);
 }
-.article-header__photo {
+.article__photo {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-
-.article-header-photo__img {
+.article__photo-img {
   display: block;
   width: 100%;
   height: auto;
   margin: 0 auto;
 }
-.article-header-photo__text {
+.article__photo-text {
   display: inline-block;
   font-size: 12px;
   line-height: 13px;
   vertical-align: top;
 }
-
-.article-date {
-  font-size: 14px;
-  line-height: 18px;
-  font-weight: 400;
-}
-.article-date__update {
-  color: var(--article-update-color);
+.article__boby {
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
 }
 
-.article-body__img {
+.img-fluid {
   display: block;
   width: 100%;
   height: auto;
@@ -195,14 +189,15 @@
 .icon-wrapper__img:hover {
   font-size: 40px;
 }
+.icon-wrapper__popup {
+  position: absolute;
+  top: 45px;
+  right: 0;
+}
 
 .search-window {
   box-sizing: border-box;
-  display: none;
-  position: absolute;
   padding: 20px;
-  top: 45px;
-  right: 0;
   background-color: var(--popup-bg-color);
   border: 1px solid var(--border-color);
   min-width: 260px;
@@ -229,10 +224,6 @@
 }
 
 .category-dropdown {
-  display: none;
-  position: absolute;
-  top: 45px;
-  right: 0;
   background-color: var(--popup-bg-color);
   border: 1px solid var(--category-bg-hover-color);
   min-width: 150px;
@@ -349,6 +340,7 @@
 .main {
   display: flex;
   flex-direction: column;
+  align-items: center;
   padding: 20px 0 20px 0;
   gap: var(--header-main-gap);
 }
@@ -451,12 +443,17 @@
     width: 40px;
   }
 }
+@media screen and (max-width: 767px) {
+  .scroll {
+    display: none;
+  }
+}
 .modal-opened {
   overflow: hidden;
 }
 
 .modal-area {
-  display: none;
+  display: flex;
   position: fixed;
   width: 100vw;
   height: 100vh;
@@ -543,6 +540,7 @@ h1, h2, h3, h4, h5, h6, p {
   --header-height: 60px;
   --header-height-small: 46px;
   --header-main-gap: 20px;
+  --article-max-width: 1100px;
 }
 
 /*# sourceMappingURL=style.css.map */

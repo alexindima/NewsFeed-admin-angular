@@ -32,3 +32,11 @@
     width: 40px;
   }
 }
+
+@include mobile {
+  .scroll {
+    display: none;
+  }
+}
+
+

@@ -13,30 +13,30 @@ arrowBottom = document.getElementById("arrowBottom")
 /* Следующие четыре функции - открытие/закрытие попапов для иконок хедера */
 document.getElementById("user").addEventListener('click', function () {
 
-        document.querySelector('.modal-area').style.display = 'flex';
+        document.querySelector('.modal-area').classList.remove('hidden');
         document.querySelector('.body-general').classList.add('modal-opened');
 });
 
 document.getElementById("modal-close").addEventListener('click', function () {
-        document.querySelector('.modal-area').style.display = 'none';
+        document.querySelector('.modal-area').classList.add('hidden');
         document.querySelector('.body-general').classList.remove('modal-opened');
 });
 
 document.getElementById("search").addEventListener('click', function () {
-    if (document.querySelector('.search-window').style.display === 'block') {
-        document.querySelector('.search-window').style.display = 'none';
+    if (document.getElementById("search-window").classList.contains('hidden')) {
+        document.getElementById("search-window").classList.remove('hidden');
     }
     else {
-        document.querySelector('.search-window').style.display = 'block';
+        document.getElementById("search-window").classList.add('hidden');
     }
 });
 
 document.getElementById("dropdown").addEventListener('click', function () {
-    if (document.querySelector('.category-dropdown').style.display === 'block') {
-        document.querySelector('.category-dropdown').style.display = 'none';
+    if (document.getElementById("category-window").classList.contains('hidden')) {
+        document.getElementById("category-window").classList.remove('hidden');
     }
     else {
-        document.querySelector('.category-dropdown').style.display = 'block';
+        document.getElementById("category-window").classList.add('hidden');
     }
 });
 

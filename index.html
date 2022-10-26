@@ -23,124 +23,128 @@
         <div class="spacer"> </div>
         <div class="header__icons icons-container">
             <div class="icon-wrapper">
-                <i id="user" class="fa-regular fa-circle-user fa-2xl icon-wrapper__img" title="User"></i>
+                <i id="user" class="fa-regular fa-circle-user icon-wrapper__img" title="User"></i>
             </div>
             <div class="icon-wrapper">
                 <i id="search" class="fa-solid fa-magnifying-glass icon-wrapper__img" title="Search"></i>
-                <div class="search-window">
-                    <form method="get" class="search-form">
-                        <label>
-                            <input type="text" class="search-form__input" placeholder="Search">
-                        </label>
-                        <button type="submit" class="search-form__button">Search</button>
-                    </form>
+                <div id="search-window" class="icon-wrapper__popup hidden">
+                    <div class="search-window">
+                        <form method="get" class="search-form">
+                            <label>
+                                <input type="text" class="search-form__input" placeholder="Search">
+                            </label>
+                            <button type="submit" class="search-form__button">Search</button>
+                        </form>
+                    </div>
                 </div>
             </div>
             <div class="icon-wrapper">
                 <i id="dropdown" class="fa-brands fa-ioxhost icon-wrapper__img" title="Category"></i>
-                <div class="category-dropdown">
-                    <a href="#" class="category-dropdown__element">Politics</a>
-                    <a href="#" class="category-dropdown__element">In the world</a>
-                    <a href="#" class="category-dropdown__element">Economy</a>
-                    <a href="#" class="category-dropdown__element">Society</a>
-                    <a href="#" class="category-dropdown__element">Incidents</a>
-                    <a href="#" class="category-dropdown__element">Army</a>
-                    <a href="#" class="category-dropdown__element">Science</a>
-                    <a href="#" class="category-dropdown__element">Sport</a>
-                    <a href="#" class="category-dropdown__element">Culture</a>
-                    <a href="#" class="category-dropdown__element">Religion</a>
-                    <a href="#" class="category-dropdown__element">Tourism</a>
+                <div id="category-window" class="icon-wrapper__popup hidden">
+                    <div class="category-dropdown">
+                        <a href="#" class="category-dropdown__element">Politics</a>
+                        <a href="#" class="category-dropdown__element">In the world</a>
+                        <a href="#" class="category-dropdown__element">Economy</a>
+                        <a href="#" class="category-dropdown__element">Society</a>
+                        <a href="#" class="category-dropdown__element">Incidents</a>
+                        <a href="#" class="category-dropdown__element">Army</a>
+                        <a href="#" class="category-dropdown__element">Science</a>
+                        <a href="#" class="category-dropdown__element">Sport</a>
+                        <a href="#" class="category-dropdown__element">Culture</a>
+                        <a href="#" class="category-dropdown__element">Religion</a>
+                        <a href="#" class="category-dropdown__element">Tourism</a>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <div class="layout__scroll scroll">
-        <div id="arrowTop" class="scroll-button" hidden>
-            <img src="img/icon-triangle-up.png" alt="Scroll Up" class="scroll-button__img">
-        </div>
-        <div id="arrowBottom" class="scroll-button" hidden>
-            <img src="img/icon-triangle-down.png" alt="Scroll Down" class="scroll-button__img scroll-button__img--down">
-        </div>
-    </div>
     <div class="layout__main main">
+        <div class="scroll">
+            <div id="arrowTop" class="scroll-button" hidden>
+                <img src="img/icon-triangle-up.png" alt="Scroll Up" class="scroll-button__img">
+            </div>
+            <div id="arrowBottom" class="scroll-button" hidden>
+                <img src="img/icon-triangle-down.png" alt="Scroll Down" class="scroll-button__img scroll-button__img--down">
+            </div>
+        </div>
         <article class="article">
-            <div class="article__header article-header">
-                <div class="article-header__date article-date">22:28 01.01.0000 <span class="article-date__update">(updated 22:30 01.01.0000)</span></div>
-                <div class="article-header__title-main">Plug. Frenzied refrigerators are massively attacking cute kittens.</div>
-                <h1 class="article-header__title-second">A wedding is a funeral with a cake.</h1>
-                <div class="article-header__photo article-header-photo">
-                    <img src="img/plug1.jpg" alt="Plug1" class="article-header-photo__img">
-                    <span class="article-header-photo__text">Just do it!</span>
+            <div class="article__header ">
+                <div class="article__date">22:28 01.01.0000 <span class="article__date article__date--update">(updated 22:30 01.01.0000)</span></div>
+                <div class="article__title-main">Plug. Frenzied refrigerators are massively attacking cute kittens.</div>
+                <h1 class="article__title-second">A wedding is a funeral with a cake.</h1>
+                <div class="article__photo">
+                    <img src="img/plug1.jpg" alt="Plug1" class="article__photo-img">
+                    <span class="article__photo-text">Just do it!</span>
                 </div>
             </div>
-            <div class="article__body article-body">
+            <div class="article__body">
                 The contents of this block will be generated using frameworks. Therefore, let's give free rein to imagination.
                 Rabid penguins attacked the Titanic, bit the commander of the ship and stole the radio. A group of strangers met other strangers.
                 The mobile version of the safe harbor has lost a finger. I'm not Zura, I'm Katsura. A blue squid bit my dog's gills.
-                <img class="article-body__img" src="img/plug2.jpg" alt="plug">
+                <img class="img-fluid" src="img/plug2.jpg" alt="plug">
                 Mario, your princess is in another castle. After each step, make a jump. If you see a red ray, look for a rainbow.
                 Every third person will become the fifth. If you love a table, love a chair. I'll be back. Sasuke, go back to the village.
-                <img class="article-body__img" src="img/plug3.jpg" alt="plug">
+                <img class="img-fluid" src="img/plug3.jpg" alt="plug">
                 If the yellow guitar becomes the sun, the dinosaurs will take over Sweden. Why are you going after a frog? It's not yours.
                 If you report an error, the error will be fixed. But not with this package.
-                <img class="article-body__img" src="img/plug4.jpg" alt="plug">
+                <img class="img-fluid" src="img/plug4.jpg" alt="plug">
                 He said that light is a wave, and he will go to watch music. Next year will be right after that.
-                <img class="article-body__img" src="img/plug5.jpg" alt="plug">
+                <img class="img-fluid" src="img/plug5.jpg" alt="plug">
                 A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher,
                 but the gopher will become a cat.
             </div>
         </article>
         <article class="article">
-            <div class="article__header article-header">
-                <div class="article-header__date article-date">22:28 01.01.0000 <span class="article-date__update">(updated 22:30 01.01.0000)</span></div>
-                <div class="article-header__title-main">Plug. Frenzied refrigerators are massively attacking cute kittens.</div>
-                <h1 class="article-header__title-second">A wedding is a funeral with a cake.</h1>
-                <div class="article-header__photo article-header-photo">
-                    <img src="img/plug1.jpg" alt="Plug1" class="article-header-photo__img">
-                    <span class="article-header-photo__text">Just do it!</span>
+            <div class="article__header ">
+                <div class="article__date">22:28 01.01.0000 <span class="article__date article__date--update">(updated 22:30 01.01.0000)</span></div>
+                <div class="article__title-main">Plug. Frenzied refrigerators are massively attacking cute kittens.</div>
+                <h1 class="article__title-second">A wedding is a funeral with a cake.</h1>
+                <div class="article__photo">
+                    <img src="img/plug1.jpg" alt="Plug1" class="article__photo-img">
+                    <span class="article__photo-text">Just do it!</span>
                 </div>
             </div>
-            <div class="article__body article-body">
+            <div class="article__body">
                 The contents of this block will be generated using frameworks. Therefore, let's give free rein to imagination.
                 Rabid penguins attacked the Titanic, bit the commander of the ship and stole the radio. A group of strangers met other strangers.
                 The mobile version of the safe harbor has lost a finger. I'm not Zura, I'm Katsura. A blue squid bit my dog's gills.
-                <img class="article-body__img" src="img/plug2.jpg" alt="plug">
+                <img class="img-fluid" src="img/plug2.jpg" alt="plug">
                 Mario, your princess is in another castle. After each step, make a jump. If you see a red ray, look for a rainbow.
                 Every third person will become the fifth. If you love a table, love a chair. I'll be back. Sasuke, go back to the village.
-                <img class="article-body__img" src="img/plug3.jpg" alt="plug">
+                <img class="img-fluid" src="img/plug3.jpg" alt="plug">
                 If the yellow guitar becomes the sun, the dinosaurs will take over Sweden. Why are you going after a frog? It's not yours.
                 If you report an error, the error will be fixed. But not with this package.
-                <img class="article-body__img" src="img/plug4.jpg" alt="plug">
+                <img class="img-fluid" src="img/plug4.jpg" alt="plug">
                 He said that light is a wave, and he will go to watch music. Next year will be right after that.
-                <img class="article-body__img" src="img/plug5.jpg" alt="plug">
+                <img class="img-fluid" src="img/plug5.jpg" alt="plug">
                 A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher,
                 but the gopher will become a cat.
             </div>
         </article>
         <article class="article">
-            <div class="article__header article-header">
-                <div class="article-header__date article-date">22:28 01.01.0000 <span class="article-date__update">(updated 22:30 01.01.0000)</span></div>
-                <div class="article-header__title-main">Plug. Frenzied refrigerators are massively attacking cute kittens.</div>
-                <h1 class="article-header__title-second">A wedding is a funeral with a cake.</h1>
-                <div class="article-header__photo article-header-photo">
-                    <img src="img/plug1.jpg" alt="Plug1" class="article-header-photo__img">
-                    <span class="article-header-photo__text">Just do it!</span>
+            <div class="article__header ">
+                <div class="article__date">22:28 01.01.0000 <span class="article__date article__date--update">(updated 22:30 01.01.0000)</span></div>
+                <div class="article__title-main">Plug. Frenzied refrigerators are massively attacking cute kittens.</div>
+                <h1 class="article__title-second">A wedding is a funeral with a cake.</h1>
+                <div class="article__photo">
+                    <img src="img/plug1.jpg" alt="Plug1" class="article__photo-img">
+                    <span class="article__photo-text">Just do it!</span>
                 </div>
             </div>
-            <div class="article__body article-body">
+            <div class="article__body">
                 The contents of this block will be generated using frameworks. Therefore, let's give free rein to imagination.
                 Rabid penguins attacked the Titanic, bit the commander of the ship and stole the radio. A group of strangers met other strangers.
                 The mobile version of the safe harbor has lost a finger. I'm not Zura, I'm Katsura. A blue squid bit my dog's gills.
-                <img class="article-body__img" src="img/plug2.jpg" alt="plug">
+                <img class="img-fluid" src="img/plug2.jpg" alt="plug">
                 Mario, your princess is in another castle. After each step, make a jump. If you see a red ray, look for a rainbow.
                 Every third person will become the fifth. If you love a table, love a chair. I'll be back. Sasuke, go back to the village.
-                <img class="article-body__img" src="img/plug3.jpg" alt="plug">
+                <img class="img-fluid" src="img/plug3.jpg" alt="plug">
                 If the yellow guitar becomes the sun, the dinosaurs will take over Sweden. Why are you going after a frog? It's not yours.
                 If you report an error, the error will be fixed. But not with this package.
-                <img class="article-body__img" src="img/plug4.jpg" alt="plug">
+                <img class="img-fluid" src="img/plug4.jpg" alt="plug">
                 He said that light is a wave, and he will go to watch music. Next year will be right after that.
-                <img class="article-body__img" src="img/plug5.jpg" alt="plug">
+                <img class="img-fluid" src="img/plug5.jpg" alt="plug">
                 A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher,
                 but the gopher will become a cat.
             </div>
@@ -203,7 +207,7 @@
 
         </div>
     </div>
-    <div id="modalAuth" class="modal-area">
+    <div id="modalAuth" class="modal-area hidden">
         <div class="modal-window">
             <div class="modal-window__close close-wrapper">
                 <img id="modal-close" src="img/icon-close.png" alt="Modal Close" class="close-wrapper__img">

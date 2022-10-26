@@ -20,7 +20,7 @@
   }
   &__scroll {
     grid-area: scro;
-    z-index: 0;
+
   }
   &__main {
     grid-area: main;
@@ -45,9 +45,6 @@
             "main";
     grid-template-rows: var(--header-height) 1fr;
     grid-template-columns: minmax(var(--min-screen), 1fr);
-    &__scroll {
-      display: none;
-    }
     &__suggested {
       display: none;
     }
@@ -61,30 +58,30 @@
 @include desktop-wide {
   .layout {
     grid-template-areas:
-            "head head head"
-            "scro main sugg";
+            "head head"
+            "main sugg";
     grid-template-rows: var(--header-height) 1fr;
-    grid-template-columns: 150px minmax(var(--min-screen), 1fr) 400px; /* Pixel 5 */
+    grid-template-columns: minmax(var(--min-screen), 1fr) 400px; /* 150 */
   }
 }
 
 @include desktop-normal {
   .layout {
     grid-template-areas:
-            "head head head"
-            "scro main sugg";
+            "head head"
+            "main sugg";
     grid-template-rows: var(--header-height) 1fr;
-    grid-template-columns: 150px minmax(var(--min-screen), 1fr) 300px;
+    grid-template-columns: minmax(var(--min-screen), 1fr) 300px;
   }
 }
 
 @include desktop-small {
   .layout {
     grid-template-areas:
-            "head head"
-            "scro main";
+            "head"
+            "main";
     grid-template-rows: var(--header-height) 1fr;
-    grid-template-columns: 60px minmax(var(--min-screen), 1fr);
+    grid-template-columns: minmax(var(--min-screen), 1fr); //60
     &__suggested {
       display: none;
     }
