@@ -1,64 +1,11 @@
 import * as React from "react";
 import { createRoot } from 'react-dom/client';
-import Header from "./components/Header/Header";
-import Layout from "./components/Layout/Layout";
-import Modal from "./components/Modal/Modal";
+import { App } from "./components/App"
 import 'normalize.css';
 import './index.scss';
 import ReactDOM from "react-dom";
-
-
-class App extends React.Component<any, any>{
-    constructor(props) {
-        super(props);
-        this.state = {
-            headerIsSmall: false,
-        }
-        this.ScrollHandle = this.ScrollHandle.bind(this);
-    }
-    downThreshold = 200;
-    bigHeader = 50;
-
-    componentDidMount() {
-        window.addEventListener('scroll', this.ScrollHandle);
-    }
-    componentWillUnmount() {
-        window.removeEventListener('scroll', this.ScrollHandle);
-    }
-
-    CalculateHeader = () => {
-        if (window.scrollY  > this.downThreshold) {
-            this.setState({headerIsSmall: true});
-        }
-        else { /* Гистерезис */
-            if (window.scrollY  < this.bigHeader) {
-                this.setState({headerIsSmall: false});
-            }
-        }
-    }
-
-    ScrollHandle() {
-        let scrollWidth = Math.max(
-            document.body.scrollWidth, document.documentElement.scrollWidth,
-            document.body.offsetWidth, document.documentElement.offsetWidth,
-            document.body.clientWidth, document.documentElement.clientWidth
-        );
-        if (scrollWidth > 768) {
-            this.CalculateHeader();
-        }
-    }
-
-    render() {
-        return (
-            <div className="body-general">
-                <Header headerIsSmall={this.state.headerIsSmall}/>
-                <Layout />
-                <Modal />
-            </div>
-
-        )
-    }
-}
+import {createStore} from "redux";
+import {Provider} from "react-redux";
 
 
 const app = document.getElementById("app")

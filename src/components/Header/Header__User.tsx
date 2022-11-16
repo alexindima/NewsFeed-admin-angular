@@ -1,18 +1,12 @@
 import React from "react";
 import { BiUserCircle } from 'react-icons/bi';
 import ReactDOM from "react-dom";
-import Modal from "../Modal/Modal";
+import {useStore} from "react-redux";
 
-export default class Header__User extends React.Component{
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-            <div className="icon-wrapper">
-                <BiUserCircle id="user" className="icon-wrapper__img" title="User" />
-            </div>
-        )
-    }
+export function Header__User () {
+    return (
+        <div className="icon-wrapper">
+            <BiUserCircle id="user" className="icon-wrapper__img" title="User" />
+        </div>
+    )
 }
