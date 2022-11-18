@@ -9,8 +9,8 @@ import classNames from "classnames";
 import {useEffect, useState} from "react";
 
 export function Header () {
-    const downThreshold = 200;
-    const bigHeader = 50;
+    const DOWN_THRESHOLD = 200;
+    const BIG_HEADER = 50;
 
     let [headerIsSmall, setHeaderIsSmall] = useState(false)
 
@@ -19,11 +19,11 @@ export function Header () {
     },[]);
 
     function CalculateHeader () {
-        if (window.scrollY  > downThreshold) {
+        if (window.scrollY  > DOWN_THRESHOLD) {
             setHeaderIsSmall(headerIsSmall = true);
         }
         else { /* Гистерезис */
-            if (window.scrollY  < bigHeader) {
+            if (window.scrollY  < BIG_HEADER) {
                 setHeaderIsSmall(headerIsSmall = false);
             }
         }

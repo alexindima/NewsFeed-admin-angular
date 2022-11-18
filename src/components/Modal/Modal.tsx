@@ -18,5 +18,5 @@ export function Modal () {
                 <Modal__User />
             </div>
         </div>
-        )
+    )
 }

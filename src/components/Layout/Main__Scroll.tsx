@@ -1,43 +1,35 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import "./Main__Scroll.scss"
 import { VscTriangleUp } from 'react-icons/vsc';
 import { VscTriangleDown } from 'react-icons/vsc';
 import classNames from "classnames";
 
 export function Main__Scroll () {
-    let [scrollWas, setScrollWas] = useState(false) //разобраться почему не сохраняется для калкулейт
-    let [lastPoint, setLastPoint] = useState(0)
-    let [arrowTopIsHidden, setArrowTopIsHidden] = useState(true)
-    let [arrowBottomIsHidden, setArrowBottomIsHidden] = useState(true)
+    const UP_THRESHOLD = 500;
+    const FORGET_THRESHOLD = 2000;
+    const BIG_HEADER = 50;
 
-    const upThreshold = 500;
-    const forgetThreshold = 2000;
-    const bigHeader = 50;
+    let scrollWas = useRef(false);
+    let lastPoint = useRef(0);
+    let [arrowTopIsHidden, setArrowTopIsHidden] = useState(true);
+    let [arrowBottomIsHidden, setArrowBottomIsHidden] = useState(true);
 
     function goTop() {
-        setScrollWas(scrollWas = true);
-        console.log('gotop');
-        setLastPoint(lastPoint = window.scrollY);
-        setArrowBottomIsHidden( arrowBottomIsHidden = false);
-        console.log(arrowBottomIsHidden);
-        window.scrollTo(window.scrollX , 0);
-        console.log(arrowBottomIsHidden);
-        // после scrollTo возникнет событие "scroll", так что стрелка автоматически скроется
+        lastPoint.current = window.scrollY;
+        setArrowBottomIsHidden( false);
+        scrollWas.current = true;
+        window.scrollTo(window.scrollX , 0); //scroll event will arise automatically after this
     }
 
     function goBack () {
-        window.scrollTo(window.scrollX, lastPoint);
+        window.scrollTo(window.scrollX, lastPoint.current);
     }
 
     function CalculateScroll() {
-        console.log('calc');
-        console.log(window.scrollY);
-        console.log(scrollWas);
-        setArrowTopIsHidden(arrowTopIsHidden = (window.scrollY < upThreshold));
-        setArrowBottomIsHidden(arrowBottomIsHidden = !((scrollWas) && (window.scrollY < bigHeader)))
-        console.log(scrollWas);
-        if (window.scrollY  > forgetThreshold) {
-            setScrollWas(scrollWas = false);
+        setArrowTopIsHidden(window.scrollY < UP_THRESHOLD);
+        setArrowBottomIsHidden(!((scrollWas.current) && (window.scrollY < BIG_HEADER)));
+        if (scrollWas && (window.scrollY  > FORGET_THRESHOLD)) {
+            scrollWas.current = false;
         }
     }
 
