@@ -6,7 +6,7 @@ import Plug4 from "../../img/plug4.jpg"
 import Plug5 from "../../img/plug5.jpg"
 
 // вся магия будет тут походу
-export function Articles__Article () {
+const Articles__Article = () => {
     return (
         <article className="article">
                 <div className="article__header ">
@@ -49,3 +49,5 @@ export function Articles__Article () {
             </article>
     )
 }
+
+export default Articles__Article

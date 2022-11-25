@@ -1,6 +1,6 @@
 import React from "react";
 
-export function Suggested__News () {
+const Suggested__News = () => {
     return (
         <a href="#" className="suggested-news">
             <div className="suggested-news__time">27:68</div>
@@ -8,3 +8,5 @@ export function Suggested__News () {
         </a>
     )
 }
+
+export default Suggested__News

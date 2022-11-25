@@ -2,7 +2,7 @@ import React from "react";
 import "./Modal__User.scss"
 
 // Нужен рефакторинг классов
-export function Modal__User () {
+const Modal__User = () => {
     return (
         <div>
             <div className="modal-window__main-title">
@@ -31,3 +31,5 @@ export function Modal__User () {
         </div>
     )
 }
+
+export default Modal__User

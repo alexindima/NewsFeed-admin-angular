@@ -1,9 +1,9 @@
 import * as React from "react";
-import { Header } from "./Header/Header";
-import { Layout } from "./Layout/Layout";
-import { Modal } from "./Modal/Modal";
+import Header from "./Header/Header";
+import Layout from "./Layout/Layout";
+import Modal from "./Modal/Modal";
 
-export function App (){
+const App = () => {
     return (
         <div className="body-general">
             <Header />
@@ -12,3 +12,5 @@ export function App (){
         </div>
     )
 }
+
+export default App

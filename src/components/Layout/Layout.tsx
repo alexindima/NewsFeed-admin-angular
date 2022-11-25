@@ -1,9 +1,9 @@
 import * as React from "react";
-import { Layout__Main } from "./Layout__Main";
-import { Layout__Suggested } from "./Layout__Suggested";
+import Layout__Main from "./Layout__Main";
+import Layout__Suggested from "./Layout__Suggested";
 import "./Layout.scss"
 
-export function Layout () {
+const Layout = () => {
     return (
         <div className="layout">
             <Layout__Main />
@@ -11,3 +11,5 @@ export function Layout () {
         </div>
     )
 }
+
+export default Layout

@@ -1,10 +1,10 @@
 import React from "react";
-import { Modal__User } from "./Modal__User";
+import Modal__User from "./Modal__User";
 import "./Modal.scss"
 import classNames from "classnames";
 
 // нужен рефакторинг классов
-export function Modal () {
+const Modal = () => {
     const modalClass = classNames({
         "modal-area": true,
         "hidden": true,
@@ -20,3 +20,5 @@ export function Modal () {
         </div>
     )
 }
+
+export default Modal

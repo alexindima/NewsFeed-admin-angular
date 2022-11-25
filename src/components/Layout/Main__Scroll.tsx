@@ -4,15 +4,15 @@ import { VscTriangleUp } from 'react-icons/vsc';
 import { VscTriangleDown } from 'react-icons/vsc';
 import classNames from "classnames";
 
-export function Main__Scroll () {
+const Main__Scroll = () => {
     const UP_THRESHOLD = 500;
     const FORGET_THRESHOLD = 2000;
     const BIG_HEADER = 50;
 
     let scrollWas = useRef(false);
     let lastPoint = useRef(0);
-    let [arrowTopIsHidden, setArrowTopIsHidden] = useState(true);
-    let [arrowBottomIsHidden, setArrowBottomIsHidden] = useState(true);
+    const [arrowTopIsHidden, setArrowTopIsHidden] = useState(true);
+    const [arrowBottomIsHidden, setArrowBottomIsHidden] = useState(true);
 
     function goTop() {
         lastPoint.current = window.scrollY;
@@ -68,3 +68,5 @@ export function Main__Scroll () {
         </div>
     )
 }
+
+export default Main__Scroll

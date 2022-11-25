@@ -1,18 +1,18 @@
 import * as React from "react";
 import Logo from '../../img/logo.jpg'
 
-import { Header__User } from "./Header__User"
-import { Header__Search } from "./Header__Search"
-import { Header__Category } from "./Header__Category"
+import Header__User from "./Header__User"
+import Header__Search from "./Header__Search"
+import Header__Category from "./Header__Category"
 import './Header.scss'
 import classNames from "classnames";
 import {useEffect, useState} from "react";
 
-export function Header () {
+const Header = () => {
     const DOWN_THRESHOLD = 200;
     const BIG_HEADER = 50;
 
-    let [headerIsSmall, setHeaderIsSmall] = useState(false)
+    const [headerIsSmall, setHeaderIsSmall] = useState(false)
 
     useEffect(() => {
         window.addEventListener('scroll', ScrollHandle);
@@ -20,11 +20,11 @@ export function Header () {
 
     function CalculateHeader () {
         if (window.scrollY  > DOWN_THRESHOLD) {
-            setHeaderIsSmall(headerIsSmall = true);
+            setHeaderIsSmall(true);
         }
         else { /* Гистерезис */
             if (window.scrollY  < BIG_HEADER) {
-                setHeaderIsSmall(headerIsSmall = false);
+                setHeaderIsSmall(false);
             }
         }
     }
@@ -65,3 +65,5 @@ export function Header () {
         </header>
     )
 }
+
+export default Header

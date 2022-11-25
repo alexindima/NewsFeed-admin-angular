@@ -3,7 +3,7 @@ import { CgMenuRound } from 'react-icons/cg';
 import "./Header__Category.scss"
 import classNames from "classnames";
 
-export function Header__Category (){
+const Header__Category = () => {
     let [categoryIsClosed, setCategoryIsClosed] =useState(true)
 
     function showOrHideCategory () {
@@ -35,3 +35,5 @@ export function Header__Category (){
         </div>
     )
 }
+
+export default Header__Category
