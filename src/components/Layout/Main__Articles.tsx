@@ -2,12 +2,13 @@ import React, {useContext, useEffect, useState} from "react";
 
 import Articles__Article from "./Articles__Article";
 import axios from "axios";
-import UserContext from "../../Context/Context";
+import { UserContext } from "../../Context/Context";
+
 import NewsFilter from "../../lib/NewsFilter";
 
 const Main__Articles = () => {
     const [articles, setArticles] = useState<any[]>([]);
-    const user = useContext(UserContext);
+    const user = useContext(UserContext).user;
 
     useEffect(() => {
         const fetchData = async () => {

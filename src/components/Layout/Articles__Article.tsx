@@ -3,7 +3,6 @@ import "./Articles__Article.scss"
 
 // вся магия будет тут походу
 const Articles__Article = ( {article} ) => {
-    console.log(article)
     return (
         <article className="article">
                 <div className="article__header ">
@@ -20,14 +19,13 @@ const Articles__Article = ( {article} ) => {
                 </div>
                 <div>
                     {article.body.map(el => {
-                        console.log(el)
                         switch (el.type) {
                             case "text":
-                                return <>{el.data}</>
+                                return <div key={el.id}>{el.data}</div>
                             case "image":
-                                return <img className="img-fluid" src={el.href} alt={el.alt}></img>
+                                return <img key={el.id} className="img-fluid" src={el.href} alt={el.alt}></img>
                             case "anchor":
-                                return <a href={el.href}>{el.data}</a>
+                                return <a key={el.id} href={el.href} target="_blank">{el.data}</a>
                             default: return <></>
                         }
                     })}

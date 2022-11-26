@@ -2,12 +2,13 @@ import React, {useContext, useEffect, useState} from "react";
 import Suggested__News from "./Suggested__News";
 import "./Layout__Suggested.scss"
 import axios from "axios";
-import UserContext from "../../Context/Context";
 import NewsFilter from "../../lib/NewsFilter";
+import { UserContext } from "../../Context/Context";
+
 
 const Layout__Suggested = () => {
     const [news, setNews] = useState<any[]>([]);
-    const user = useContext(UserContext);
+    const user = useContext(UserContext).user;
 
     useEffect(() => {
         const fetchData = async () => {
