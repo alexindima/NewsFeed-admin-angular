@@ -5,6 +5,7 @@
   background-color: var(--article-bg-color);
   border-radius: 10px;
   padding: 30px;
+  margin-bottom: 20px; //Разобраться почему не работает теперь разрыв для мейна (возможно дело в скролле)
   &__header {
     padding-bottom: 20px; //Был флекс с разрывом
   }

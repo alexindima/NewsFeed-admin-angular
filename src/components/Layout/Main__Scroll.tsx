@@ -9,8 +9,8 @@ const Main__Scroll = () => {
     const FORGET_THRESHOLD = 2000;
     const BIG_HEADER = 50;
 
-    let scrollWas = useRef(false);
-    let lastPoint = useRef(0);
+    const scrollWas = useRef(false);
+    const lastPoint = useRef(0);
     const [arrowTopIsHidden, setArrowTopIsHidden] = useState(true);
     const [arrowBottomIsHidden, setArrowBottomIsHidden] = useState(true);
 

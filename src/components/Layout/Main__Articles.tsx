@@ -1,32 +1,33 @@
-import React, {useEffect, useState} from "react";
-import "./Main__Articles.scss"
+import React, {useContext, useEffect, useState} from "react";
+
 import Articles__Article from "./Articles__Article";
 import axios from "axios";
+import UserContext from "../../Context/Context";
+import NewsFilter from "../../lib/NewsFilter";
 
 const Main__Articles = () => {
-    const [articles, setArticles] = useState([]);
+    const [articles, setArticles] = useState<any[]>([]);
+    const user = useContext(UserContext);
 
     useEffect(() => {
-        console.log('effect')
         const fetchData = async () => {
             const result = await axios(
                 'http://localhost:3030/articles',
             );
-            console.log(result.data)
-            setArticles(result.data);
+
+            /* Дальше идет фильтрация данных с бека по игнорируемым категориям и тегам
+            в идеале это должен делать бек, но пока так
+             */
+            const filteredArray = NewsFilter(result.data, user.current.ignoredCategories, user.current.ignoredTags)
+
+            setArticles(filteredArray);
         };
         fetchData();
     }, []);
 
     return (
         <div>
-            <Articles__Article />
-            <Articles__Article />
-            <Articles__Article />
-            <Articles__Article />
-            <Articles__Article />
-            <Articles__Article />
-
+            {articles.map(article => <Articles__Article key={article.id} article={article}/>)}
         </div>
     )
 }
