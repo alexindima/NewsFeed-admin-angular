@@ -18,7 +18,6 @@ const Layout__Suggested = () => {
             в идеале это должен делать бек, но пока так
              */
             const filteredArray = NewsFilter(result.data, user.current.ignoredCategories, user.current.ignoredTags)
-
             setNews(filteredArray);
         };
         fetchData();

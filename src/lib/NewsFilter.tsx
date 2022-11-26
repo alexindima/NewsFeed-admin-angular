@@ -3,16 +3,16 @@ const NewsFilter = (article, ignoredCategories, ignoredTags) => {
         let notIgnored = true
         const articleCategory = item.category
         ignoredCategories.every(ignoredCategory => {
-            if (ignoredCategory.trim().toLowerCase() === articleCategory.trim().toLowerCase()) {
+            if (ignoredCategory.toLowerCase() === articleCategory.toLowerCase()) {
                 notIgnored = false
                 return false
             }
             return true
         })
-        const articleTags = item.tags.split(',')
+        const articleTags = item.tags
         ignoredTags.every(ignoredTag => {
             articleTags.every(articleTag => {
-                if (ignoredTag.trim().toLowerCase() === articleTag.trim().toLowerCase()) {
+                if (ignoredTag.toLowerCase() === articleTag.toLowerCase()) {
                     notIgnored = false
                     return false
                 }
