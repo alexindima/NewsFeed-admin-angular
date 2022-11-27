@@ -10,7 +10,7 @@
   top: 0;
   left: 0;
   justify-content: center;
-  align-items: center;
+  align-items: start;
   background-color: var(--modal-bg-color);
   z-index: 9999;
   &::after {
@@ -26,7 +26,9 @@
 
 .modal-window {
   position: relative;
+  top: 40px;
   width: 480px;
+  height: auto;
   padding: 20px;
   background: var(--secondary-bg-color);
   z-index: 2;
@@ -34,7 +36,17 @@
     position: absolute;
     top: 10px;
     right: 10px;
-    width: 30px;
+    width: 50px;
+    cursor: pointer;
+    font-size: 50px;
+  }
+  &__back {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 50px;
+    cursor: pointer;
+    font-size: 50px;
   }
   &__main-title {
     margin-bottom: 40px;
@@ -52,7 +64,4 @@
   }
 }
 
-.close-wrapper {
-  cursor: pointer;
-  font-size: 30px;
-}
+

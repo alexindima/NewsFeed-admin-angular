@@ -17,13 +17,13 @@
         {
           "id": 2,
           "type": "anchor",
-          "href" : "https://www.google.com",
+          "href": "https://www.google.com",
           "data": "google"
         },
         {
           "id": 3,
           "type": "image",
-          "href" : "https://i.dummyjson.com/data/products/15/1.jpg",
+          "href": "https://i.dummyjson.com/data/products/15/1.jpg",
           "alt": "plug"
         },
         {
@@ -34,7 +34,7 @@
         {
           "id": 5,
           "type": "image",
-          "href" : "https://i.dummyjson.com/data/products/15/2.jpg",
+          "href": "https://i.dummyjson.com/data/products/15/2.jpg",
           "alt": "plug"
         },
         {
@@ -45,7 +45,7 @@
         {
           "id": 7,
           "type": "image",
-          "href" : "https://i.dummyjson.com/data/products/15/3.jpg",
+          "href": "https://i.dummyjson.com/data/products/15/3.jpg",
           "alt": "plug"
         },
         {
@@ -56,7 +56,7 @@
         {
           "id": 9,
           "type": "image",
-          "href" : "https://i.dummyjson.com/data/products/15/4.jpg",
+          "href": "https://i.dummyjson.com/data/products/15/4.jpg",
           "alt": "plug"
         },
         {
@@ -66,7 +66,10 @@
         }
       ],
       "category": "politics",
-      "tags": ["moon", "dog"]
+      "tags": [
+        "moon",
+        "dog"
+      ]
     },
     {
       "id": 2,
@@ -85,13 +88,13 @@
         {
           "id": 2,
           "type": "anchor",
-          "href" : "https://www.google.com",
+          "href": "https://www.google.com",
           "data": "google"
         },
         {
           "id": 3,
           "type": "image",
-          "href" : "https://i.dummyjson.com/data/products/24/1.jpg",
+          "href": "https://i.dummyjson.com/data/products/24/1.jpg",
           "alt": "plug"
         },
         {
@@ -102,7 +105,7 @@
         {
           "id": 5,
           "type": "image",
-          "href" : "https://i.dummyjson.com/data/products/25/2.jpg",
+          "href": "https://i.dummyjson.com/data/products/25/2.jpg",
           "alt": "plug"
         },
         {
@@ -113,7 +116,7 @@
         {
           "id": 7,
           "type": "image",
-          "href" : "https://i.dummyjson.com/data/products/16/3.jpg",
+          "href": "https://i.dummyjson.com/data/products/16/3.jpg",
           "alt": "plug"
         },
         {
@@ -124,7 +127,7 @@
         {
           "id": 9,
           "type": "image",
-          "href" : "https://i.dummyjson.com/data/products/16/4.jpg",
+          "href": "https://i.dummyjson.com/data/products/16/4.jpg",
           "alt": "plug"
         },
         {
@@ -134,7 +137,10 @@
         }
       ],
       "category": "politics",
-      "tags": ["cat", "moon"]
+      "tags": [
+        "cat",
+        "moon"
+      ]
     },
     {
       "id": 3,
@@ -153,13 +159,13 @@
         {
           "id": 2,
           "type": "anchor",
-          "href" : "https://www.google.com",
+          "href": "https://www.google.com",
           "data": "google"
         },
         {
           "id": 3,
           "type": "image",
-          "href" : "https://i.dummyjson.com/data/products/17/1.jpg",
+          "href": "https://i.dummyjson.com/data/products/17/1.jpg",
           "alt": "plug"
         },
         {
@@ -170,7 +176,7 @@
         {
           "id": 5,
           "type": "image",
-          "href" : "https://i.dummyjson.com/data/products/17/2.jpg",
+          "href": "https://i.dummyjson.com/data/products/17/2.jpg",
           "alt": "plug"
         },
         {
@@ -181,7 +187,7 @@
         {
           "id": 7,
           "type": "image",
-          "href" : "https://i.dummyjson.com/data/products/17/3.jpg",
+          "href": "https://i.dummyjson.com/data/products/17/3.jpg",
           "alt": "plug"
         },
         {
@@ -192,7 +198,7 @@
         {
           "id": 9,
           "type": "image",
-          "href" : "https://i.dummyjson.com/data/products/30/2.jpg",
+          "href": "https://i.dummyjson.com/data/products/30/2.jpg",
           "alt": "plug"
         },
         {
@@ -202,7 +208,10 @@
         }
       ],
       "category": "politics",
-      "tags": ["cat", "dog"]
+      "tags": [
+        "cat",
+        "dog"
+      ]
     },
     {
       "id": 4,
@@ -221,13 +230,13 @@
         {
           "id": 2,
           "type": "anchor",
-          "href" : "https://www.google.com",
+          "href": "https://www.google.com",
           "data": "google"
         },
         {
           "id": 3,
           "type": "image",
-          "href" : "https://i.dummyjson.com/data/products/18/1.jpg",
+          "href": "https://i.dummyjson.com/data/products/18/1.jpg",
           "alt": "plug"
         },
         {
@@ -238,7 +247,7 @@
         {
           "id": 5,
           "type": "image",
-          "href" : "https://i.dummyjson.com/data/products/18/2.jpg",
+          "href": "https://i.dummyjson.com/data/products/18/2.jpg",
           "alt": "plug"
         },
         {
@@ -249,7 +258,7 @@
         {
           "id": 7,
           "type": "image",
-          "href" : "https://i.dummyjson.com/data/products/18/3.jpg",
+          "href": "https://i.dummyjson.com/data/products/18/3.jpg",
           "alt": "plug"
         },
         {
@@ -260,7 +269,7 @@
         {
           "id": 9,
           "type": "image",
-          "href" : "https://i.dummyjson.com/data/products/18/4.jpg",
+          "href": "https://i.dummyjson.com/data/products/18/4.jpg",
           "alt": "plug"
         },
         {
@@ -270,7 +279,10 @@
         }
       ],
       "category": "army",
-      "tags": ["moon", "dog"]
+      "tags": [
+        "moon",
+        "dog"
+      ]
     },
     {
       "id": 5,
@@ -289,13 +301,13 @@
         {
           "id": 2,
           "type": "anchor",
-          "href" : "https://www.google.com",
+          "href": "https://www.google.com",
           "data": "google"
         },
         {
           "id": 3,
           "type": "image",
-          "href" : "https://i.dummyjson.com/data/products/19/1.jpg",
+          "href": "https://i.dummyjson.com/data/products/19/1.jpg",
           "alt": "plug"
         },
         {
@@ -306,7 +318,7 @@
         {
           "id": 5,
           "type": "image",
-          "href" : "https://i.dummyjson.com/data/products/19/2.jpg",
+          "href": "https://i.dummyjson.com/data/products/19/2.jpg",
           "alt": "plug"
         },
         {
@@ -317,7 +329,7 @@
         {
           "id": 7,
           "type": "image",
-          "href" : "https://i.dummyjson.com/data/products/30/3.jpg",
+          "href": "https://i.dummyjson.com/data/products/30/3.jpg",
           "alt": "plug"
         },
         {
@@ -328,7 +340,7 @@
         {
           "id": 9,
           "type": "image",
-          "href" : "https://i.dummyjson.com/data/products/29/1.jpg",
+          "href": "https://i.dummyjson.com/data/products/29/1.jpg",
           "alt": "plug"
         },
         {
@@ -338,7 +350,10 @@
         }
       ],
       "category": "army",
-      "tags": ["cat", "moon"]
+      "tags": [
+        "cat",
+        "moon"
+      ]
     },
     {
       "id": 6,
@@ -357,13 +372,13 @@
         {
           "id": 2,
           "type": "anchor",
-          "href" : "https://www.google.com",
+          "href": "https://www.google.com",
           "data": "google"
         },
         {
           "id": 3,
           "type": "image",
-          "href" : "https://i.dummyjson.com/data/products/20/1.jpg",
+          "href": "https://i.dummyjson.com/data/products/20/1.jpg",
           "alt": "plug"
         },
         {
@@ -374,7 +389,7 @@
         {
           "id": 5,
           "type": "image",
-          "href" : "https://i.dummyjson.com/data/products/20/2.jpg",
+          "href": "https://i.dummyjson.com/data/products/20/2.jpg",
           "alt": "plug"
         },
         {
@@ -385,7 +400,7 @@
         {
           "id": 7,
           "type": "image",
-          "href" : "https://i.dummyjson.com/data/products/20/3.jpg",
+          "href": "https://i.dummyjson.com/data/products/20/3.jpg",
           "alt": "plug"
         },
         {
@@ -396,7 +411,7 @@
         {
           "id": 9,
           "type": "image",
-          "href" : "https://i.dummyjson.com/data/products/20/4.jpg",
+          "href": "https://i.dummyjson.com/data/products/20/4.jpg",
           "alt": "plug"
         },
         {
@@ -406,7 +421,10 @@
         }
       ],
       "category": "army",
-      "tags": ["cat", "dog"]
+      "tags": [
+        "cat",
+        "dog"
+      ]
     }
   ],
   "suggestedNews": [
@@ -415,88 +433,163 @@
       "time": "23:45",
       "title": "Superluminal underpants are now at a 50% discount!",
       "category": "politics",
-      "tags": ["cat", "dog"]
+      "tags": [
+        "cat",
+        "dog"
+      ]
     },
     {
       "id": 2,
       "time": "23:45",
       "title": "Superluminal underpants are now at a 50% discount!",
       "category": "politics",
-      "tags": ["cat", "dog"]
+      "tags": [
+        "cat",
+        "dog"
+      ]
     },
     {
       "id": 3,
       "time": "23:45",
       "title": "Superluminal underpants are now at a 50% discount!",
       "category": "politics",
-      "tags": ["cat", "dog"]
+      "tags": [
+        "cat",
+        "dog"
+      ]
     },
     {
       "id": 4,
       "time": "23:45",
       "title": "Superluminal underpants are now at a 50% discount!",
       "category": "politics",
-      "tags": ["cat", "dog"]
+      "tags": [
+        "cat",
+        "dog"
+      ]
     },
     {
       "id": 5,
       "time": "23:45",
       "title": "Superluminal underpants are now at a 50% discount!",
       "category": "politics",
-      "tags": ["cat", "dog"]
+      "tags": [
+        "cat",
+        "dog"
+      ]
     },
     {
       "id": 6,
       "time": "23:45",
       "title": "Superluminal underpants are now at a 50% discount!",
       "category": "politics",
-      "tags": ["cat", "dog"]
+      "tags": [
+        "cat",
+        "dog"
+      ]
     },
     {
       "id": 7,
       "time": "23:45",
       "title": "Superluminal underpants are now at a 50% discount!",
       "category": "politics",
-      "tags": ["cat", "dog"]
+      "tags": [
+        "cat",
+        "dog"
+      ]
     },
     {
       "id": 8,
       "time": "23:45",
       "title": "Superluminal underpants are now at a 50% discount!",
       "category": "politics",
-      "tags": ["cat", "dog"]
+      "tags": [
+        "cat",
+        "dog"
+      ]
     },
     {
       "id": 9,
       "time": "23:45",
       "title": "Superluminal underpants are now at a 50% discount!",
       "category": "politics",
-      "tags": ["cat", "dog"]
-    },{
+      "tags": [
+        "cat",
+        "dog"
+      ]
+    },
+    {
       "id": 10,
       "time": "23:45",
       "title": "Superluminal underpants are now at a 50% discount!",
       "category": "politics",
-      "tags": ["cat", "dog"]
+      "tags": [
+        "cat",
+        "dog"
+      ]
     }
   ],
   "users": [
     {
       "id": 1,
       "name": "admin",
-      "email": "q@q",
-      "password": "1",
-      "ignoredCategorise": [],
-      "ignoredTags": []
+      "email": "a@a",
+      "password": "bcb15f821479b4d5772bd0ca866c00ad5f926e3580720659cc80d39c9d09802a",
+      "ignoredCategories": [
+        ""
+      ],
+      "ignoredTags": [
+        ""
+      ]
     },
     {
       "id": 2,
       "name": "test",
-      "email": "a@a",
-      "password": "1",
-      "ignoredCategories": ["politics"],
-      "ignoredTags": ["cat", "dog"]
+      "email": "q@q",
+      "password": "bcb15f821479b4d5772bd0ca866c00ad5f926e3580720659cc80d39c9d09802a",
+      "ignoredCategories": [
+        ""
+      ],
+      "ignoredTags": [
+        ""
+      ]
+    },
+    {
+      "id": 3,
+      "name": "test",
+      "email": "test@test",
+      "password": "37268335dd6931045bdcdf92623ff819a64244b53d0e746d438797349d4da578",
+      "ignoredCategories": [
+        ""
+      ],
+      "ignoredTags": [
+        ""
+      ]
+    },
+    {
+      "id": 4,
+      "name": "eee",
+      "email": "e@e",
+      "password": "bcb15f821479b4d5772bd0ca866c00ad5f926e3580720659cc80d39c9d09802a",
+      "ignoredCategories": [
+        ""
+      ],
+      "ignoredTags": [
+        ""
+      ]
     }
   ],
-  "categories": ["Politics", "In the world", "Economy", "Society", "Incidents", "Army", "Science", "Sport", "Culture", "Religion", "Tourism"]
+  "categories": [
+    "Politics",
+    "In the world",
+    "Economy",
+    "Society",
+    "Incidents",
+    "Army",
+    "Science",
+    "Sport",
+    "Culture",
+    "Religion",
+    "Tourism"
+  ]
 }

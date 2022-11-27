@@ -7,6 +7,7 @@ export const UserContext = createContext<any>({});
 const Context = (props) => {
     const [userIsLogged, setUserIsLogged] = useState(false)
     const [loginModalIsOpened, setLoginModalIsOpened] = useState(false)
+    const [signupModalIsOpened, setSignupModalIsOpened] = useState(false)
     const [currentCategory, setCurrentCategory] = useState("")
     const user = useRef({
         id: 0,
@@ -55,15 +56,22 @@ const Context = (props) => {
     const openLoginModal = () => {
         document.body.classList.add('modal-open');
         setLoginModalIsOpened(true)
+        setSignupModalIsOpened(false)
     }
-    const hideLoginModal = () => {
+    const openSignupModal = () => {
+        document.body.classList.add('modal-open');
+        setLoginModalIsOpened(false)
+        setSignupModalIsOpened(true)
+    }
+    const hideModal = () => {
         document.body.classList.remove('modal-open');
         setLoginModalIsOpened(false)
+        setSignupModalIsOpened(false)
     }
 
 
     const logIn = (loggedUser) => {
-        hideLoginModal()
+        hideModal()
         user.current.id = loggedUser.id
         user.current.name = loggedUser.name
         user.current.ignoredCategories = loggedUser.ignoredCategories
@@ -85,8 +93,10 @@ const Context = (props) => {
         userIsLogged,
         user,
         loginModalIsOpened,
+        signupModalIsOpened,
         openLoginModal,
-        hideLoginModal,
+        openSignupModal,
+        hideModal,
         logIn,
         logOut,
         currentCategory,

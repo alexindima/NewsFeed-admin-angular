@@ -1,14 +1,16 @@
 import React, {useContext, useState} from "react";
-import "./Modal__User.scss"
+import "./Modal__Login.scss"
 import axios from "axios";
+import { calculateHash } from "../../encrypt/Hash"
 import { UserContext } from "../../Context/Context";
 
 // Нужен рефакторинг классов
-const Modal__User = () => {
+const Modal__Login = () => {
     const EMAIL_ERROR = "This email is not exist"
     const PASSWORD_ERROR = "Wrong password"
 
     const logIn = useContext(UserContext).logIn;
+    const openSignupModal = useContext(UserContext).openSignupModal;
 
     const [emailInputValue, setEmailInputValue] = useState('')
     const [passwordInputValue, setPasswordInputValue] = useState('')
@@ -24,11 +26,11 @@ const Modal__User = () => {
             /*  Это должен делать бэк
              */
             let emailIsExist = false
-            const resultData = result.data
+            const passwordHash = await calculateHash(passwordInputValue)
             result.data.every(el => {
                 if (el.email === emailInputValue.trim().toLowerCase()) {
                     emailIsExist = true
-                    if (el.password === passwordInputValue) {//need convert to hash
+                    if (el.password === passwordHash) {//need convert to hash
                         logIn(el)
                         return false
                     }
@@ -62,19 +64,19 @@ const Modal__User = () => {
                         setPasswordInputValue(event.target.value)
                     }} />
                 </label>
+                {errorMessage && <div>{errorMessage}</div>}
                 <button type="submit" className="auth-form__submit-button">Log In</button>
             </form>
             <div className="modal-window__recover-password recover-password">
-                <a href="#" className="recover-password__link">Recover Password</a>
+                <button className="recover-password__link">Recover Password</button>
             </div>
             <div className="modal-window__second-title">
                 Or
             </div>
-            <div className="modal-window__sign-up-button sign-up-button">
-                <a href="#" className="sign-up-button__link">Sign Up</a>
-            </div>
+            <button onClick={openSignupModal} className="auth-form__submit-button">Sign Up</button>
+
         </div>
     )
 }
 
-export default Modal__User
+export default Modal__Login
