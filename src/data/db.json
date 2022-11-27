@@ -484,18 +484,19 @@
     {
       "id": 1,
       "name": "admin",
-      "email": "alexindima@gmail.com",
+      "email": "q@q",
       "password": "1",
-      "ignoredCategorise": "politic, sport",
-      "ignoredTags": "death, cat"
+      "ignoredCategorise": [],
+      "ignoredTags": []
     },
     {
       "id": 2,
       "name": "test",
       "email": "a@a",
       "password": "1",
-      "ignoredCategories": "politic, sport",
-      "ignoredTags": "death, cat"
+      "ignoredCategories": ["politics"],
+      "ignoredTags": ["cat", "dog"]
     }
-  ]
+  ],
+  "categories": ["Politics", "In the world", "Economy", "Society", "Incidents", "Army", "Science", "Sport", "Culture", "Religion", "Tourism"]
 }

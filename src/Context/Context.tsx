@@ -7,6 +7,7 @@ export const UserContext = createContext<any>({});
 const Context = (props) => {
     const [userIsLogged, setUserIsLogged] = useState(false)
     const [loginModalIsOpened, setLoginModalIsOpened] = useState(false)
+    const [currentCategory, setCurrentCategory] = useState("")
     const user = useRef({
         id: 0,
         name: "",
@@ -15,13 +16,10 @@ const Context = (props) => {
     })
 
     useEffect(() => {
-        console.log('effect')
         const data = localStorage.getItem("userID")
-        console.log(data)
         if (data) {
             const savedUser = JSON.parse(data);
-            console.log(savedUser)
-            if (savedUser.id !== 1) { //админа сохранять нельзя для безопасности
+            if (savedUser !== 1) { //админа сохранять нельзя для безопасности
                 const fetchData = async () => {
                     const result = await axios(
                         'http://localhost:3030/users',
@@ -46,6 +44,13 @@ const Context = (props) => {
         }
     }, [])
 
+    const chooseCategory = (category) => {
+        setCurrentCategory(category)
+    }
+
+    const clearCategory = () => {
+        setCurrentCategory("")
+    }
 
     const openLoginModal = () => {
         document.body.classList.add('modal-open');
@@ -84,6 +89,9 @@ const Context = (props) => {
         hideLoginModal,
         logIn,
         logOut,
+        currentCategory,
+        chooseCategory,
+        clearCategory
     }
 
     return (

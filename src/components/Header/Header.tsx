@@ -3,7 +3,7 @@ import Logo from '../../img/logo.jpg'
 
 import Header__User from "./Header__User"
 import Header__Search from "./Header__Search"
-import Header__Category from "./Header__Category"
+import Header__Categories from "./Header__Categories"
 import './Header.scss'
 import classNames from "classnames";
 import {useEffect, useState} from "react";
@@ -59,7 +59,7 @@ const Header = () => {
                 <div className="header__icons icons-container">
                     <Header__User />
                     <Header__Search />
-                    <Header__Category />
+                    <Header__Categories />
                 </div>
             </div>
         </header>
