@@ -8,6 +8,8 @@ const Context = (props) => {
     const [userIsLogged, setUserIsLogged] = useState(false)
     const [loginModalIsOpened, setLoginModalIsOpened] = useState(false)
     const [signupModalIsOpened, setSignupModalIsOpened] = useState(false)
+    const [recoveryModalIsOpened, setRecoveryModalIsOpened] = useState(false)
+    const [newPasswordModalIsOpened, setNewPasswordModalIsOpened] = useState(false)
     const [currentCategory, setCurrentCategory] = useState("")
     const user = useRef({
         id: 0,
@@ -57,16 +59,36 @@ const Context = (props) => {
         document.body.classList.add('modal-open');
         setLoginModalIsOpened(true)
         setSignupModalIsOpened(false)
+        setRecoveryModalIsOpened(false)
+        setNewPasswordModalIsOpened(false)
     }
     const openSignupModal = () => {
         document.body.classList.add('modal-open');
         setLoginModalIsOpened(false)
         setSignupModalIsOpened(true)
+        setRecoveryModalIsOpened(false)
+        setNewPasswordModalIsOpened(false)
+    }
+    const openRecoveryModal = () => {
+        document.body.classList.add('modal-open');
+        setLoginModalIsOpened(false)
+        setSignupModalIsOpened(false)
+        setRecoveryModalIsOpened(true)
+        setNewPasswordModalIsOpened(false)
+    }
+    const openNewPasswordModal = () => {
+        document.body.classList.add('modal-open');
+        setLoginModalIsOpened(false)
+        setSignupModalIsOpened(false)
+        setRecoveryModalIsOpened(false)
+        setNewPasswordModalIsOpened(true)
     }
     const hideModal = () => {
         document.body.classList.remove('modal-open');
         setLoginModalIsOpened(false)
         setSignupModalIsOpened(false)
+        setRecoveryModalIsOpened(false)
+        setNewPasswordModalIsOpened(false)
     }
 
 
@@ -94,14 +116,18 @@ const Context = (props) => {
         user,
         loginModalIsOpened,
         signupModalIsOpened,
+        recoveryModalIsOpened,
+        newPasswordModalIsOpened,
         openLoginModal,
         openSignupModal,
+        openRecoveryModal,
+        openNewPasswordModal,
         hideModal,
         logIn,
         logOut,
         currentCategory,
         chooseCategory,
-        clearCategory
+        clearCategory,
     }
 
     return (

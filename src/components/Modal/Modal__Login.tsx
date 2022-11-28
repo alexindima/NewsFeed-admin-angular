@@ -6,11 +6,12 @@ import { UserContext } from "../../Context/Context";
 
 // Нужен рефакторинг классов
 const Modal__Login = () => {
-    const EMAIL_ERROR = "This email is not exist"
+    const EMAIL_ERROR = "There is no user with this email"
     const PASSWORD_ERROR = "Wrong password"
 
     const logIn = useContext(UserContext).logIn;
     const openSignupModal = useContext(UserContext).openSignupModal;
+    const openRecoveryModal = useContext(UserContext).openRecoveryModal;
 
     const [emailInputValue, setEmailInputValue] = useState('')
     const [passwordInputValue, setPasswordInputValue] = useState('')
@@ -64,17 +65,16 @@ const Modal__Login = () => {
                         setPasswordInputValue(event.target.value)
                     }} />
                 </label>
-                {errorMessage && <div>{errorMessage}</div>}
+                {errorMessage && <div className="modal-window__error">{errorMessage}</div>}
                 <button type="submit" className="auth-form__submit-button">Log In</button>
             </form>
             <div className="modal-window__recover-password recover-password">
-                <button className="recover-password__link">Recover Password</button>
+                <button onClick={openRecoveryModal} className="recover-password__button">Recover Password</button>
             </div>
             <div className="modal-window__second-title">
                 Or
             </div>
             <button onClick={openSignupModal} className="auth-form__submit-button">Sign Up</button>
-
         </div>
     )
 }

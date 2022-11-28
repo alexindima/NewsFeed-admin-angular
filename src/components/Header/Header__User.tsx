@@ -13,18 +13,17 @@ const Header__User = () => {
     const logOut = useContext(UserContext).logOut;
     const openLoginModal =  useContext(UserContext).openLoginModal;
 
-    function showOrHideCategory () {
+    const showOrHideCategory = () => {
         if (userIsLogged) {
             setUserIsClosed(!userIsClosed)
         }
     }
-        console.log(userID)
 
     const userWindowClass = classNames({
         "icon-wrapper__popup": true,
         "hidden": userIsClosed,
     })
-    console.log(userID)
+
     return (
         <div className="icon-wrapper" onClick={showOrHideCategory}>
             {userIsLogged || <BiUserCircle onClick={openLoginModal} id="user" className="icon-wrapper__img" title="User" />}

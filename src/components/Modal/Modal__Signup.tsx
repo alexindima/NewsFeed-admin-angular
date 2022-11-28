@@ -15,7 +15,6 @@ const Modal__Login = () => {
     const logIn = useContext(UserContext).logIn;
     const hideModal =  useContext(UserContext).hideModal;
 
-
     const [nameInputValue, setNameInputValue] = useState('')
     const [emailInputValue, setEmailInputValue] = useState('')
     const [passwordInputValue, setPasswordInputValue] = useState('')
@@ -112,7 +111,7 @@ const Modal__Login = () => {
                         setPassword2InputValue(event.target.value)
                     }} />
                 </label>
-                {errorMessage && <div>{errorMessage}</div>}
+                {errorMessage && <div className="modal-window__error">{errorMessage}</div>}
                 <button type="submit" className="auth-form__submit-button">Sign Up</button>
             </form>
         </div>
