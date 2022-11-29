@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useRef, useState} from "react";
 import { BiUserCircle,} from 'react-icons/bi';
 import { BiUserCheck } from 'react-icons/bi';
 import { UserContext } from "../../Context/Context";
@@ -6,15 +6,17 @@ import classNames from "classnames";
 
 const Header__User = () => {
     const [userIsClosed, setUserIsClosed] = useState(true)
+    const helloUserDOM = useRef(null) //узнать как это сделать без юзрефа
 
     const userIsLogged = useContext(UserContext).userIsLogged;
     const userID = useContext(UserContext).user.current.id;
     const userName = useContext(UserContext).user.current.name;
     const logOut = useContext(UserContext).logOut;
     const openLoginModal =  useContext(UserContext).openLoginModal;
+    const openSettingsMainModal =  useContext(UserContext).openSettingsMainModal;
 
-    const showOrHideCategory = () => {
-        if (userIsLogged) {
+    const showOrHideUser = (event) => {
+        if (userIsLogged && (event.target !== helloUserDOM.current)) {
             setUserIsClosed(!userIsClosed)
         }
     }
@@ -25,16 +27,16 @@ const Header__User = () => {
     })
 
     return (
-        <div className="icon-wrapper" onClick={showOrHideCategory}>
+        <div className="icon-wrapper" onClick={(event) => {showOrHideUser(event)}}>
             {userIsLogged || <BiUserCircle onClick={openLoginModal} id="user" className="icon-wrapper__img" title="User" />}
             {userIsLogged && <>
-                <BiUserCheck id="user" className="icon-wrapper__img" title="User" />
+                <BiUserCheck className="icon-wrapper__img" title="User" />
                 <div className={userWindowClass}>
                     <div className="category-dropdown">
-                        <div>Hello, {userName}!</div>
-                        <button className="category-dropdown__element" >Settings</button>
+                        <div ref={helloUserDOM} className="category-dropdown__name">Hello, {userName}!</div>
+                        <button onClick={openSettingsMainModal} className="category-dropdown__element" >Settings</button>
                         {(userID === 1) && <button className="category-dropdown__element" >Admin panel</button>}
-                        <button onClick={logOut} className="category-dropdown__element" >Log Out</button>
+                        <button onClick={logOut} className="category-dropdown__element category-dropdown__element--reset" >Log Out</button>
                     </div>
                 </div>
             </> }

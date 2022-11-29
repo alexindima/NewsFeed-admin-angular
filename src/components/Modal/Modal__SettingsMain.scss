@@ -1,0 +1,112 @@
+.form-field {
+  position: relative;
+  display: block;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  min-height: 60px;
+  margin-bottom: 10px;
+  padding: 18px 15px 2px;
+  border: 1px solid var(--user-form-input-body-color);
+  border-radius: 3px;
+  background-color: var(--primary-bg-color);
+  &__title{
+    top: 8px;
+    font-size: 12px;
+    line-height: 14px;
+    padding-right: 45px;
+    position: absolute;
+    z-index: 2;
+    color: var(--secondary-text-color);
+    font-weight: 500;
+  }
+  &__input {
+    width: 100%;
+    overflow: hidden;
+    color: var(--primary-text-color);
+    border: none;
+    outline: none;
+    background: var(--user-form-input-body-color);
+    font-size: 16px;
+    line-height: 23px;
+    font-weight: 600;
+    min-height: 38px;
+    padding: 7px 0;
+  }
+  &__textarea {
+    resize: none;
+    width: 100%;
+    overflow: auto;
+    color: var(--primary-text-color);
+    border: none;
+    outline: none;
+    background: var(--user-form-input-body-color);
+    font-size: 16px;
+    line-height: 23px;
+    font-weight: 600;
+    min-height: 38px;
+    padding: 7px 0;
+  }
+}
+
+.auth-form {
+  &__submit-button {
+    cursor: pointer;
+    width: 100%;
+    height: 60px;
+    padding: 0 10px;
+    text-align: center;
+    color: var(--btn-text-color);
+    border: none;
+    border-radius: 3px;
+    outline: none;
+    background-color: var(--btn-bg-color);
+    font-size: 16px;
+    font-weight: bold;
+    position: relative;
+    &:hover {
+      background-color: var(--btn-bg-hover-color);
+    }
+  }
+}
+
+.change-name-password {
+  display: block;
+  padding-top: 20px;
+  text-align: right;
+  &__button {
+    border: 0;
+    background: transparent;
+    text-decoration: underline;
+    cursor: pointer;
+    color: var(--secondary-text-color);
+    &:hover {
+      color: var(--btn-bg-hover-color);
+    }
+  }
+}
+
+.sign-up-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  height: 60px;
+  padding: 0 10px;
+  text-align: center;
+  vertical-align: middle;
+  border: none;
+  border-radius: 3px;
+  outline: none;
+  background-color: var(--btn-bg-color);
+  font-size: 16px;
+  font-weight: bold;
+  &:hover {
+    background-color: var(--btn-bg-hover-color);
+  }
+  &__link {
+    color: var(--btn-text-color);
+    text-decoration: none;
+  }
+}
+
+

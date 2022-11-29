@@ -6,7 +6,7 @@ import { validUserName, validPassword } from "../../Regex/Regex"
 import { UserContext } from "../../Context/Context";
 
 // Нужен рефакторинг классов
-const Modal__Login = () => {
+const Modal__Signup = () => {
     const NAME_ERROR = "The user name must contain at least 3 letters, numbers and underscores"
     const EMAIL_ERROR = "This email is already exist"
     const PASSWORD_ERROR = "The password must contain at least 6 valid characters"
@@ -118,4 +118,4 @@ const Modal__Login = () => {
     )
 }
 
-export default Modal__Login
+export default Modal__Signup

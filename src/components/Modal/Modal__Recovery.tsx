@@ -45,7 +45,7 @@ const Modal__Recovery = (props) => {
     return (
         <div>
             <div className="modal-window__main-title">
-                Password Recovery
+                Password recovery
             </div>
             <form onSubmit={handleSubmit} className="modal-window__auth-form auth-form">
                 <label className="auth-form__field form-field">

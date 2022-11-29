@@ -1,20 +1,17 @@
 import React, {useContext, useState} from "react";
-import "./Modal__NewPassword.scss"
-import Form__SetPassword from "./Form__SetPassword";
+import "./Form__SetPassword.scss"
 import axios from "axios";
 import { calculateHash } from "../../encrypt/Hash"
 import { validPassword } from "../../Regex/Regex"
-import { UserContext } from "../../Context/Context";
 
 // Нужен рефакторинг классов
-const Modal__NewPassword = (props) => {
+const Modal__SetPassword = (props) => {
     const PASSWORD_ERROR = "The password must contain at least 6 valid characters"
     const PASSWORD2_ERROR = "Passwords must match"
 
-    const recoveredUser = props.user
-
-    const logIn = useContext(UserContext).logIn
-    const hideModal =  useContext(UserContext).hideModal
+    const recoveredUser = props.userID
+    const logIn = props.loginFunction
+    const hideModal =  props.hideModalFunction
 
     const [emailInputValue, setEmailInputValue] = useState('')
     const [passwordInputValue, setPasswordInputValue] = useState('')
@@ -48,13 +45,23 @@ const Modal__NewPassword = (props) => {
     };
 
     return (
-        <div>
-            <div className="modal-window__main-title">
-                Set new password
-            </div>
-            <Form__SetPassword userID={recoveredUser} loginFunction={logIn} hideModalFunction={hideModal}/>
-        </div>
+        <form onSubmit={handleSubmit} className="modal-window__auth-form auth-form">
+            <label className="auth-form__field form-field">
+                <span className="form-field__title">New Password *</span>
+                <input type="password" className="form-field__input" required value={passwordInputValue} onChange={(event) => {
+                    setPasswordInputValue(event.target.value)
+                }} />
+            </label>
+            <label className="auth-form__field form-field">
+                <span className="form-field__title">Repeat New Password *</span>
+                <input type="password" className="form-field__input" required value={password2InputValue} onChange={(event) => {
+                    setPassword2InputValue(event.target.value)
+                }} />
+            </label>
+            {errorMessage && <div className="modal-window__error">{errorMessage}</div>}
+            <button type="submit" className="auth-form__submit-button">Save new password</button>
+        </form>
     )
 }
 
-export default Modal__NewPassword
+export default Modal__SetPassword

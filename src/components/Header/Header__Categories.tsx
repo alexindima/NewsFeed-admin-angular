@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import { CgMenuRound } from 'react-icons/cg';
+import { CgMenuRound, CgPlayListCheck } from 'react-icons/cg';
 import "./Header__Categories.scss"
 import classNames from "classnames";
 import axios from "axios";
@@ -8,6 +8,7 @@ import { UserContext } from "../../Context/Context";
 const Header__Categories = () => {
     const [categoryList, setCategoryList] = useState([])
     const [categoryIsClosed, setCategoryIsClosed] =useState(true)
+
     const currentCategory = useContext(UserContext).currentCategory
     const chooseCategory = useContext(UserContext).chooseCategory
     const clearCategory = useContext(UserContext).clearCategory
@@ -33,11 +34,23 @@ const Header__Categories = () => {
     })
     return (
         <div className="icon-wrapper"  onClick={showOrHideCategory}>
-            <CgMenuRound id="dropdown" className="icon-wrapper__img" title="Category"/>
+            {!!currentCategory || <CgMenuRound className="icon-wrapper__img" title="Category"/>}
+            {!!currentCategory && <CgPlayListCheck className="icon-wrapper__img" title="Category"/>}
             <div id="category-window" className={categoryWindowClass}>
                 <div className="category-dropdown">
-                    {currentCategory && <button onClick={clearCategory} className="category-dropdown__element" >Clear category</button>}
-                    {categoryList.map((el, index) => <button onClick={() => chooseCategory(el)} className="category-dropdown__element" key={index}>{el}</button>)}
+                    {currentCategory && <button onClick={clearCategory}
+                                                className="category-dropdown__element category-dropdown__element--reset" >Clear category</button>}
+                    {
+                        categoryList.map((el, index) => (
+                            <button onClick={() => chooseCategory(el)}
+                                    className={
+                                        el === currentCategory
+                                            ? "category-dropdown__element category-dropdown__element--active"
+                                            : "category-dropdown__element"
+                                    }
+                                    key={index}>{el}</button>)
+                        )
+                    }
                 </div>
             </div>
         </div>
