@@ -3,6 +3,7 @@ import "./Modal__SettingsName.scss"
 import axios from "axios";
 import { UserContext } from "../../Context/Context";
 import {validUserName} from "../../Regex/Regex";
+import classNames from "classnames";
 
 // Нужен рефакторинг классов
 const Modal__SettingsName = () => {
@@ -36,13 +37,18 @@ const Modal__SettingsName = () => {
         }
     };
 
+    const nameFieldClass = classNames({
+        "form-field": true,
+        "form-field--error": errorMessage === NAME_ERROR,
+    })
+
     return (
         <div>
             <div className="modal-window__main-title">
                 Change name
             </div>
             <form onSubmit={handleSubmit} className="modal-window__auth-form auth-form">
-                <label className="auth-form__field form-field">
+                <label className={nameFieldClass}>
                     <span className="form-field__title">New name *</span>
                     <input ref={nameInputDOM} type="text" className="form-field__input" required value={nameInputValue} onChange={(event) => {
                         setNameInputValue(event.target.value)

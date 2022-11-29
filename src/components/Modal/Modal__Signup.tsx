@@ -4,6 +4,7 @@ import axios from "axios";
 import { calculateHash } from "../../encrypt/Hash"
 import { validUserName, validPassword } from "../../Regex/Regex"
 import { UserContext } from "../../Context/Context";
+import classNames from "classnames";
 
 // Нужен рефакторинг классов
 const Modal__Signup = () => {
@@ -88,31 +89,43 @@ const Modal__Signup = () => {
         }
     };
 
+    const nameFieldClass = classNames({
+        "form-field": true,
+        "form-field--error": errorMessage === NAME_ERROR,
+    })
+    const emailFieldClass = classNames({
+        "form-field": true,
+        "form-field--error": errorMessage === EMAIL_ERROR,
+    })
+    const passwordFieldClass = classNames({
+        "form-field": true,
+        "form-field--error": (errorMessage === PASSWORD_ERROR) || (errorMessage === PASSWORD2_ERROR),
+    })
     return (
         <div>
             <div className="modal-window__main-title">
                 Sign Up
             </div>
             <form onSubmit={handleSubmit} className="modal-window__auth-form auth-form">
-                <label className="auth-form__field form-field">
+                <label className={nameFieldClass}>
                     <span className="form-field__title">Name *</span>
                     <input ref={nameInputDOM} type="text" className="form-field__input" required value={nameInputValue} onChange={(event) => {
                         setNameInputValue(event.target.value)
                     }} />
                 </label>
-                <label className="auth-form__field form-field">
+                <label className={emailFieldClass}>
                     <span className="form-field__title">Email *</span>
                     <input ref={emailInputDOM} type="email" className="form-field__input" required value={emailInputValue} onChange={(event) => {
                         setEmailInputValue(event.target.value)
                     }} />
                 </label>
-                <label className="auth-form__field form-field">
+                <label className={passwordFieldClass}>
                     <span className="form-field__title">Password *</span>
                     <input ref={passwordInputDOM} type="password" className="form-field__input" required value={passwordInputValue} onChange={(event) => {
                         setPasswordInputValue(event.target.value)
                     }} />
                 </label>
-                <label className="auth-form__field form-field">
+                <label className={passwordFieldClass}>
                     <span className="form-field__title">Repeat the Password *</span>
                     <input type="password" className="form-field__input" value={password2InputValue} onChange={(event) => {
                         setPassword2InputValue(event.target.value)

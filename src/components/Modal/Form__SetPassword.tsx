@@ -3,6 +3,7 @@ import "./Form__SetPassword.scss"
 import axios from "axios";
 import {calculateHash} from "../../encrypt/Hash"
 import {validPassword} from "../../Regex/Regex"
+import classNames from "classnames";
 
 // Нужен рефакторинг классов
 const Modal__SetPassword = (props) => {
@@ -48,15 +49,20 @@ const Modal__SetPassword = (props) => {
         }
     };
 
+    const passwordFieldClass = classNames({
+        "form-field": true,
+        "form-field--error": !!errorMessage,
+    })
+
     return (
         <form onSubmit={handleSubmit} className="modal-window__auth-form auth-form">
-            <label className="auth-form__field form-field">
+            <label className={passwordFieldClass}>
                 <span className="form-field__title">New Password *</span>
                 <input ref={passwordInputDOM} type="password" className="form-field__input" required value={passwordInputValue} onChange={(event) => {
                     setPasswordInputValue(event.target.value)
                 }} />
             </label>
-            <label className="auth-form__field form-field">
+            <label className={passwordFieldClass}>
                 <span className="form-field__title">Repeat New Password *</span>
                 <input type="password" className="form-field__input" value={password2InputValue} onChange={(event) => {
                     setPassword2InputValue(event.target.value)

@@ -2,6 +2,7 @@ import React, {useContext, useRef, useState} from "react";
 import "./Modal__Recovery.scss"
 import axios from "axios";
 import { UserContext } from "../../Context/Context";
+import classNames from "classnames";
 
 // Нужен рефакторинг классов
 const Modal__Recovery = (props) => {
@@ -44,13 +45,18 @@ const Modal__Recovery = (props) => {
 
     };
 
+    const emailFieldClass = classNames({
+        "form-field": true,
+        "form-field--error": !!errorMessage,
+    })
+
     return (
         <div>
             <div className="modal-window__main-title">
                 Password recovery
             </div>
             <form onSubmit={handleSubmit} className="modal-window__auth-form auth-form">
-                <label className="auth-form__field form-field">
+                <label className={emailFieldClass}>
                     <span className="form-field__title">Email *</span>
                     <input ref={emailInputDOM} type="email" className="form-field__input" required value={emailInputValue} onChange={(event) => {
                         setEmailInputValue(event.target.value)

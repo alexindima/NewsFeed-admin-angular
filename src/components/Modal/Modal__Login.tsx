@@ -1,10 +1,10 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useRef, useState} from "react";
 import "./Modal__Login.scss"
 import axios from "axios";
 import { calculateHash } from "../../encrypt/Hash"
 import { UserContext } from "../../Context/Context";
+import classNames from "classnames";
 
-// Нужен рефакторинг классов
 const Modal__Login = () => {
     const EMAIL_ERROR = "There is no user with this email"
     const PASSWORD_ERROR = "Wrong password"
@@ -16,6 +16,9 @@ const Modal__Login = () => {
     const [emailInputValue, setEmailInputValue] = useState('')
     const [passwordInputValue, setPasswordInputValue] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
+
+    const emailInputDOM  = useRef<HTMLInputElement>(null)
+    const passwordInputDOM  = useRef<HTMLInputElement>(null)
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -37,15 +40,28 @@ const Modal__Login = () => {
                     }
                     else {
                         setErrorMessage(PASSWORD_ERROR)
+                        passwordInputDOM.current!.focus();
                     }
                 }
                 return true
             })
-            if (!emailIsExist) {setErrorMessage(EMAIL_ERROR)}
+            if (!emailIsExist) {
+                setErrorMessage(EMAIL_ERROR)
+                emailInputDOM.current!.focus();
+            }
         };
         fetchData();
 
     };
+
+    const emailFieldClass = classNames({
+        "form-field": true,
+        "form-field--error": errorMessage === EMAIL_ERROR,
+    })
+    const passwordFieldClass = classNames({
+        "form-field": true,
+        "form-field--error": errorMessage === PASSWORD_ERROR,
+    })
 
     return (
         <div>
@@ -53,15 +69,15 @@ const Modal__Login = () => {
                 Login to the site
             </div>
             <form onSubmit={handleSubmit} className="modal-window__auth-form auth-form">
-                <label className="auth-form__field form-field">
+                <label className={emailFieldClass}>
                     <span className="form-field__title">Email</span>
-                    <input type="email" className="form-field__input" required value={emailInputValue} onChange={(event) => {
+                    <input ref={emailInputDOM} type="email" className="form-field__input" required value={emailInputValue} onChange={(event) => {
                         setEmailInputValue(event.target.value)
                     }} />
                 </label>
-                <label className="auth-form__field form-field">
+                <label className={passwordFieldClass}>
                     <span className="form-field__title">Password</span>
-                    <input type="password" className="form-field__input" required value={passwordInputValue} onChange={(event) => {
+                    <input ref={passwordInputDOM} type="password" className="form-field__input" required value={passwordInputValue} onChange={(event) => {
                         setPasswordInputValue(event.target.value)
                     }} />
                 </label>
