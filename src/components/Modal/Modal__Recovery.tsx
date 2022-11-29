@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useRef, useState} from "react";
 import "./Modal__Recovery.scss"
 import axios from "axios";
 import { UserContext } from "../../Context/Context";
@@ -8,6 +8,7 @@ const Modal__Recovery = (props) => {
     const EMAIL_ERROR = "There is no user with this email"
 
     const setRecoveryUser = props.setUser
+    const emailInputDOM  = useRef<HTMLInputElement>(null)
 
     const openNewPasswordModal =  useContext(UserContext).openNewPasswordModal;
 
@@ -36,6 +37,7 @@ const Modal__Recovery = (props) => {
             })
             if (!userExist) {
                 setErrorMessage(EMAIL_ERROR)
+                emailInputDOM.current!.focus();
             }
         };
         fetchData();
@@ -50,7 +52,7 @@ const Modal__Recovery = (props) => {
             <form onSubmit={handleSubmit} className="modal-window__auth-form auth-form">
                 <label className="auth-form__field form-field">
                     <span className="form-field__title">Email *</span>
-                    <input type="email" className="form-field__input" required value={emailInputValue} onChange={(event) => {
+                    <input ref={emailInputDOM} type="email" className="form-field__input" required value={emailInputValue} onChange={(event) => {
                         setEmailInputValue(event.target.value)
                     }} />
                 </label>

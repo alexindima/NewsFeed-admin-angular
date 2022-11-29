@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useRef, useState} from "react";
 import "./Modal__Signup.scss"
 import axios from "axios";
 import { calculateHash } from "../../encrypt/Hash"
@@ -14,6 +14,9 @@ const Modal__Signup = () => {
 
     const logIn = useContext(UserContext).logIn;
     const hideModal =  useContext(UserContext).hideModal;
+    const nameInputDOM  = useRef<HTMLInputElement>(null)
+    const emailInputDOM  = useRef<HTMLInputElement>(null)
+    const passwordInputDOM  = useRef<HTMLInputElement>(null)
 
     const [nameInputValue, setNameInputValue] = useState('')
     const [emailInputValue, setEmailInputValue] = useState('')
@@ -30,16 +33,19 @@ const Modal__Signup = () => {
             setErrorMessage(PASSWORD2_ERROR);
             setPasswordInputValue("")
             setPassword2InputValue("")
+            passwordInputDOM.current!.focus();
         }
         else if (!validUserName.test(nameInputValue)) {
             setErrorMessage(NAME_ERROR);
             setPasswordInputValue("")
             setPassword2InputValue("")
+            nameInputDOM.current!.focus();
         }
         else if (!validPassword.test(passwordInputValue)) {
             setErrorMessage(PASSWORD_ERROR);
             setPasswordInputValue("")
             setPassword2InputValue("")
+            passwordInputDOM.current!.focus();
         }
         else {
             const fetchData = async () => {
@@ -59,6 +65,7 @@ const Modal__Signup = () => {
                         setErrorMessage(EMAIL_ERROR)
                         setPasswordInputValue("")
                         setPassword2InputValue("")
+                        emailInputDOM.current!.focus();
                         return false
                     }
                     return true
@@ -89,25 +96,25 @@ const Modal__Signup = () => {
             <form onSubmit={handleSubmit} className="modal-window__auth-form auth-form">
                 <label className="auth-form__field form-field">
                     <span className="form-field__title">Name *</span>
-                    <input type="text" className="form-field__input" required value={nameInputValue} onChange={(event) => {
+                    <input ref={nameInputDOM} type="text" className="form-field__input" required value={nameInputValue} onChange={(event) => {
                         setNameInputValue(event.target.value)
                     }} />
                 </label>
                 <label className="auth-form__field form-field">
                     <span className="form-field__title">Email *</span>
-                    <input type="email" className="form-field__input" required value={emailInputValue} onChange={(event) => {
+                    <input ref={emailInputDOM} type="email" className="form-field__input" required value={emailInputValue} onChange={(event) => {
                         setEmailInputValue(event.target.value)
                     }} />
                 </label>
                 <label className="auth-form__field form-field">
                     <span className="form-field__title">Password *</span>
-                    <input type="password" className="form-field__input" required value={passwordInputValue} onChange={(event) => {
+                    <input ref={passwordInputDOM} type="password" className="form-field__input" required value={passwordInputValue} onChange={(event) => {
                         setPasswordInputValue(event.target.value)
                     }} />
                 </label>
                 <label className="auth-form__field form-field">
                     <span className="form-field__title">Repeat the Password *</span>
-                    <input type="password" className="form-field__input" required value={password2InputValue} onChange={(event) => {
+                    <input type="password" className="form-field__input" value={password2InputValue} onChange={(event) => {
                         setPassword2InputValue(event.target.value)
                     }} />
                 </label>

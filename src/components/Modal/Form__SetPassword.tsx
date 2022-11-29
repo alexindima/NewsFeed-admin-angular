@@ -1,13 +1,15 @@
-import React, {useContext, useState} from "react";
+import React, {useRef, useState} from "react";
 import "./Form__SetPassword.scss"
 import axios from "axios";
-import { calculateHash } from "../../encrypt/Hash"
-import { validPassword } from "../../Regex/Regex"
+import {calculateHash} from "../../encrypt/Hash"
+import {validPassword} from "../../Regex/Regex"
 
 // Нужен рефакторинг классов
 const Modal__SetPassword = (props) => {
     const PASSWORD_ERROR = "The password must contain at least 6 valid characters"
     const PASSWORD2_ERROR = "Passwords must match"
+
+    const passwordInputDOM  = useRef<HTMLInputElement>(null)
 
     const recoveredUser = props.userID
     const logIn = props.loginFunction
@@ -26,11 +28,13 @@ const Modal__SetPassword = (props) => {
             setErrorMessage(PASSWORD2_ERROR)
             setPasswordInputValue("")
             setPassword2InputValue("")
+            passwordInputDOM.current!.focus();
         }
         else if (!validPassword.test(passwordInputValue)) {
             setErrorMessage(PASSWORD_ERROR)
             setPasswordInputValue("")
             setPassword2InputValue("")
+            passwordInputDOM.current!.focus();
         }
         else {
             const fetchData = async () => {
@@ -48,13 +52,13 @@ const Modal__SetPassword = (props) => {
         <form onSubmit={handleSubmit} className="modal-window__auth-form auth-form">
             <label className="auth-form__field form-field">
                 <span className="form-field__title">New Password *</span>
-                <input type="password" className="form-field__input" required value={passwordInputValue} onChange={(event) => {
+                <input ref={passwordInputDOM} type="password" className="form-field__input" required value={passwordInputValue} onChange={(event) => {
                     setPasswordInputValue(event.target.value)
                 }} />
             </label>
             <label className="auth-form__field form-field">
                 <span className="form-field__title">Repeat New Password *</span>
-                <input type="password" className="form-field__input" required value={password2InputValue} onChange={(event) => {
+                <input type="password" className="form-field__input" value={password2InputValue} onChange={(event) => {
                     setPassword2InputValue(event.target.value)
                 }} />
             </label>

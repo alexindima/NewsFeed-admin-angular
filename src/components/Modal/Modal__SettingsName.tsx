@@ -1,9 +1,8 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useRef, useState} from "react";
 import "./Modal__SettingsName.scss"
 import axios from "axios";
 import { UserContext } from "../../Context/Context";
 import {validUserName} from "../../Regex/Regex";
-import Form__SetPassword from "./Form__SetPassword";
 
 // Нужен рефакторинг классов
 const Modal__SettingsName = () => {
@@ -17,11 +16,13 @@ const Modal__SettingsName = () => {
     const [errorMessage, setErrorMessage] = useState('')
 
     const changedUser = user.current.id
+    const nameInputDOM  = useRef<HTMLInputElement>(null)
 
     const handleSubmit = (event) => {
         event.preventDefault();
         if (!validUserName.test(nameInputValue)) {
             setErrorMessage(NAME_ERROR);
+            nameInputDOM.current!.focus();
         }
         else {
             const fetchData = async () => {
@@ -43,7 +44,7 @@ const Modal__SettingsName = () => {
             <form onSubmit={handleSubmit} className="modal-window__auth-form auth-form">
                 <label className="auth-form__field form-field">
                     <span className="form-field__title">New name *</span>
-                    <input type="text" className="form-field__input" required value={nameInputValue} onChange={(event) => {
+                    <input ref={nameInputDOM} type="text" className="form-field__input" required value={nameInputValue} onChange={(event) => {
                         setNameInputValue(event.target.value)
                     }} />
                 </label>
