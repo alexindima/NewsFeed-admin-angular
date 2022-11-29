@@ -1,6 +1,7 @@
 import React, {useContext, useRef, useState} from "react";
 import "./Modal__Signup.scss"
 import axios from "axios";
+import {IUser} from "../../type/IUser";
 import { calculateHash } from "../../encrypt/Hash"
 import { validUserName, validPassword } from "../../Regex/Regex"
 import { UserContext } from "../../Context/Context";
@@ -27,7 +28,7 @@ const Modal__Signup = () => {
 
 
 
-    const handleSubmit = (event) => {
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setEmailInputValue(emailInputValue.toLowerCase())
         if (passwordInputValue !== password2InputValue) {
@@ -57,11 +58,11 @@ const Modal__Signup = () => {
                  */
                 let userAlreadyExist = false
                 let lastID = 0
-                result.data.every(el => {
-                    if (el.id > lastID) {
-                        lastID = el.id
+                result.data.every((user:IUser) => {
+                    if (user.id > lastID) {
+                        lastID = user.id
                     }
-                    if (el.email === emailInputValue.trim().toLowerCase()) {
+                    if (user.email === emailInputValue.trim().toLowerCase()) {
                         userAlreadyExist = true
                         setErrorMessage(EMAIL_ERROR)
                         setPasswordInputValue("")

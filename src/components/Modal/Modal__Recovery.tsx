@@ -1,11 +1,15 @@
 import React, {useContext, useRef, useState} from "react";
 import "./Modal__Recovery.scss"
+import {IUser} from "../../type/IUser";
 import axios from "axios";
 import { UserContext } from "../../Context/Context";
 import classNames from "classnames";
 
-// Нужен рефакторинг классов
-const Modal__Recovery = (props) => {
+interface IUserProps {
+    setUser: Function
+}
+
+const Modal__Recovery = (props: IUserProps) => {
     const EMAIL_ERROR = "There is no user with this email"
 
     const setRecoveryUser = props.setUser
@@ -16,7 +20,7 @@ const Modal__Recovery = (props) => {
     const [emailInputValue, setEmailInputValue] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
 
-    const handleSubmit = (event) => {
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setEmailInputValue(emailInputValue.toLowerCase())
 
@@ -27,10 +31,10 @@ const Modal__Recovery = (props) => {
             /*  Это должен делать бэк
              */
             let userExist = false
-            result.data.every(el => {
-                if (el.email === emailInputValue.trim().toLowerCase()) {
+            result.data.every((user: IUser) => {
+                if (user.email === emailInputValue.trim().toLowerCase()) {
                     userExist = true
-                    setRecoveryUser(el.id)
+                    setRecoveryUser(user.id)
                     openNewPasswordModal()
                     return false
                 }

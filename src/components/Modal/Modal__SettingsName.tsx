@@ -9,17 +9,17 @@ import classNames from "classnames";
 const Modal__SettingsName = () => {
     const NAME_ERROR = "The user name must contain at least 3 letters, numbers and underscores"
 
-    const user = useContext(UserContext).user;
+    const userID = useContext(UserContext).userID;
+    const userName = useContext(UserContext).userName;
     const logIn = useContext(UserContext).logIn;
     const hideModal =  useContext(UserContext).hideModal;
 
-    const [nameInputValue, setNameInputValue] = useState(user.current.name)
+    const [nameInputValue, setNameInputValue] = useState(userName)
     const [errorMessage, setErrorMessage] = useState('')
 
-    const changedUser = user.current.id
     const nameInputDOM  = useRef<HTMLInputElement>(null)
 
-    const handleSubmit = (event) => {
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (!validUserName.test(nameInputValue)) {
             setErrorMessage(NAME_ERROR);
@@ -27,9 +27,9 @@ const Modal__SettingsName = () => {
         }
         else {
             const fetchData = async () => {
-                const result = await axios(`http://localhost:3030/users/${changedUser}`)
+                const result = await axios(`http://localhost:3030/users/${userID}`)
                 const user = {...result.data, name: nameInputValue}
-                const response = await axios.put(`http://localhost:3030/users/${changedUser}`, user)
+                const response = await axios.put(`http://localhost:3030/users/${userID}`, user)
                 logIn(user)
                 hideModal()
             };

@@ -4,6 +4,7 @@ import axios from "axios";
 import { calculateHash } from "../../encrypt/Hash"
 import { UserContext } from "../../Context/Context";
 import classNames from "classnames";
+import {IUser} from "../../type/IUser";
 
 const Modal__Login = () => {
     const EMAIL_ERROR = "There is no user with this email"
@@ -20,7 +21,7 @@ const Modal__Login = () => {
     const emailInputDOM  = useRef<HTMLInputElement>(null)
     const passwordInputDOM  = useRef<HTMLInputElement>(null)
 
-    const handleSubmit = (event) => {
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const fetchData = async () => {
             const result = await axios(
@@ -31,11 +32,11 @@ const Modal__Login = () => {
              */
             let emailIsExist = false
             const passwordHash = await calculateHash(passwordInputValue)
-            result.data.every(el => {
-                if (el.email === emailInputValue.trim().toLowerCase()) {
+            result.data.every((user: IUser) => {
+                if (user.email === emailInputValue.trim().toLowerCase()) {
                     emailIsExist = true
-                    if (el.password === passwordHash) {//need convert to hash
-                        logIn(el)
+                    if (user.password === passwordHash) {//need convert to hash
+                        logIn(user)
                         return false
                     }
                     else {

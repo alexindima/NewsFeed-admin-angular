@@ -1,12 +1,16 @@
 import * as React from "react";
-import {createContext, useEffect, useRef, useState} from "react";
+import {createContext, useEffect, useState} from "react";
 import axios from "axios";
+import {IUser} from "../type/IUser";
 
 export const UserContext = createContext<any>({});
 
+interface IContextProps {
+    children?: JSX.Element
+}
+
 //наверно стоит разбить на разные контексты (юзер, категории, модалки)
-const Context = (props) => {
-    const [userIsLogged, setUserIsLogged] = useState(false)
+const Context = (props: IContextProps) => {
     const [loginModalIsOpened, setLoginModalIsOpened] = useState(false)
     const [signupModalIsOpened, setSignupModalIsOpened] = useState(false)
     const [recoveryModalIsOpened, setRecoveryModalIsOpened] = useState(false)
@@ -14,13 +18,14 @@ const Context = (props) => {
     const [settingsMainModalIsOpened, setSettingsMainModalIsOpened] = useState(false)
     const [settingsNameModalIsOpened, setSettingsNameModalIsOpened] = useState(false)
     const [settingsPasswordModalIsOpened, setSettingsPasswordModalIsOpened] = useState(false)
+
     const [currentCategory, setCurrentCategory] = useState("")
-    const user = useRef({  //подумать насчет переделки на стейт
-        id: 0,
-        name: "",
-        ignoredCategories: [""],
-        ignoredTags: [""]
-    })
+
+    const [userIsLogged, setUserIsLogged] = useState(false)
+    const [userID, setUserID] = useState(0)
+    const [userName, setUserName] = useState("")
+    const [userIgnoredCategories, setUserIgnoredCategories] = useState([""])
+    const [userIgnoredTags, setUserIgnoredTags] = useState([""])
 
     useEffect(() => {
         const data = localStorage.getItem("userID")
@@ -34,12 +39,12 @@ const Context = (props) => {
 
                     /*  Это должен делать бэк
                      */
-                    result.data.every(el => {
-                        if (el.id === savedUser) {
-                            user.current.id = el.id
-                            user.current.name = el.name
-                            user.current.ignoredCategories = el.ignoredCategories
-                            user.current.ignoredTags = el.ignoredTags
+                    result.data.every((user:IUser) => {
+                        if (user.id === savedUser) {
+                            setUserID(user.id)
+                            setUserName(user.name)
+                            setUserIgnoredCategories(user.ignoredCategories)
+                            setUserIgnoredTags(user.ignoredTags)
                             setUserIsLogged(true)
                             return false
                         }
@@ -51,7 +56,7 @@ const Context = (props) => {
         }
     }, [])
 
-    const chooseCategory = (category) => {
+    const chooseCategory = (category:string) => {
         setCurrentCategory(category)
     }
 
@@ -140,28 +145,31 @@ const Context = (props) => {
     }
 
 
-    const logIn = (loggedUser) => {
+    const logIn = (loggedUser:IUser) => {
         hideModal()
-        user.current.id = loggedUser.id
-        user.current.name = loggedUser.name
-        user.current.ignoredCategories = loggedUser.ignoredCategories
-        user.current.ignoredTags = loggedUser.ignoredTags
-        localStorage.setItem("userID", JSON.stringify(user.current.id))
+        setUserID(loggedUser.id)
+        setUserName(loggedUser.name)
+        setUserIgnoredCategories(loggedUser.ignoredCategories)
+        setUserIgnoredTags(loggedUser.ignoredTags)
+        localStorage.setItem("userID", JSON.stringify(loggedUser.id))
         setUserIsLogged(true)
     }
 
     const logOut = () => {
-        user.current.id = 0
-        user.current.name = ""
-        user.current.ignoredCategories = []
-        user.current.ignoredTags = []
-        localStorage.setItem("userID", JSON.stringify(user.current.id))
+        setUserID(0)
+        setUserName("")
+        setUserIgnoredCategories([""])
+        setUserIgnoredTags([""])
+        localStorage.setItem("userID", JSON.stringify(0))
         setUserIsLogged(false)
     }
 
     const value = {
         userIsLogged,
-        user,
+        userID,
+        userName,
+        userIgnoredCategories,
+        userIgnoredTags,
         loginModalIsOpened,
         signupModalIsOpened,
         recoveryModalIsOpened,

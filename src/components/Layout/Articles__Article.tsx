@@ -1,8 +1,9 @@
 import React from "react";
+import {IArticle} from "../../type/IArtickle";
+import {IArticleElement} from "../../type/IArticleElement";
 import "./Articles__Article.scss"
 
-// вся магия будет тут походу
-const Articles__Article = ( {article} ) => {
+const Articles__Article = ( {article}: {article: IArticle} ) => {
     return (
         <article className="article">
                 <div className="article__header ">
@@ -18,7 +19,7 @@ const Articles__Article = ( {article} ) => {
                     </div>
                 </div>
                 <div>
-                    {article.body.map(el => {
+                    {article.body.map((el: IArticleElement) => {
                         switch (el.type) {
                             case "text":
                                 return <div key={el.id}>{el.data}</div>

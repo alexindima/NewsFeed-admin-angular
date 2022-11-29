@@ -1,5 +1,7 @@
-const NewsFilter = (article, ignoredCategories, ignoredTags) => {
-    return article.filter(item => {
+import {IArticle} from "../type/IArtickle";
+
+const NewsFilter = (articles:[IArticle], ignoredCategories:[string], ignoredTags:[string]) => {
+    return articles.filter(item => {
         let notIgnored = true
         const articleCategory = item.category
         ignoredCategories.every(ignoredCategory => {

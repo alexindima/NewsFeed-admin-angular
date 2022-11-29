@@ -8,15 +8,14 @@ const Header__User = () => {
     const [userIsClosed, setUserIsClosed] = useState(true)
     const helloUserDOM = useRef(null) //узнать как это сделать без юзрефа
 
-    const userIsLogged = useContext(UserContext).userIsLogged;
-    const userID = useContext(UserContext).user.current.id;
-    const userName = useContext(UserContext).user.current.name;
+    const userID = useContext(UserContext).userID;
+    const userName = useContext(UserContext).userName;
     const logOut = useContext(UserContext).logOut;
     const openLoginModal =  useContext(UserContext).openLoginModal;
     const openSettingsMainModal =  useContext(UserContext).openSettingsMainModal;
 
-    const showOrHideUser = (event) => {
-        if (userIsLogged && (event.target !== helloUserDOM.current)) {
+    const showOrHideUser = (event: React.MouseEvent<HTMLDivElement>) => {
+        if (userID && (event.target !== helloUserDOM.current)) {
             setUserIsClosed(!userIsClosed)
         }
     }
@@ -28,8 +27,8 @@ const Header__User = () => {
 
     return (
         <div className="icon-wrapper" onClick={(event) => {showOrHideUser(event)}}>
-            {userIsLogged || <BiUserCircle onClick={openLoginModal} id="user" className="icon-wrapper__img" title="User" />}
-            {userIsLogged && <>
+            {!!userID || <BiUserCircle onClick={openLoginModal} id="user" className="icon-wrapper__img" title="User" />}
+            {!!userID && <>
                 <BiUserCheck className="icon-wrapper__img" title="User" />
                 <div className={userWindowClass}>
                     <div className="category-dropdown">

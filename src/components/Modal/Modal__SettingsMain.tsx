@@ -1,32 +1,31 @@
 import React, {useContext, useState} from "react";
 import "./Modal__SettingsMain.scss"
 import axios from "axios";
-import { calculateHash } from "../../encrypt/Hash"
 import { UserContext } from "../../Context/Context";
 
 // Нужен рефакторинг классов
 const Modal__SettingsMain = () => {
-
-    const user = useContext(UserContext).user;
+    const userID = useContext(UserContext).userID;
+    const userIgnoredCategories = useContext(UserContext).userIgnoredCategories;
+    const userIgnoredTags = useContext(UserContext).userIgnoredTags;
     const logIn = useContext(UserContext).logIn;
     const hideModal = useContext(UserContext).hideModal;
     const openSettingsNameModal = useContext(UserContext).openSettingsNameModal;
     const openSettingsPasswordModal = useContext(UserContext).openSettingsPasswordModal;
 
-    const [ignoredCategories, setIgnoredCategories] = useState(user.current.ignoredCategories)
-    const [ignoredTags, setIgnoredTags] = useState(user.current.ignoredTags)
+    const [ignoredCategories, setIgnoredCategories] = useState(userIgnoredCategories)//useref instead states
+    const [ignoredTags, setIgnoredTags] = useState(userIgnoredTags)
 
-
-    const handleSubmit = (event) => {
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const fetchData = async () => {
-            const result = await axios(`http://localhost:3030/users/${user.current.id}`)
+            const result = await axios(`http://localhost:3030/users/${userID}`)
             const changedUser = {
                 ...result.data,
-                ignoredCategories: ignoredCategories.map((el) => el.trim()),
-                ignoredTags: ignoredTags.map((el) => el.trim())
+                ignoredCategories: ignoredCategories.map((category:string) => category.trim()),
+                ignoredTags: ignoredTags.map((tag:string) => tag.trim())
             }
-            const response = await axios.put(`http://localhost:3030/users/${user.current.id}`, changedUser)
+            const response = await axios.put(`http://localhost:3030/users/${userID}`, changedUser)
             logIn(changedUser)
             hideModal()
         };

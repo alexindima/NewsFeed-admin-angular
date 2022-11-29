@@ -1,6 +1,7 @@
 import React from "react";
+import {ISuggestedNews} from "../../type/ISuggestedNews";
 
-const Suggested__News = ({news}) => {
+const Suggested__News = ({news}: {news: ISuggestedNews}) => {
     return (
         <a href="#" className="suggested-news">
             <div className="suggested-news__time">{news.time}</div>

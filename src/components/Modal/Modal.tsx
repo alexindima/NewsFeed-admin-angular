@@ -56,7 +56,7 @@ const Modal = () => {
                 {loginModalIsOpened && <Modal__Login/>}
                 {signupModalIsOpened && <Modal__Signup/>}
                 {recoveryModalIsOpened && <Modal__Recovery setUser={setRecoveredUser} />}
-                {newPasswordModalIsOpened && <Modal__NewPassword user={recoveredUser} />}
+                {newPasswordModalIsOpened && <Modal__NewPassword userID={recoveredUser} />}
                 {settingsMainModalIsOpened && <Modal__SettingsMain />}
                 {settingsNameModalIsOpened && <Modal__SettingsName />}
                 {settingsPasswordModalIsOpened && <Modal__SettingsPassword />}

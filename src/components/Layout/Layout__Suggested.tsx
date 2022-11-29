@@ -7,8 +7,10 @@ import { UserContext } from "../../Context/Context";
 
 
 const Layout__Suggested = () => {
+    const userIgnoredCategories = useContext(UserContext).userIgnoredCategories;
+    const userIgnoredTags = useContext(UserContext).userIgnoredTags;
+
     const [news, setNews] = useState<any[]>([]);
-    const user = useContext(UserContext).user;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -18,7 +20,7 @@ const Layout__Suggested = () => {
             /* Дальше идет фильтрация данных с бека по игнорируемым категориям и тегам
             в идеале это должен делать бек, но пока так
              */
-            const filteredArray = NewsFilter(result.data, user.current.ignoredCategories, user.current.ignoredTags)
+            const filteredArray = NewsFilter(result.data, userIgnoredCategories, userIgnoredTags)
             setNews(filteredArray);
         };
         fetchData();

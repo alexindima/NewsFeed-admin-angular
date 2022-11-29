@@ -1,20 +1,24 @@
-import React, {useRef, useState} from "react";
+import React, {useContext, useRef, useState} from "react";
 import "./Form__SetPassword.scss"
 import axios from "axios";
 import {calculateHash} from "../../encrypt/Hash"
 import {validPassword} from "../../Regex/Regex"
 import classNames from "classnames";
+import {UserContext} from "../../Context/Context";
 
-// Нужен рефакторинг классов
-const Modal__SetPassword = (props) => {
+interface IUserIDProps {
+    userID: number
+}
+
+const Modal__SetPassword = (props: IUserIDProps) => {
     const PASSWORD_ERROR = "The password must contain at least 6 valid characters"
     const PASSWORD2_ERROR = "Passwords must match"
 
     const passwordInputDOM  = useRef<HTMLInputElement>(null)
-
     const recoveredUser = props.userID
-    const logIn = props.loginFunction
-    const hideModal =  props.hideModalFunction
+
+    const logIn = useContext(UserContext).logIn;
+    const hideModal =  useContext(UserContext).hideModal;
 
     const [emailInputValue, setEmailInputValue] = useState('')
     const [passwordInputValue, setPasswordInputValue] = useState('')
@@ -22,7 +26,7 @@ const Modal__SetPassword = (props) => {
     const [errorMessage, setErrorMessage] = useState('')
 
 
-    const handleSubmit = (event) => {
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         setEmailInputValue(emailInputValue.toLowerCase())
         if (passwordInputValue !== password2InputValue) {
