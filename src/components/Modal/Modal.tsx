@@ -1,30 +1,30 @@
 import React, {useContext, useState} from "react";
 import { RiCloseCircleLine, RiArrowLeftCircleLine } from "react-icons/ri"
-import Modal__Login from "./Modal__Login";
-import Modal__Signup from "./Modal__Signup";
-import Modal__Recovery from "./Modal__Recovery";
-import Modal__NewPassword from "./Modal__NewPassword";
-import Modal__SettingsMain from "./Modal__SettingsMain";
-import Modal__SettingsName from "./Modal__SettingsName";
-import Modal__SettingsPassword from "./Modal__SettingsPassword";
+import Login from "./Login";
+import Signup from "./Signup";
+import Recovery from "./Recovery";
+import NewPassword from "./NewPassword";
+import SettingsMain from "./SettingsMain";
+import SettingsName from "./SettingsName";
+import SettingsPassword from "./SettingsPassword";
 import "./Modal.scss"
 import classNames from "classnames";
-import { UserContext } from "../../Context/Context";
+import {modalContext} from "../../Context/ModalContext";
 
 // нужен рефакторинг классов
 const Modal = () => {
     const [recoveredUser, setRecoveredUser] = useState(0)
 
-    const loginModalIsOpened = useContext(UserContext).loginModalIsOpened
-    const signupModalIsOpened = useContext(UserContext).signupModalIsOpened
-    const recoveryModalIsOpened = useContext(UserContext).recoveryModalIsOpened
-    const newPasswordModalIsOpened = useContext(UserContext).newPasswordModalIsOpened
-    const settingsMainModalIsOpened = useContext(UserContext).settingsMainModalIsOpened
-    const settingsNameModalIsOpened = useContext(UserContext).settingsNameModalIsOpened
-    const settingsPasswordModalIsOpened = useContext(UserContext).settingsPasswordModalIsOpened
-    const openLoginModal =  useContext(UserContext).openLoginModal;
-    const openSettingsMainModal =  useContext(UserContext).openSettingsMainModal;
-    const hideModal =  useContext(UserContext).hideModal;
+    const loginModalIsOpened            = useContext(modalContext).loginModalIsOpened
+    const signupModalIsOpened           = useContext(modalContext).signupModalIsOpened
+    const recoveryModalIsOpened         = useContext(modalContext).recoveryModalIsOpened
+    const newPasswordModalIsOpened      = useContext(modalContext).newPasswordModalIsOpened
+    const settingsMainModalIsOpened     = useContext(modalContext).settingsMainModalIsOpened
+    const settingsNameModalIsOpened     = useContext(modalContext).settingsNameModalIsOpened
+    const settingsPasswordModalIsOpened = useContext(modalContext).settingsPasswordModalIsOpened
+    const openLoginModal                = useContext(modalContext).openLoginModal;
+    const openSettingsMainModal         = useContext(modalContext).openSettingsMainModal;
+    const hideModal                     = useContext(modalContext).hideModal;
 
     const modalClass = classNames({
         "modal-area": true,
@@ -53,13 +53,13 @@ const Modal = () => {
                         <RiArrowLeftCircleLine onClick={goBack} title="Back"/>
                     </div>
                 }
-                {loginModalIsOpened && <Modal__Login/>}
-                {signupModalIsOpened && <Modal__Signup/>}
-                {recoveryModalIsOpened && <Modal__Recovery setUser={setRecoveredUser} />}
-                {newPasswordModalIsOpened && <Modal__NewPassword userID={recoveredUser} />}
-                {settingsMainModalIsOpened && <Modal__SettingsMain />}
-                {settingsNameModalIsOpened && <Modal__SettingsName />}
-                {settingsPasswordModalIsOpened && <Modal__SettingsPassword />}
+                {loginModalIsOpened && <Login/>}
+                {signupModalIsOpened && <Signup/>}
+                {recoveryModalIsOpened && <Recovery setUser={setRecoveredUser} />}
+                {newPasswordModalIsOpened && <NewPassword userID={recoveredUser} />}
+                {settingsMainModalIsOpened && <SettingsMain />}
+                {settingsNameModalIsOpened && <SettingsName />}
+                {settingsPasswordModalIsOpened && <SettingsPassword />}
             </div>
         </div>
     )

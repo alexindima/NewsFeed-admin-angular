@@ -1,18 +1,19 @@
 import React, {useContext, useRef, useState} from "react";
-import "./Modal__SettingsName.scss"
+import "./SettingsName.scss"
 import axios from "axios";
-import { UserContext } from "../../Context/Context";
+import { userContext } from "../../Context/UserContext";
 import {validUserName} from "../../Regex/Regex";
 import classNames from "classnames";
+import {modalContext} from "../../Context/ModalContext";
 
 // Нужен рефакторинг классов
-const Modal__SettingsName = () => {
+const SettingsName = () => {
     const NAME_ERROR = "The user name must contain at least 3 letters, numbers and underscores"
 
-    const userID = useContext(UserContext).userID;
-    const userName = useContext(UserContext).userName;
-    const logIn = useContext(UserContext).logIn;
-    const hideModal =  useContext(UserContext).hideModal;
+    const userID    = useContext(userContext).userID;
+    const userName  = useContext(userContext).userName;
+    const logIn     = useContext(userContext).logIn;
+    const hideModal = useContext(modalContext).hideModal;
 
     const [nameInputValue, setNameInputValue] = useState(userName)
     const [errorMessage, setErrorMessage] = useState('')
@@ -61,4 +62,4 @@ const Modal__SettingsName = () => {
     )
 }
 
-export default Modal__SettingsName
+export default SettingsName

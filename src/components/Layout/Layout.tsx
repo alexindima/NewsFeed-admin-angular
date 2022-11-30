@@ -1,13 +1,13 @@
 import * as React from "react";
-import Layout__Main from "./Layout__Main";
-import Layout__Suggested from "./Layout__Suggested";
+import Main from "./Main";
+import Suggested from "./Suggested";
 import "./Layout.scss"
 
 const Layout = () => {
     return (
         <div className="layout">
-            <Layout__Main />
-            <Layout__Suggested />
+            <Main />
+            <Suggested />
         </div>
     )
 }

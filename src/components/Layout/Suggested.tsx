@@ -1,16 +1,17 @@
 import React, {useContext, useEffect, useState} from "react";
-import Suggested__News from "./Suggested__News";
-import "./Layout__Suggested.scss"
+import News from "./Suggested/News";
+import "./Suggested.scss"
 import axios from "axios";
 import NewsFilter from "../../lib/NewsFilter";
-import { UserContext } from "../../Context/Context";
+import { userContext } from "../../Context/UserContext";
+import {IArticle} from "../../types/IArticle";
 
 
-const Layout__Suggested = () => {
-    const userIgnoredCategories = useContext(UserContext).userIgnoredCategories;
-    const userIgnoredTags = useContext(UserContext).userIgnoredTags;
+const Suggested = () => {
+    const userIgnoredCategories = useContext(userContext).userIgnoredCategories;
+    const userIgnoredTags       = useContext(userContext).userIgnoredTags;
 
-    const [news, setNews] = useState<any[]>([]);
+    const [news, setNews] = useState<IArticle[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -30,10 +31,10 @@ const Layout__Suggested = () => {
     return (
         <div className="layout__suggested suggested">
                 <div className="suggested-container">
-                    {news.map(news => <Suggested__News key={news.id} news={news}/>)}
+                    {news.map(news => <News key={news.id} news={news}/>)}
                 </div>
             </div>
     )
 }
 
-export default Layout__Suggested
+export default Suggested

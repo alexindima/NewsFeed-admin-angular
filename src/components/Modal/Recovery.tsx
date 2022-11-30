@@ -1,24 +1,25 @@
 import React, {useContext, useRef, useState} from "react";
-import "./Modal__Recovery.scss"
-import {IUser} from "../../type/IUser";
-import axios from "axios";
-import { UserContext } from "../../Context/Context";
+import "./Recovery.scss"
+import {IUser} from "../../types/IUser";
+import axios from "axios"
 import classNames from "classnames";
+import {modalContext} from "../../Context/ModalContext";
 
 interface IUserProps {
     setUser: Function
 }
 
-const Modal__Recovery = (props: IUserProps) => {
+const Recovery = (props: IUserProps) => {
     const EMAIL_ERROR = "There is no user with this email"
 
     const setRecoveryUser = props.setUser
+
     const emailInputDOM  = useRef<HTMLInputElement>(null)
 
-    const openNewPasswordModal =  useContext(UserContext).openNewPasswordModal;
+    const openNewPasswordModal =  useContext(modalContext).openNewPasswordModal;
 
     const [emailInputValue, setEmailInputValue] = useState('')
-    const [errorMessage, setErrorMessage] = useState('')
+    const [errorMessage, setErrorMessage]       = useState('')
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -73,4 +74,4 @@ const Modal__Recovery = (props: IUserProps) => {
     )
 }
 
-export default Modal__Recovery
+export default Recovery

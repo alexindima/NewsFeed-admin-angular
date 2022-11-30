@@ -4,7 +4,7 @@
       "id": 1,
       "createdDate": "24.10.2022 14:11",
       "upgradeDate": "24.10.2022 14:15",
-      "mainTitle": "Plug. Frenzied refrigerators are massively attacking cute kittens.",
+      "mainTitle": "123 456. Frenzied refrigerators are massively attacking cute kittens.",
       "secondTitle": "A wedding is a funeral with a cake.",
       "mainPhoto": "https://i.dummyjson.com/data/products/1/2.jpg",
       "mainPhotoDescription": "Just do it!",
@@ -75,7 +75,7 @@
       "id": 2,
       "createdDate": "24.10.2022 14:11",
       "upgradeDate": "24.10.2022 14:15",
-      "mainTitle": "Plug. Frenzied refrigerators are massively attacking cute kittens.",
+      "mainTitle": "234 567. Frenzied refrigerators are massively attacking cute kittens.",
       "secondTitle": "A wedding is a funeral with a cake.",
       "mainPhoto": "https://i.dummyjson.com/data/products/2/2.jpg",
       "mainPhotoDescription": "Just do it!",
@@ -146,7 +146,7 @@
       "id": 3,
       "createdDate": "24.10.2022 14:11",
       "upgradeDate": "24.10.2022 14:15",
-      "mainTitle": "Plug. Frenzied refrigerators are massively attacking cute kittens.",
+      "mainTitle": "345 678. Frenzied refrigerators are massively attacking cute kittens.",
       "secondTitle": "A wedding is a funeral with a cake.",
       "mainPhoto": "https://i.dummyjson.com/data/products/30/1.jpg",
       "mainPhotoDescription": "Just do it!",
@@ -217,7 +217,7 @@
       "id": 4,
       "createdDate": "24.10.2022 14:11",
       "upgradeDate": "24.10.2022 14:15",
-      "mainTitle": "Plug. Frenzied refrigerators are massively attacking cute kittens.",
+      "mainTitle": "456 789. Frenzied refrigerators are massively attacking cute kittens.",
       "secondTitle": "A wedding is a funeral with a cake.",
       "mainPhoto": "https://i.dummyjson.com/data/products/4/2.jpg",
       "mainPhotoDescription": "Just do it!",
@@ -288,7 +288,7 @@
       "id": 5,
       "createdDate": "24.10.2022 14:11",
       "upgradeDate": "24.10.2022 14:15",
-      "mainTitle": "Plug. Frenzied refrigerators are massively attacking cute kittens.",
+      "mainTitle": "567 890. Frenzied refrigerators are massively attacking cute kittens.",
       "secondTitle": "A wedding is a funeral with a cake.",
       "mainPhoto": "https://i.dummyjson.com/data/products/5/2.jpg",
       "mainPhotoDescription": "Just do it!",
@@ -359,7 +359,7 @@
       "id": 6,
       "createdDate": "24.10.2022 14:11",
       "upgradeDate": "24.10.2022 14:15",
-      "mainTitle": "Plug. Frenzied refrigerators are massively attacking cute kittens.",
+      "mainTitle": "678 901 123. Frenzied refrigerators are massively attacking cute kittens.",
       "secondTitle": "A wedding is a funeral with a cake.",
       "mainPhoto": "https://i.dummyjson.com/data/products/6/2.jpg",
       "mainPhotoDescription": "Just do it!",
@@ -430,8 +430,8 @@
   "suggestedNews": [
     {
       "id": 1,
-      "time": "23:45",
-      "title": "Superluminal underpants are now at a 50% discount!",
+      "createdDate": "23:45",
+      "mainTitle": "Superluminal underpants are now at a 50% discount!",
       "category": "politics",
       "tags": [
         "cat",
@@ -440,8 +440,8 @@
     },
     {
       "id": 2,
-      "time": "23:45",
-      "title": "Superluminal underpants are now at a 50% discount!",
+      "createdDate": "23:45",
+      "mainTitle": "Superluminal underpants are now at a 50% discount!",
       "category": "politics",
       "tags": [
         "cat",
@@ -450,8 +450,8 @@
     },
     {
       "id": 3,
-      "time": "23:45",
-      "title": "Superluminal underpants are now at a 50% discount!",
+      "createdDate": "23:45",
+      "mainTitle": "Superluminal underpants are now at a 50% discount!",
       "category": "politics",
       "tags": [
         "cat",
@@ -460,8 +460,8 @@
     },
     {
       "id": 4,
-      "time": "23:45",
-      "title": "Superluminal underpants are now at a 50% discount!",
+      "createdDate": "23:45",
+      "mainTitle": "Superluminal underpants are now at a 50% discount!",
       "category": "politics",
       "tags": [
         "cat",
@@ -470,8 +470,8 @@
     },
     {
       "id": 5,
-      "time": "23:45",
-      "title": "Superluminal underpants are now at a 50% discount!",
+      "createdDate": "23:45",
+      "mainTitle": "Superluminal underpants are now at a 50% discount!",
       "category": "politics",
       "tags": [
         "cat",
@@ -480,8 +480,8 @@
     },
     {
       "id": 6,
-      "time": "23:45",
-      "title": "Superluminal underpants are now at a 50% discount!",
+      "createdDate": "23:45",
+      "mainTitle": "Superluminal underpants are now at a 50% discount!",
       "category": "politics",
       "tags": [
         "cat",
@@ -490,8 +490,8 @@
     },
     {
       "id": 7,
-      "time": "23:45",
-      "title": "Superluminal underpants are now at a 50% discount!",
+      "createdDate": "23:45",
+      "mainTitle": "Superluminal underpants are now at a 50% discount!",
       "category": "politics",
       "tags": [
         "cat",
@@ -500,8 +500,8 @@
     },
     {
       "id": 8,
-      "time": "23:45",
-      "title": "Superluminal underpants are now at a 50% discount!",
+      "createdDate": "23:45",
+      "mainTitle": "Superluminal underpants are now at a 50% discount!",
       "category": "politics",
       "tags": [
         "cat",
@@ -510,8 +510,8 @@
     },
     {
       "id": 9,
-      "time": "23:45",
-      "title": "Superluminal underpants are now at a 50% discount!",
+      "createdDate": "23:45",
+      "mainTitle": "Superluminal underpants are now at a 50% discount!",
       "category": "politics",
       "tags": [
         "cat",
@@ -520,8 +520,8 @@
     },
     {
       "id": 10,
-      "time": "23:45",
-      "title": "Superluminal underpants are now at a 50% discount!",
+      "createdDate": "23:45",
+      "mainTitle": "Superluminal underpants are now at a 50% discount!",
       "category": "politics",
       "tags": [
         "cat",
@@ -551,8 +551,8 @@
         "Politics"
       ],
       "ignoredTags": [
-        "cat",
-        "sites"
+        "sites",
+        "cat"
       ]
     },
     {

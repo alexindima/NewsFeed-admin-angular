@@ -1,16 +1,16 @@
 import * as React from "react";
 import Logo from '../../img/logo.jpg'
 
-import Header__User from "./Header__User"
-import Header__Search from "./Header__Search"
-import Header__Categories from "./Header__Categories"
+import User from "./User"
+import Search from "./Search"
+import Categories from "./Categories"
 import './Header.scss'
 import classNames from "classnames";
 import {useEffect, useState} from "react";
 
 const Header = () => {
-    const DOWN_THRESHOLD = 200;
-    const BIG_HEADER = 50;
+    const DOWN_THRESHOLD    = 200;
+    const BIG_HEADER        = 50;
 
     const [headerIsSmall, setHeaderIsSmall] = useState(false)
 
@@ -53,13 +53,13 @@ const Header = () => {
         <header className="header-wrapper">
             <div className={headerClass}>
                 <div className="header__logo">
-                    <a href="././index.html"><img src={Logo} alt="Logo" className={headerLogoClass} /></a>
+                    <a href="#"><img src={Logo} alt="Logo" className={headerLogoClass} /></a>
                 </div>
                 <div className="spacer"></div>
                 <div className="header__icons icons-container">
-                    <Header__User />
-                    <Header__Search />
-                    <Header__Categories />
+                    <User />
+                    <Search />
+                    <Categories />
                 </div>
             </div>
         </header>

@@ -1,4 +1,4 @@
-import {IArticle} from "../type/IArtickle";
+import {IArticle} from "../types/IArticle";
 
 const NewsFilter = (articles:[IArticle], ignoredCategories:[string], ignoredTags:[string]) => {
     return articles.filter(item => {

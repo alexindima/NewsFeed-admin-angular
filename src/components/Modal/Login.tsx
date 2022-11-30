@@ -1,24 +1,26 @@
 import React, {useContext, useRef, useState} from "react";
-import "./Modal__Login.scss"
+import "./Login.scss"
 import axios from "axios";
 import { calculateHash } from "../../encrypt/Hash"
-import { UserContext } from "../../Context/Context";
+import { userContext } from "../../Context/UserContext";
 import classNames from "classnames";
-import {IUser} from "../../type/IUser";
+import {IUser} from "../../types/IUser";
+import {modalContext} from "../../Context/ModalContext";
 
-const Modal__Login = () => {
-    const EMAIL_ERROR = "There is no user with this email"
-    const PASSWORD_ERROR = "Wrong password"
+const Login = () => {
+    const EMAIL_ERROR       = "There is no user with this email"
+    const PASSWORD_ERROR    =  "Wrong password"
 
-    const logIn = useContext(UserContext).logIn;
-    const openSignupModal = useContext(UserContext).openSignupModal;
-    const openRecoveryModal = useContext(UserContext).openRecoveryModal;
+    const logIn             = useContext(userContext).logIn;
+    const openSignupModal   = useContext(modalContext).openSignupModal;
+    const openRecoveryModal = useContext(modalContext).openRecoveryModal;
+    const hideModal         = useContext(modalContext).hideModal;
 
-    const [emailInputValue, setEmailInputValue] = useState('')
-    const [passwordInputValue, setPasswordInputValue] = useState('')
-    const [errorMessage, setErrorMessage] = useState('')
+    const [emailInputValue, setEmailInputValue]         = useState('')
+    const [passwordInputValue, setPasswordInputValue]   = useState('')
+    const [errorMessage, setErrorMessage]               = useState('')
 
-    const emailInputDOM  = useRef<HTMLInputElement>(null)
+    const emailInputDOM     = useRef<HTMLInputElement>(null)
     const passwordInputDOM  = useRef<HTMLInputElement>(null)
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -37,6 +39,7 @@ const Modal__Login = () => {
                     emailIsExist = true
                     if (user.password === passwordHash) {//need convert to hash
                         logIn(user)
+                        hideModal()
                         return false
                     }
                     else {
@@ -96,4 +99,4 @@ const Modal__Login = () => {
     )
 }
 
-export default Modal__Login
+export default Login

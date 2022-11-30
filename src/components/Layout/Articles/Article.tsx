@@ -1,9 +1,9 @@
 import React from "react";
-import {IArticle} from "../../type/IArtickle";
-import {IArticleElement} from "../../type/IArticleElement";
-import "./Articles__Article.scss"
+import {IArticle} from "../../../types/IArticle";
+import {IArticleElement} from "../../../types/IArticleElement";
+import "./Article.scss"
 
-const Articles__Article = ( {article}: {article: IArticle} ) => {
+const Article = ({article}: {article: IArticle} ) => {
     return (
         <article className="article">
                 <div className="article__header ">
@@ -35,4 +35,4 @@ const Articles__Article = ( {article}: {article: IArticle} ) => {
     )
 }
 
-export default Articles__Article
+export default Article

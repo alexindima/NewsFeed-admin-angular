@@ -1,17 +1,19 @@
 import React, {useContext, useEffect, useState} from "react";
 import { CgMenuRound, CgPlayListCheck } from 'react-icons/cg';
-import "./Header__Categories.scss"
+import "./Categories.scss"
 import classNames from "classnames";
 import axios from "axios";
-import { UserContext } from "../../Context/Context";
+import { userContext } from "../../Context/UserContext";
+import {siteContext} from "../../Context/SiteContext";
 
-const Header__Categories = () => {
-    const [categoryList, setCategoryList] = useState([])
-    const [categoryIsClosed, setCategoryIsClosed] =useState(true)
+const Categories = () => {
+    const [categoryList, setCategoryList]           = useState([])
+    const [categoryIsClosed, setCategoryIsClosed]   = useState(true)
 
-    const currentCategory = useContext(UserContext).currentCategory
-    const chooseCategory = useContext(UserContext).chooseCategory
-    const clearCategory = useContext(UserContext).clearCategory
+    const userIgnoredCategories = useContext(userContext).userIgnoredCategories;
+    const currentCategory       = useContext(siteContext).currentCategory
+    const chooseCategory        = useContext(siteContext).chooseCategory
+    const clearCategory         = useContext(siteContext).clearCategory
 
 
     function showOrHideCategory () {
@@ -23,10 +25,21 @@ const Header__Categories = () => {
             const result = await axios(
                 'http://localhost:3030/categories',
             );
-            setCategoryList(result.data)
+            setCategoryList((result.data.filter((category:string) => {
+                let categoryIsIgnored = false
+                userIgnoredCategories.every((userIgnoredCategory:string) => {
+                    if(category.toLowerCase() === userIgnoredCategory.toLowerCase()) {
+                        categoryIsIgnored = true
+                        return false
+                    }
+                    return true
+                })
+                return !categoryIsIgnored
+            })))
+
         };
         fetchData();
-    },[])
+    },[userIgnoredCategories])
 
     const categoryWindowClass = classNames({
         "icon-wrapper__popup": true,
@@ -57,4 +70,4 @@ const Header__Categories = () => {
     )
 }
 
-export default Header__Categories
+export default Categories

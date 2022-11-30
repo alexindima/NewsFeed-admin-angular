@@ -1,20 +1,21 @@
 import React, {useContext, useState} from "react";
-import "./Modal__SettingsMain.scss"
+import "./SettingsMain.scss"
 import axios from "axios";
-import { UserContext } from "../../Context/Context";
+import { userContext } from "../../Context/UserContext";
+import {modalContext} from "../../Context/ModalContext";
 
 // Нужен рефакторинг классов
-const Modal__SettingsMain = () => {
-    const userID = useContext(UserContext).userID;
-    const userIgnoredCategories = useContext(UserContext).userIgnoredCategories;
-    const userIgnoredTags = useContext(UserContext).userIgnoredTags;
-    const logIn = useContext(UserContext).logIn;
-    const hideModal = useContext(UserContext).hideModal;
-    const openSettingsNameModal = useContext(UserContext).openSettingsNameModal;
-    const openSettingsPasswordModal = useContext(UserContext).openSettingsPasswordModal;
+const SettingsMain = () => {
+    const userID                    = useContext(userContext).userID;
+    const userIgnoredCategories     = useContext(userContext).userIgnoredCategories;
+    const userIgnoredTags           = useContext(userContext).userIgnoredTags;
+    const logIn                     = useContext(userContext).logIn;
+    const hideModal                 = useContext(modalContext).hideModal;
+    const openSettingsNameModal     = useContext(modalContext).openSettingsNameModal;
+    const openSettingsPasswordModal = useContext(modalContext).openSettingsPasswordModal;
 
     const [ignoredCategories, setIgnoredCategories] = useState(userIgnoredCategories)//useref instead states
-    const [ignoredTags, setIgnoredTags] = useState(userIgnoredTags)
+    const [ignoredTags, setIgnoredTags]             = useState(userIgnoredTags)
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -62,4 +63,4 @@ const Modal__SettingsMain = () => {
     )
 }
 
-export default Modal__SettingsMain
+export default SettingsMain

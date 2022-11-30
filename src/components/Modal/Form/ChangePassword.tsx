@@ -1,29 +1,31 @@
 import React, {useContext, useRef, useState} from "react";
-import "./Form__SetPassword.scss"
+import "./ChangePassword.scss"
 import axios from "axios";
-import {calculateHash} from "../../encrypt/Hash"
-import {validPassword} from "../../Regex/Regex"
+import {calculateHash} from "../../../encrypt/Hash"
+import {validPassword} from "../../../Regex/Regex"
 import classNames from "classnames";
-import {UserContext} from "../../Context/Context";
+import {userContext} from "../../../Context/UserContext";
+import {modalContext} from "../../../Context/ModalContext";
 
 interface IUserIDProps {
     userID: number
 }
 
-const Modal__SetPassword = (props: IUserIDProps) => {
-    const PASSWORD_ERROR = "The password must contain at least 6 valid characters"
-    const PASSWORD2_ERROR = "Passwords must match"
+const ChangePassword = (props: IUserIDProps) => {
+    const PASSWORD_ERROR    = "The password must contain at least 6 valid characters"
+    const PASSWORD2_ERROR   = "Passwords must match"
 
     const passwordInputDOM  = useRef<HTMLInputElement>(null)
+
     const recoveredUser = props.userID
 
-    const logIn = useContext(UserContext).logIn;
-    const hideModal =  useContext(UserContext).hideModal;
+    const logIn     = useContext(userContext).logIn;
+    const hideModal = useContext(modalContext).hideModal;
 
-    const [emailInputValue, setEmailInputValue] = useState('')
-    const [passwordInputValue, setPasswordInputValue] = useState('')
+    const [emailInputValue, setEmailInputValue]         = useState('')
+    const [passwordInputValue, setPasswordInputValue]   = useState('')
     const [password2InputValue, setPassword2InputValue] = useState('')
-    const [errorMessage, setErrorMessage] = useState('')
+    const [errorMessage, setErrorMessage]               = useState('')
 
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -78,4 +80,4 @@ const Modal__SetPassword = (props: IUserIDProps) => {
     )
 }
 
-export default Modal__SetPassword
+export default ChangePassword

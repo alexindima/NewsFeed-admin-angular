@@ -1,17 +1,18 @@
 import React, {useEffect, useRef, useState} from "react";
-import "./Main__Scroll.scss"
+import "./Scroll.scss"
 import { VscTriangleUp } from 'react-icons/vsc';
 import { VscTriangleDown } from 'react-icons/vsc';
 import classNames from "classnames";
 
-const Main__Scroll = () => {
-    const UP_THRESHOLD = 500;
-    const FORGET_THRESHOLD = 2000;
-    const BIG_HEADER = 50;
+const Scroll = () => {
+    const UP_THRESHOLD      = 500;
+    const FORGET_THRESHOLD  = 2000;
+    const BIG_HEADER        = 50;
 
     const scrollWas = useRef(false);
     const lastPoint = useRef(0);
-    const [arrowTopIsHidden, setArrowTopIsHidden] = useState(true);
+
+    const [arrowTopIsHidden, setArrowTopIsHidden]       = useState(true);
     const [arrowBottomIsHidden, setArrowBottomIsHidden] = useState(true);
 
     function goTop() {
@@ -46,7 +47,7 @@ const Main__Scroll = () => {
 
     useEffect(() => {
         window.addEventListener('scroll', ScrollHandle);
-    },[]);
+    });
 
     const arrowTopClass = classNames({
         "scroll-button": true,
@@ -69,4 +70,4 @@ const Main__Scroll = () => {
     )
 }
 
-export default Main__Scroll
+export default Scroll

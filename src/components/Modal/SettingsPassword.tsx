@@ -1,11 +1,11 @@
 import React, {useContext} from "react";
-import "./Modal__SettingsPassword.scss"
-import { UserContext } from "../../Context/Context";
-import Form__SetPassword from "./Form__SetPassword";
+import "./SettingsPassword.scss"
+import { userContext } from "../../Context/UserContext";
+import Form__SetPassword from "./Form/ChangePassword";
 
 // Нужен рефакторинг классов
-const Modal__SettingsPassword = () => {
-    const userID = useContext(UserContext).userID;
+const SettingsPassword = () => {
+    const userID = useContext(userContext).userID;
 
     return (
         <div>
@@ -17,4 +17,4 @@ const Modal__SettingsPassword = () => {
     )
 }
 
-export default Modal__SettingsPassword
+export default SettingsPassword

@@ -1,18 +1,20 @@
 import React, {useContext, useRef, useState} from "react";
 import { BiUserCircle,} from 'react-icons/bi';
 import { BiUserCheck } from 'react-icons/bi';
-import { UserContext } from "../../Context/Context";
+import { userContext } from "../../Context/UserContext";
+import {modalContext} from "../../Context/ModalContext";
 import classNames from "classnames";
 
-const Header__User = () => {
+const User = () => {
     const [userIsClosed, setUserIsClosed] = useState(true)
-    const helloUserDOM = useRef(null) //узнать как это сделать без юзрефа
 
-    const userID = useContext(UserContext).userID;
-    const userName = useContext(UserContext).userName;
-    const logOut = useContext(UserContext).logOut;
-    const openLoginModal =  useContext(UserContext).openLoginModal;
-    const openSettingsMainModal =  useContext(UserContext).openSettingsMainModal;
+    const helloUserDOM = useRef(null)
+
+    const userID                = useContext(userContext).userID;
+    const userName              = useContext(userContext).userName;
+    const logOut                = useContext(userContext).logOut;
+    const openLoginModal        = useContext(modalContext).openLoginModal;
+    const openSettingsMainModal = useContext(modalContext).openSettingsMainModal;
 
     const showOrHideUser = (event: React.MouseEvent<HTMLDivElement>) => {
         if (userID && (event.target !== helloUserDOM.current)) {
@@ -44,4 +46,4 @@ const Header__User = () => {
     )
 }
 
-export default Header__User
+export default User

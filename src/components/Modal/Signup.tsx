@@ -1,30 +1,32 @@
 import React, {useContext, useRef, useState} from "react";
-import "./Modal__Signup.scss"
+import "./Signup.scss"
 import axios from "axios";
-import {IUser} from "../../type/IUser";
+import {IUser} from "../../types/IUser";
 import { calculateHash } from "../../encrypt/Hash"
 import { validUserName, validPassword } from "../../Regex/Regex"
-import { UserContext } from "../../Context/Context";
+import { userContext } from "../../Context/UserContext";
 import classNames from "classnames";
+import {modalContext} from "../../Context/ModalContext";
 
 // Нужен рефакторинг классов
-const Modal__Signup = () => {
-    const NAME_ERROR = "The user name must contain at least 3 letters, numbers and underscores"
-    const EMAIL_ERROR = "This email is already exist"
-    const PASSWORD_ERROR = "The password must contain at least 6 valid characters"
-    const PASSWORD2_ERROR = "Passwords must match"
+const Signup = () => {
+    const NAME_ERROR        = "The user name must contain at least 3 letters, numbers and underscores"
+    const EMAIL_ERROR       = "This email is already exist"
+    const PASSWORD_ERROR    = "The password must contain at least 6 valid characters"
+    const PASSWORD2_ERROR   = "Passwords must match"
 
-    const logIn = useContext(UserContext).logIn;
-    const hideModal =  useContext(UserContext).hideModal;
-    const nameInputDOM  = useRef<HTMLInputElement>(null)
-    const emailInputDOM  = useRef<HTMLInputElement>(null)
+    const logIn     = useContext(userContext).logIn;
+    const hideModal =  useContext(modalContext).hideModal;
+
+    const nameInputDOM      = useRef<HTMLInputElement>(null)
+    const emailInputDOM     = useRef<HTMLInputElement>(null)
     const passwordInputDOM  = useRef<HTMLInputElement>(null)
 
-    const [nameInputValue, setNameInputValue] = useState('')
-    const [emailInputValue, setEmailInputValue] = useState('')
-    const [passwordInputValue, setPasswordInputValue] = useState('')
+    const [nameInputValue, setNameInputValue]           = useState('')
+    const [emailInputValue, setEmailInputValue]         = useState('')
+    const [passwordInputValue, setPasswordInputValue]   = useState('')
     const [password2InputValue, setPassword2InputValue] = useState('')
-    const [errorMessage, setErrorMessage] = useState('')
+    const [errorMessage, setErrorMessage]               = useState('')
 
 
 
@@ -139,4 +141,4 @@ const Modal__Signup = () => {
     )
 }
 
-export default Modal__Signup
+export default Signup

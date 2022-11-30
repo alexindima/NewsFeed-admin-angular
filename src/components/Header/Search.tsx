@@ -1,9 +1,9 @@
 import React, {useState} from "react";
 import { HiOutlineSearchCircle } from 'react-icons/hi';
-import "./Header__Search.scss"
+import "./Search.scss"
 import classNames from "classnames";
 
-const Header__Search = () => {
+const Search = () => {
     let [searchIsClosed, setSearchIsClosed] = useState(true)
 
     function showOrHideSearch () {
@@ -31,4 +31,4 @@ const Header__Search = () => {
     )
 }
 
-export default Header__Search
+export default Search

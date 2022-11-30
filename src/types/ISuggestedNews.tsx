@@ -1,7 +1,7 @@
 export interface ISuggestedNews {
     readonly id: number
-    readonly time: string
-    readonly title: string
+    readonly createdDate: string
+    readonly mainTitle: string
     readonly category: string
     readonly tags: [string]
 }

@@ -1,12 +1,12 @@
 import React from "react";
-import "./Modal__NewPassword.scss"
-import Form__SetPassword from "./Form__SetPassword";
+import "./NewPassword.scss"
+import Form__SetPassword from "./Form/ChangePassword";
 
 interface IUserIDProps {
     userID: number
 }
 
-const Modal__NewPassword = (props: IUserIDProps) => {
+const NewPassword = (props: IUserIDProps) => {
     const recoveredUser = props.userID
 
     return (
@@ -19,4 +19,4 @@ const Modal__NewPassword = (props: IUserIDProps) => {
     )
 }
 
-export default Modal__NewPassword
+export default NewPassword
