@@ -425,93 +425,214 @@
         "cat",
         "dog"
       ]
-    }
-  ],
-  "suggestedNews": [
-    {
-      "id": 1,
-      "createdDate": "23:45",
-      "mainTitle": "Superluminal underpants are now at a 50% discount!",
-      "category": "politics",
-      "tags": [
-        "cat",
-        "dog"
-      ]
-    },
-    {
-      "id": 2,
-      "createdDate": "23:45",
-      "mainTitle": "Superluminal underpants are now at a 50% discount!",
-      "category": "politics",
-      "tags": [
-        "cat",
-        "dog"
-      ]
-    },
-    {
-      "id": 3,
-      "createdDate": "23:45",
-      "mainTitle": "Superluminal underpants are now at a 50% discount!",
-      "category": "politics",
-      "tags": [
-        "cat",
-        "dog"
-      ]
-    },
-    {
-      "id": 4,
-      "createdDate": "23:45",
-      "mainTitle": "Superluminal underpants are now at a 50% discount!",
-      "category": "politics",
-      "tags": [
-        "cat",
-        "dog"
-      ]
-    },
-    {
-      "id": 5,
-      "createdDate": "23:45",
-      "mainTitle": "Superluminal underpants are now at a 50% discount!",
-      "category": "politics",
-      "tags": [
-        "cat",
-        "dog"
-      ]
-    },
-    {
-      "id": 6,
-      "createdDate": "23:45",
-      "mainTitle": "Superluminal underpants are now at a 50% discount!",
-      "category": "politics",
-      "tags": [
-        "cat",
-        "dog"
-      ]
     },
     {
       "id": 7,
-      "createdDate": "23:45",
-      "mainTitle": "Superluminal underpants are now at a 50% discount!",
+      "createdDate": "24.10.2022 14:11",
+      "upgradeDate": "24.10.2022 14:15",
+      "mainTitle": "123 456. Frenzied refrigerators are massively attacking cute kittens.",
+      "secondTitle": "A wedding is a funeral with a cake.",
+      "mainPhoto": "https://i.dummyjson.com/data/products/1/2.jpg",
+      "mainPhotoDescription": "Just do it!",
+      "body": [
+        {
+          "id": 1,
+          "type": "text",
+          "data": "The contents of this block will be generated using frameworks. Therefore, let's give free rein to imagination. Rabid penguins attacked the Titanic, bit the commander of the ship and stole the radio. A group of strangers met other strangers. The mobile version of the safe harbor has lost a finger. I'm not Zura, I'm Katsura. A blue squid bit my dog's gills."
+        },
+        {
+          "id": 2,
+          "type": "anchor",
+          "href": "https://www.google.com",
+          "data": "google"
+        },
+        {
+          "id": 3,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/15/1.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 4,
+          "type": "text",
+          "data": "Mario, your princess is in another castle. After each step, make a jump. If you see a red ray, look for a rainbow. Every third person will become the fifth. If you love a table, love a chair. I'll be back. Sasuke, go back to the village."
+        },
+        {
+          "id": 5,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/15/2.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 6,
+          "type": "text",
+          "data": "If the yellow guitar becomes the sun, the dinosaurs will take over Sweden. Why are you going after a frog? It's not yours. If you report an error, the error will be fixed. But not with this package."
+        },
+        {
+          "id": 7,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/15/3.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 8,
+          "type": "text",
+          "data": "He said that light is a wave, and he will go to watch music. Next year will be right after that. "
+        },
+        {
+          "id": 9,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/15/4.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 10,
+          "type": "text",
+          "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
+        }
+      ],
       "category": "politics",
       "tags": [
-        "cat",
+        "moon",
         "dog"
       ]
     },
     {
       "id": 8,
-      "createdDate": "23:45",
-      "mainTitle": "Superluminal underpants are now at a 50% discount!",
+      "createdDate": "24.10.2022 14:11",
+      "upgradeDate": "24.10.2022 14:15",
+      "mainTitle": "234 567. Frenzied refrigerators are massively attacking cute kittens.",
+      "secondTitle": "A wedding is a funeral with a cake.",
+      "mainPhoto": "https://i.dummyjson.com/data/products/2/2.jpg",
+      "mainPhotoDescription": "Just do it!",
+      "body": [
+        {
+          "id": 1,
+          "type": "text",
+          "data": "The contents of this block will be generated using frameworks. Therefore, let's give free rein to imagination. Rabid penguins attacked the Titanic, bit the commander of the ship and stole the radio. A group of strangers met other strangers. The mobile version of the safe harbor has lost a finger. I'm not Zura, I'm Katsura. A blue squid bit my dog's gills."
+        },
+        {
+          "id": 2,
+          "type": "anchor",
+          "href": "https://www.google.com",
+          "data": "google"
+        },
+        {
+          "id": 3,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/24/1.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 4,
+          "type": "text",
+          "data": "Mario, your princess is in another castle. After each step, make a jump. If you see a red ray, look for a rainbow. Every third person will become the fifth. If you love a table, love a chair. I'll be back. Sasuke, go back to the village."
+        },
+        {
+          "id": 5,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/25/2.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 6,
+          "type": "text",
+          "data": "If the yellow guitar becomes the sun, the dinosaurs will take over Sweden. Why are you going after a frog? It's not yours. If you report an error, the error will be fixed. But not with this package."
+        },
+        {
+          "id": 7,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/16/3.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 8,
+          "type": "text",
+          "data": "He said that light is a wave, and he will go to watch music. Next year will be right after that. "
+        },
+        {
+          "id": 9,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/16/4.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 10,
+          "type": "text",
+          "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
+        }
+      ],
       "category": "politics",
       "tags": [
         "cat",
-        "dog"
+        "moon"
       ]
     },
     {
       "id": 9,
-      "createdDate": "23:45",
-      "mainTitle": "Superluminal underpants are now at a 50% discount!",
+      "createdDate": "24.10.2022 14:11",
+      "upgradeDate": "24.10.2022 14:15",
+      "mainTitle": "345 678. Frenzied refrigerators are massively attacking cute kittens.",
+      "secondTitle": "A wedding is a funeral with a cake.",
+      "mainPhoto": "https://i.dummyjson.com/data/products/30/1.jpg",
+      "mainPhotoDescription": "Just do it!",
+      "body": [
+        {
+          "id": 1,
+          "type": "text",
+          "data": "The contents of this block will be generated using frameworks. Therefore, let's give free rein to imagination. Rabid penguins attacked the Titanic, bit the commander of the ship and stole the radio. A group of strangers met other strangers. The mobile version of the safe harbor has lost a finger. I'm not Zura, I'm Katsura. A blue squid bit my dog's gills."
+        },
+        {
+          "id": 2,
+          "type": "anchor",
+          "href": "https://www.google.com",
+          "data": "google"
+        },
+        {
+          "id": 3,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/17/1.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 4,
+          "type": "text",
+          "data": "Mario, your princess is in another castle. After each step, make a jump. If you see a red ray, look for a rainbow. Every third person will become the fifth. If you love a table, love a chair. I'll be back. Sasuke, go back to the village."
+        },
+        {
+          "id": 5,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/17/2.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 6,
+          "type": "text",
+          "data": "If the yellow guitar becomes the sun, the dinosaurs will take over Sweden. Why are you going after a frog? It's not yours. If you report an error, the error will be fixed. But not with this package."
+        },
+        {
+          "id": 7,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/17/3.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 8,
+          "type": "text",
+          "data": "He said that light is a wave, and he will go to watch music. Next year will be right after that. "
+        },
+        {
+          "id": 9,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/30/2.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 10,
+          "type": "text",
+          "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
+        }
+      ],
       "category": "politics",
       "tags": [
         "cat",
@@ -520,14 +641,1498 @@
     },
     {
       "id": 10,
-      "createdDate": "23:45",
-      "mainTitle": "Superluminal underpants are now at a 50% discount!",
+      "createdDate": "24.10.2022 14:11",
+      "upgradeDate": "24.10.2022 14:15",
+      "mainTitle": "456 789. Frenzied refrigerators are massively attacking cute kittens.",
+      "secondTitle": "A wedding is a funeral with a cake.",
+      "mainPhoto": "https://i.dummyjson.com/data/products/4/2.jpg",
+      "mainPhotoDescription": "Just do it!",
+      "body": [
+        {
+          "id": 1,
+          "type": "text",
+          "data": "The contents of this block will be generated using frameworks. Therefore, let's give free rein to imagination. Rabid penguins attacked the Titanic, bit the commander of the ship and stole the radio. A group of strangers met other strangers. The mobile version of the safe harbor has lost a finger. I'm not Zura, I'm Katsura. A blue squid bit my dog's gills."
+        },
+        {
+          "id": 2,
+          "type": "anchor",
+          "href": "https://www.google.com",
+          "data": "google"
+        },
+        {
+          "id": 3,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/18/1.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 4,
+          "type": "text",
+          "data": "Mario, your princess is in another castle. After each step, make a jump. If you see a red ray, look for a rainbow. Every third person will become the fifth. If you love a table, love a chair. I'll be back. Sasuke, go back to the village."
+        },
+        {
+          "id": 5,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/18/2.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 6,
+          "type": "text",
+          "data": "If the yellow guitar becomes the sun, the dinosaurs will take over Sweden. Why are you going after a frog? It's not yours. If you report an error, the error will be fixed. But not with this package."
+        },
+        {
+          "id": 7,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/18/3.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 8,
+          "type": "text",
+          "data": "He said that light is a wave, and he will go to watch music. Next year will be right after that. "
+        },
+        {
+          "id": 9,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/18/4.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 10,
+          "type": "text",
+          "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
+        }
+      ],
+      "category": "army",
+      "tags": [
+        "moon",
+        "dog"
+      ]
+    },
+    {
+      "id": 11,
+      "createdDate": "24.10.2022 14:11",
+      "upgradeDate": "24.10.2022 14:15",
+      "mainTitle": "123 456. Frenzied refrigerators are massively attacking cute kittens.",
+      "secondTitle": "A wedding is a funeral with a cake.",
+      "mainPhoto": "https://i.dummyjson.com/data/products/1/2.jpg",
+      "mainPhotoDescription": "Just do it!",
+      "body": [
+        {
+          "id": 1,
+          "type": "text",
+          "data": "The contents of this block will be generated using frameworks. Therefore, let's give free rein to imagination. Rabid penguins attacked the Titanic, bit the commander of the ship and stole the radio. A group of strangers met other strangers. The mobile version of the safe harbor has lost a finger. I'm not Zura, I'm Katsura. A blue squid bit my dog's gills."
+        },
+        {
+          "id": 2,
+          "type": "anchor",
+          "href": "https://www.google.com",
+          "data": "google"
+        },
+        {
+          "id": 3,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/15/1.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 4,
+          "type": "text",
+          "data": "Mario, your princess is in another castle. After each step, make a jump. If you see a red ray, look for a rainbow. Every third person will become the fifth. If you love a table, love a chair. I'll be back. Sasuke, go back to the village."
+        },
+        {
+          "id": 5,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/15/2.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 6,
+          "type": "text",
+          "data": "If the yellow guitar becomes the sun, the dinosaurs will take over Sweden. Why are you going after a frog? It's not yours. If you report an error, the error will be fixed. But not with this package."
+        },
+        {
+          "id": 7,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/15/3.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 8,
+          "type": "text",
+          "data": "He said that light is a wave, and he will go to watch music. Next year will be right after that. "
+        },
+        {
+          "id": 9,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/15/4.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 10,
+          "type": "text",
+          "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
+        }
+      ],
+      "category": "politics",
+      "tags": [
+        "moon",
+        "dog"
+      ]
+    },
+    {
+      "id": 12,
+      "createdDate": "24.10.2022 14:11",
+      "upgradeDate": "24.10.2022 14:15",
+      "mainTitle": "234 567. Frenzied refrigerators are massively attacking cute kittens.",
+      "secondTitle": "A wedding is a funeral with a cake.",
+      "mainPhoto": "https://i.dummyjson.com/data/products/2/2.jpg",
+      "mainPhotoDescription": "Just do it!",
+      "body": [
+        {
+          "id": 1,
+          "type": "text",
+          "data": "The contents of this block will be generated using frameworks. Therefore, let's give free rein to imagination. Rabid penguins attacked the Titanic, bit the commander of the ship and stole the radio. A group of strangers met other strangers. The mobile version of the safe harbor has lost a finger. I'm not Zura, I'm Katsura. A blue squid bit my dog's gills."
+        },
+        {
+          "id": 2,
+          "type": "anchor",
+          "href": "https://www.google.com",
+          "data": "google"
+        },
+        {
+          "id": 3,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/24/1.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 4,
+          "type": "text",
+          "data": "Mario, your princess is in another castle. After each step, make a jump. If you see a red ray, look for a rainbow. Every third person will become the fifth. If you love a table, love a chair. I'll be back. Sasuke, go back to the village."
+        },
+        {
+          "id": 5,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/25/2.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 6,
+          "type": "text",
+          "data": "If the yellow guitar becomes the sun, the dinosaurs will take over Sweden. Why are you going after a frog? It's not yours. If you report an error, the error will be fixed. But not with this package."
+        },
+        {
+          "id": 7,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/16/3.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 8,
+          "type": "text",
+          "data": "He said that light is a wave, and he will go to watch music. Next year will be right after that. "
+        },
+        {
+          "id": 9,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/16/4.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 10,
+          "type": "text",
+          "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
+        }
+      ],
+      "category": "politics",
+      "tags": [
+        "cat",
+        "moon"
+      ]
+    },
+    {
+      "id": 13,
+      "createdDate": "24.10.2022 14:11",
+      "upgradeDate": "24.10.2022 14:15",
+      "mainTitle": "345 678. Frenzied refrigerators are massively attacking cute kittens.",
+      "secondTitle": "A wedding is a funeral with a cake.",
+      "mainPhoto": "https://i.dummyjson.com/data/products/30/1.jpg",
+      "mainPhotoDescription": "Just do it!",
+      "body": [
+        {
+          "id": 1,
+          "type": "text",
+          "data": "The contents of this block will be generated using frameworks. Therefore, let's give free rein to imagination. Rabid penguins attacked the Titanic, bit the commander of the ship and stole the radio. A group of strangers met other strangers. The mobile version of the safe harbor has lost a finger. I'm not Zura, I'm Katsura. A blue squid bit my dog's gills."
+        },
+        {
+          "id": 2,
+          "type": "anchor",
+          "href": "https://www.google.com",
+          "data": "google"
+        },
+        {
+          "id": 3,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/17/1.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 4,
+          "type": "text",
+          "data": "Mario, your princess is in another castle. After each step, make a jump. If you see a red ray, look for a rainbow. Every third person will become the fifth. If you love a table, love a chair. I'll be back. Sasuke, go back to the village."
+        },
+        {
+          "id": 5,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/17/2.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 6,
+          "type": "text",
+          "data": "If the yellow guitar becomes the sun, the dinosaurs will take over Sweden. Why are you going after a frog? It's not yours. If you report an error, the error will be fixed. But not with this package."
+        },
+        {
+          "id": 7,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/17/3.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 8,
+          "type": "text",
+          "data": "He said that light is a wave, and he will go to watch music. Next year will be right after that. "
+        },
+        {
+          "id": 9,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/30/2.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 10,
+          "type": "text",
+          "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
+        }
+      ],
       "category": "politics",
       "tags": [
         "cat",
         "dog"
       ]
+    },
+    {
+      "id": 14,
+      "createdDate": "24.10.2022 14:11",
+      "upgradeDate": "24.10.2022 14:15",
+      "mainTitle": "456 789. Frenzied refrigerators are massively attacking cute kittens.",
+      "secondTitle": "A wedding is a funeral with a cake.",
+      "mainPhoto": "https://i.dummyjson.com/data/products/4/2.jpg",
+      "mainPhotoDescription": "Just do it!",
+      "body": [
+        {
+          "id": 1,
+          "type": "text",
+          "data": "The contents of this block will be generated using frameworks. Therefore, let's give free rein to imagination. Rabid penguins attacked the Titanic, bit the commander of the ship and stole the radio. A group of strangers met other strangers. The mobile version of the safe harbor has lost a finger. I'm not Zura, I'm Katsura. A blue squid bit my dog's gills."
+        },
+        {
+          "id": 2,
+          "type": "anchor",
+          "href": "https://www.google.com",
+          "data": "google"
+        },
+        {
+          "id": 3,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/18/1.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 4,
+          "type": "text",
+          "data": "Mario, your princess is in another castle. After each step, make a jump. If you see a red ray, look for a rainbow. Every third person will become the fifth. If you love a table, love a chair. I'll be back. Sasuke, go back to the village."
+        },
+        {
+          "id": 5,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/18/2.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 6,
+          "type": "text",
+          "data": "If the yellow guitar becomes the sun, the dinosaurs will take over Sweden. Why are you going after a frog? It's not yours. If you report an error, the error will be fixed. But not with this package."
+        },
+        {
+          "id": 7,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/18/3.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 8,
+          "type": "text",
+          "data": "He said that light is a wave, and he will go to watch music. Next year will be right after that. "
+        },
+        {
+          "id": 9,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/18/4.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 10,
+          "type": "text",
+          "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
+        }
+      ],
+      "category": "army",
+      "tags": [
+        "moon",
+        "dog"
+      ]
+    },
+    {
+      "id": 15,
+      "createdDate": "24.10.2022 14:11",
+      "upgradeDate": "24.10.2022 14:15",
+      "mainTitle": "567 890. Frenzied refrigerators are massively attacking cute kittens.",
+      "secondTitle": "A wedding is a funeral with a cake.",
+      "mainPhoto": "https://i.dummyjson.com/data/products/5/2.jpg",
+      "mainPhotoDescription": "Just do it!",
+      "body": [
+        {
+          "id": 1,
+          "type": "text",
+          "data": "The contents of this block will be generated using frameworks. Therefore, let's give free rein to imagination. Rabid penguins attacked the Titanic, bit the commander of the ship and stole the radio. A group of strangers met other strangers. The mobile version of the safe harbor has lost a finger. I'm not Zura, I'm Katsura. A blue squid bit my dog's gills."
+        },
+        {
+          "id": 2,
+          "type": "anchor",
+          "href": "https://www.google.com",
+          "data": "google"
+        },
+        {
+          "id": 3,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/19/1.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 4,
+          "type": "text",
+          "data": "Mario, your princess is in another castle. After each step, make a jump. If you see a red ray, look for a rainbow. Every third person will become the fifth. If you love a table, love a chair. I'll be back. Sasuke, go back to the village."
+        },
+        {
+          "id": 5,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/19/2.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 6,
+          "type": "text",
+          "data": "If the yellow guitar becomes the sun, the dinosaurs will take over Sweden. Why are you going after a frog? It's not yours. If you report an error, the error will be fixed. But not with this package."
+        },
+        {
+          "id": 7,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/30/3.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 8,
+          "type": "text",
+          "data": "He said that light is a wave, and he will go to watch music. Next year will be right after that. "
+        },
+        {
+          "id": 9,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/29/1.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 10,
+          "type": "text",
+          "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
+        }
+      ],
+      "category": "army",
+      "tags": [
+        "cat",
+        "moon"
+      ]
+    },
+    {
+      "id": 16,
+      "createdDate": "24.10.2022 14:11",
+      "upgradeDate": "24.10.2022 14:15",
+      "mainTitle": "678 901 123. Frenzied refrigerators are massively attacking cute kittens.",
+      "secondTitle": "A wedding is a funeral with a cake.",
+      "mainPhoto": "https://i.dummyjson.com/data/products/6/2.jpg",
+      "mainPhotoDescription": "Just do it!",
+      "body": [
+        {
+          "id": 1,
+          "type": "text",
+          "data": "The contents of this block will be generated using frameworks. Therefore, let's give free rein to imagination. Rabid penguins attacked the Titanic, bit the commander of the ship and stole the radio. A group of strangers met other strangers. The mobile version of the safe harbor has lost a finger. I'm not Zura, I'm Katsura. A blue squid bit my dog's gills."
+        },
+        {
+          "id": 2,
+          "type": "anchor",
+          "href": "https://www.google.com",
+          "data": "google"
+        },
+        {
+          "id": 3,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/20/1.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 4,
+          "type": "text",
+          "data": "Mario, your princess is in another castle. After each step, make a jump. If you see a red ray, look for a rainbow. Every third person will become the fifth. If you love a table, love a chair. I'll be back. Sasuke, go back to the village."
+        },
+        {
+          "id": 5,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/20/2.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 6,
+          "type": "text",
+          "data": "If the yellow guitar becomes the sun, the dinosaurs will take over Sweden. Why are you going after a frog? It's not yours. If you report an error, the error will be fixed. But not with this package."
+        },
+        {
+          "id": 7,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/20/3.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 8,
+          "type": "text",
+          "data": "He said that light is a wave, and he will go to watch music. Next year will be right after that. "
+        },
+        {
+          "id": 9,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/20/4.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 10,
+          "type": "text",
+          "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
+        }
+      ],
+      "category": "army",
+      "tags": [
+        "cat",
+        "dog"
+      ]
+    },
+    {
+      "id": 17,
+      "createdDate": "24.10.2022 14:11",
+      "upgradeDate": "24.10.2022 14:15",
+      "mainTitle": "123 456. Frenzied refrigerators are massively attacking cute kittens.",
+      "secondTitle": "A wedding is a funeral with a cake.",
+      "mainPhoto": "https://i.dummyjson.com/data/products/1/2.jpg",
+      "mainPhotoDescription": "Just do it!",
+      "body": [
+        {
+          "id": 1,
+          "type": "text",
+          "data": "The contents of this block will be generated using frameworks. Therefore, let's give free rein to imagination. Rabid penguins attacked the Titanic, bit the commander of the ship and stole the radio. A group of strangers met other strangers. The mobile version of the safe harbor has lost a finger. I'm not Zura, I'm Katsura. A blue squid bit my dog's gills."
+        },
+        {
+          "id": 2,
+          "type": "anchor",
+          "href": "https://www.google.com",
+          "data": "google"
+        },
+        {
+          "id": 3,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/15/1.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 4,
+          "type": "text",
+          "data": "Mario, your princess is in another castle. After each step, make a jump. If you see a red ray, look for a rainbow. Every third person will become the fifth. If you love a table, love a chair. I'll be back. Sasuke, go back to the village."
+        },
+        {
+          "id": 5,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/15/2.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 6,
+          "type": "text",
+          "data": "If the yellow guitar becomes the sun, the dinosaurs will take over Sweden. Why are you going after a frog? It's not yours. If you report an error, the error will be fixed. But not with this package."
+        },
+        {
+          "id": 7,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/15/3.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 8,
+          "type": "text",
+          "data": "He said that light is a wave, and he will go to watch music. Next year will be right after that. "
+        },
+        {
+          "id": 9,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/15/4.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 10,
+          "type": "text",
+          "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
+        }
+      ],
+      "category": "politics",
+      "tags": [
+        "moon",
+        "dog"
+      ]
+    },
+    {
+      "id": 18,
+      "createdDate": "24.10.2022 14:11",
+      "upgradeDate": "24.10.2022 14:15",
+      "mainTitle": "234 567. Frenzied refrigerators are massively attacking cute kittens.",
+      "secondTitle": "A wedding is a funeral with a cake.",
+      "mainPhoto": "https://i.dummyjson.com/data/products/2/2.jpg",
+      "mainPhotoDescription": "Just do it!",
+      "body": [
+        {
+          "id": 1,
+          "type": "text",
+          "data": "The contents of this block will be generated using frameworks. Therefore, let's give free rein to imagination. Rabid penguins attacked the Titanic, bit the commander of the ship and stole the radio. A group of strangers met other strangers. The mobile version of the safe harbor has lost a finger. I'm not Zura, I'm Katsura. A blue squid bit my dog's gills."
+        },
+        {
+          "id": 2,
+          "type": "anchor",
+          "href": "https://www.google.com",
+          "data": "google"
+        },
+        {
+          "id": 3,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/24/1.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 4,
+          "type": "text",
+          "data": "Mario, your princess is in another castle. After each step, make a jump. If you see a red ray, look for a rainbow. Every third person will become the fifth. If you love a table, love a chair. I'll be back. Sasuke, go back to the village."
+        },
+        {
+          "id": 5,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/25/2.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 6,
+          "type": "text",
+          "data": "If the yellow guitar becomes the sun, the dinosaurs will take over Sweden. Why are you going after a frog? It's not yours. If you report an error, the error will be fixed. But not with this package."
+        },
+        {
+          "id": 7,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/16/3.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 8,
+          "type": "text",
+          "data": "He said that light is a wave, and he will go to watch music. Next year will be right after that. "
+        },
+        {
+          "id": 9,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/16/4.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 10,
+          "type": "text",
+          "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
+        }
+      ],
+      "category": "politics",
+      "tags": [
+        "cat",
+        "moon"
+      ]
+    },
+    {
+      "id": 19,
+      "createdDate": "24.10.2022 14:11",
+      "upgradeDate": "24.10.2022 14:15",
+      "mainTitle": "345 678. Frenzied refrigerators are massively attacking cute kittens.",
+      "secondTitle": "A wedding is a funeral with a cake.",
+      "mainPhoto": "https://i.dummyjson.com/data/products/30/1.jpg",
+      "mainPhotoDescription": "Just do it!",
+      "body": [
+        {
+          "id": 1,
+          "type": "text",
+          "data": "The contents of this block will be generated using frameworks. Therefore, let's give free rein to imagination. Rabid penguins attacked the Titanic, bit the commander of the ship and stole the radio. A group of strangers met other strangers. The mobile version of the safe harbor has lost a finger. I'm not Zura, I'm Katsura. A blue squid bit my dog's gills."
+        },
+        {
+          "id": 2,
+          "type": "anchor",
+          "href": "https://www.google.com",
+          "data": "google"
+        },
+        {
+          "id": 3,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/17/1.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 4,
+          "type": "text",
+          "data": "Mario, your princess is in another castle. After each step, make a jump. If you see a red ray, look for a rainbow. Every third person will become the fifth. If you love a table, love a chair. I'll be back. Sasuke, go back to the village."
+        },
+        {
+          "id": 5,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/17/2.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 6,
+          "type": "text",
+          "data": "If the yellow guitar becomes the sun, the dinosaurs will take over Sweden. Why are you going after a frog? It's not yours. If you report an error, the error will be fixed. But not with this package."
+        },
+        {
+          "id": 7,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/17/3.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 8,
+          "type": "text",
+          "data": "He said that light is a wave, and he will go to watch music. Next year will be right after that. "
+        },
+        {
+          "id": 9,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/30/2.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 10,
+          "type": "text",
+          "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
+        }
+      ],
+      "category": "politics",
+      "tags": [
+        "cat",
+        "dog"
+      ]
+    },
+    {
+      "id": 20,
+      "createdDate": "24.10.2022 14:11",
+      "upgradeDate": "24.10.2022 14:15",
+      "mainTitle": "456 789. Frenzied refrigerators are massively attacking cute kittens.",
+      "secondTitle": "A wedding is a funeral with a cake.",
+      "mainPhoto": "https://i.dummyjson.com/data/products/4/2.jpg",
+      "mainPhotoDescription": "Just do it!",
+      "body": [
+        {
+          "id": 1,
+          "type": "text",
+          "data": "The contents of this block will be generated using frameworks. Therefore, let's give free rein to imagination. Rabid penguins attacked the Titanic, bit the commander of the ship and stole the radio. A group of strangers met other strangers. The mobile version of the safe harbor has lost a finger. I'm not Zura, I'm Katsura. A blue squid bit my dog's gills."
+        },
+        {
+          "id": 2,
+          "type": "anchor",
+          "href": "https://www.google.com",
+          "data": "google"
+        },
+        {
+          "id": 3,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/18/1.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 4,
+          "type": "text",
+          "data": "Mario, your princess is in another castle. After each step, make a jump. If you see a red ray, look for a rainbow. Every third person will become the fifth. If you love a table, love a chair. I'll be back. Sasuke, go back to the village."
+        },
+        {
+          "id": 5,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/18/2.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 6,
+          "type": "text",
+          "data": "If the yellow guitar becomes the sun, the dinosaurs will take over Sweden. Why are you going after a frog? It's not yours. If you report an error, the error will be fixed. But not with this package."
+        },
+        {
+          "id": 7,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/18/3.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 8,
+          "type": "text",
+          "data": "He said that light is a wave, and he will go to watch music. Next year will be right after that. "
+        },
+        {
+          "id": 9,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/18/4.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 10,
+          "type": "text",
+          "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
+        }
+      ],
+      "category": "army",
+      "tags": [
+        "moon",
+        "dog"
+      ]
+    },
+    {
+      "id": 21,
+      "createdDate": "24.10.2022 14:11",
+      "upgradeDate": "24.10.2022 14:15",
+      "mainTitle": "123 456. Frenzied refrigerators are massively attacking cute kittens.",
+      "secondTitle": "A wedding is a funeral with a cake.",
+      "mainPhoto": "https://i.dummyjson.com/data/products/1/2.jpg",
+      "mainPhotoDescription": "Just do it!",
+      "body": [
+        {
+          "id": 1,
+          "type": "text",
+          "data": "The contents of this block will be generated using frameworks. Therefore, let's give free rein to imagination. Rabid penguins attacked the Titanic, bit the commander of the ship and stole the radio. A group of strangers met other strangers. The mobile version of the safe harbor has lost a finger. I'm not Zura, I'm Katsura. A blue squid bit my dog's gills."
+        },
+        {
+          "id": 2,
+          "type": "anchor",
+          "href": "https://www.google.com",
+          "data": "google"
+        },
+        {
+          "id": 3,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/15/1.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 4,
+          "type": "text",
+          "data": "Mario, your princess is in another castle. After each step, make a jump. If you see a red ray, look for a rainbow. Every third person will become the fifth. If you love a table, love a chair. I'll be back. Sasuke, go back to the village."
+        },
+        {
+          "id": 5,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/15/2.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 6,
+          "type": "text",
+          "data": "If the yellow guitar becomes the sun, the dinosaurs will take over Sweden. Why are you going after a frog? It's not yours. If you report an error, the error will be fixed. But not with this package."
+        },
+        {
+          "id": 7,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/15/3.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 8,
+          "type": "text",
+          "data": "He said that light is a wave, and he will go to watch music. Next year will be right after that. "
+        },
+        {
+          "id": 9,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/15/4.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 10,
+          "type": "text",
+          "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
+        }
+      ],
+      "category": "politics",
+      "tags": [
+        "moon",
+        "dog"
+      ]
+    },
+    {
+      "id": 22,
+      "createdDate": "24.10.2022 14:11",
+      "upgradeDate": "24.10.2022 14:15",
+      "mainTitle": "234 567. Frenzied refrigerators are massively attacking cute kittens.",
+      "secondTitle": "A wedding is a funeral with a cake.",
+      "mainPhoto": "https://i.dummyjson.com/data/products/2/2.jpg",
+      "mainPhotoDescription": "Just do it!",
+      "body": [
+        {
+          "id": 1,
+          "type": "text",
+          "data": "The contents of this block will be generated using frameworks. Therefore, let's give free rein to imagination. Rabid penguins attacked the Titanic, bit the commander of the ship and stole the radio. A group of strangers met other strangers. The mobile version of the safe harbor has lost a finger. I'm not Zura, I'm Katsura. A blue squid bit my dog's gills."
+        },
+        {
+          "id": 2,
+          "type": "anchor",
+          "href": "https://www.google.com",
+          "data": "google"
+        },
+        {
+          "id": 3,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/24/1.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 4,
+          "type": "text",
+          "data": "Mario, your princess is in another castle. After each step, make a jump. If you see a red ray, look for a rainbow. Every third person will become the fifth. If you love a table, love a chair. I'll be back. Sasuke, go back to the village."
+        },
+        {
+          "id": 5,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/25/2.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 6,
+          "type": "text",
+          "data": "If the yellow guitar becomes the sun, the dinosaurs will take over Sweden. Why are you going after a frog? It's not yours. If you report an error, the error will be fixed. But not with this package."
+        },
+        {
+          "id": 7,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/16/3.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 8,
+          "type": "text",
+          "data": "He said that light is a wave, and he will go to watch music. Next year will be right after that. "
+        },
+        {
+          "id": 9,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/16/4.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 10,
+          "type": "text",
+          "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
+        }
+      ],
+      "category": "politics",
+      "tags": [
+        "cat",
+        "moon"
+      ]
+    },
+    {
+      "id": 23,
+      "createdDate": "24.10.2022 14:11",
+      "upgradeDate": "24.10.2022 14:15",
+      "mainTitle": "345 678. Frenzied refrigerators are massively attacking cute kittens.",
+      "secondTitle": "A wedding is a funeral with a cake.",
+      "mainPhoto": "https://i.dummyjson.com/data/products/30/1.jpg",
+      "mainPhotoDescription": "Just do it!",
+      "body": [
+        {
+          "id": 1,
+          "type": "text",
+          "data": "The contents of this block will be generated using frameworks. Therefore, let's give free rein to imagination. Rabid penguins attacked the Titanic, bit the commander of the ship and stole the radio. A group of strangers met other strangers. The mobile version of the safe harbor has lost a finger. I'm not Zura, I'm Katsura. A blue squid bit my dog's gills."
+        },
+        {
+          "id": 2,
+          "type": "anchor",
+          "href": "https://www.google.com",
+          "data": "google"
+        },
+        {
+          "id": 3,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/17/1.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 4,
+          "type": "text",
+          "data": "Mario, your princess is in another castle. After each step, make a jump. If you see a red ray, look for a rainbow. Every third person will become the fifth. If you love a table, love a chair. I'll be back. Sasuke, go back to the village."
+        },
+        {
+          "id": 5,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/17/2.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 6,
+          "type": "text",
+          "data": "If the yellow guitar becomes the sun, the dinosaurs will take over Sweden. Why are you going after a frog? It's not yours. If you report an error, the error will be fixed. But not with this package."
+        },
+        {
+          "id": 7,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/17/3.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 8,
+          "type": "text",
+          "data": "He said that light is a wave, and he will go to watch music. Next year will be right after that. "
+        },
+        {
+          "id": 9,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/30/2.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 10,
+          "type": "text",
+          "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
+        }
+      ],
+      "category": "politics",
+      "tags": [
+        "cat",
+        "dog"
+      ]
+    },
+    {
+      "id": 24,
+      "createdDate": "24.10.2022 14:11",
+      "upgradeDate": "24.10.2022 14:15",
+      "mainTitle": "456 789. Frenzied refrigerators are massively attacking cute kittens.",
+      "secondTitle": "A wedding is a funeral with a cake.",
+      "mainPhoto": "https://i.dummyjson.com/data/products/4/2.jpg",
+      "mainPhotoDescription": "Just do it!",
+      "body": [
+        {
+          "id": 1,
+          "type": "text",
+          "data": "The contents of this block will be generated using frameworks. Therefore, let's give free rein to imagination. Rabid penguins attacked the Titanic, bit the commander of the ship and stole the radio. A group of strangers met other strangers. The mobile version of the safe harbor has lost a finger. I'm not Zura, I'm Katsura. A blue squid bit my dog's gills."
+        },
+        {
+          "id": 2,
+          "type": "anchor",
+          "href": "https://www.google.com",
+          "data": "google"
+        },
+        {
+          "id": 3,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/18/1.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 4,
+          "type": "text",
+          "data": "Mario, your princess is in another castle. After each step, make a jump. If you see a red ray, look for a rainbow. Every third person will become the fifth. If you love a table, love a chair. I'll be back. Sasuke, go back to the village."
+        },
+        {
+          "id": 5,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/18/2.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 6,
+          "type": "text",
+          "data": "If the yellow guitar becomes the sun, the dinosaurs will take over Sweden. Why are you going after a frog? It's not yours. If you report an error, the error will be fixed. But not with this package."
+        },
+        {
+          "id": 7,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/18/3.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 8,
+          "type": "text",
+          "data": "He said that light is a wave, and he will go to watch music. Next year will be right after that. "
+        },
+        {
+          "id": 9,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/18/4.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 10,
+          "type": "text",
+          "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
+        }
+      ],
+      "category": "army",
+      "tags": [
+        "moon",
+        "dog"
+      ]
+    },
+    {
+      "id": 25,
+      "createdDate": "24.10.2022 14:11",
+      "upgradeDate": "24.10.2022 14:15",
+      "mainTitle": "567 890. Frenzied refrigerators are massively attacking cute kittens.",
+      "secondTitle": "A wedding is a funeral with a cake.",
+      "mainPhoto": "https://i.dummyjson.com/data/products/5/2.jpg",
+      "mainPhotoDescription": "Just do it!",
+      "body": [
+        {
+          "id": 1,
+          "type": "text",
+          "data": "The contents of this block will be generated using frameworks. Therefore, let's give free rein to imagination. Rabid penguins attacked the Titanic, bit the commander of the ship and stole the radio. A group of strangers met other strangers. The mobile version of the safe harbor has lost a finger. I'm not Zura, I'm Katsura. A blue squid bit my dog's gills."
+        },
+        {
+          "id": 2,
+          "type": "anchor",
+          "href": "https://www.google.com",
+          "data": "google"
+        },
+        {
+          "id": 3,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/19/1.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 4,
+          "type": "text",
+          "data": "Mario, your princess is in another castle. After each step, make a jump. If you see a red ray, look for a rainbow. Every third person will become the fifth. If you love a table, love a chair. I'll be back. Sasuke, go back to the village."
+        },
+        {
+          "id": 5,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/19/2.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 6,
+          "type": "text",
+          "data": "If the yellow guitar becomes the sun, the dinosaurs will take over Sweden. Why are you going after a frog? It's not yours. If you report an error, the error will be fixed. But not with this package."
+        },
+        {
+          "id": 7,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/30/3.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 8,
+          "type": "text",
+          "data": "He said that light is a wave, and he will go to watch music. Next year will be right after that. "
+        },
+        {
+          "id": 9,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/29/1.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 10,
+          "type": "text",
+          "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
+        }
+      ],
+      "category": "army",
+      "tags": [
+        "cat",
+        "moon"
+      ]
+    },
+    {
+      "id": 26,
+      "createdDate": "24.10.2022 14:11",
+      "upgradeDate": "24.10.2022 14:15",
+      "mainTitle": "678 901 123. Frenzied refrigerators are massively attacking cute kittens.",
+      "secondTitle": "A wedding is a funeral with a cake.",
+      "mainPhoto": "https://i.dummyjson.com/data/products/6/2.jpg",
+      "mainPhotoDescription": "Just do it!",
+      "body": [
+        {
+          "id": 1,
+          "type": "text",
+          "data": "The contents of this block will be generated using frameworks. Therefore, let's give free rein to imagination. Rabid penguins attacked the Titanic, bit the commander of the ship and stole the radio. A group of strangers met other strangers. The mobile version of the safe harbor has lost a finger. I'm not Zura, I'm Katsura. A blue squid bit my dog's gills."
+        },
+        {
+          "id": 2,
+          "type": "anchor",
+          "href": "https://www.google.com",
+          "data": "google"
+        },
+        {
+          "id": 3,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/20/1.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 4,
+          "type": "text",
+          "data": "Mario, your princess is in another castle. After each step, make a jump. If you see a red ray, look for a rainbow. Every third person will become the fifth. If you love a table, love a chair. I'll be back. Sasuke, go back to the village."
+        },
+        {
+          "id": 5,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/20/2.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 6,
+          "type": "text",
+          "data": "If the yellow guitar becomes the sun, the dinosaurs will take over Sweden. Why are you going after a frog? It's not yours. If you report an error, the error will be fixed. But not with this package."
+        },
+        {
+          "id": 7,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/20/3.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 8,
+          "type": "text",
+          "data": "He said that light is a wave, and he will go to watch music. Next year will be right after that. "
+        },
+        {
+          "id": 9,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/20/4.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 10,
+          "type": "text",
+          "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
+        }
+      ],
+      "category": "army",
+      "tags": [
+        "cat",
+        "dog"
+      ]
+    },
+    {
+      "id": 27,
+      "createdDate": "24.10.2022 14:11",
+      "upgradeDate": "24.10.2022 14:15",
+      "mainTitle": "123 456. Frenzied refrigerators are massively attacking cute kittens.",
+      "secondTitle": "A wedding is a funeral with a cake.",
+      "mainPhoto": "https://i.dummyjson.com/data/products/1/2.jpg",
+      "mainPhotoDescription": "Just do it!",
+      "body": [
+        {
+          "id": 1,
+          "type": "text",
+          "data": "The contents of this block will be generated using frameworks. Therefore, let's give free rein to imagination. Rabid penguins attacked the Titanic, bit the commander of the ship and stole the radio. A group of strangers met other strangers. The mobile version of the safe harbor has lost a finger. I'm not Zura, I'm Katsura. A blue squid bit my dog's gills."
+        },
+        {
+          "id": 2,
+          "type": "anchor",
+          "href": "https://www.google.com",
+          "data": "google"
+        },
+        {
+          "id": 3,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/15/1.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 4,
+          "type": "text",
+          "data": "Mario, your princess is in another castle. After each step, make a jump. If you see a red ray, look for a rainbow. Every third person will become the fifth. If you love a table, love a chair. I'll be back. Sasuke, go back to the village."
+        },
+        {
+          "id": 5,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/15/2.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 6,
+          "type": "text",
+          "data": "If the yellow guitar becomes the sun, the dinosaurs will take over Sweden. Why are you going after a frog? It's not yours. If you report an error, the error will be fixed. But not with this package."
+        },
+        {
+          "id": 7,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/15/3.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 8,
+          "type": "text",
+          "data": "He said that light is a wave, and he will go to watch music. Next year will be right after that. "
+        },
+        {
+          "id": 9,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/15/4.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 10,
+          "type": "text",
+          "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
+        }
+      ],
+      "category": "politics",
+      "tags": [
+        "moon",
+        "dog"
+      ]
+    },
+    {
+      "id": 28,
+      "createdDate": "24.10.2022 14:11",
+      "upgradeDate": "24.10.2022 14:15",
+      "mainTitle": "234 567. Frenzied refrigerators are massively attacking cute kittens.",
+      "secondTitle": "A wedding is a funeral with a cake.",
+      "mainPhoto": "https://i.dummyjson.com/data/products/2/2.jpg",
+      "mainPhotoDescription": "Just do it!",
+      "body": [
+        {
+          "id": 1,
+          "type": "text",
+          "data": "The contents of this block will be generated using frameworks. Therefore, let's give free rein to imagination. Rabid penguins attacked the Titanic, bit the commander of the ship and stole the radio. A group of strangers met other strangers. The mobile version of the safe harbor has lost a finger. I'm not Zura, I'm Katsura. A blue squid bit my dog's gills."
+        },
+        {
+          "id": 2,
+          "type": "anchor",
+          "href": "https://www.google.com",
+          "data": "google"
+        },
+        {
+          "id": 3,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/24/1.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 4,
+          "type": "text",
+          "data": "Mario, your princess is in another castle. After each step, make a jump. If you see a red ray, look for a rainbow. Every third person will become the fifth. If you love a table, love a chair. I'll be back. Sasuke, go back to the village."
+        },
+        {
+          "id": 5,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/25/2.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 6,
+          "type": "text",
+          "data": "If the yellow guitar becomes the sun, the dinosaurs will take over Sweden. Why are you going after a frog? It's not yours. If you report an error, the error will be fixed. But not with this package."
+        },
+        {
+          "id": 7,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/16/3.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 8,
+          "type": "text",
+          "data": "He said that light is a wave, and he will go to watch music. Next year will be right after that. "
+        },
+        {
+          "id": 9,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/16/4.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 10,
+          "type": "text",
+          "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
+        }
+      ],
+      "category": "politics",
+      "tags": [
+        "cat",
+        "moon"
+      ]
+    },
+    {
+      "id": 29,
+      "createdDate": "24.10.2022 14:11",
+      "upgradeDate": "24.10.2022 14:15",
+      "mainTitle": "345 678. Frenzied refrigerators are massively attacking cute kittens.",
+      "secondTitle": "A wedding is a funeral with a cake.",
+      "mainPhoto": "https://i.dummyjson.com/data/products/30/1.jpg",
+      "mainPhotoDescription": "Just do it!",
+      "body": [
+        {
+          "id": 1,
+          "type": "text",
+          "data": "The contents of this block will be generated using frameworks. Therefore, let's give free rein to imagination. Rabid penguins attacked the Titanic, bit the commander of the ship and stole the radio. A group of strangers met other strangers. The mobile version of the safe harbor has lost a finger. I'm not Zura, I'm Katsura. A blue squid bit my dog's gills."
+        },
+        {
+          "id": 2,
+          "type": "anchor",
+          "href": "https://www.google.com",
+          "data": "google"
+        },
+        {
+          "id": 3,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/17/1.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 4,
+          "type": "text",
+          "data": "Mario, your princess is in another castle. After each step, make a jump. If you see a red ray, look for a rainbow. Every third person will become the fifth. If you love a table, love a chair. I'll be back. Sasuke, go back to the village."
+        },
+        {
+          "id": 5,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/17/2.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 6,
+          "type": "text",
+          "data": "If the yellow guitar becomes the sun, the dinosaurs will take over Sweden. Why are you going after a frog? It's not yours. If you report an error, the error will be fixed. But not with this package."
+        },
+        {
+          "id": 7,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/17/3.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 8,
+          "type": "text",
+          "data": "He said that light is a wave, and he will go to watch music. Next year will be right after that. "
+        },
+        {
+          "id": 9,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/30/2.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 10,
+          "type": "text",
+          "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
+        }
+      ],
+      "category": "politics",
+      "tags": [
+        "cat",
+        "dog"
+      ]
+    },
+    {
+      "id": 30,
+      "createdDate": "24.10.2022 14:11",
+      "upgradeDate": "24.10.2022 14:15",
+      "mainTitle": "456 789. Frenzied refrigerators are massively attacking cute kittens.",
+      "secondTitle": "A wedding is a funeral with a cake.",
+      "mainPhoto": "https://i.dummyjson.com/data/products/4/2.jpg",
+      "mainPhotoDescription": "Just do it!",
+      "body": [
+        {
+          "id": 1,
+          "type": "text",
+          "data": "The contents of this block will be generated using frameworks. Therefore, let's give free rein to imagination. Rabid penguins attacked the Titanic, bit the commander of the ship and stole the radio. A group of strangers met other strangers. The mobile version of the safe harbor has lost a finger. I'm not Zura, I'm Katsura. A blue squid bit my dog's gills."
+        },
+        {
+          "id": 2,
+          "type": "anchor",
+          "href": "https://www.google.com",
+          "data": "google"
+        },
+        {
+          "id": 3,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/18/1.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 4,
+          "type": "text",
+          "data": "Mario, your princess is in another castle. After each step, make a jump. If you see a red ray, look for a rainbow. Every third person will become the fifth. If you love a table, love a chair. I'll be back. Sasuke, go back to the village."
+        },
+        {
+          "id": 5,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/18/2.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 6,
+          "type": "text",
+          "data": "If the yellow guitar becomes the sun, the dinosaurs will take over Sweden. Why are you going after a frog? It's not yours. If you report an error, the error will be fixed. But not with this package."
+        },
+        {
+          "id": 7,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/18/3.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 8,
+          "type": "text",
+          "data": "He said that light is a wave, and he will go to watch music. Next year will be right after that. "
+        },
+        {
+          "id": 9,
+          "type": "image",
+          "href": "https://i.dummyjson.com/data/products/18/4.jpg",
+          "alt": "plug"
+        },
+        {
+          "id": 10,
+          "type": "text",
+          "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
+        }
+      ],
+      "category": "army",
+      "tags": [
+        "moon",
+        "dog"
+      ]
     }
+  ],
+  "suggestedNews": [
+   1, 2, 3, 4, 5, 6, 7, 8, 9, 10
   ],
   "users": [
     {
