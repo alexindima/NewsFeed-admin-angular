@@ -51,7 +51,7 @@ const Categories = () => {
             {!!currentCategory && <CgPlayListCheck className="icon-wrapper__img" title="Category"/>}
             <div id="category-window" className={categoryWindowClass}>
                 <div className="category-dropdown">
-                    {currentCategory && <button onClick={clearCategory}
+                    {!!currentCategory && <button onClick={clearCategory}
                                                 className="category-dropdown__element category-dropdown__element--reset" >Clear category</button>}
                     {
                         categoryList.map((el, index) => (
