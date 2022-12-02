@@ -8,7 +8,6 @@ import {siteContext} from "../../Context/SiteContext";
 const Search = () => {
     const searchPhrase          = useContext(siteContext).searchPhrase
     const chooseSearchPhrase    = useContext(siteContext).chooseSearchPhrase
-    const clearSearchPhrase     = useContext(siteContext).clearSearchPhrase
 
     const [searchInputValue, setSearchInputValue] = useState('')
     const [searchIsClosed, setSearchIsClosed] = useState(true)
@@ -55,10 +54,6 @@ const Search = () => {
                         </label>
                         <button type="submit" className="search-form__button">Search</button>
                     </form>
-                    {!!searchPhrase && <button onClick={clearSearchPhrase}
-                                               className="category-dropdown__element category-dropdown__element--reset" >
-                        Clear search: {searchPhrase}
-                    </button>}
                 </div>
             </div>
         </div>

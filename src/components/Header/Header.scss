@@ -23,6 +23,7 @@
     align-items: center;
   }
   &__logo-img {
+    cursor: pointer;
     height: 54px;
     transition: height var(--header-transition-time-big);
     display: block; /* Найти почему не применилось выравнивание к инлайн*/
@@ -31,6 +32,7 @@
       transition: height var(--header-transition-time--small);
     }
   }
+
 }
 
 .icons-container {

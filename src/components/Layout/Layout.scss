@@ -1,7 +1,7 @@
 @import "../../styles/mixins";
 
 
-/*// Мне кажется что после переноса хедера из лейаута теперь просто двухколоночный лайоут и гриды немножк избыточно
+// Мне кажется что после переноса хедера из лейаута теперь просто двухколоночный лайоут и гриды немножк избыточно
 // Поэтому сделаю на флексах. Возможно появятся фичи и гриды будут оптимальнее
 .layout {
   display: grid;
@@ -11,21 +11,25 @@
   &__suggested {
     grid-area: suggested;
   }
+  &__back {
+    grid-area: goBack;
+  }
 }
 
 @include mobile {
   .body-general {
     overflow: scroll;
-    -ms-overflow-style: none;  !* IE и Edge *!
-    scrollbar-width: none;  !* Firefox *!
+    -ms-overflow-style: none;  //!* IE и Edge *!
+    scrollbar-width: none;  //!* Firefox *!
     &::-webkit-scrollbar {
-      display: none; !* Safari *!
+      display: none; //!* Safari *!
     }
   }
   .layout {
     grid-template-areas:
-            "main";
-    grid-template-rows:1fr;
+            "main"
+            "goBack";
+    grid-template-rows:1fr 50px;
     grid-template-columns: minmax(var(--min-screen), 1fr);
     &__suggested {
       display: none;
@@ -36,8 +40,9 @@
 @include desktop-wide {
   .layout {
     grid-template-areas:
-            "main suggested";
-    grid-template-rows:1fr;
+            "main suggested"
+            "goBack goBack";
+    grid-template-rows:1fr 50px;
     grid-template-columns: minmax(var(--min-screen), 1fr) 400px;
   }
 }
@@ -45,8 +50,9 @@
 @include desktop-normal {
   .layout {
     grid-template-areas:
-            "main suggested";
-    grid-template-rows: 1fr;
+            "main suggested"
+            "goBack goBack";
+    grid-template-rows:1fr 50px;
     grid-template-columns: minmax(var(--min-screen), 1fr) 300px;
   }
 }
@@ -54,16 +60,19 @@
 @include desktop-small {
   .layout {
     grid-template-areas:
-            "main";
-    grid-template-rows:1fr;
+            "main"
+            "goBack";
+    grid-template-rows:1fr 50px;
     grid-template-columns: minmax(var(--min-screen), 1fr);
     &__suggested {
       display: none;
     }
   }
-}*/
+}
+
 
 // На флексах
+/*
 .layout {
   display: flex;
   &__main {
@@ -114,3 +123,4 @@
     }
   }
 }
+*/

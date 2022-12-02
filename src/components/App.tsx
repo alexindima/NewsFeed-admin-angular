@@ -6,7 +6,6 @@ import UserContext from "../Context/UserContext";
 import ModalContext from "../Context/ModalContext";
 import SiteContext from "../Context/SiteContext";
 
-
 const App = () => {
 
     return (

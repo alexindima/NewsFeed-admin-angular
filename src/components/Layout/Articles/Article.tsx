@@ -1,9 +1,12 @@
-import React from "react";
+import React, {useContext} from "react";
 import {IArticle} from "../../../types/IArticle";
 import {IArticleElement} from "../../../types/IArticleElement";
 import "./Article.scss"
+import {siteContext} from "../../../Context/SiteContext";
 
 const Article = ({article}: {article: IArticle} ) => {
+    const chooseTag = useContext(siteContext).chooseTag;
+
     return (
         <article className="article">
                 <div className="article__header ">
@@ -30,6 +33,11 @@ const Article = ({article}: {article: IArticle} ) => {
                             default: return <></>
                         }
                     })}
+                </div>
+                <div className="article__tags">
+                    {article.tags.map((el, index) => (
+                        <div onClick={() => chooseTag(el)} key={index} className="article__tag" >{el}</div>)
+                    )}
                 </div>
             </article>
     )

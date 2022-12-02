@@ -13,7 +13,6 @@ const Categories = () => {
     const userIgnoredCategories = useContext(userContext).userIgnoredCategories;
     const currentCategory       = useContext(siteContext).currentCategory
     const chooseCategory        = useContext(siteContext).chooseCategory
-    const clearCategory         = useContext(siteContext).clearCategory
 
 
     function showOrHideCategory () {
@@ -51,8 +50,6 @@ const Categories = () => {
             {!!currentCategory && <CgPlayListCheck className="icon-wrapper__img" title="Category"/>}
             <div id="category-window" className={categoryWindowClass}>
                 <div className="category-dropdown">
-                    {!!currentCategory && <button onClick={clearCategory}
-                                                className="category-dropdown__element category-dropdown__element--reset" >Clear category</button>}
                     {
                         categoryList.map((el, index) => (
                             <button onClick={() => chooseCategory(el)}
