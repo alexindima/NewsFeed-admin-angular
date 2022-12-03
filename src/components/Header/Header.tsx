@@ -20,7 +20,7 @@ const Header = () => {
         window.addEventListener('scroll', ScrollHandle);
     },[]);
 
-    function CalculateHeader () {
+    const CalculateHeader = () => {
         if (window.scrollY  > DOWN_THRESHOLD) {
             setHeaderIsSmall(true);
         }
@@ -31,7 +31,7 @@ const Header = () => {
         }
     }
 
-    function ScrollHandle() {
+    const ScrollHandle = () => {
         let scrollWidth = Math.max(
             document.body.scrollWidth, document.documentElement.scrollWidth,
             document.body.offsetWidth, document.documentElement.offsetWidth,

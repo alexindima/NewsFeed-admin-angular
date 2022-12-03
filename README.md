@@ -1,70 +1,35 @@
-# Getting Started with Create React App
+#  News feed with endless news loading
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### The news feed is written using a **react**. Main features:
+- Articles don't load all at once. Articles are loaded when the scroll approaches the bottom of the browser screen.
+- Articles consist of a title and a body. The body can contain text, links and images in any order and in any quantity
+- Each article has a category. The list of categories is received from the server
+- An article can contain multiple tags
+- It is possible to sort the display by categories and tags
+- Search by the content of articles is implemented
+- There is a section of recommended articles. Recommended articles come from the server
 
-## Available Scripts
+It is possible to create an account on the site. Registration provides the following advantages:  
+- Ability to set categories that will be ignored. Articles with the selected categories will not be displayed, and the selected categories will disappear from the category list.
+- Ability to set tags that will be ignored. Articles containing such tags will not be displayed
 
-In the project directory, you can run:
+The ability to change the user's name and password is implemented. The user with ID 1 is an administrator. This user has the opportunity to go to the admin panel (not implemented yet, it is planned to be implemented on the Angular). Also, the administrator's authorization will not be saved when the page is reloaded for security
 
-### `npm start`
+Known disadvantages:
+- Since the server part is performed by the Json Server, the server's capabilities are very limited, and most of the server functions are performed by the frontend. This leads to a loss of performance and security vulnerabilities
+- The ability to hide popups when clicking outside of them has not yet been implemented
+- Since there is no email server, password recovery has a formal form
+- Big design problems
+- HTTP request error tracking has not been implemented yet
+- Since only the user ID is stored in the browser, when the page loads, the ignored tags and caterogies are loaded from the server, and if they exist, an additional rendering of articles occurs. Only the ID is saved due to the fact that the user can change the ignored information on another computer, which will make the saved data irrelevant.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+To launch the application, run
+```
+npm run start
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+The application will launch at http://localhost:3000/ 
 
-### `npm test`
+The server will start at http://localhost:3030/
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+There is a small delay on the server to be able to see the data loading spinner

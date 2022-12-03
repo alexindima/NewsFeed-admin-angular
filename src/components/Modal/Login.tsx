@@ -6,6 +6,7 @@ import { userContext } from "../../Context/UserContext";
 import classNames from "classnames";
 import {IUser} from "../../types/IUser";
 import {modalContext} from "../../Context/ModalContext";
+import PulseLoader from "react-spinners/PulseLoader";
 
 const Login = () => {
     const EMAIL_ERROR       = "There is no user with this email"
@@ -19,6 +20,7 @@ const Login = () => {
     const [emailInputValue, setEmailInputValue]         = useState('')
     const [passwordInputValue, setPasswordInputValue]   = useState('')
     const [errorMessage, setErrorMessage]               = useState('')
+    const [loading, setLoading]                         = useState(false);
 
     const emailInputDOM     = useRef<HTMLInputElement>(null)
     const passwordInputDOM  = useRef<HTMLInputElement>(null)
@@ -26,6 +28,7 @@ const Login = () => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const fetchData = async () => {
+            setLoading(true)
             const result = await axios(
                 'http://localhost:3030/users',
             );
@@ -40,10 +43,13 @@ const Login = () => {
                     if (user.password === passwordHash) {//need convert to hash
                         logIn(user)
                         hideModal()
+                        setLoading(false)
                         return false
                     }
                     else {
                         setErrorMessage(PASSWORD_ERROR)
+                        setLoading(false)
+                        setPasswordInputValue("")
                         passwordInputDOM.current!.focus();
                     }
                 }
@@ -51,6 +57,8 @@ const Login = () => {
             })
             if (!emailIsExist) {
                 setErrorMessage(EMAIL_ERROR)
+                setLoading(false)
+                setPasswordInputValue("")
                 emailInputDOM.current!.focus();
             }
         };
@@ -72,7 +80,7 @@ const Login = () => {
             <div className="modal-window__main-title">
                 Login to the site
             </div>
-            <form onSubmit={handleSubmit} className="modal-window__auth-form auth-form">
+            <form onSubmit={handleSubmit} className="modal-window__auth-form loginForm">
                 <label className={emailFieldClass}>
                     <span className="form-field__title">Email</span>
                     <input ref={emailInputDOM} type="email" className="form-field__input" required value={emailInputValue} onChange={(event) => {
@@ -86,7 +94,13 @@ const Login = () => {
                     }} />
                 </label>
                 {errorMessage && <div className="modal-window__error">{errorMessage}</div>}
-                <button type="submit" className="auth-form__submit-button">Log In</button>
+                <button type="submit" className="loginForm__submitButton">Log In<div className="recoveryForm__spinner">
+                    <PulseLoader
+                        color="#ffffff"
+                        loading={loading}
+                        size={10}
+                    />
+                </div></button>
             </form>
             <div className="modal-window__recover-password recover-password">
                 <button onClick={openRecoveryModal} className="recover-password__button">Recover Password</button>

@@ -1,5 +1,5 @@
 import * as React from "react";
-import "./Back.scss"
+import styles from "./Back.module.scss"
 import {BiArrowBack} from "react-icons/bi";
 import {useContext} from "react";
 import {siteContext} from "../../Context/SiteContext";
@@ -16,28 +16,34 @@ const Back = () => {
     const clearSearchPhrase     = useContext(siteContext).clearSearchPhrase;
     const clearArticleToShow    = useContext(siteContext).clearArticleToShow;
 
-
     return (
-        <div className="back">
-
-            <div onClick={clearAll} className="layout__back back__container">
-                <div className="back__icon-wrapper">
-                    <BiArrowBack className="back__icon-wrapper-img" title="Go back" />
+        <div className={styles.back}>
+            <div onClick={clearAll} className={styles.back__container}>
+                <div className={styles.back__iconWrapper}>
+                    <BiArrowBack title="Go back" />
                 </div>
-                <div className="back__label-container">
-                    <div className="back__label">
+                <div className={styles.back__labelContainer}>
                         Go back
-                    </div>
                 </div>
-
             </div>
-            <div className="back__info-container">
-                {!!currentCategory && <div onClick={clearCategory} className="back__info">Current category: {currentCategory} <RiCloseCircleFill/></div>}
-                {!!currentTag && <div onClick={clearTag} className="back__info">Current tag: {currentTag} <RiCloseCircleFill/></div>}
-                {!!searchPhrase && <div onClick={clearSearchPhrase} className="back__info">Current search: {searchPhrase} <RiCloseCircleFill/></div>}
-                {!!articleToShowID && <div onClick={clearArticleToShow} className="back__info">Selected suggested news <RiCloseCircleFill/></div>}
+            <div className={styles.back__infoContainer}>
+                {!!currentCategory &&
+                    <div onClick={clearCategory} className={styles.back__info}>
+                        Current category: {currentCategory} <RiCloseCircleFill/>
+                    </div>}
+                {!!currentTag &&
+                    <div onClick={clearTag} className={styles.back__info}>
+                        Current tag: {currentTag} <RiCloseCircleFill/>
+                    </div>}
+                {!!searchPhrase &&
+                    <div onClick={clearSearchPhrase} className={styles.back__info}>
+                        Current search: {searchPhrase} <RiCloseCircleFill/>
+                    </div>}
+                {!!articleToShowID &&
+                    <div onClick={clearArticleToShow} className={styles.back__info}>
+                        Selected suggested news <RiCloseCircleFill/>
+                    </div>}
             </div>
-
         </div>
     )
 }

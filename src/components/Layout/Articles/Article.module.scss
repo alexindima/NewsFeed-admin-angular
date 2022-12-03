@@ -7,22 +7,25 @@
   padding: 30px 30px 10px 30px;
   margin-bottom: 20px; //Разобраться почему не работает теперь разрыв для мейна (возможно дело в скролле)
   &__header {
-    padding-bottom: 20px; //Был флекс с разрывом
+    padding-bottom: 20px;
   }
-  &__date {
+  &__createDate {
     font-size: 14px;
     line-height: 18px;
     font-weight: 400;
-    &--update {
-      color: var(--article-update-color);
-    }
   }
-  &__title-main {
+  &__updateDate {
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 400;
+    color: var(--article-update-color);
+  }
+  &__titleMain {
     font-size: 36px;
     line-height: 45px;
     font-weight: 700;
   }
-  &__title-second {
+  &__titleSecond {
     display: block;
     font-size: 16px;
     padding-top: 10px;
@@ -34,13 +37,13 @@
     flex-direction: column;
     gap: 10px;
   }
-  &__photo-img {
+  &__photoImg {
     display: block;
     width: 100%;
     height: auto;
     margin: 0 auto;
   }
-  &__photo-text {
+  &__photoText {
     display: inline-block;
     font-size: 12px;
     line-height: 13px;
@@ -66,7 +69,7 @@
   }
 }
 
-.img-fluid {
+.imgFluid {
   display: block;
   width: 100%;
   height: auto;

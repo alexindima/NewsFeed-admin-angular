@@ -7,7 +7,6 @@ import ModalContext from "../Context/ModalContext";
 import SiteContext from "../Context/SiteContext";
 
 const App = () => {
-
     return (
         <UserContext>
             <ModalContext>
@@ -20,7 +19,6 @@ const App = () => {
                 </SiteContext>
             </ModalContext>
         </UserContext>
-
     )
 }
 

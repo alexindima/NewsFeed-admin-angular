@@ -1,10 +1,10 @@
 .back {
   position: fixed;
-
   bottom: 0;
   height: 50px;
   width: 100%;
   background: #f1f1f1;
+  background: var(--primary-bg-color);
   border-top: 2px solid var(--border-color);
   display: flex;
   gap: 20px;
@@ -18,10 +18,10 @@
       font-size: 40px;
     }
   }
-  &__label-container {
+  &__labelContainer {
     width: 150px;
   }
-  &__icon-wrapper {
+  &__iconWrapper {
     display: flex;
     position: relative; /* Чтобы край попапов был под кнопкой */
     align-items: center;
@@ -29,7 +29,7 @@
     height: 45px;
     width: 45px;
   }
-  &__info-container {
+  &__infoContainer {
     display: flex;
     gap:10px;
   }
@@ -49,4 +49,3 @@
     }
   }
 }
-

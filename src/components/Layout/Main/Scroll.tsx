@@ -59,10 +59,10 @@ const Scroll = () => {
     })
     return (
         <div className="scroll">
-            <div id="arrowTop" className={arrowTopClass} onClick={goTop}>
+            <div className={arrowTopClass} onClick={goTop}>
                 <VscTriangleUp className="scroll-button__img"/>
             </div>
-            <div id="arrowBottom" className={arrowBottomClass} onClick={goBack}>
+            <div className={arrowBottomClass} onClick={goBack}>
                 <VscTriangleDown
                      className="scroll-button__img scroll-button__img--down"/>
             </div>

@@ -2162,7 +2162,8 @@
       "email": "q@q",
       "password": "bcb15f821479b4d5772bd0ca866c00ad5f926e3580720659cc80d39c9d09802a",
       "ignoredCategories": [
-        "politics"
+        "politics",
+        "army"
       ],
       "ignoredTags": [
         "cat",
@@ -2186,6 +2187,18 @@
       "name": "test",
       "email": "e@e",
       "password": "e0bc60c82713f64ef8a57c0c40d02ce24fd0141d5cc3086259c19b1e62a62bea",
+      "ignoredCategories": [
+        ""
+      ],
+      "ignoredTags": [
+        ""
+      ]
+    },
+    {
+      "id": 5,
+      "name": "1111",
+      "email": "11@1",
+      "password": "bcb15f821479b4d5772bd0ca866c00ad5f926e3580720659cc80d39c9d09802a",
       "ignoredCategories": [
         ""
       ],

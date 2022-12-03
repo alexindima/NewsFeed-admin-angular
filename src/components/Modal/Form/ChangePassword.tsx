@@ -6,6 +6,7 @@ import {validPassword} from "../../../Regex/Regex"
 import classNames from "classnames";
 import {userContext} from "../../../Context/UserContext";
 import {modalContext} from "../../../Context/ModalContext";
+import PulseLoader from "react-spinners/PulseLoader";
 
 interface IUserIDProps {
     userID: number
@@ -26,7 +27,7 @@ const ChangePassword = (props: IUserIDProps) => {
     const [passwordInputValue, setPasswordInputValue]   = useState('')
     const [password2InputValue, setPassword2InputValue] = useState('')
     const [errorMessage, setErrorMessage]               = useState('')
-
+    const [loading, setLoading]                         = useState(false);
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -45,9 +46,11 @@ const ChangePassword = (props: IUserIDProps) => {
         }
         else {
             const fetchData = async () => {
+                setLoading(true)
                 const result = await axios(`http://localhost:3030/users/${recoveredUser}`)
                 const user = {...result.data, password: await calculateHash(passwordInputValue)}
                 const response = await axios.put(`http://localhost:3030/users/${recoveredUser}`, user)
+                setLoading(false)
                 logIn(user)
                 hideModal()
             };
@@ -61,7 +64,7 @@ const ChangePassword = (props: IUserIDProps) => {
     })
 
     return (
-        <form onSubmit={handleSubmit} className="modal-window__auth-form auth-form">
+        <form onSubmit={handleSubmit} className="modal-window__auth-form recoveryForm">
             <label className={passwordFieldClass}>
                 <span className="form-field__title">New Password *</span>
                 <input ref={passwordInputDOM} type="password" className="form-field__input" required value={passwordInputValue} onChange={(event) => {
@@ -75,7 +78,13 @@ const ChangePassword = (props: IUserIDProps) => {
                 }} />
             </label>
             {errorMessage && <div className="modal-window__error">{errorMessage}</div>}
-            <button type="submit" className="auth-form__submit-button">Save new password</button>
+            <button type="submit" className="recoveryForm__submitButton">Save new password<div className="recoveryForm__spinner">
+                <PulseLoader
+                    color="#ffffff"
+                    loading={loading}
+                    size={10}
+                />
+            </div></button>
         </form>
     )
 }

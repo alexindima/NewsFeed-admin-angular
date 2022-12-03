@@ -5,6 +5,7 @@ import { userContext } from "../../Context/UserContext";
 import {validUserName} from "../../Regex/Regex";
 import classNames from "classnames";
 import {modalContext} from "../../Context/ModalContext";
+import PulseLoader from "react-spinners/PulseLoader";
 
 // Нужен рефакторинг классов
 const SettingsName = () => {
@@ -15,8 +16,9 @@ const SettingsName = () => {
     const logIn     = useContext(userContext).logIn;
     const hideModal = useContext(modalContext).hideModal;
 
-    const [nameInputValue, setNameInputValue] = useState(userName)
-    const [errorMessage, setErrorMessage] = useState('')
+    const [nameInputValue, setNameInputValue]   = useState(userName)
+    const [errorMessage, setErrorMessage]       = useState('')
+    const [loading, setLoading]                 = useState(false);
 
     const nameInputDOM  = useRef<HTMLInputElement>(null)
 
@@ -28,11 +30,13 @@ const SettingsName = () => {
         }
         else {
             const fetchData = async () => {
+                setLoading(true)
                 const result = await axios(`http://localhost:3030/users/${userID}`)
                 const user = {...result.data, name: nameInputValue}
                 const response = await axios.put(`http://localhost:3030/users/${userID}`, user)
                 logIn(user)
                 hideModal()
+                setLoading(false)
             };
             fetchData();
         }
@@ -48,7 +52,7 @@ const SettingsName = () => {
             <div className="modal-window__main-title">
                 Change name
             </div>
-            <form onSubmit={handleSubmit} className="modal-window__auth-form auth-form">
+            <form onSubmit={handleSubmit} className="modal-window__auth-form nameForm">
                 <label className={nameFieldClass}>
                     <span className="form-field__title">New name *</span>
                     <input ref={nameInputDOM} type="text" className="form-field__input" required value={nameInputValue} onChange={(event) => {
@@ -56,7 +60,13 @@ const SettingsName = () => {
                     }} />
                 </label>
                 {errorMessage && <div className="modal-window__error">{errorMessage}</div>}
-                <button type="submit" className="auth-form__submit-button">Save new name</button>
+                <button type="submit" className="nameForm__submitButton">Save new name<div className="recoveryForm__spinner">
+                    <PulseLoader
+                        color="#ffffff"
+                        loading={loading}
+                        size={10}
+                    />
+                </div></button>
             </form>
         </div>
     )

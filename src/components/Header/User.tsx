@@ -8,7 +8,8 @@ import classNames from "classnames";
 const User = () => {
     const [userIsClosed, setUserIsClosed] = useState(true)
 
-    const helloUserDOM = useRef(null)
+    const userDOM       = useRef(null)
+    const helloUserDOM  = useRef(null)
 
     const userID                = useContext(userContext).userID;
     const userName              = useContext(userContext).userName;
@@ -28,7 +29,7 @@ const User = () => {
     })
 
     return (
-        <div className="icon-wrapper" onClick={(event) => {showOrHideUser(event)}}>
+        <div ref={userDOM} className="icon-wrapper" onClick={(event) => {showOrHideUser(event)}}>
             {!!userID || <BiUserCircle onClick={openLoginModal} id="user" className="icon-wrapper__img" title="User" />}
             {!!userID && <>
                 <BiUserCheck className="icon-wrapper__img" title="User" />
@@ -42,7 +43,6 @@ const User = () => {
                 </div>
             </> }
         </div>
-
     )
 }
 

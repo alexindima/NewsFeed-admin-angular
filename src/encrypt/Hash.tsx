@@ -2,7 +2,7 @@ import {sha1,sha256,sha384,sha512} from 'crypto-hash';
 
 export const calculateHash = async (value:string, algorithm = 'sha256') => {
     let result = '';
-    if (algorithm == 'sha1') {
+    if (algorithm === 'sha1') {
         result = await sha1(value);
     } else if (algorithm === 'sha256') {
         result = await sha256(value);

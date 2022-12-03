@@ -7,6 +7,7 @@ import { validUserName, validPassword } from "../../Regex/Regex"
 import { userContext } from "../../Context/UserContext";
 import classNames from "classnames";
 import {modalContext} from "../../Context/ModalContext";
+import PulseLoader from "react-spinners/PulseLoader";
 
 // Нужен рефакторинг классов
 const Signup = () => {
@@ -27,8 +28,7 @@ const Signup = () => {
     const [passwordInputValue, setPasswordInputValue]   = useState('')
     const [password2InputValue, setPassword2InputValue] = useState('')
     const [errorMessage, setErrorMessage]               = useState('')
-
-
+    const [loading, setLoading]                         = useState(false)
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -53,9 +53,8 @@ const Signup = () => {
         }
         else {
             const fetchData = async () => {
-                const result = await axios(
-                    'http://localhost:3030/users',
-                );
+                setLoading(true)
+                const result = await axios('http://localhost:3030/users')
                 /*  Это должен делать бэк
                  */
                 let userAlreadyExist = false
@@ -69,6 +68,7 @@ const Signup = () => {
                         setErrorMessage(EMAIL_ERROR)
                         setPasswordInputValue("")
                         setPassword2InputValue("")
+                        setLoading(false)
                         emailInputDOM.current!.focus();
                         return false
                     }
@@ -86,6 +86,7 @@ const Signup = () => {
                     const response = await axios.post('http://localhost:3030/users', newUser);
                     logIn(newUser)
                     hideModal()
+                    setLoading(false)
                 }
             };
             fetchData();
@@ -109,7 +110,7 @@ const Signup = () => {
             <div className="modal-window__main-title">
                 Sign Up
             </div>
-            <form onSubmit={handleSubmit} className="modal-window__auth-form auth-form">
+            <form onSubmit={handleSubmit} className="modal-window__auth-form signupForm">
                 <label className={nameFieldClass}>
                     <span className="form-field__title">Name *</span>
                     <input ref={nameInputDOM} type="text" className="form-field__input" required value={nameInputValue} onChange={(event) => {
@@ -135,7 +136,13 @@ const Signup = () => {
                     }} />
                 </label>
                 {errorMessage && <div className="modal-window__error">{errorMessage}</div>}
-                <button type="submit" className="auth-form__submit-button">Sign Up</button>
+                <button type="submit" className="signupForm__submitButton">Sign Up<div className="recoveryForm__spinner">
+                    <PulseLoader
+                        color="#ffffff"
+                        loading={loading}
+                        size={10}
+                    />
+                </div></button>
             </form>
         </div>
     )
