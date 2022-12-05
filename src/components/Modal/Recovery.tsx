@@ -73,13 +73,20 @@ const Recovery = (props: IUserProps) => {
                     }} />
                 </label>
                 {errorMessage && <div className="modal-window__error">{errorMessage}</div>}
-                <button type="submit" className="recoveryForm__submitButton">Send an email<div className="recoveryForm__spinner">
-                    <PulseLoader
-                        color="#ffffff"
-                        loading={loading}
-                        size={10}
-                    />
-                </div></button>
+                <button type="submit" className="recoveryForm__submitButton"
+                        disabled={(
+                            !emailInputValue ||
+                            loading
+                        )}>
+                    Send an email
+                    <div className="recoveryForm__spinner">
+                        <PulseLoader
+                            color="#ffffff"
+                            loading={loading}
+                            size={10}
+                        />
+                    </div>
+                </button>
             </form>
         </div>
     )

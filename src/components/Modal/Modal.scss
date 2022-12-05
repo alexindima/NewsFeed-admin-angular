@@ -10,7 +10,7 @@
   top: 0;
   left: 0;
   justify-content: center;
-  align-items: start;
+  align-items: flex-start;
   background-color: var(--modal-bg-color);
   z-index: 9999;
   &::after {

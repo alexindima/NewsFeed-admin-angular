@@ -33,7 +33,7 @@ const SettingsName = () => {
                 setLoading(true)
                 const result = await axios(`http://localhost:3030/users/${userID}`)
                 const user = {...result.data, name: nameInputValue}
-                const response = await axios.put(`http://localhost:3030/users/${userID}`, user)
+                await axios.put(`http://localhost:3030/users/${userID}`, user)
                 logIn(user)
                 hideModal()
                 setLoading(false)
@@ -60,13 +60,20 @@ const SettingsName = () => {
                     }} />
                 </label>
                 {errorMessage && <div className="modal-window__error">{errorMessage}</div>}
-                <button type="submit" className="nameForm__submitButton">Save new name<div className="recoveryForm__spinner">
-                    <PulseLoader
-                        color="#ffffff"
-                        loading={loading}
-                        size={10}
-                    />
-                </div></button>
+                <button type="submit" className="nameForm__submitButton"
+                    disabled={(
+                        !nameInputValue ||
+                        loading
+                    )}>
+                    Save new name
+                    <div className="recoveryForm__spinner">
+                        <PulseLoader
+                            color="#ffffff"
+                            loading={loading}
+                            size={10}
+                        />
+                    </div>
+                </button>
             </form>
         </div>
     )

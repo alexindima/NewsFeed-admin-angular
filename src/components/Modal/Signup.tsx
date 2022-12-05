@@ -9,7 +9,6 @@ import classNames from "classnames";
 import {modalContext} from "../../Context/ModalContext";
 import PulseLoader from "react-spinners/PulseLoader";
 
-// Нужен рефакторинг классов
 const Signup = () => {
     const NAME_ERROR        = "The user name must contain at least 3 letters, numbers and underscores"
     const EMAIL_ERROR       = "This email is already exist"
@@ -17,7 +16,7 @@ const Signup = () => {
     const PASSWORD2_ERROR   = "Passwords must match"
 
     const logIn     = useContext(userContext).logIn;
-    const hideModal =  useContext(modalContext).hideModal;
+    const hideModal = useContext(modalContext).hideModal;
 
     const nameInputDOM      = useRef<HTMLInputElement>(null)
     const emailInputDOM     = useRef<HTMLInputElement>(null)
@@ -83,7 +82,7 @@ const Signup = () => {
                         ignoredCategories: [""],
                         ignoredTags: [""]
                     }
-                    const response = await axios.post('http://localhost:3030/users', newUser);
+                    await axios.post('http://localhost:3030/users', newUser);
                     logIn(newUser)
                     hideModal()
                     setLoading(false)
@@ -136,13 +135,23 @@ const Signup = () => {
                     }} />
                 </label>
                 {errorMessage && <div className="modal-window__error">{errorMessage}</div>}
-                <button type="submit" className="signupForm__submitButton">Sign Up<div className="recoveryForm__spinner">
-                    <PulseLoader
-                        color="#ffffff"
-                        loading={loading}
-                        size={10}
-                    />
-                </div></button>
+                <button type="submit" className="signupForm__submitButton"
+                    disabled={(
+                        !nameInputValue ||
+                        !emailInputValue ||
+                        !passwordInputValue ||
+                        !password2InputValue ||
+                        loading
+                    )}>
+                    Sign Up
+                    <div className="recoveryForm__spinner">
+                        <PulseLoader
+                            color="#ffffff"
+                            loading={loading}
+                            size={10}
+                        />
+                    </div>
+                </button>
             </form>
         </div>
     )

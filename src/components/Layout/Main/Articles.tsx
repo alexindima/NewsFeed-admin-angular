@@ -31,6 +31,7 @@ const Articles = () => {
 
     let pageIsLoading   = useRef(false)
     let wasLoading      = useRef(false)
+    let dataIsMissing   = useRef(false)
     let loadMoreDOM     = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
@@ -47,9 +48,11 @@ const Articles = () => {
             setLoading(true)
             const result = await axios(url);
             const filteredArray = NewsFilter(result.data, userIgnoredCategories, userIgnoredTags, currentTag)
-
-            const newArray = [...articles, ...filteredArray]
-            setArticles(newArray);
+            dataIsMissing.current = !filteredArray.length
+            if (!dataIsMissing.current) {
+                const newArray = [...articles, ...filteredArray]
+                setArticles(newArray);
+            }
             setNeedToLoad(false)
             setCurrentPage(currentPage.current + 1)
             setLoading(false)
@@ -59,7 +62,7 @@ const Articles = () => {
             fetchData();
             pageIsLoading.current = false
         }
-
+    // eslint-disable-next-line
     }, [needToLoad]);
 
     useEffect(() => {
@@ -67,7 +70,7 @@ const Articles = () => {
         pageIsLoading.current = false
         setNeedToLoad(true)
         currentPage.current = 1
-    }, [currentCategory, currentTag, userIgnoredCategories, userIgnoredTags, searchPhrase]);
+    }, [currentPage, currentCategory, currentTag, userIgnoredCategories, userIgnoredTags, searchPhrase]);
 
 
     useEffect(() => {
@@ -87,7 +90,7 @@ const Articles = () => {
 
     useEffect(() => {
         window.addEventListener('scroll', ScrollHandle);
-    },[]);
+    });
 
     const ScrollHandle = () => {
         if(loadMoreDOM.current) {
@@ -109,7 +112,7 @@ const Articles = () => {
     }
 
     return (
-        <div>
+        <>
             {!!articleToShowID &&
                 <div className={styles.spinner}>
                     <PulseLoader
@@ -121,7 +124,7 @@ const Articles = () => {
             }
             {!!articleToShowID && articleToShowIsReady &&<Article article={articleToShow}/>}
             {!!articleToShowID ||
-                <div>
+                <>
                     {articles.map((article: IArticle) => <Article key={article.id} article={article}/>)}
                     <div ref={loadMoreDOM} onClick={LoadMoreHandle}>
                         <div className={styles.spinner}>
@@ -132,8 +135,12 @@ const Articles = () => {
                             />
                         </div>
                     </div>
-                </div> }
-        </div>
+                </> }
+            {!articleToShowID && dataIsMissing.current && !loading &&
+                <div className={styles.noResults}>
+                    No results :(
+                </div>}
+        </>
     )
 }
 

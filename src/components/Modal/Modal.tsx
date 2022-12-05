@@ -11,7 +11,6 @@ import "./Modal.scss"
 import classNames from "classnames";
 import {modalContext} from "../../Context/ModalContext";
 
-// нужен рефакторинг классов
 const Modal = () => {
     const [recoveredUser, setRecoveredUser] = useState(0)
 

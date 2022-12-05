@@ -23,7 +23,6 @@ const ChangePassword = (props: IUserIDProps) => {
     const logIn     = useContext(userContext).logIn;
     const hideModal = useContext(modalContext).hideModal;
 
-    const [emailInputValue, setEmailInputValue]         = useState('')
     const [passwordInputValue, setPasswordInputValue]   = useState('')
     const [password2InputValue, setPassword2InputValue] = useState('')
     const [errorMessage, setErrorMessage]               = useState('')
@@ -31,7 +30,6 @@ const ChangePassword = (props: IUserIDProps) => {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        setEmailInputValue(emailInputValue.toLowerCase())
         if (passwordInputValue !== password2InputValue) {
             setErrorMessage(PASSWORD2_ERROR)
             setPasswordInputValue("")
@@ -49,7 +47,7 @@ const ChangePassword = (props: IUserIDProps) => {
                 setLoading(true)
                 const result = await axios(`http://localhost:3030/users/${recoveredUser}`)
                 const user = {...result.data, password: await calculateHash(passwordInputValue)}
-                const response = await axios.put(`http://localhost:3030/users/${recoveredUser}`, user)
+                await axios.put(`http://localhost:3030/users/${recoveredUser}`, user)
                 setLoading(false)
                 logIn(user)
                 hideModal()
@@ -78,13 +76,21 @@ const ChangePassword = (props: IUserIDProps) => {
                 }} />
             </label>
             {errorMessage && <div className="modal-window__error">{errorMessage}</div>}
-            <button type="submit" className="recoveryForm__submitButton">Save new password<div className="recoveryForm__spinner">
-                <PulseLoader
-                    color="#ffffff"
-                    loading={loading}
-                    size={10}
-                />
-            </div></button>
+            <button type="submit" className="recoveryForm__submitButton"
+                disabled={(
+                    !passwordInputValue ||
+                    !password2InputValue ||
+                    loading
+                )}>
+                Save new password
+                <div className="recoveryForm__spinner">
+                    <PulseLoader
+                        color="#ffffff"
+                        loading={loading}
+                        size={10}
+                    />
+                </div>
+            </button>
         </form>
     )
 }

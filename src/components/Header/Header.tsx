@@ -18,7 +18,7 @@ const Header = () => {
 
     useEffect(() => {
         window.addEventListener('scroll', ScrollHandle);
-    },[]);
+    });
 
     const CalculateHeader = () => {
         if (window.scrollY  > DOWN_THRESHOLD) {

@@ -29,7 +29,7 @@ const Article = ({article}: {article: IArticle} ) => {
                             case "image":
                                 return <img key={el.id} className={styles.imgFluid} src={el.href} alt={el.alt}></img>
                             case "anchor":
-                                return <a key={el.id} href={el.href} target="_blank">{el.data}</a>
+                                return <a key={el.id} href={el.href} rel="noreferrer" target="_blank">{el.data}</a>
                             default: return <></>
                         }
                     })}

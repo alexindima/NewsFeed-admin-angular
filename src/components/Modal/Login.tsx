@@ -94,13 +94,21 @@ const Login = () => {
                     }} />
                 </label>
                 {errorMessage && <div className="modal-window__error">{errorMessage}</div>}
-                <button type="submit" className="loginForm__submitButton">Log In<div className="recoveryForm__spinner">
-                    <PulseLoader
-                        color="#ffffff"
-                        loading={loading}
-                        size={10}
-                    />
-                </div></button>
+                <button type="submit" className="loginForm__submitButton"
+                    disabled={(
+                        !emailInputValue ||
+                        !passwordInputValue ||
+                        loading
+                    )}>
+                    Log In
+                    <div className="recoveryForm__spinner">
+                        <PulseLoader
+                            color="#ffffff"
+                            loading={loading}
+                            size={10}
+                        />
+                    </div>
+                </button>
             </form>
             <div className="modal-window__recover-password recover-password">
                 <button onClick={openRecoveryModal} className="recover-password__button">Recover Password</button>

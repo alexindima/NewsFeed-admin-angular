@@ -29,7 +29,7 @@ const SettingsMain = () => {
                 ignoredCategories: ignoredCategories.map((category:string) => category.trim()),
                 ignoredTags: ignoredTags.map((tag:string) => tag.trim())
             }
-            const response = await axios.put(`http://localhost:3030/users/${userID}`, changedUser)
+            await axios.put(`http://localhost:3030/users/${userID}`, changedUser)
             logIn(changedUser)
             hideModal()
             setLoading(false)
@@ -55,13 +55,19 @@ const SettingsMain = () => {
                         setIgnoredTags(event.target.value.split(","))
                     }} />
                 </label>
-                <button type="submit" className="mainSettings__submitButton">Save<div className="recoveryForm__spinner">
-                    <PulseLoader
-                        color="#ffffff"
-                        loading={loading}
-                        size={10}
-                    />
-                </div></button>
+                <button type="submit" className="mainSettings__submitButton"
+                    disabled={(
+                        loading
+                    )}>
+                    Save
+                    <div className="recoveryForm__spinner">
+                        <PulseLoader
+                            color="#ffffff"
+                            loading={loading}
+                            size={10}
+                        />
+                    </div>
+                </button>
             </form>
             <div className="modal-window__recover-password change-name-password">
                 <button onClick={openSettingsNameModal} className="change-name-password__button">Change Name</button>

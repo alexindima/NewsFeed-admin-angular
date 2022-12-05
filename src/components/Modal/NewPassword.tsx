@@ -10,12 +10,12 @@ const NewPassword = (props: IUserIDProps) => {
     const recoveredUser = props.userID
 
     return (
-        <div>
+        <>
             <div className="modal-window__main-title">
                 Set new password
             </div>
             <ChangePassword userID={recoveredUser} />
-        </div>
+        </>
     )
 }
 
