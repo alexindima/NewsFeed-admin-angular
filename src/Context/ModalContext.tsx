@@ -4,103 +4,50 @@ import {IContextProps} from "../types/IContextProps";
 
 export const modalContext = createContext<any>({});
 
+/* Реакт не ангуляр, тут нет удобного открытия модалок как у ангуляра
+* если использовать Dialog из React Material, появляется огромная проблема
+* с открытием модалки из модалки, закрывая первую модалку, приходится
+* распологать модалки рядом и прокидывать пропс в родитель, сильно
+* усложняя код и его читаемость*/
+
 const ModalContext = (props: IContextProps) => {
-    const [loginModalIsOpened, setLoginModalIsOpened]                       = useState(false)
-    const [signupModalIsOpened, setSignupModalIsOpened]                     = useState(false)
-    const [recoveryModalIsOpened, setRecoveryModalIsOpened]                 = useState(false)
-    const [newPasswordModalIsOpened, setNewPasswordModalIsOpened]           = useState(false)
-    const [settingsMainModalIsOpened, setSettingsMainModalIsOpened]         = useState(false)
-    const [settingsNameModalIsOpened, setSettingsNameModalIsOpened]         = useState(false)
-    const [settingsPasswordModalIsOpened, setSettingsPasswordModalIsOpened] = useState(false)
+    const [currentModal, setCurrentModal] = useState<string|null>(null)
 
     const openLoginModal = () => {
         document.body.classList.add('modal-open')
-        setLoginModalIsOpened(true)
-        setSignupModalIsOpened(false)
-        setRecoveryModalIsOpened(false)
-        setNewPasswordModalIsOpened(false)
-        setSettingsMainModalIsOpened(false)
-        setSettingsNameModalIsOpened(false)
-        setSettingsPasswordModalIsOpened(false)
+        setCurrentModal("login")
     }
     const openSignupModal = () => {
         document.body.classList.add('modal-open')
-        setLoginModalIsOpened(false)
-        setSignupModalIsOpened(true)
-        setRecoveryModalIsOpened(false)
-        setNewPasswordModalIsOpened(false)
-        setSettingsMainModalIsOpened(false)
-        setSettingsNameModalIsOpened(false)
-        setSettingsPasswordModalIsOpened(false)
+        setCurrentModal("signup")
     }
     const openRecoveryModal = () => {
         document.body.classList.add('modal-open')
-        setLoginModalIsOpened(false)
-        setSignupModalIsOpened(false)
-        setRecoveryModalIsOpened(true)
-        setNewPasswordModalIsOpened(false)
-        setSettingsMainModalIsOpened(false)
-        setSettingsNameModalIsOpened(false)
+        setCurrentModal("recovery")
     }
     const openNewPasswordModal = () => {
         document.body.classList.add('modal-open')
-        setLoginModalIsOpened(false)
-        setSignupModalIsOpened(false)
-        setRecoveryModalIsOpened(false)
-        setNewPasswordModalIsOpened(true)
-        setSettingsMainModalIsOpened(false)
-        setSettingsNameModalIsOpened(false)
-        setSettingsPasswordModalIsOpened(false)
+        setCurrentModal("newPassword")
     }
     const openSettingsMainModal = () => {
         document.body.classList.add('modal-open')
-        setLoginModalIsOpened(false)
-        setSignupModalIsOpened(false)
-        setRecoveryModalIsOpened(false)
-        setNewPasswordModalIsOpened(false)
-        setSettingsMainModalIsOpened(true)
-        setSettingsNameModalIsOpened(false)
-        setSettingsPasswordModalIsOpened(false)
+        setCurrentModal("settingsMain")
     }
     const openSettingsNameModal = () => {
         document.body.classList.add('modal-open')
-        setLoginModalIsOpened(false)
-        setSignupModalIsOpened(false)
-        setRecoveryModalIsOpened(false)
-        setNewPasswordModalIsOpened(false)
-        setSettingsMainModalIsOpened(false)
-        setSettingsNameModalIsOpened(true)
-        setSettingsPasswordModalIsOpened(false)
+        setCurrentModal("settingsName")
     }
     const openSettingsPasswordModal = () => {
         document.body.classList.add('modal-open')
-        setLoginModalIsOpened(false)
-        setSignupModalIsOpened(false)
-        setRecoveryModalIsOpened(false)
-        setNewPasswordModalIsOpened(false)
-        setSettingsMainModalIsOpened(false)
-        setSettingsNameModalIsOpened(false)
-        setSettingsPasswordModalIsOpened(true)
+        setCurrentModal("settingsPassword")
     }
     const hideModal = () => {
         document.body.classList.remove('modal-open')
-        setLoginModalIsOpened(false)
-        setSignupModalIsOpened(false)
-        setRecoveryModalIsOpened(false)
-        setNewPasswordModalIsOpened(false)
-        setSettingsMainModalIsOpened(false)
-        setSettingsNameModalIsOpened(false)
-        setSettingsPasswordModalIsOpened(false)
+        setCurrentModal(null)
     }
 
     const value = {
-        loginModalIsOpened,
-        signupModalIsOpened,
-        recoveryModalIsOpened,
-        newPasswordModalIsOpened,
-        settingsMainModalIsOpened,
-        settingsNameModalIsOpened,
-        settingsPasswordModalIsOpened,
+        currentModal,
         openLoginModal,
         openSignupModal,
         openRecoveryModal,

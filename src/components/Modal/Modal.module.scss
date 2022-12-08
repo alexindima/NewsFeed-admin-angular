@@ -1,8 +1,4 @@
-.modal-open {
-  overflow: hidden;
-}
-
-.modal-area {
+.modalArea {
   display: flex;
   position: fixed;
   width: 100vw;
@@ -24,7 +20,7 @@
 }
 
 
-.modal-window {
+.modalWindow {
   position: relative;
   top: 40px;
   width: 480px;
@@ -47,23 +43,6 @@
     width: 50px;
     cursor: pointer;
     font-size: 50px;
-  }
-  &__main-title {
-    margin-bottom: 40px;
-    text-align: center;
-    font-size: 32px;
-    font-weight: bold;
-    line-height: normal;
-  }
-  &__second-title {
-    margin-bottom: 40px;
-    text-align: center;
-    font-size: 24px;
-    font-weight: bold;
-    line-height: normal;
-  }
-  &__error {
-    color: red;
   }
 }
 

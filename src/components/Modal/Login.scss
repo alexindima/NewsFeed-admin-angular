@@ -1,3 +1,75 @@
+.modal-open {
+  overflow: hidden;
+}
+
+.modal-area {
+  display: flex;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: var(--modal-bg-color);
+  z-index: 9999;
+  &::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--modal-bg-after-color);
+    z-index: 1;
+  }
+}
+
+
+.modal-window {
+  position: relative;
+  top: 40px;
+  width: 480px;
+  height: auto;
+  padding: 20px;
+  background: var(--secondary-bg-color);
+  z-index: 2;
+  &__close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 50px;
+    cursor: pointer;
+    font-size: 50px;
+  }
+  &__back {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 50px;
+    cursor: pointer;
+    font-size: 50px;
+  }
+  &__main-title {
+    margin-bottom: 40px;
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    line-height: normal;
+  }
+  &__second-title {
+    margin-bottom: 40px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: normal;
+  }
+  &__error {
+    color: red;
+  }
+}
+
+
+
+
 .form-field {
   position: relative;
   display: block;
