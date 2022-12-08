@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import {IArticle} from "../../../types/IArticle";
 import Article from "../Articles/Article";
 import axios from "axios";
-import { userContext } from "../../../Context/UserContext";
+import {userContext} from "../../../Context/UserContext";
 import PulseLoader from "react-spinners/PulseLoader";
 import NewsFilter from "../../../lib/NewsFilter";
 import {siteContext} from "../../../Context/SiteContext";
@@ -12,27 +12,26 @@ const Articles = () => {
     const ARTICLES_TO_LOAD = 5
     const LOAD_ON_POSITION = 2000
 
-    const userIgnoredCategories = useContext(userContext).userIgnoredCategories
-    const userIgnoredTags       = useContext(userContext).userIgnoredTags
-    const currentCategory       = useContext(siteContext).currentCategory
-    const currentTag            = useContext(siteContext).currentTag
-    const searchPhrase          = useContext(siteContext).searchPhrase
-    const articleToShowID       = useContext(siteContext).articleToShow
-    const currentPage           = useContext(siteContext).currentPage
-    const setCurrentPage        = useContext(siteContext).setCurrentPage
+    const user = useContext(userContext).user;
+    const currentCategory = useContext(siteContext).currentCategory
+    const currentTag = useContext(siteContext).currentTag
+    const searchPhrase = useContext(siteContext).searchPhrase
+    const articleToShowID = useContext(siteContext).articleToShow
+    const currentPage = useContext(siteContext).currentPage
+    const setCurrentPage = useContext(siteContext).setCurrentPage
 
     // Из-за того что нет бэкенда дальше будет жесть, всю бэковую работу будет делать фронт
-    const [articles, setArticles]                           = useState<IArticle[]>([]);
-    const [articleToShow, setArticleToShow]                 = useState<IArticle>(Object)
-    const [articleToShowIsReady, setArticleToShowIsReady]   = useState(false)
-    const [needToLoad, setNeedToLoad]                       = useState(true)
-    const [loading, setLoading]                             = useState(true);
-    const [loadingSuggested, setLoadingSuggested]           = useState(true);
+    const [articles, setArticles] = useState<IArticle[]>([]);
+    const [articleToShow, setArticleToShow] = useState<IArticle>(Object)
+    const [articleToShowIsReady, setArticleToShowIsReady] = useState(false)
+    const [needToLoad, setNeedToLoad] = useState(true)
+    const [loading, setLoading] = useState(true);
+    const [loadingSuggested, setLoadingSuggested] = useState(true);
 
-    let pageIsLoading   = useRef(false)
-    let wasLoading      = useRef(false)
-    let dataIsMissing   = useRef(false)
-    let loadMoreDOM     = useRef<HTMLDivElement>(null)
+    let pageIsLoading = useRef(false)
+    let wasLoading = useRef(false)
+    let dataIsMissing = useRef(false)
+    let loadMoreDOM = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         let url = 'http://localhost:3030/articles?'
@@ -47,7 +46,7 @@ const Articles = () => {
         const fetchData = async () => {
             setLoading(true)
             const result = await axios(url);
-            const filteredArray = NewsFilter(result.data, userIgnoredCategories, userIgnoredTags, currentTag)
+            const filteredArray = NewsFilter(result.data, user?.ignoredCategories, user?.ignoredTags, currentTag)
             dataIsMissing.current = !filteredArray.length
             if (!dataIsMissing.current) {
                 const newArray = [...articles, ...filteredArray]
@@ -62,7 +61,7 @@ const Articles = () => {
             fetchData();
             pageIsLoading.current = false
         }
-    // eslint-disable-next-line
+        // eslint-disable-next-line
     }, [needToLoad]);
 
     useEffect(() => {
@@ -70,7 +69,7 @@ const Articles = () => {
         pageIsLoading.current = false
         setNeedToLoad(true)
         currentPage.current = 1
-    }, [currentPage, currentCategory, currentTag, userIgnoredCategories, userIgnoredTags, searchPhrase]);
+    }, [currentPage, currentCategory, currentTag, user?.ignoredCategories, user?.ignoredTags, searchPhrase]);
 
 
     useEffect(() => {
@@ -93,15 +92,13 @@ const Articles = () => {
     });
 
     const ScrollHandle = () => {
-        if(loadMoreDOM.current) {
+        if (loadMoreDOM.current) {
 
-            if (loadMoreDOM.current.getBoundingClientRect().bottom < LOAD_ON_POSITION)
-            {
+            if (loadMoreDOM.current.getBoundingClientRect().bottom < LOAD_ON_POSITION) {
                 if (!wasLoading.current) {
                     LoadMoreHandle()
                 }
-            }
-            else  {
+            } else {
                 wasLoading.current = false
             }
         }
@@ -122,7 +119,7 @@ const Articles = () => {
                     />
                 </div>
             }
-            {!!articleToShowID && articleToShowIsReady &&<Article article={articleToShow}/>}
+            {!!articleToShowID && articleToShowIsReady && <Article article={articleToShow}/>}
             {!!articleToShowID ||
                 <>
                     {articles.map((article: IArticle) => <Article key={article.id} article={article}/>)}
@@ -135,7 +132,7 @@ const Articles = () => {
                             />
                         </div>
                     </div>
-                </> }
+                </>}
             {!articleToShowID && dataIsMissing.current && !loading &&
                 <div className={styles.noResults}>
                     No results :(

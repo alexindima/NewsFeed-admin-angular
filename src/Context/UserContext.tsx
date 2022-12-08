@@ -7,10 +7,7 @@ import {IContextProps} from "../types/IContextProps";
 export const userContext = createContext<any>({});
 
 const UserContext = (props: IContextProps) => {
-    const [userID, setUserID]                               = useState(0)
-    const [userName, setUserName]                           = useState("")
-    const [userIgnoredCategories, setUserIgnoredCategories] = useState([""])
-    const [userIgnoredTags, setUserIgnoredTags]             = useState([""])
+    const [user, setUser] = useState<IUser | null>(null)
 
     useEffect(() => {
         const data = localStorage.getItem("userID")
@@ -24,12 +21,9 @@ const UserContext = (props: IContextProps) => {
 
                     /*  Это должен делать бэк
                      */
-                    result.data.every((user:IUser) => {
+                    result.data.every((user: IUser) => {
                         if (user.id === savedUser) {
-                            setUserID(user.id)
-                            setUserName(user.name)
-                            setUserIgnoredCategories(user.ignoredCategories)
-                            setUserIgnoredTags(user.ignoredTags)
+                            setUser(user)
                             return false
                         }
                         return true
@@ -40,33 +34,24 @@ const UserContext = (props: IContextProps) => {
         }
     }, [])
 
-    const logIn = (loggedUser:IUser) => {
-        setUserID(loggedUser.id)
-        setUserName(loggedUser.name)
-        setUserIgnoredCategories(loggedUser.ignoredCategories)
-        setUserIgnoredTags(loggedUser.ignoredTags)
+    const logIn = (loggedUser: IUser) => {
+        setUser(loggedUser)
         localStorage.setItem("userID", JSON.stringify(loggedUser.id))
     }
 
     const logOut = () => {
-        setUserID(0)
-        setUserName("")
-        setUserIgnoredCategories([""])
-        setUserIgnoredTags([""])
-        localStorage.setItem("userID", JSON.stringify(0))
+        setUser(null)
+        localStorage.removeItem("userID")
     }
 
     const value = {
-        userID,
-        userName,
-        userIgnoredCategories,
-        userIgnoredTags,
+        user,
         logIn,
         logOut,
     }
 
     return (
-        <userContext.Provider value={value} > {props.children} </userContext.Provider>
+        <userContext.Provider value={value}> {props.children} </userContext.Provider>
     )
 }
 

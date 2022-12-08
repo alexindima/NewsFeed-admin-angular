@@ -3,19 +3,18 @@ import News from "./Suggested/News";
 import styles from "./Suggested.module.scss"
 import axios from "axios";
 import NewsFilter from "../../lib/NewsFilter";
-import { userContext } from "../../Context/UserContext";
+import {userContext} from "../../Context/UserContext";
 import {IArticle} from "../../types/IArticle";
 import PulseLoader from "react-spinners/PulseLoader";
 
 
 const Suggested = () => {
-    const userIgnoredCategories = useContext(userContext).userIgnoredCategories;
-    const userIgnoredTags       = useContext(userContext).userIgnoredTags;
+    const user = useContext(userContext).user;
 
-    const [newsID, setNewsID]       = useState([])
-    const [articles, setArticles]   = useState<IArticle[]>([]);
-    const [news, setNews]           = useState<IArticle[]>([]);
-    const [loading, setLoading]     = useState(true);
+    const [newsID, setNewsID] = useState([])
+    const [articles, setArticles] = useState<IArticle[]>([]);
+    const [news, setNews] = useState<IArticle[]>([]);
+    const [loading, setLoading] = useState(true);
 
     // это тоже все должен делать бэк, приходится извращаться
     useEffect(() => {
@@ -27,20 +26,20 @@ const Suggested = () => {
             setNewsID(resultID.data)
         }
         fetchSuggestedNews()
-    },[])
+    }, [])
 
-    useEffect( () => {
+    useEffect(() => {
         const fetchArticles = async () => {
             setLoading(true)
             const resultID = await axios('http://localhost:3030/articles')
-            const filteredArticles = NewsFilter(resultID.data, userIgnoredCategories, userIgnoredTags)
+            const filteredArticles = NewsFilter(resultID.data, user?.ignoredCategories, user?.ignoredTags)
             setArticles(filteredArticles)
             setLoading(false)
         }
         fetchArticles()
-    }, [userIgnoredCategories, userIgnoredTags]);
+    }, [user?.ignoredCategories, user?.ignoredTags]);
 
-    useEffect( () => {
+    useEffect(() => {
         const newsArray = articles.filter((article) => {
             let articleIsSuggested = false
             newsID.every((ID) => {
@@ -56,22 +55,22 @@ const Suggested = () => {
     }, [newsID, articles]);
 
     return (
-            <div className="layout__suggested">
-                <div className={styles.suggestedContainer}>
-                    <div className={styles.suggestedContainer__spinner}>
-                        <PulseLoader
-                            color="#000000"
-                            loading={loading}
-                            size={20}
-                        />
-                    </div>
-                    {!!news.length || loading ||
-                        <div className={styles.suggestedContainer__noResults}>
-                            No results :(
-                        </div>}
-                    {news.map(news => <News key={news.id} news={news}/>)}
+        <div className="layout__suggested">
+            <div className={styles.suggestedContainer}>
+                <div className={styles.suggestedContainer__spinner}>
+                    <PulseLoader
+                        color="#000000"
+                        loading={loading}
+                        size={20}
+                    />
                 </div>
+                {!!news.length || loading ||
+                    <div className={styles.suggestedContainer__noResults}>
+                        No results :(
+                    </div>}
+                {news.map(news => <News key={news.id} news={news}/>)}
             </div>
+        </div>
     )
 }
 

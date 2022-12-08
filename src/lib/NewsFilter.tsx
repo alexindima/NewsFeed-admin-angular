@@ -1,6 +1,6 @@
 import {IArticle} from "../types/IArticle";
 
-const NewsFilter = (articles:IArticle[], ignoredCategories:string[], ignoredTags:string[], tagToShow:string = "") => {
+const NewsFilter = (articles:IArticle[], ignoredCategories:string[], ignoredTags:string[], tagToShow:string|null = null) => {
     return articles.filter(item => {
         let notIgnored = true
         const articleCategory = item.category
@@ -17,7 +17,7 @@ const NewsFilter = (articles:IArticle[], ignoredCategories:string[], ignoredTags
             })
         }
 
-        ignoredCategories.every(ignoredCategory => {
+        ignoredCategories?.every(ignoredCategory => {
             if (ignoredCategory.toLowerCase() === articleCategory.toLowerCase()) {
                 notIgnored = false
                 return false
@@ -25,7 +25,7 @@ const NewsFilter = (articles:IArticle[], ignoredCategories:string[], ignoredTags
             return true
         })
 
-        ignoredTags.every(ignoredTag => {
+        ignoredTags?.every(ignoredTag => {
             articleTags.every(articleTag => {
                 if (ignoredTag.toLowerCase() === articleTag.toLowerCase()) {
                     notIgnored = false
