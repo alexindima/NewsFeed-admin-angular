@@ -11,7 +11,7 @@ const Categories = () => {
     const [categoryIsClosed, setCategoryIsClosed] = useState(true)
 
     const user = useContext(userContext).user;
-    const currentCategory = useContext(siteContext).currentCategory
+    const siteState = useContext(siteContext).siteState
     const chooseCategory = useContext(siteContext).chooseCategory
 
 
@@ -43,15 +43,15 @@ const Categories = () => {
     })
     return (
         <div className="icon-wrapper" onClick={showOrHideCategory}>
-            {!!currentCategory || <CgMenuRound className="icon-wrapper__img" title="Category"/>}
-            {!!currentCategory && <CgPlayListCheck className="icon-wrapper__img" title="Category"/>}
+            {!!siteState?.category || <CgMenuRound className="icon-wrapper__img" title="Category"/>}
+            {!!siteState?.category && <CgPlayListCheck className="icon-wrapper__img" title="Category"/>}
             <div id="category-window" className={categoryWindowClass}>
                 <div className="category-dropdown">
                     {
                         categoryList.map((el, index) => (
                             <button onClick={() => chooseCategory(el)}
                                     className={
-                                        el === currentCategory
+                                        el === siteState?.category
                                             ? "category-dropdown__element category-dropdown__element--active"
                                             : "category-dropdown__element"
                                     }

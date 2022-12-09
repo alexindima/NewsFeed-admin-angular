@@ -1,93 +1,88 @@
 import * as React from "react";
-import {createContext, useEffect, useRef, useState} from "react";
+import {createContext, useRef, useState} from "react";
 import {IContextProps} from "../types/IContextProps";
+import {ISiteState} from "../types/ISiteState";
 
 export const siteContext = createContext<any>({});
 
 const SiteContext = (props: IContextProps) => {
-    const [currentCategory, setCurrentCategory] = useState("")
-    const [currentTag, setCurrentTag]           = useState("")
-    const [searchPhrase, setSearchPhrase]       = useState("")
-    const [articleToShow, setArticleToShow]     = useState(0)
+    const [siteState, setSiteState] = useState<ISiteState | null>(null)
 
-    let userDOM     = useRef<React.LegacyRef<HTMLDivElement>>(Object)
+    let userDOM = useRef<React.LegacyRef<HTMLDivElement>>(Object)
     let categoryDOM = useRef<React.LegacyRef<HTMLDivElement>>(Object)
     let currentPage = useRef(1)
 
-    const setUserDOM = (DOM:React.LegacyRef<HTMLDivElement>) => {
+    const setUserDOM = (DOM: React.LegacyRef<HTMLDivElement>) => {
         userDOM.current = DOM
     }
-    const setCategoryDOM = (DOM:React.LegacyRef<HTMLDivElement>) => {
+    const setCategoryDOM = (DOM: React.LegacyRef<HTMLDivElement>) => {
         categoryDOM.current = DOM
     }
 
-    useEffect(() => {
-        setArticleToShow(0)
-    }, [currentCategory, currentTag, searchPhrase])
+    const setStateWithCheck = (state: ISiteState) => {
+        if (!(state?.category || state?.tag || state?.search || state?.article)) {
+            setSiteState(null)
+        } else {
+            setSiteState(state)
+        }
+    }
 
-    const chooseCategory = (category:string) => {
-        setCurrentCategory(category)
+    const chooseCategory = (category: string) => {
+        setSiteState({...siteState, category: category, article: null} as ISiteState)
     }
 
     const clearCategory = () => {
-        setCurrentCategory("")
+        setStateWithCheck({...siteState, category: null} as ISiteState)
         currentPage.current = 1
     }
 
-    const chooseTag = (category:string) => {
-        setCurrentTag(category)
+    const chooseTag = (tag: string) => {
+        setSiteState({...siteState, tag: tag, article: null} as ISiteState)
     }
 
     const clearTag = () => {
-        setCurrentTag("")
+        setStateWithCheck({...siteState, tag: null} as ISiteState)
         currentPage.current = 1
     }
 
-    const chooseSearchPhrase = (search:string) => {
-        setSearchPhrase(search)
+    const chooseSearchPhrase = (search: string) => {
+        setSiteState({...siteState, search: search, article: null} as ISiteState)
         currentPage.current = 1
     }
 
     const clearSearchPhrase = () => {
-        setSearchPhrase("")
+        setStateWithCheck({...siteState, search: null} as ISiteState)
         currentPage.current = 1
     }
 
-    const chooseArticleToShow = (id:number) => {
-        clearAll()
-        setArticleToShow(id)
+    const chooseArticleToShow = (id: number) => {
+        setSiteState({article: id} as ISiteState)
     }
 
     const clearArticleToShow = () => {
-        setArticleToShow(0)
+        setStateWithCheck({...siteState, article: null} as ISiteState)
         currentPage.current = 1
     }
 
     const clearAll = () => {
-        setCurrentCategory("")
-        setCurrentTag("")
-        setSearchPhrase("")
-        setArticleToShow(0)
+        setSiteState(null)
         currentPage.current = 1
     }
 
-    const setCurrentPage = (page:number) => {
+    const setCurrentPage = (page: number) => {
         currentPage.current = page
     }
 
     const value = {
         setUserDOM,
         setCategoryDOM,
-        currentCategory,
+        siteState,
         chooseCategory,
         clearCategory,
-        currentTag,
         chooseTag,
         clearTag,
-        searchPhrase,
         chooseSearchPhrase,
         clearSearchPhrase,
-        articleToShow,
         chooseArticleToShow,
         clearArticleToShow,
         currentPage,
@@ -96,7 +91,7 @@ const SiteContext = (props: IContextProps) => {
     }
 
     return (
-        <siteContext.Provider value={value} > {props.children} </siteContext.Provider>
+        <siteContext.Provider value={value}> {props.children} </siteContext.Provider>
     )
 }
 

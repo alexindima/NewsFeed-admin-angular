@@ -13,10 +13,7 @@ const Articles = () => {
     const LOAD_ON_POSITION = 2000
 
     const user = useContext(userContext).user;
-    const currentCategory = useContext(siteContext).currentCategory
-    const currentTag = useContext(siteContext).currentTag
-    const searchPhrase = useContext(siteContext).searchPhrase
-    const articleToShowID = useContext(siteContext).articleToShow
+    const siteState = useContext(siteContext).siteState
     const currentPage = useContext(siteContext).currentPage
     const setCurrentPage = useContext(siteContext).setCurrentPage
 
@@ -35,18 +32,18 @@ const Articles = () => {
 
     useEffect(() => {
         let url = 'http://localhost:3030/articles?'
-        if (currentCategory) {
-            url += `category=${currentCategory.toLowerCase()}&`
+        if (siteState?.category) {
+            url += `category=${siteState?.category.toLowerCase()}&`
         }
-        if (searchPhrase) {
-            url += `q=${searchPhrase.replace(/ /g, '+')}&`
+        if (siteState?.search) {
+            url += `q=${siteState?.search.replace(/ /g, '+')}&`
         }
         url += `_page=${currentPage.current}&_limit=${ARTICLES_TO_LOAD}`
 
         const fetchData = async () => {
             setLoading(true)
             const result = await axios(url);
-            const filteredArray = NewsFilter(result.data, user?.ignoredCategories, user?.ignoredTags, currentTag)
+            const filteredArray = NewsFilter(result.data, user?.ignoredCategories, user?.ignoredTags, siteState?.tag)
             dataIsMissing.current = !filteredArray.length
             if (!dataIsMissing.current) {
                 const newArray = [...articles, ...filteredArray]
@@ -65,27 +62,35 @@ const Articles = () => {
     }, [needToLoad]);
 
     useEffect(() => {
-        setArticles([])
-        pageIsLoading.current = false
-        setNeedToLoad(true)
-        currentPage.current = 1
-    }, [currentPage, currentCategory, currentTag, user?.ignoredCategories, user?.ignoredTags, searchPhrase]);
+            setArticles([])
+            pageIsLoading.current = false
+            setNeedToLoad(true)
+            currentPage.current = 1
+        }, [
+            currentPage,
+            siteState?.category,
+            siteState?.tag,
+            siteState?.search,
+            user?.ignoredCategories,
+            user?.ignoredTags,
+        ]
+    );
 
 
     useEffect(() => {
         setArticleToShowIsReady(false)
-    }, [articleToShowID]);
+    }, [siteState?.article]);
 
     useEffect(() => {
         const fetchData = async () => {
             setLoadingSuggested(true)
-            const result = await axios(`http://localhost:3030/articles/${articleToShowID}`);
+            const result = await axios(`http://localhost:3030/articles/${siteState?.article}`);
             setArticleToShowIsReady(true)
             setArticleToShow(result.data);
             setLoadingSuggested(false)
         };
-        if (articleToShowID) fetchData();
-    }, [articleToShowID]);
+        if (siteState?.article) fetchData();
+    }, [siteState?.article]);
 
     useEffect(() => {
         window.addEventListener('scroll', ScrollHandle);
@@ -110,7 +115,7 @@ const Articles = () => {
 
     return (
         <>
-            {!!articleToShowID &&
+            {!!siteState?.article &&
                 <div className={styles.spinner}>
                     <PulseLoader
                         color="#000000"
@@ -119,8 +124,8 @@ const Articles = () => {
                     />
                 </div>
             }
-            {!!articleToShowID && articleToShowIsReady && <Article article={articleToShow}/>}
-            {!!articleToShowID ||
+            {!!siteState?.article && articleToShowIsReady && <Article article={articleToShow}/>}
+            {!!siteState?.article ||
                 <>
                     {articles.map((article: IArticle) => <Article key={article.id} article={article}/>)}
                     <div ref={loadMoreDOM} onClick={LoadMoreHandle}>
@@ -133,7 +138,7 @@ const Articles = () => {
                         </div>
                     </div>
                 </>}
-            {!articleToShowID && dataIsMissing.current && !loading &&
+            {!siteState?.article && dataIsMissing.current && !loading &&
                 <div className={styles.noResults}>
                     No results :(
                 </div>}

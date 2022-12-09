@@ -1,19 +1,19 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
-import { HiOutlineSearchCircle } from 'react-icons/hi';
-import { MdManageSearch } from 'react-icons/md';
+import {HiOutlineSearchCircle} from 'react-icons/hi';
+import {MdManageSearch} from 'react-icons/md';
 import "./Search.scss"
 import classNames from "classnames";
 import {siteContext} from "../../Context/SiteContext";
 
 const Search = () => {
-    const searchPhrase          = useContext(siteContext).searchPhrase
-    const chooseSearchPhrase    = useContext(siteContext).chooseSearchPhrase
+    const siteState = useContext(siteContext).siteState
+    const chooseSearchPhrase = useContext(siteContext).chooseSearchPhrase
 
     const [searchInputValue, setSearchInputValue] = useState('')
     const [searchIsClosed, setSearchIsClosed] = useState(true)
 
-    const searchInputDOM    = useRef<HTMLInputElement>(null)
-    const searchWindowDOM   = useRef(null)
+    const searchInputDOM = useRef<HTMLInputElement>(null)
+    const searchWindowDOM = useRef(null)
 
     useEffect(() => {
         if (!searchIsClosed) {
@@ -41,16 +41,16 @@ const Search = () => {
     })
     return (
         <div className="icon-wrapper" onClick={showOrHideSearch}>
-            {!!searchPhrase || <HiOutlineSearchCircle id="search" className="icon-wrapper__img" title="Search" />}
-            {!!searchPhrase && <MdManageSearch id="search" className="icon-wrapper__img" title="Search" />}
+            {!!siteState?.search || <HiOutlineSearchCircle id="search" className="icon-wrapper__img" title="Search"/>}
+            {!!siteState?.search && <MdManageSearch id="search" className="icon-wrapper__img" title="Search"/>}
             <div className={searchWindowClass}>
                 <div ref={searchWindowDOM} className="search-window">
                     <form onSubmit={handleSubmit} className="search-form">
                         <label className="search-form__label">
                             <input ref={searchInputDOM} type="text" className="search-form__input" placeholder="Search"
                                    value={searchInputValue} onChange={(event) => {
-                                       setSearchInputValue(event.target.value)
-                                   }} />
+                                setSearchInputValue(event.target.value)
+                            }}/>
                         </label>
                         <button type="submit" className="search-form__button">Search</button>
                     </form>
