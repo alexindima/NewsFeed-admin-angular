@@ -1,0 +1,31 @@
+.submitButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  width: 100%;
+  height: 60px;
+  padding: 0 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  color: var(--btn-text-color);
+  border: none;
+  border-radius: 3px;
+  outline: none;
+  background-color: var(--btn-bg-color);
+  font-size: 16px;
+  font-weight: bold;
+  position: relative;
+
+  &:hover {
+    background-color: var(--btn-bg-hover-color);
+  }
+
+  &:disabled {
+    background-color: var(--btn-bg-color);
+    cursor: not-allowed;
+  }
+}
+
+
