@@ -2,22 +2,15 @@ import * as React from "react";
 import {createContext, useRef, useState} from "react";
 import {IContextProps} from "../types/IContextProps";
 import {ISiteState} from "../types/ISiteState";
+import {ICategory} from "../types/ICategory";
 
 export const siteContext = createContext<any>({});
 
 const SiteContext = (props: IContextProps) => {
     const [siteState, setSiteState] = useState<ISiteState | null>(null)
 
-    let userDOM = useRef<React.LegacyRef<HTMLDivElement>>(Object)
-    let categoryDOM = useRef<React.LegacyRef<HTMLDivElement>>(Object)
-    let currentPage = useRef(1)
-
-    const setUserDOM = (DOM: React.LegacyRef<HTMLDivElement>) => {
-        userDOM.current = DOM
-    }
-    const setCategoryDOM = (DOM: React.LegacyRef<HTMLDivElement>) => {
-        categoryDOM.current = DOM
-    }
+    const [siteCategoryList, setSiteCategoryList] = useState<ICategory[] | null>(null) //нужно теперь хранить для Back элемента
+    const currentPage = useRef(1)
 
     const setStateWithCheck = (state: ISiteState) => {
         if (!(state?.category || state?.tag || state?.search || state?.article)) {
@@ -27,7 +20,7 @@ const SiteContext = (props: IContextProps) => {
         }
     }
 
-    const chooseCategory = (category: string) => {
+    const chooseCategory = (category: number) => {
         setSiteState({...siteState, category: category, article: null} as ISiteState)
     }
 
@@ -73,9 +66,11 @@ const SiteContext = (props: IContextProps) => {
         currentPage.current = page
     }
 
+    const setSiteCategories = (list: ICategory[]) => {
+        setSiteCategoryList(list)
+    }
+
     const value = {
-        setUserDOM,
-        setCategoryDOM,
         siteState,
         chooseCategory,
         clearCategory,
@@ -87,6 +82,8 @@ const SiteContext = (props: IContextProps) => {
         clearArticleToShow,
         currentPage,
         setCurrentPage,
+        siteCategoryList,
+        setSiteCategories,
         clearAll
     }
 

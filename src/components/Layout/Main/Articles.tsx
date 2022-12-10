@@ -32,9 +32,6 @@ const Articles = () => {
 
     useEffect(() => {
         let url = 'http://localhost:3030/articles?'
-        if (siteState?.category) {
-            url += `category=${siteState?.category.toLowerCase()}&`
-        }
         if (siteState?.search) {
             url += `q=${siteState?.search.replace(/ /g, '+')}&`
         }
@@ -43,7 +40,12 @@ const Articles = () => {
         const fetchData = async () => {
             setLoading(true)
             const result = await axios(url);
-            const filteredArray = NewsFilter(result.data, user?.ignoredCategories, user?.ignoredTags, siteState?.tag)
+            const filteredArray = NewsFilter(
+                result.data,
+                user?.ignoredCategories,
+                user?.ignoredTags,
+                siteState?.category,
+                siteState?.tag)
             dataIsMissing.current = !filteredArray.length
             if (!dataIsMissing.current) {
                 const newArray = [...articles, ...filteredArray]

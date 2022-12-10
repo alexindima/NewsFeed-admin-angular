@@ -3,6 +3,6 @@ export interface IUser {
     name: string
     email?: string
     password?: string
-    ignoredCategories: string[]
+    ignoredCategories: number[]
     ignoredTags: string[]
 }

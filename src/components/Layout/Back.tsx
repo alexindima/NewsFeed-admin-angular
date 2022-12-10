@@ -4,10 +4,12 @@ import {BiArrowBack} from "react-icons/bi";
 import {useContext} from "react";
 import {siteContext} from "../../Context/SiteContext";
 import {RiCloseCircleFill} from "react-icons/ri";
+import {ICategory} from "../../types/ICategory";
 
 const Back = () => {
     const clearAll = useContext(siteContext).clearAll;
     const siteState = useContext(siteContext).siteState;
+    const siteCategoryList = useContext(siteContext).siteCategoryList;
     const clearCategory = useContext(siteContext).clearCategory;
     const clearTag = useContext(siteContext).clearTag;
     const clearSearchPhrase = useContext(siteContext).clearSearchPhrase;
@@ -26,7 +28,8 @@ const Back = () => {
             <div className={styles.back__infoContainer}>
                 {!!siteState?.category &&
                     <div onClick={clearCategory} className={styles.back__info}>
-                        Current category: {siteState?.category} <RiCloseCircleFill/>
+                        Current category: {siteCategoryList?.find(
+                        (category: ICategory) => category.id === siteState?.category).name} <RiCloseCircleFill/>
                     </div>}
                 {!!siteState?.tag &&
                     <div onClick={clearTag} className={styles.back__info}>

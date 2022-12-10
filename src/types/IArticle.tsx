@@ -9,6 +9,6 @@ export interface IArticle {
     readonly mainPhoto: string
     readonly mainPhotoDescription: string
     readonly body: IArticleElement[]
-    readonly category: string
+    readonly category: number
     readonly tags: string[]
 }

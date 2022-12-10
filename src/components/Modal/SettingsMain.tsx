@@ -4,16 +4,20 @@ import axios from "axios";
 import {userContext} from "../../Context/UserContext";
 import {modalContext} from "../../Context/ModalContext";
 import PulseLoader from "react-spinners/PulseLoader";
+import {siteContext} from "../../Context/SiteContext";
+import {ICategory} from "../../types/ICategory";
 
 // Нужен рефакторинг классов
 const SettingsMain = () => {
     const user = useContext(userContext).user;
+    const siteCategoryList = useContext(siteContext).siteCategoryList;
+
     const logIn = useContext(userContext).logIn;
     const hideModal = useContext(modalContext).hideModal;
     const openSettingsNameModal = useContext(modalContext).openSettingsNameModal;
     const openSettingsPasswordModal = useContext(modalContext).openSettingsPasswordModal;
-
-    const [ignoredCategories, setIgnoredCategories] = useState(user?.ignoredCategories)
+    const [ignoredCategories, setIgnoredCategories] = useState(user?.ignoredCategories.map((ignoredCategory: number) =>
+        siteCategoryList?.find((category: ICategory) => category.id === ignoredCategory).name))
     const [ignoredTags, setIgnoredTags] = useState(user?.ignoredTags)
     const [loading, setLoading] = useState(false)
 
@@ -21,10 +25,23 @@ const SettingsMain = () => {
         event.preventDefault();
         const fetchData = async () => {
             setLoading(true)
+            const categoriesNameList: string[] = ignoredCategories.filter((ignoredCategory: string) => {
+                let categoryIsValid = false
+                siteCategoryList?.every((category: ICategory) => {
+                    if (category.name.toLowerCase().trim() === ignoredCategory.toLowerCase().trim()) {
+                        categoryIsValid = true
+                        return false
+                    }
+                    return true
+                })
+                return categoryIsValid
+            })
             const result = await axios(`http://localhost:3030/users/${user.id}`)
             const changedUser = {
                 ...result.data,
-                ignoredCategories: ignoredCategories.map((category: string) => category.trim()),
+                ignoredCategories: categoriesNameList.map((ignoredCategory: string) =>
+                    siteCategoryList?.find((category: ICategory) =>
+                        category.name.toLowerCase().trim() === ignoredCategory.toLowerCase().trim()).id),
                 ignoredTags: ignoredTags.map((tag: string) => tag.trim())
             }
             await axios.put(`http://localhost:3030/users/${user.id}`, changedUser)

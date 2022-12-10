@@ -5,13 +5,15 @@ import classNames from "classnames";
 import axios from "axios";
 import {userContext} from "../../Context/UserContext";
 import {siteContext} from "../../Context/SiteContext";
+import {ICategory} from "../../types/ICategory";
 
 const Categories = () => {
-    const [categoryList, setCategoryList] = useState([])
+    const [categoryList, setCategoryList] = useState<ICategory[] | null>(null)
     const [categoryIsClosed, setCategoryIsClosed] = useState(true)
 
     const user = useContext(userContext).user;
     const siteState = useContext(siteContext).siteState
+    const setSiteCategories = useContext(siteContext).setSiteCategories
     const chooseCategory = useContext(siteContext).chooseCategory
 
 
@@ -22,19 +24,21 @@ const Categories = () => {
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios('http://localhost:3030/categories')
-            setCategoryList((result.data.filter((category: string) => {
+            setSiteCategories(result.data)
+            setCategoryList(result.data.filter((category: ICategory) => {
                 let categoryIsIgnored = false
-                user?.ignoredCategories.every((userIgnoredCategory: string) => {
-                    if (category.toLowerCase() === userIgnoredCategory.toLowerCase()) {
+                user?.ignoredCategories.every((userIgnoredCategory: number) => {
+                    if (category.id === userIgnoredCategory) {
                         categoryIsIgnored = true
                         return false
                     }
                     return true
                 })
                 return !categoryIsIgnored
-            })))
+            }))
         };
         fetchData();
+        // eslint-disable-next-line
     }, [user?.ignoredCategories])
 
     const categoryWindowClass = classNames({
@@ -48,14 +52,14 @@ const Categories = () => {
             <div id="category-window" className={categoryWindowClass}>
                 <div className="category-dropdown">
                     {
-                        categoryList.map((el, index) => (
-                            <button onClick={() => chooseCategory(el)}
+                        categoryList?.map((category: ICategory) => (
+                            <button onClick={() => chooseCategory(category.id)}
                                     className={
-                                        el === siteState?.category
+                                        category === siteState?.category
                                             ? "category-dropdown__element category-dropdown__element--active"
                                             : "category-dropdown__element"
                                     }
-                                    key={index}>{el}</button>)
+                                    key={category.id}>{category.name}</button>)
                         )
                     }
                 </div>

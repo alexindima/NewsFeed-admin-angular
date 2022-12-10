@@ -1,5 +1,5 @@
 export interface ISiteState {
-    category: string | null
+    category: number | null
     tag: string | null
     search: string | null
     article: number | null

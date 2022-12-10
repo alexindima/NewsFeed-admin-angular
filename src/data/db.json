@@ -65,7 +65,7 @@
           "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
         }
       ],
-      "category": "politics",
+      "category": 1,
       "tags": [
         "moon",
         "dog"
@@ -136,7 +136,7 @@
           "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
         }
       ],
-      "category": "politics",
+      "category": 2,
       "tags": [
         "cat",
         "moon"
@@ -207,7 +207,7 @@
           "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
         }
       ],
-      "category": "politics",
+      "category": 3,
       "tags": [
         "cat",
         "dog"
@@ -278,7 +278,7 @@
           "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
         }
       ],
-      "category": "army",
+      "category": 4,
       "tags": [
         "moon",
         "dog"
@@ -349,7 +349,7 @@
           "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
         }
       ],
-      "category": "army",
+      "category": 5,
       "tags": [
         "cat",
         "moon"
@@ -420,7 +420,7 @@
           "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
         }
       ],
-      "category": "army",
+      "category": 5,
       "tags": [
         "cat",
         "dog"
@@ -491,7 +491,7 @@
           "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
         }
       ],
-      "category": "politics",
+      "category": 4,
       "tags": [
         "moon",
         "dog"
@@ -562,7 +562,7 @@
           "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
         }
       ],
-      "category": "politics",
+      "category": 3,
       "tags": [
         "cat",
         "moon"
@@ -633,7 +633,7 @@
           "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
         }
       ],
-      "category": "politics",
+      "category": 2,
       "tags": [
         "cat",
         "dog"
@@ -704,7 +704,7 @@
           "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
         }
       ],
-      "category": "army",
+      "category": 1,
       "tags": [
         "moon",
         "dog"
@@ -775,7 +775,7 @@
           "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
         }
       ],
-      "category": "politics",
+      "category": 1,
       "tags": [
         "moon",
         "dog"
@@ -846,7 +846,7 @@
           "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
         }
       ],
-      "category": "politics",
+      "category": 2,
       "tags": [
         "cat",
         "moon"
@@ -917,7 +917,7 @@
           "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
         }
       ],
-      "category": "politics",
+      "category": 3,
       "tags": [
         "cat",
         "dog"
@@ -988,7 +988,7 @@
           "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
         }
       ],
-      "category": "army",
+      "category": 4,
       "tags": [
         "moon",
         "dog"
@@ -1059,7 +1059,7 @@
           "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
         }
       ],
-      "category": "army",
+      "category": 5,
       "tags": [
         "cat",
         "moon"
@@ -1130,7 +1130,7 @@
           "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
         }
       ],
-      "category": "army",
+      "category": 1,
       "tags": [
         "cat",
         "dog"
@@ -1201,7 +1201,7 @@
           "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
         }
       ],
-      "category": "politics",
+      "category": 2,
       "tags": [
         "moon",
         "dog"
@@ -1272,7 +1272,7 @@
           "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
         }
       ],
-      "category": "politics",
+      "category": 3,
       "tags": [
         "cat",
         "moon"
@@ -1343,7 +1343,7 @@
           "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
         }
       ],
-      "category": "politics",
+      "category": 4,
       "tags": [
         "cat",
         "dog"
@@ -1414,7 +1414,7 @@
           "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
         }
       ],
-      "category": "army",
+      "category": 5,
       "tags": [
         "moon",
         "dog"
@@ -1485,7 +1485,7 @@
           "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
         }
       ],
-      "category": "politics",
+      "category": 1,
       "tags": [
         "moon",
         "dog"
@@ -1556,7 +1556,7 @@
           "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
         }
       ],
-      "category": "politics",
+      "category": 2,
       "tags": [
         "cat",
         "moon"
@@ -1627,7 +1627,7 @@
           "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
         }
       ],
-      "category": "politics",
+      "category": 3,
       "tags": [
         "cat",
         "dog"
@@ -1698,7 +1698,7 @@
           "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
         }
       ],
-      "category": "army",
+      "category": 4,
       "tags": [
         "moon",
         "dog"
@@ -1769,7 +1769,7 @@
           "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
         }
       ],
-      "category": "army",
+      "category": 5,
       "tags": [
         "cat",
         "moon"
@@ -1840,7 +1840,7 @@
           "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
         }
       ],
-      "category": "army",
+      "category": 4,
       "tags": [
         "cat",
         "dog"
@@ -1911,7 +1911,7 @@
           "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
         }
       ],
-      "category": "politics",
+      "category": 3,
       "tags": [
         "moon",
         "dog"
@@ -1982,7 +1982,7 @@
           "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
         }
       ],
-      "category": "politics",
+      "category": 2,
       "tags": [
         "cat",
         "moon"
@@ -2053,7 +2053,7 @@
           "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
         }
       ],
-      "category": "politics",
+      "category": 1,
       "tags": [
         "cat",
         "dog"
@@ -2124,7 +2124,7 @@
           "data": "A samurai with a sword is like a samurai without a sword, but only with a sword. The horse will not become a gopher, but the gopher will become a cat."
         }
       ],
-      "category": "army",
+      "category": 6,
       "tags": [
         "moon",
         "dog"
@@ -2149,9 +2149,7 @@
       "name": "admin",
       "email": "a@a",
       "password": "bcb15f821479b4d5772bd0ca866c00ad5f926e3580720659cc80d39c9d09802a",
-      "ignoredCategories": [
-        ""
-      ],
+      "ignoredCategories": [],
       "ignoredTags": [
         ""
       ]
@@ -2162,7 +2160,8 @@
       "email": "q@q",
       "password": "bcb15f821479b4d5772bd0ca866c00ad5f926e3580720659cc80d39c9d09802a",
       "ignoredCategories": [
-        "politics"
+        6,
+        1
       ],
       "ignoredTags": [
         "cat",
@@ -2175,7 +2174,8 @@
       "email": "test@test",
       "password": "37268335dd6931045bdcdf92623ff819a64244b53d0e746d438797349d4da578",
       "ignoredCategories": [
-        ""
+        1,
+        2
       ],
       "ignoredTags": [
         ""
@@ -2186,9 +2186,7 @@
       "name": "test",
       "email": "e@e",
       "password": "e0bc60c82713f64ef8a57c0c40d02ce24fd0141d5cc3086259c19b1e62a62bea",
-      "ignoredCategories": [
-        ""
-      ],
+      "ignoredCategories": [],
       "ignoredTags": [
         ""
       ]
@@ -2198,25 +2196,102 @@
       "name": "1111",
       "email": "11@1",
       "password": "bcb15f821479b4d5772bd0ca866c00ad5f926e3580720659cc80d39c9d09802a",
-      "ignoredCategories": [
-        ""
-      ],
+      "ignoredCategories": [],
       "ignoredTags": [
         ""
       ]
     }
   ],
   "categories": [
-    "Politics",
-    "In the world",
-    "Economy",
-    "Society",
-    "Incidents",
-    "Army",
-    "Science",
-    "Sport",
-    "Culture",
-    "Religion",
-    "Tourism"
+    {
+      "id": 1,
+      "name": "Politics"
+    },
+    {
+      "id": 2,
+      "name": "In the world"
+    },
+    {
+      "id": 3,
+      "name": "Economy"
+    },
+    {
+      "id": 4,
+      "name": "Society"
+    },
+    {
+      "id": 5,
+      "name": "Incidents"
+    },
+    {
+      "id": 6,
+      "name": "Army"
+    },
+    {
+      "id": 7,
+      "name": "Science"
+    },
+    {
+      "id": 8,
+      "name": "Sport"
+    },
+    {
+      "id": 9,
+      "name": "Culture"
+    },
+    {
+      "id": 10,
+      "name": "Religion"
+    },
+    {
+      "id": 11,
+      "name": "Tourism"
+    }
+  ],
+  "tags": [
+    {
+      "id": 1,
+      "name": "cat"
+    },
+    {
+      "id": 2,
+      "name": "dog"
+    },
+    {
+      "id": 3,
+      "name": "moon"
+    },
+    {
+      "id": 4,
+      "name": "road"
+    },
+    {
+      "id": 5,
+      "name": "some strange tag"
+    },
+    {
+      "id": 6,
+      "name": "no"
+    },
+    {
+      "id": 7,
+      "name": "cola"
+    },
+    {
+      "id": 8,
+      "name": "life"
+    },
+    {
+      "id": 9,
+      "name": "thunder"
+    },
+    {
+      "id": 10,
+      "name": "rain"
+    },
+    {
+      "id": 11,
+      "name": "hair"
+    }
   ]
 }
