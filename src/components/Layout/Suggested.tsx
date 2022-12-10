@@ -5,7 +5,8 @@ import axios from "axios";
 import NewsFilter from "../../lib/NewsFilter";
 import {userContext} from "../../Context/UserContext";
 import {IArticle} from "../../types/IArticle";
-import PulseLoader from "react-spinners/PulseLoader";
+import Spinner from "../common/Spinner";
+import NoResult from "../common/NoResult";
 
 
 const Suggested = () => {
@@ -57,17 +58,8 @@ const Suggested = () => {
     return (
         <div className="layout__suggested">
             <div className={styles.suggestedContainer}>
-                <div className={styles.suggestedContainer__spinner}>
-                    <PulseLoader
-                        color="#000000"
-                        loading={loading}
-                        size={20}
-                    />
-                </div>
-                {!!news.length || loading ||
-                    <div className={styles.suggestedContainer__noResults}>
-                        No results :(
-                    </div>}
+                {loading && <Spinner color={"#000000"} size={20}/>}
+                {!!news.length || loading || <NoResult/>}
                 {news.map(news => <News key={news.id} news={news}/>)}
             </div>
         </div>

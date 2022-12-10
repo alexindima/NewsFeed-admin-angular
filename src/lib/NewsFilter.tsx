@@ -1,6 +1,11 @@
 import {IArticle} from "../types/IArticle";
 
-const NewsFilter = (articles: IArticle[], ignoredCategories: number[], ignoredTags: number[], categoryToShow: number | null, tagToShow: number | null) => {
+const NewsFilter = (
+    articles: IArticle[],
+    ignoredCategories: number[],
+    ignoredTags: number[],
+    categoryToShow: number | null = null,
+    tagToShow: number | null = null) => {
     return articles.filter(item => {
         let notIgnored = true
         const articleCategory = item.category

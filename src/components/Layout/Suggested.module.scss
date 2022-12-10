@@ -1,6 +1,8 @@
 .suggestedContainer { /* Как у ТАСС */
-  display: block;
+  display: flex;
+  flex-direction: column;
   position: sticky;
+  align-items: center;
   top: calc(var(--header-height) + var(--main-gap));
   height: calc(75vh);
   background-color: var(--secondary-bg-color);
@@ -8,19 +10,10 @@
   margin: 0 auto;
   padding: 15px;
   overflow: scroll;
-  -ms-overflow-style: none;  /* IE и Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE и Edge */
+  scrollbar-width: none; /* Firefox */
   &::-webkit-scrollbar {
     display: none; /* Safari */
-  }
-  &__spinner {
-    width: 100%;
-    text-align: center;
-  }
-  &__noResults {
-    width: 100%;
-    text-align: center;
-    font-size: 20px;
   }
 }
 

@@ -1,18 +1,16 @@
 import React, {useContext} from "react";
-import "./SettingsPassword.scss"
-import { userContext } from "../../Context/UserContext";
-import ChangePassword from "./Form/ChangePassword";
+import {userContext} from "../../Context/UserContext";
+import ChangePassword from "../common/ChangePassword";
+import ModalTitle from "../common/ModalTitle";
 
 const SettingsPassword = () => {
     const userID = useContext(userContext).userID;
 
     return (
-        <div>
-            <div className="modal-window__main-title">
-                Change password
-            </div>
-            <ChangePassword userID={userID} />
-        </div>
+        <>
+            <ModalTitle>Change password</ModalTitle>
+            <ChangePassword userID={userID}/>
+        </>
     )
 }
 

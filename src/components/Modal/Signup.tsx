@@ -1,33 +1,34 @@
 import React, {useContext, useRef, useState} from "react";
-import "./Signup.scss"
 import axios from "axios";
 import {IUser} from "../../types/IUser";
-import { calculateHash } from "../../encrypt/Hash"
-import { validUserName, validPassword } from "../../Regex/Regex"
-import { userContext } from "../../Context/UserContext";
-import classNames from "classnames";
+import {calculateHash} from "../../encrypt/Hash"
+import {validUserName, validPassword} from "../../Regex/Regex"
+import {userContext} from "../../Context/UserContext";
 import {modalContext} from "../../Context/ModalContext";
-import PulseLoader from "react-spinners/PulseLoader";
+import StyliZedInput from "../common/StylizedInput";
+import InputError from "../common/InputError";
+import StylizedSubmitButton from "../common/StylizedSubmitButton";
+import ModalTitle from "../common/ModalTitle";
 
 const Signup = () => {
-    const NAME_ERROR        = "The user name must contain at least 3 letters, numbers and underscores"
-    const EMAIL_ERROR       = "This email is already exist"
-    const PASSWORD_ERROR    = "The password must contain at least 6 valid characters"
-    const PASSWORD2_ERROR   = "Passwords must match"
+    const NAME_ERROR = "The user name must contain at least 3 letters, numbers and underscores"
+    const EMAIL_ERROR = "This email is already exist"
+    const PASSWORD_ERROR = "The password must contain at least 6 valid characters"
+    const PASSWORD2_ERROR = "Passwords must match"
 
-    const logIn     = useContext(userContext).logIn;
+    const logIn = useContext(userContext).logIn;
     const hideModal = useContext(modalContext).hideModal;
 
-    const nameInputDOM      = useRef<HTMLInputElement>(null)
-    const emailInputDOM     = useRef<HTMLInputElement>(null)
-    const passwordInputDOM  = useRef<HTMLInputElement>(null)
+    const nameInputDOM = useRef<HTMLInputElement>(null)
+    const emailInputDOM = useRef<HTMLInputElement>(null)
+    const passwordInputDOM = useRef<HTMLInputElement>(null)
 
-    const [nameInputValue, setNameInputValue]           = useState('')
-    const [emailInputValue, setEmailInputValue]         = useState('')
-    const [passwordInputValue, setPasswordInputValue]   = useState('')
+    const [nameInputValue, setNameInputValue] = useState('')
+    const [emailInputValue, setEmailInputValue] = useState('')
+    const [passwordInputValue, setPasswordInputValue] = useState('')
     const [password2InputValue, setPassword2InputValue] = useState('')
-    const [errorMessage, setErrorMessage]               = useState('')
-    const [loading, setLoading]                         = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -37,20 +38,17 @@ const Signup = () => {
             setPasswordInputValue("")
             setPassword2InputValue("")
             passwordInputDOM.current!.focus();
-        }
-        else if (!validUserName.test(nameInputValue)) {
+        } else if (!validUserName.test(nameInputValue)) {
             setErrorMessage(NAME_ERROR);
             setPasswordInputValue("")
             setPassword2InputValue("")
             nameInputDOM.current!.focus();
-        }
-        else if (!validPassword.test(passwordInputValue)) {
+        } else if (!validPassword.test(passwordInputValue)) {
             setErrorMessage(PASSWORD_ERROR);
             setPasswordInputValue("")
             setPassword2InputValue("")
             passwordInputDOM.current!.focus();
-        }
-        else {
+        } else {
             const fetchData = async () => {
                 setLoading(true)
                 const result = await axios('http://localhost:3030/users')
@@ -58,7 +56,7 @@ const Signup = () => {
                  */
                 let userAlreadyExist = false
                 let lastID = 0
-                result.data.every((user:IUser) => {
+                result.data.every((user: IUser) => {
                     if (user.id > lastID) {
                         lastID = user.id
                     }
@@ -92,68 +90,61 @@ const Signup = () => {
         }
     };
 
-    const nameFieldClass = classNames({
-        "form-field": true,
-        "form-field--error": errorMessage === NAME_ERROR,
-    })
-    const emailFieldClass = classNames({
-        "form-field": true,
-        "form-field--error": errorMessage === EMAIL_ERROR,
-    })
-    const passwordFieldClass = classNames({
-        "form-field": true,
-        "form-field--error": (errorMessage === PASSWORD_ERROR) || (errorMessage === PASSWORD2_ERROR),
-    })
     return (
-        <div>
-            <div className="modal-window__main-title">
-                Sign Up
-            </div>
-            <form onSubmit={handleSubmit} className="modal-window__auth-form signupForm">
-                <label className={nameFieldClass}>
-                    <span className="form-field__title">Name *</span>
-                    <input ref={nameInputDOM} type="text" className="form-field__input" required value={nameInputValue} onChange={(event) => {
+        <>
+            <ModalTitle>Sign Up</ModalTitle>
+            <form onSubmit={handleSubmit}>
+                <StyliZedInput
+                    name={"Name *"}
+                    type={"text"}
+                    value={nameInputValue}
+                    required={true}
+                    error={errorMessage === NAME_ERROR}
+                    innerRef={nameInputDOM}
+                    onChange={(event) => {
                         setNameInputValue(event.target.value)
-                    }} />
-                </label>
-                <label className={emailFieldClass}>
-                    <span className="form-field__title">Email *</span>
-                    <input ref={emailInputDOM} type="email" className="form-field__input" required value={emailInputValue} onChange={(event) => {
+                    }}/>
+                <StyliZedInput
+                    name={"Email *"}
+                    type={"email"}
+                    value={emailInputValue}
+                    required={true}
+                    error={errorMessage === EMAIL_ERROR}
+                    innerRef={emailInputDOM}
+                    onChange={(event) => {
                         setEmailInputValue(event.target.value)
-                    }} />
-                </label>
-                <label className={passwordFieldClass}>
-                    <span className="form-field__title">Password *</span>
-                    <input ref={passwordInputDOM} type="password" className="form-field__input" required value={passwordInputValue} onChange={(event) => {
+                    }}/>
+                <StyliZedInput
+                    name={"Password *"}
+                    type={"password"}
+                    value={passwordInputValue}
+                    required={true}
+                    error={(errorMessage === PASSWORD_ERROR) || (errorMessage === PASSWORD2_ERROR)}
+                    innerRef={passwordInputDOM}
+                    onChange={(event) => {
                         setPasswordInputValue(event.target.value)
-                    }} />
-                </label>
-                <label className={passwordFieldClass}>
-                    <span className="form-field__title">Repeat the Password *</span>
-                    <input type="password" className="form-field__input" value={password2InputValue} onChange={(event) => {
+                    }}/>
+                <StyliZedInput
+                    name={"Repeat the Password *"}
+                    type={"password"}
+                    value={password2InputValue}
+                    required={false}
+                    error={(errorMessage === PASSWORD_ERROR) || (errorMessage === PASSWORD2_ERROR)}
+                    innerRef={undefined}
+                    onChange={(event) => {
                         setPassword2InputValue(event.target.value)
-                    }} />
-                </label>
-                {errorMessage && <div className="modal-window__error">{errorMessage}</div>}
-                <button type="submit" className="signupForm__submitButton"
-                    disabled={(
-                        !nameInputValue ||
-                        !emailInputValue ||
-                        !passwordInputValue ||
-                        !password2InputValue ||
-                        loading
-                    )}>
-                    Sign Up
-                    <div className="recoveryForm__spinner">
-                        <PulseLoader
-                            color="#ffffff"
-                            loading={loading}
-                            size={10}
-                        />
-                    </div>
-                </button>
+                    }}/>
+                {errorMessage && <InputError>{errorMessage}</InputError>}
+                <StylizedSubmitButton
+                    name={"Sign Up"}
+                    loading={loading}
+                    disabled={!nameInputValue
+                        || !emailInputValue
+                        || !passwordInputValue
+                        || !password2InputValue
+                        || loading}/>
             </form>
-        </div>
+        </>
     )
 }
 

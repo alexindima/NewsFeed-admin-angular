@@ -1,29 +1,32 @@
 import React, {useContext, useRef, useState} from "react";
-import "./Login.scss"
+import styles from "./Login.module.scss"
 import axios from "axios";
-import { calculateHash } from "../../encrypt/Hash"
-import { userContext } from "../../Context/UserContext";
-import classNames from "classnames";
+import {calculateHash} from "../../encrypt/Hash"
+import {userContext} from "../../Context/UserContext";
 import {IUser} from "../../types/IUser";
 import {modalContext} from "../../Context/ModalContext";
-import PulseLoader from "react-spinners/PulseLoader";
+import StyliZedInput from "../common/StylizedInput";
+import InputError from "../common/InputError";
+import StylizedSubmitButton from "../common/StylizedSubmitButton";
+import ModalTitle from "../common/ModalTitle";
+import StylizedLinkButton from "../common/StylizedLinkButton";
 
 const Login = () => {
-    const EMAIL_ERROR       = "There is no user with this email"
-    const PASSWORD_ERROR    =  "Wrong password"
+    const EMAIL_ERROR = "There is no user with this email"
+    const PASSWORD_ERROR = "Wrong password"
 
-    const logIn             = useContext(userContext).logIn;
-    const openSignupModal   = useContext(modalContext).openSignupModal;
+    const logIn = useContext(userContext).logIn;
+    const openSignupModal = useContext(modalContext).openSignupModal;
     const openRecoveryModal = useContext(modalContext).openRecoveryModal;
-    const hideModal         = useContext(modalContext).hideModal;
+    const hideModal = useContext(modalContext).hideModal;
 
-    const [emailInputValue, setEmailInputValue]         = useState('')
-    const [passwordInputValue, setPasswordInputValue]   = useState('')
-    const [errorMessage, setErrorMessage]               = useState('')
-    const [loading, setLoading]                         = useState(false);
+    const [emailInputValue, setEmailInputValue] = useState('')
+    const [passwordInputValue, setPasswordInputValue] = useState('')
+    const [errorMessage, setErrorMessage] = useState('')
+    const [loading, setLoading] = useState(false);
 
-    const emailInputDOM     = useRef<HTMLInputElement>(null)
-    const passwordInputDOM  = useRef<HTMLInputElement>(null)
+    const emailInputDOM = useRef<HTMLInputElement>(null)
+    const passwordInputDOM = useRef<HTMLInputElement>(null)
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -45,8 +48,7 @@ const Login = () => {
                         hideModal()
                         setLoading(false)
                         return false
-                    }
-                    else {
+                    } else {
                         setErrorMessage(PASSWORD_ERROR)
                         setLoading(false)
                         setPasswordInputValue("")
@@ -63,61 +65,42 @@ const Login = () => {
             }
         };
         fetchData();
-
     };
 
-    const emailFieldClass = classNames({
-        "form-field": true,
-        "form-field--error": errorMessage === EMAIL_ERROR,
-    })
-    const passwordFieldClass = classNames({
-        "form-field": true,
-        "form-field--error": errorMessage === PASSWORD_ERROR,
-    })
-
     return (
-        <div>
-            <div className="modal-window__main-title">
-                Login to the site
-            </div>
-            <form onSubmit={handleSubmit} className="modal-window__auth-form loginForm">
-                <label className={emailFieldClass}>
-                    <span className="form-field__title">Email</span>
-                    <input ref={emailInputDOM} type="email" className="form-field__input" required value={emailInputValue} onChange={(event) => {
+        <>
+            <ModalTitle>Login to the site</ModalTitle>
+            <form onSubmit={handleSubmit}>
+                <StyliZedInput
+                    name={"Email *"}
+                    type={"email"}
+                    value={emailInputValue}
+                    required={true}
+                    error={errorMessage === EMAIL_ERROR}
+                    innerRef={emailInputDOM}
+                    onChange={(event) => {
                         setEmailInputValue(event.target.value)
-                    }} />
-                </label>
-                <label className={passwordFieldClass}>
-                    <span className="form-field__title">Password</span>
-                    <input ref={passwordInputDOM} type="password" className="form-field__input" required value={passwordInputValue} onChange={(event) => {
+                    }}/>
+                <StyliZedInput
+                    name={"Password *"}
+                    type={"password"}
+                    value={passwordInputValue}
+                    required={true}
+                    error={errorMessage === PASSWORD_ERROR}
+                    innerRef={passwordInputDOM}
+                    onChange={(event) => {
                         setPasswordInputValue(event.target.value)
-                    }} />
-                </label>
-                {errorMessage && <div className="modal-window__error">{errorMessage}</div>}
-                <button type="submit" className="loginForm__submitButton"
-                    disabled={(
-                        !emailInputValue ||
-                        !passwordInputValue ||
-                        loading
-                    )}>
-                    Log In
-                    <div className="recoveryForm__spinner">
-                        <PulseLoader
-                            color="#ffffff"
-                            loading={loading}
-                            size={10}
-                        />
-                    </div>
-                </button>
+                    }}/>
+                {errorMessage && <InputError>{errorMessage}</InputError>}
+                <StylizedSubmitButton
+                    name={"Log In"}
+                    loading={loading}
+                    disabled={!emailInputValue || !passwordInputValue || loading}/>
             </form>
-            <div className="modal-window__recover-password recover-password">
-                <button onClick={openRecoveryModal} className="recover-password__button">Recover Password</button>
-            </div>
-            <div className="modal-window__second-title">
-                Or
-            </div>
-            <button onClick={openSignupModal} className="auth-form__submit-button">Sign Up</button>
-        </div>
+            <StylizedLinkButton name={"Recover Password"} onClick={openRecoveryModal}/>
+            <ModalTitle>Or</ModalTitle>
+            <button onClick={openSignupModal} className={styles.signUpButton}>Sign Up</button>
+        </>
     )
 }
 

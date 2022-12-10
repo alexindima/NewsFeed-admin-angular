@@ -1,6 +1,6 @@
 import React from "react";
-import "./NewPassword.scss"
-import ChangePassword from "./Form/ChangePassword";
+import ChangePassword from "../common/ChangePassword";
+import ModalTitle from "../common/ModalTitle";
 
 interface IUserIDProps {
     userID: number
@@ -11,10 +11,8 @@ const NewPassword = (props: IUserIDProps) => {
 
     return (
         <>
-            <div className="modal-window__main-title">
-                Set new password
-            </div>
-            <ChangePassword userID={recoveredUser} />
+            <ModalTitle>Set new password</ModalTitle>
+            <ChangePassword userID={recoveredUser}/>
         </>
     )
 }

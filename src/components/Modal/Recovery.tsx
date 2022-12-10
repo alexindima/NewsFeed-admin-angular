@@ -1,10 +1,11 @@
 import React, {useContext, useRef, useState} from "react";
-import "./Recovery.scss"
 import {IUser} from "../../types/IUser";
 import axios from "axios"
-import classNames from "classnames";
 import {modalContext} from "../../Context/ModalContext";
-import PulseLoader from "react-spinners/PulseLoader";
+import StyliZedInput from "../common/StylizedInput";
+import InputError from "../common/InputError";
+import StylizedSubmitButton from "../common/StylizedSubmitButton";
+import ModalTitle from "../common/ModalTitle";
 
 interface IUserProps {
     setUser: Function
@@ -15,13 +16,13 @@ const Recovery = (props: IUserProps) => {
 
     const setRecoveryUser = props.setUser
 
-    const emailInputDOM  = useRef<HTMLInputElement>(null)
+    const emailInputDOM = useRef<HTMLInputElement>(null)
 
-    const openNewPasswordModal =  useContext(modalContext).openNewPasswordModal;
+    const openNewPasswordModal = useContext(modalContext).openNewPasswordModal;
 
     const [emailInputValue, setEmailInputValue] = useState('')
-    const [errorMessage, setErrorMessage]       = useState('')
-    const [loading, setLoading]                 = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -55,40 +56,27 @@ const Recovery = (props: IUserProps) => {
 
     };
 
-    const emailFieldClass = classNames({
-        "form-field": true,
-        "form-field--error": !!errorMessage,
-    })
-
     return (
-        <div>
-            <div className="modal-window__main-title">
-                Password recovery
-            </div>
-            <form onSubmit={handleSubmit} className="modal-window__auth-form recoveryForm">
-                <label className={emailFieldClass}>
-                    <span className="form-field__title">Email *</span>
-                    <input ref={emailInputDOM} type="email" className="form-field__input" required value={emailInputValue} onChange={(event) => {
+        <>
+            <ModalTitle>Password recovery</ModalTitle>
+            <form onSubmit={handleSubmit}>
+                <StyliZedInput
+                    name={"Email *"}
+                    type={"email"}
+                    value={emailInputValue}
+                    required={true}
+                    error={!!errorMessage}
+                    innerRef={emailInputDOM}
+                    onChange={(event) => {
                         setEmailInputValue(event.target.value)
-                    }} />
-                </label>
-                {errorMessage && <div className="modal-window__error">{errorMessage}</div>}
-                <button type="submit" className="recoveryForm__submitButton"
-                        disabled={(
-                            !emailInputValue ||
-                            loading
-                        )}>
-                    Send an email
-                    <div className="recoveryForm__spinner">
-                        <PulseLoader
-                            color="#ffffff"
-                            loading={loading}
-                            size={10}
-                        />
-                    </div>
-                </button>
+                    }}/>
+                {errorMessage && <InputError>{errorMessage}</InputError>}
+                <StylizedSubmitButton
+                    name={"Send an email"}
+                    loading={loading}
+                    disabled={!emailInputValue || loading}/>
             </form>
-        </div>
+        </>
     )
 }
 

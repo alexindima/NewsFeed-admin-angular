@@ -1,14 +1,15 @@
 import React, {useContext, useState} from "react";
-import "./SettingsMain.scss"
 import axios from "axios";
 import {userContext} from "../../Context/UserContext";
 import {modalContext} from "../../Context/ModalContext";
-import PulseLoader from "react-spinners/PulseLoader";
 import {siteContext} from "../../Context/SiteContext";
 import {ICategory} from "../../types/ICategory";
 import {ITag} from "../../types/ITag";
+import StylizedTextarea from "../common/StylizedTextarea";
+import StylizedSubmitButton from "../common/StylizedSubmitButton";
+import ModalTitle from "../common/ModalTitle";
+import StylizedLinkButton from "../common/StylizedLinkButton";
 
-// Нужен рефакторинг классов
 const SettingsMain = () => {
     const user = useContext(userContext).user;
     const siteCategoryList = useContext(siteContext).siteCategoryList;
@@ -69,45 +70,31 @@ const SettingsMain = () => {
     };
 
     return (
-        <div>
-            <div className="modal-window__main-title">
-                Ignoring settings
-            </div>
-            <form onSubmit={handleSubmit} className="modal-window__auth-form auth-form">
-                <label className="auth-form__field form-field">
-                    <span className="form-field__title">Ignored categories</span>
-                    <textarea rows={3} className="form-field__textarea" value={ignoredCategories} onChange={(event) => {
+        <>
+            <ModalTitle>Ignoring settings</ModalTitle>
+            <form onSubmit={handleSubmit}>
+                <StylizedTextarea
+                    name={"Ignored categories"}
+                    value={ignoredCategories}
+                    rows={3}
+                    onChange={(event) => {
                         setIgnoredCategories(event.target.value.split(","))
                     }}/>
-                </label>
-                <label className="mainSettings__field form-field">
-                    <span className="form-field__title">Ignored tags</span>
-                    <textarea rows={3} className="form-field__textarea" value={ignoredTags} onChange={(event) => {
+                <StylizedTextarea
+                    name={"Ignored tags"}
+                    value={ignoredTags}
+                    rows={3}
+                    onChange={(event) => {
                         setIgnoredTags(event.target.value.split(","))
                     }}/>
-                </label>
-                <button type="submit" className="mainSettings__submitButton"
-                        disabled={(
-                            loading
-                        )}>
-                    Save
-                    <div className="recoveryForm__spinner">
-                        <PulseLoader
-                            color="#ffffff"
-                            loading={loading}
-                            size={10}
-                        />
-                    </div>
-                </button>
+                <StylizedSubmitButton
+                    name={"Save"}
+                    loading={loading}
+                    disabled={loading}/>
             </form>
-            <div className="modal-window__recover-password change-name-password">
-                <button onClick={openSettingsNameModal} className="change-name-password__button">Change Name</button>
-            </div>
-            <div className="modal-window__recover-password change-name-password">
-                <button onClick={openSettingsPasswordModal} className="change-name-password__button">Change Password
-                </button>
-            </div>
-        </div>
+            <StylizedLinkButton name={"Change Name"} onClick={openSettingsNameModal}/>
+            <StylizedLinkButton name={"Change Password"} onClick={openSettingsPasswordModal}/>
+        </>
     )
 }
 

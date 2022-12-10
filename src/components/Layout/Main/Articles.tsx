@@ -3,10 +3,10 @@ import {IArticle} from "../../../types/IArticle";
 import Article from "../Articles/Article";
 import axios from "axios";
 import {userContext} from "../../../Context/UserContext";
-import PulseLoader from "react-spinners/PulseLoader";
 import NewsFilter from "../../../lib/NewsFilter";
 import {siteContext} from "../../../Context/SiteContext";
-import styles from "./Articles.module.scss";
+import Spinner from "../../common/Spinner";
+import NoResult from "../../common/NoResult";
 
 const Articles = () => {
     const ARTICLES_TO_LOAD = 5
@@ -127,32 +127,21 @@ const Articles = () => {
     return (
         <>
             {!!siteState?.article &&
-                <div className={styles.spinner}>
-                    <PulseLoader
-                        color="#000000"
-                        loading={loadingSuggested}
-                        size={20}
-                    />
-                </div>
+                <>
+                    {loadingSuggested && <Spinner color={"#000000"} size={20}/>}
+                    {articleToShowIsReady && <Article article={articleToShow}/>}
+                </>
             }
-            {!!siteState?.article && articleToShowIsReady && <Article article={articleToShow}/>}
+
             {!!siteState?.article ||
                 <>
                     {articles.map((article: IArticle) => <Article key={article.id} article={article}/>)}
                     <div ref={loadMoreDOM} onClick={LoadMoreHandle}>
-                        <div className={styles.spinner}>
-                            <PulseLoader
-                                color="#000000"
-                                loading={loading}
-                                size={20}
-                            />
-                        </div>
+                        {loading && <Spinner color={"#000000"} size={20}/>}
+                        {dataIsMissing.current && !loading && <NoResult/>}
                     </div>
                 </>}
-            {!siteState?.article && dataIsMissing.current && !loading &&
-                <div className={styles.noResults}>
-                    No results :(
-                </div>}
+
         </>
     )
 }

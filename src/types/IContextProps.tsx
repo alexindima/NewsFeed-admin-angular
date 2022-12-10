@@ -1,3 +1,3 @@
 export interface IContextProps {
-    children?: JSX.Element
+    children: JSX.Element
 }

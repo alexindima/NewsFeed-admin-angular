@@ -1,13 +1,13 @@
 import React, {useContext, useRef, useState} from "react";
-import "./SettingsName.scss"
 import axios from "axios";
 import {userContext} from "../../Context/UserContext";
-import {validUserName} from "../../Regex/Regex";
-import classNames from "classnames";
+import {validUserName} from "../../Regex/Regex"
 import {modalContext} from "../../Context/ModalContext";
-import PulseLoader from "react-spinners/PulseLoader";
+import StyliZedInput from "../common/StylizedInput";
+import InputError from "../common/InputError";
+import StylizedSubmitButton from "../common/StylizedSubmitButton";
+import ModalTitle from "../common/ModalTitle";
 
-// Нужен рефакторинг классов
 const SettingsName = () => {
     const NAME_ERROR = "The user name must contain at least 3 letters, numbers and underscores"
 
@@ -40,41 +40,27 @@ const SettingsName = () => {
         }
     };
 
-    const nameFieldClass = classNames({
-        "form-field": true,
-        "form-field--error": errorMessage === NAME_ERROR,
-    })
-
     return (
-        <div>
-            <div className="modal-window__main-title">
-                Change name
-            </div>
-            <form onSubmit={handleSubmit} className="modal-window__auth-form nameForm">
-                <label className={nameFieldClass}>
-                    <span className="form-field__title">New name *</span>
-                    <input ref={nameInputDOM} type="text" className="form-field__input" required value={nameInputValue}
-                           onChange={(event) => {
-                               setNameInputValue(event.target.value)
-                           }}/>
-                </label>
-                {errorMessage && <div className="modal-window__error">{errorMessage}</div>}
-                <button type="submit" className="nameForm__submitButton"
-                        disabled={(
-                            !nameInputValue ||
-                            loading
-                        )}>
-                    Save new name
-                    <div className="recoveryForm__spinner">
-                        <PulseLoader
-                            color="#ffffff"
-                            loading={loading}
-                            size={10}
-                        />
-                    </div>
-                </button>
+        <>
+            <ModalTitle>Change name</ModalTitle>
+            <form onSubmit={handleSubmit}>
+                <StyliZedInput
+                    name={"New name *"}
+                    type={"text"}
+                    value={nameInputValue}
+                    required={true}
+                    error={!!errorMessage}
+                    innerRef={nameInputDOM}
+                    onChange={(event) => {
+                        setNameInputValue(event.target.value)
+                    }}/>
+                {errorMessage && <InputError>{errorMessage}</InputError>}
+                <StylizedSubmitButton
+                    name={"Save new name"}
+                    loading={loading}
+                    disabled={!nameInputValue || loading}/>
             </form>
-        </div>
+        </>
     )
 }
 
