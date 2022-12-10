@@ -8,12 +8,17 @@ import {ITag} from "../../../types/ITag";
 const Article = ({article}: { article: IArticle }) => {
     const chooseTag = useContext(siteContext).chooseTag;
     const siteTagList = useContext(siteContext).siteTagList
+    const createdDate = new Date(article.createdDate)
+    const upgradeDate = new Date(article.upgradeDate)
 
     return (
         <article className={styles.article}>
             <div className={styles.article__header}>
-                <div className={styles.article__createDate}>{article.createdDate}<span
-                    className={styles.article__updateDate}> (updated {article.upgradeDate})</span>
+                <div className={styles.article__createDate}>
+                    {createdDate.toLocaleDateString()} {createdDate.toLocaleTimeString()}
+                    <span className={styles.article__updateDate}>
+                         &ensp;(updated {upgradeDate.toLocaleDateString()} {upgradeDate.toLocaleTimeString()})
+                    </span>
                 </div>
                 <div className={styles.article__titleMain}>{article.mainTitle}
                 </div>
