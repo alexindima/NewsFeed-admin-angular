@@ -16,6 +16,7 @@ const Articles = () => {
     const siteState = useContext(siteContext).siteState
     const currentPage = useContext(siteContext).currentPage
     const setCurrentPage = useContext(siteContext).setCurrentPage
+    const setSiteTags = useContext(siteContext).setSiteTags
 
     // Из-за того что нет бэкенда дальше будет жесть, всю бэковую работу будет делать фронт
     const [articles, setArticles] = useState<IArticle[]>([]);
@@ -29,6 +30,14 @@ const Articles = () => {
     let wasLoading = useRef(false)
     let dataIsMissing = useRef(false)
     let loadMoreDOM = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await axios('http://localhost:3030/tags')
+            setSiteTags(result.data)
+        };
+        fetchData();
+    }, [])
 
     useEffect(() => {
         let url = 'http://localhost:3030/articles?'

@@ -10,5 +10,5 @@ export interface IArticle {
     readonly mainPhotoDescription: string
     readonly body: IArticleElement[]
     readonly category: number
-    readonly tags: string[]
+    readonly tags: number[]
 }

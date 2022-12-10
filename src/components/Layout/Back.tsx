@@ -5,11 +5,13 @@ import {useContext} from "react";
 import {siteContext} from "../../Context/SiteContext";
 import {RiCloseCircleFill} from "react-icons/ri";
 import {ICategory} from "../../types/ICategory";
+import {ITag} from "../../types/ITag";
 
 const Back = () => {
     const clearAll = useContext(siteContext).clearAll;
     const siteState = useContext(siteContext).siteState;
     const siteCategoryList = useContext(siteContext).siteCategoryList;
+    const siteTagList = useContext(siteContext).siteTagList;
     const clearCategory = useContext(siteContext).clearCategory;
     const clearTag = useContext(siteContext).clearTag;
     const clearSearchPhrase = useContext(siteContext).clearSearchPhrase;
@@ -33,7 +35,8 @@ const Back = () => {
                     </div>}
                 {!!siteState?.tag &&
                     <div onClick={clearTag} className={styles.back__info}>
-                        Current tag: {siteState?.tag} <RiCloseCircleFill/>
+                        Current tag: {siteTagList?.find((tag: ITag) =>
+                        tag.id === siteState?.tag).name} <RiCloseCircleFill/>
                     </div>}
                 {!!siteState?.search &&
                     <div onClick={clearSearchPhrase} className={styles.back__info}>

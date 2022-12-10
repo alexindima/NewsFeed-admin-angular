@@ -6,11 +6,13 @@ import {modalContext} from "../../Context/ModalContext";
 import PulseLoader from "react-spinners/PulseLoader";
 import {siteContext} from "../../Context/SiteContext";
 import {ICategory} from "../../types/ICategory";
+import {ITag} from "../../types/ITag";
 
 // Нужен рефакторинг классов
 const SettingsMain = () => {
     const user = useContext(userContext).user;
     const siteCategoryList = useContext(siteContext).siteCategoryList;
+    const siteTagList = useContext(siteContext).siteTagList;
 
     const logIn = useContext(userContext).logIn;
     const hideModal = useContext(modalContext).hideModal;
@@ -18,7 +20,8 @@ const SettingsMain = () => {
     const openSettingsPasswordModal = useContext(modalContext).openSettingsPasswordModal;
     const [ignoredCategories, setIgnoredCategories] = useState(user?.ignoredCategories.map((ignoredCategory: number) =>
         siteCategoryList?.find((category: ICategory) => category.id === ignoredCategory).name))
-    const [ignoredTags, setIgnoredTags] = useState(user?.ignoredTags)
+    const [ignoredTags, setIgnoredTags] = useState(user?.ignoredTags.map((ignoredTag: number) =>
+        siteTagList?.find((tag: ITag) => tag.id === ignoredTag).name))
     const [loading, setLoading] = useState(false)
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -36,13 +39,26 @@ const SettingsMain = () => {
                 })
                 return categoryIsValid
             })
+            const tagsNameList: string[] = ignoredTags.filter((ignoredTag: string) => {
+                let tagIsValid = false
+                siteTagList?.every((tag: ITag) => {
+                    if (tag.name.toLowerCase().trim() === ignoredTag.toLowerCase().trim()) {
+                        tagIsValid = true
+                        return false
+                    }
+                    return true
+                })
+                return tagIsValid
+            })
             const result = await axios(`http://localhost:3030/users/${user.id}`)
             const changedUser = {
                 ...result.data,
                 ignoredCategories: categoriesNameList.map((ignoredCategory: string) =>
                     siteCategoryList?.find((category: ICategory) =>
                         category.name.toLowerCase().trim() === ignoredCategory.toLowerCase().trim()).id),
-                ignoredTags: ignoredTags.map((tag: string) => tag.trim())
+                ignoredTags: tagsNameList.map((ignoredTag: string) =>
+                    siteTagList?.find((tag: ITag) =>
+                        tag.name.toLowerCase().trim() === ignoredTag.toLowerCase().trim()).id)
             }
             await axios.put(`http://localhost:3030/users/${user.id}`, changedUser)
             logIn(changedUser)

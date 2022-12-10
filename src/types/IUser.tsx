@@ -4,5 +4,5 @@ export interface IUser {
     email?: string
     password?: string
     ignoredCategories: number[]
-    ignoredTags: string[]
+    ignoredTags: number[]
 }

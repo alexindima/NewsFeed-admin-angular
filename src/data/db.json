@@ -67,8 +67,8 @@
       ],
       "category": 1,
       "tags": [
-        "moon",
-        "dog"
+        1,
+        6
       ]
     },
     {
@@ -138,8 +138,8 @@
       ],
       "category": 2,
       "tags": [
-        "cat",
-        "moon"
+        2,
+        7
       ]
     },
     {
@@ -209,8 +209,8 @@
       ],
       "category": 3,
       "tags": [
-        "cat",
-        "dog"
+        3,
+        8
       ]
     },
     {
@@ -280,8 +280,8 @@
       ],
       "category": 4,
       "tags": [
-        "moon",
-        "dog"
+        4,
+        9
       ]
     },
     {
@@ -351,8 +351,8 @@
       ],
       "category": 5,
       "tags": [
-        "cat",
-        "moon"
+        5,
+        10
       ]
     },
     {
@@ -422,8 +422,8 @@
       ],
       "category": 5,
       "tags": [
-        "cat",
-        "dog"
+        1,
+        5
       ]
     },
     {
@@ -493,8 +493,8 @@
       ],
       "category": 4,
       "tags": [
-        "moon",
-        "dog"
+        2,
+        6
       ]
     },
     {
@@ -564,8 +564,8 @@
       ],
       "category": 3,
       "tags": [
-        "cat",
-        "moon"
+        3,
+        7
       ]
     },
     {
@@ -635,8 +635,8 @@
       ],
       "category": 2,
       "tags": [
-        "cat",
-        "dog"
+        4,
+        8
       ]
     },
     {
@@ -706,8 +706,8 @@
       ],
       "category": 1,
       "tags": [
-        "moon",
-        "dog"
+        5,
+        10
       ]
     },
     {
@@ -777,8 +777,8 @@
       ],
       "category": 1,
       "tags": [
-        "moon",
-        "dog"
+        1,
+        5
       ]
     },
     {
@@ -848,8 +848,8 @@
       ],
       "category": 2,
       "tags": [
-        "cat",
-        "moon"
+        2,
+        6
       ]
     },
     {
@@ -919,8 +919,8 @@
       ],
       "category": 3,
       "tags": [
-        "cat",
-        "dog"
+        3,
+        7
       ]
     },
     {
@@ -990,8 +990,8 @@
       ],
       "category": 4,
       "tags": [
-        "moon",
-        "dog"
+        4,
+        8
       ]
     },
     {
@@ -1061,8 +1061,8 @@
       ],
       "category": 5,
       "tags": [
-        "cat",
-        "moon"
+        5,
+        10
       ]
     },
     {
@@ -1132,8 +1132,8 @@
       ],
       "category": 1,
       "tags": [
-        "cat",
-        "dog"
+        1,
+        6
       ]
     },
     {
@@ -1203,8 +1203,8 @@
       ],
       "category": 2,
       "tags": [
-        "moon",
-        "dog"
+        2,
+        7
       ]
     },
     {
@@ -1274,8 +1274,8 @@
       ],
       "category": 3,
       "tags": [
-        "cat",
-        "moon"
+        3,
+        8
       ]
     },
     {
@@ -1345,8 +1345,8 @@
       ],
       "category": 4,
       "tags": [
-        "cat",
-        "dog"
+        4,
+        9
       ]
     },
     {
@@ -1416,8 +1416,8 @@
       ],
       "category": 5,
       "tags": [
-        "moon",
-        "dog"
+        5,
+        10
       ]
     },
     {
@@ -1487,8 +1487,8 @@
       ],
       "category": 1,
       "tags": [
-        "moon",
-        "dog"
+        1,
+        2
       ]
     },
     {
@@ -1558,8 +1558,8 @@
       ],
       "category": 2,
       "tags": [
-        "cat",
-        "moon"
+        2,
+        3
       ]
     },
     {
@@ -1629,8 +1629,8 @@
       ],
       "category": 3,
       "tags": [
-        "cat",
-        "dog"
+        3,
+        4
       ]
     },
     {
@@ -1700,8 +1700,8 @@
       ],
       "category": 4,
       "tags": [
-        "moon",
-        "dog"
+        4,
+        5
       ]
     },
     {
@@ -1771,8 +1771,8 @@
       ],
       "category": 5,
       "tags": [
-        "cat",
-        "moon"
+        5,
+        6
       ]
     },
     {
@@ -1842,8 +1842,8 @@
       ],
       "category": 4,
       "tags": [
-        "cat",
-        "dog"
+        1,
+        2
       ]
     },
     {
@@ -1913,8 +1913,8 @@
       ],
       "category": 3,
       "tags": [
-        "moon",
-        "dog"
+        2,
+        3
       ]
     },
     {
@@ -1984,8 +1984,8 @@
       ],
       "category": 2,
       "tags": [
-        "cat",
-        "moon"
+        3,
+        4
       ]
     },
     {
@@ -2055,8 +2055,8 @@
       ],
       "category": 1,
       "tags": [
-        "cat",
-        "dog"
+        4,
+        5
       ]
     },
     {
@@ -2126,8 +2126,8 @@
       ],
       "category": 6,
       "tags": [
-        "moon",
-        "dog"
+        5,
+        6
       ]
     }
   ],
@@ -2150,9 +2150,7 @@
       "email": "a@a",
       "password": "bcb15f821479b4d5772bd0ca866c00ad5f926e3580720659cc80d39c9d09802a",
       "ignoredCategories": [],
-      "ignoredTags": [
-        ""
-      ]
+      "ignoredTags": []
     },
     {
       "id": 2,
@@ -2164,31 +2162,34 @@
         1
       ],
       "ignoredTags": [
-        "cat",
-        "sites"
+        2
       ]
     },
     {
       "id": 3,
       "name": "test",
       "email": "test@test",
-      "password": "37268335dd6931045bdcdf92623ff819a64244b53d0e746d438797349d4da578",
+      "password": "bcb15f821479b4d5772bd0ca866c00ad5f926e3580720659cc80d39c9d09802a",
       "ignoredCategories": [
         1,
         2
       ],
       "ignoredTags": [
-        ""
+        1,
+        2,
+        3
       ]
     },
     {
       "id": 4,
       "name": "test",
       "email": "e@e",
-      "password": "e0bc60c82713f64ef8a57c0c40d02ce24fd0141d5cc3086259c19b1e62a62bea",
+      "password": "bcb15f821479b4d5772bd0ca866c00ad5f926e3580720659cc80d39c9d09802a",
       "ignoredCategories": [],
       "ignoredTags": [
-        ""
+        1,
+        2,
+        3
       ]
     },
     {
@@ -2198,7 +2199,7 @@
       "password": "bcb15f821479b4d5772bd0ca866c00ad5f926e3580720659cc80d39c9d09802a",
       "ignoredCategories": [],
       "ignoredTags": [
-        ""
+        1
       ]
     }
   ],

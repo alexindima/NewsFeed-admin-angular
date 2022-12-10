@@ -3,6 +3,7 @@ import {createContext, useRef, useState} from "react";
 import {IContextProps} from "../types/IContextProps";
 import {ISiteState} from "../types/ISiteState";
 import {ICategory} from "../types/ICategory";
+import {ITag} from "../types/ITag";
 
 export const siteContext = createContext<any>({});
 
@@ -10,6 +11,7 @@ const SiteContext = (props: IContextProps) => {
     const [siteState, setSiteState] = useState<ISiteState | null>(null)
 
     const [siteCategoryList, setSiteCategoryList] = useState<ICategory[] | null>(null) //нужно теперь хранить для Back элемента
+    const [siteTagList, setSiteTagList] = useState<ITag[] | null>(null) //то же самое
     const currentPage = useRef(1)
 
     const setStateWithCheck = (state: ISiteState) => {
@@ -29,7 +31,7 @@ const SiteContext = (props: IContextProps) => {
         currentPage.current = 1
     }
 
-    const chooseTag = (tag: string) => {
+    const chooseTag = (tag: number) => {
         setSiteState({...siteState, tag: tag, article: null} as ISiteState)
     }
 
@@ -70,6 +72,10 @@ const SiteContext = (props: IContextProps) => {
         setSiteCategoryList(list)
     }
 
+    const setSiteTags = (list: ITag[]) => {
+        setSiteTagList(list)
+    }
+
     const value = {
         siteState,
         chooseCategory,
@@ -84,6 +90,8 @@ const SiteContext = (props: IContextProps) => {
         setCurrentPage,
         siteCategoryList,
         setSiteCategories,
+        siteTagList,
+        setSiteTags,
         clearAll
     }
 
