@@ -1,53 +1,55 @@
 import React, {useEffect, useRef, useState} from "react";
 import "./Scroll.scss"
-import { VscTriangleUp } from 'react-icons/vsc';
-import { VscTriangleDown } from 'react-icons/vsc';
+import {VscTriangleUp} from 'react-icons/vsc';
+import {VscTriangleDown} from 'react-icons/vsc';
 import classNames from "classnames";
 
 const Scroll = () => {
-    const UP_THRESHOLD      = 500;
-    const FORGET_THRESHOLD  = 2000;
-    const BIG_HEADER        = 50;
+    const UP_THRESHOLD = 500;
+    const FORGET_THRESHOLD = 2000;
+    const BIG_HEADER = 50;
 
     const scrollWas = useRef(false);
     const lastPoint = useRef(0);
 
-    const [arrowTopIsHidden, setArrowTopIsHidden]       = useState(true);
+    const [arrowTopIsHidden, setArrowTopIsHidden] = useState(true);
     const [arrowBottomIsHidden, setArrowBottomIsHidden] = useState(true);
 
-    function goTop() {
+    const goTop = () => {
         lastPoint.current = window.scrollY;
-        setArrowBottomIsHidden( false);
+        setArrowBottomIsHidden(false);
         scrollWas.current = true;
-        window.scrollTo(window.scrollX , 0); //scroll event will arise automatically after this
+        window.scrollTo(window.scrollX, 0); //scroll event will arise automatically after this
     }
 
-    function goBack () {
+    const goBack = () => {
         window.scrollTo(window.scrollX, lastPoint.current);
     }
 
-    function CalculateScroll() {
+    const CalculateScroll = () => {
         setArrowTopIsHidden(window.scrollY < UP_THRESHOLD);
         setArrowBottomIsHidden(!((scrollWas.current) && (window.scrollY < BIG_HEADER)));
-        if (scrollWas && (window.scrollY  > FORGET_THRESHOLD)) {
+        if (scrollWas && (window.scrollY > FORGET_THRESHOLD)) {
             scrollWas.current = false;
         }
     }
 
-    function ScrollHandle() {
-        let scrollWidth = Math.max(
-            document.body.scrollWidth, document.documentElement.scrollWidth,
-            document.body.offsetWidth, document.documentElement.offsetWidth,
-            document.body.clientWidth, document.documentElement.clientWidth
-        );
-        if (scrollWidth > 768) {
-            CalculateScroll();
-        }
-    }
-
     useEffect(() => {
+        const ScrollHandle = () => {
+            let scrollWidth = Math.max(
+                document.body.scrollWidth, document.documentElement.scrollWidth,
+                document.body.offsetWidth, document.documentElement.offsetWidth,
+                document.body.clientWidth, document.documentElement.clientWidth
+            );
+            if (scrollWidth > 768) {
+                CalculateScroll();
+            }
+        }
         window.addEventListener('scroll', ScrollHandle);
-    });
+        return () => {
+            window.removeEventListener('scroll', ScrollHandle)
+        }
+    }, []);
 
     const arrowTopClass = classNames({
         "scroll-button": true,
@@ -64,7 +66,7 @@ const Scroll = () => {
             </div>
             <div className={arrowBottomClass} onClick={goBack}>
                 <VscTriangleDown
-                     className="scroll-button__img scroll-button__img--down"/>
+                    className="scroll-button__img scroll-button__img--down"/>
             </div>
         </div>
     )

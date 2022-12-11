@@ -37,6 +37,7 @@ const Articles = () => {
             setSiteTags(result.data)
         };
         fetchData();
+        // eslint-disable-next-line
     }, [])
 
     useEffect(() => {
@@ -104,21 +105,24 @@ const Articles = () => {
     }, [siteState?.article]);
 
     useEffect(() => {
-        window.addEventListener('scroll', ScrollHandle);
-    });
+        const ScrollHandle = () => {
+            if (loadMoreDOM.current) {
 
-    const ScrollHandle = () => {
-        if (loadMoreDOM.current) {
-
-            if (loadMoreDOM.current.getBoundingClientRect().bottom < LOAD_ON_POSITION) {
-                if (!wasLoading.current) {
-                    LoadMoreHandle()
+                if (loadMoreDOM.current.getBoundingClientRect().bottom < LOAD_ON_POSITION) {
+                    if (!wasLoading.current) {
+                        LoadMoreHandle()
+                    }
+                } else {
+                    wasLoading.current = false
                 }
-            } else {
-                wasLoading.current = false
             }
         }
-    }
+        window.addEventListener('scroll', ScrollHandle)
+        return () => {
+            window.removeEventListener('scroll', ScrollHandle)
+        }
+    }, []);
+
 
     const LoadMoreHandle = () => {
         setNeedToLoad(true)
