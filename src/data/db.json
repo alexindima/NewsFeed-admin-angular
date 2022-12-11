@@ -2158,8 +2158,8 @@
       "email": "q@q",
       "password": "bcb15f821479b4d5772bd0ca866c00ad5f926e3580720659cc80d39c9d09802a",
       "ignoredCategories": [
-        6,
-        1
+        1,
+        6
       ],
       "ignoredTags": [
         2
@@ -2201,6 +2201,14 @@
       "ignoredTags": [
         1
       ]
+    },
+    {
+      "id": 6,
+      "name": "1111",
+      "email": "1@1",
+      "password": "bcb15f821479b4d5772bd0ca866c00ad5f926e3580720659cc80d39c9d09802a",
+      "ignoredCategories": [],
+      "ignoredTags": []
     }
   ],
   "categories": [

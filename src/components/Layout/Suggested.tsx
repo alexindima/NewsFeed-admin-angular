@@ -1,43 +1,44 @@
 import React, {useContext, useEffect, useState} from "react";
 import News from "./Suggested/News";
 import styles from "./Suggested.module.scss"
-import axios from "axios";
 import NewsFilter from "../../lib/NewsFilter";
 import {userContext} from "../../Context/UserContext";
 import {IArticle} from "../../types/IArticle";
 import Spinner from "../common/Spinner";
 import NoResult from "../common/NoResult";
+import {apiContext} from "../../Context/ApiContext";
 
 
 const Suggested = () => {
     const user = useContext(userContext).user;
+    const fetchSuggestedNews = useContext(apiContext).fetchSuggestedNews
+    const fetchAllArticles = useContext(apiContext).fetchAllArticles
 
     const [newsID, setNewsID] = useState([])
     const [articles, setArticles] = useState<IArticle[]>([]);
     const [news, setNews] = useState<IArticle[]>([]);
     const [loading, setLoading] = useState(true);
 
-    // это тоже все должен делать бэк, приходится извращаться
     useEffect(() => {
-        const fetchSuggestedNews = async () => {
+        const fetch = async () => {
             setLoading(true)
-            const resultID = await axios(
-                'http://localhost:3030/suggestedNews',
-            );
-            setNewsID(resultID.data)
+            const suggestedNews = await fetchSuggestedNews()
+            setNewsID(suggestedNews)
         }
-        fetchSuggestedNews()
+        fetch()
+        // eslint-disable-next-line
     }, [])
 
     useEffect(() => {
-        const fetchArticles = async () => {
+        const fetch = async () => {
             setLoading(true)
-            const resultID = await axios('http://localhost:3030/articles')
-            const filteredArticles = NewsFilter(resultID.data, user?.ignoredCategories, user?.ignoredTags)
+            const articles = await fetchAllArticles()
+            const filteredArticles = NewsFilter(articles, user?.ignoredCategories, user?.ignoredTags)
             setArticles(filteredArticles)
             setLoading(false)
         }
-        fetchArticles()
+        fetch()
+        // eslint-disable-next-line
     }, [user?.ignoredCategories, user?.ignoredTags]);
 
     useEffect(() => {

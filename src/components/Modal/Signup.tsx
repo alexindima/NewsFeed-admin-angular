@@ -1,5 +1,4 @@
 import React, {useContext, useRef, useState} from "react";
-import axios from "axios";
 import {IUser} from "../../types/IUser";
 import {calculateHash} from "../../encrypt/Hash"
 import {validUserName, validPassword} from "../../Regex/Regex"
@@ -9,6 +8,7 @@ import StyliZedInput from "../common/StylizedInput";
 import InputError from "../common/InputError";
 import StylizedSubmitButton from "../common/StylizedSubmitButton";
 import ModalTitle from "../common/ModalTitle";
+import {apiContext} from "../../Context/ApiContext";
 
 const Signup = () => {
     const NAME_ERROR = "The user name must contain at least 3 letters, numbers and underscores"
@@ -18,6 +18,8 @@ const Signup = () => {
 
     const logIn = useContext(userContext).logIn;
     const hideModal = useContext(modalContext).hideModal;
+    const fetchAllUsers = useContext(apiContext).fetchAllUsers;
+    const createUser = useContext(apiContext).createUser
 
     const nameInputDOM = useRef<HTMLInputElement>(null)
     const emailInputDOM = useRef<HTMLInputElement>(null)
@@ -31,32 +33,30 @@ const Signup = () => {
     const [loading, setLoading] = useState(false)
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+        event.preventDefault()
         setEmailInputValue(emailInputValue.toLowerCase())
         if (passwordInputValue !== password2InputValue) {
-            setErrorMessage(PASSWORD2_ERROR);
+            setErrorMessage(PASSWORD2_ERROR)
             setPasswordInputValue("")
             setPassword2InputValue("")
-            passwordInputDOM.current!.focus();
+            passwordInputDOM.current!.focus()
         } else if (!validUserName.test(nameInputValue)) {
             setErrorMessage(NAME_ERROR);
             setPasswordInputValue("")
             setPassword2InputValue("")
             nameInputDOM.current!.focus();
         } else if (!validPassword.test(passwordInputValue)) {
-            setErrorMessage(PASSWORD_ERROR);
+            setErrorMessage(PASSWORD_ERROR)
             setPasswordInputValue("")
             setPassword2InputValue("")
-            passwordInputDOM.current!.focus();
+            passwordInputDOM.current!.focus()
         } else {
             const fetchData = async () => {
                 setLoading(true)
-                const result = await axios('http://localhost:3030/users')
-                /*  Это должен делать бэк
-                 */
+                const allUsers = await fetchAllUsers()
                 let userAlreadyExist = false
                 let lastID = 0
-                result.data.every((user: IUser) => {
+                allUsers.every((user: IUser) => {
                     if (user.id > lastID) {
                         lastID = user.id
                     }
@@ -77,10 +77,10 @@ const Signup = () => {
                         name: nameInputValue,
                         email: emailInputValue,
                         password: await calculateHash(passwordInputValue),
-                        ignoredCategories: [""],
-                        ignoredTags: [""]
+                        ignoredCategories: [],
+                        ignoredTags: []
                     }
-                    await axios.post('http://localhost:3030/users', newUser);
+                    await createUser(newUser)
                     logIn(newUser)
                     hideModal()
                     setLoading(false)

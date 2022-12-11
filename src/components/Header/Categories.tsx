@@ -2,7 +2,6 @@ import React, {useContext, useEffect, useState} from "react";
 import {CgMenuRound, CgPlayListCheck} from 'react-icons/cg';
 import "./Categories.scss"
 import classNames from "classnames";
-import axios from "axios";
 import {userContext} from "../../Context/UserContext";
 import {siteContext} from "../../Context/SiteContext";
 import {ICategory} from "../../types/ICategory";
@@ -13,7 +12,7 @@ const Categories = () => {
 
     const user = useContext(userContext).user;
     const siteState = useContext(siteContext).siteState
-    const setSiteCategories = useContext(siteContext).setSiteCategories
+    const siteCategoryList = useContext(siteContext).siteCategoryList
     const chooseCategory = useContext(siteContext).chooseCategory
 
 
@@ -22,24 +21,18 @@ const Categories = () => {
     }
 
     useEffect(() => {
-        const fetchData = async () => {
-            const result = await axios('http://localhost:3030/categories')
-            setSiteCategories(result.data)
-            setCategoryList(result.data.filter((category: ICategory) => {
-                let categoryIsIgnored = false
-                user?.ignoredCategories.every((userIgnoredCategory: number) => {
-                    if (category.id === userIgnoredCategory) {
-                        categoryIsIgnored = true
-                        return false
-                    }
-                    return true
-                })
-                return !categoryIsIgnored
-            }))
-        };
-        fetchData();
-        // eslint-disable-next-line
-    }, [user?.ignoredCategories])
+        setCategoryList(siteCategoryList?.filter((category: ICategory) => {
+            let categoryIsIgnored = false
+            user?.ignoredCategories.every((userIgnoredCategory: number) => {
+                if (category.id === userIgnoredCategory) {
+                    categoryIsIgnored = true
+                    return false
+                }
+                return true
+            })
+            return !categoryIsIgnored
+        }))
+    }, [user?.ignoredCategories, siteCategoryList])
 
     const categoryWindowClass = classNames({
         "icon-wrapper__popup": true,

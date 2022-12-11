@@ -1,11 +1,11 @@
 import React, {useContext, useRef, useState} from "react";
 import {IUser} from "../../types/IUser";
-import axios from "axios"
 import {modalContext} from "../../Context/ModalContext";
 import StyliZedInput from "../common/StylizedInput";
 import InputError from "../common/InputError";
 import StylizedSubmitButton from "../common/StylizedSubmitButton";
 import ModalTitle from "../common/ModalTitle";
+import {apiContext} from "../../Context/ApiContext";
 
 interface IUserProps {
     setUser: Function
@@ -18,6 +18,7 @@ const Recovery = (props: IUserProps) => {
 
     const emailInputDOM = useRef<HTMLInputElement>(null)
 
+    const fetchAllUsers = useContext(apiContext).fetchAllUsers;
     const openNewPasswordModal = useContext(modalContext).openNewPasswordModal;
 
     const [emailInputValue, setEmailInputValue] = useState('')
@@ -30,13 +31,9 @@ const Recovery = (props: IUserProps) => {
 
         const fetchData = async () => {
             setLoading(true)
-            const result = await axios(
-                'http://localhost:3030/users',
-            );
-            /*  Это должен делать бэк
-             */
+            const allUsers = await fetchAllUsers()
             let userExist = false
-            result.data.every((user: IUser) => {
+            allUsers.every((user: IUser) => {
                 if (user.email === emailInputValue.trim().toLowerCase()) {
                     userExist = true
                     setRecoveryUser(user.id)
@@ -51,10 +48,9 @@ const Recovery = (props: IUserProps) => {
                 setLoading(false)
                 emailInputDOM.current!.focus();
             }
-        };
-        fetchData();
-
-    };
+        }
+        fetchData()
+    }
 
     return (
         <>

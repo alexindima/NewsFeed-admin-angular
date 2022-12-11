@@ -1,9 +1,10 @@
 import * as React from "react";
-import {createContext, useRef, useState} from "react";
+import {createContext, useContext, useEffect, useRef, useState} from "react";
 import {IContextProps} from "../types/IContextProps";
 import {ISiteState} from "../types/ISiteState";
 import {ICategory} from "../types/ICategory";
 import {ITag} from "../types/ITag";
+import {apiContext} from "./ApiContext";
 
 export const siteContext = createContext<any>({});
 
@@ -13,6 +14,9 @@ const SiteContext = (props: IContextProps) => {
     const [siteCategoryList, setSiteCategoryList] = useState<ICategory[] | null>(null) //нужно теперь хранить для Back элемента
     const [siteTagList, setSiteTagList] = useState<ITag[] | null>(null) //то же самое
     const currentPage = useRef(1)
+
+    const fetchCategories = useContext(apiContext).fetchCategories
+    const fetchTags = useContext(apiContext).fetchTags
 
     const setStateWithCheck = (state: ISiteState) => {
         if (!(state?.category || state?.tag || state?.search || state?.article)) {
@@ -68,13 +72,21 @@ const SiteContext = (props: IContextProps) => {
         currentPage.current = page
     }
 
-    const setSiteCategories = (list: ICategory[]) => {
-        setSiteCategoryList(list)
-    }
+    useEffect(() => {
+        const fetch = async () => {
+            const list = await fetchCategories()
+            setSiteCategoryList(list)
+        }
+        fetch()
+    }, [])
 
-    const setSiteTags = (list: ITag[]) => {
-        setSiteTagList(list)
-    }
+    useEffect(() => {
+        const fetch = async () => {
+            const list = await fetchTags()
+            setSiteTagList(list)
+        }
+        fetch()
+    }, [])
 
     const value = {
         siteState,
@@ -89,9 +101,7 @@ const SiteContext = (props: IContextProps) => {
         currentPage,
         setCurrentPage,
         siteCategoryList,
-        setSiteCategories,
         siteTagList,
-        setSiteTags,
         clearAll
     }
 

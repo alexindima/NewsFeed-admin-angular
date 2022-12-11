@@ -1,22 +1,22 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useLayoutEffect, useRef, useState} from "react";
 import {IArticle} from "../../../types/IArticle";
 import Article from "../Articles/Article";
-import axios from "axios";
 import {userContext} from "../../../Context/UserContext";
 import NewsFilter from "../../../lib/NewsFilter";
 import {siteContext} from "../../../Context/SiteContext";
 import Spinner from "../../common/Spinner";
 import InfinityScroll from "../../common/InfinityScroll";
+import {apiContext} from "../../../Context/ApiContext";
 
 const Articles = () => {
     const ARTICLES_TO_LOAD = 5
-
 
     const user = useContext(userContext).user;
     const siteState = useContext(siteContext).siteState
     const currentPage = useContext(siteContext).currentPage
     const setCurrentPage = useContext(siteContext).setCurrentPage
-    const setSiteTags = useContext(siteContext).setSiteTags
+    const fetchOneArticle = useContext(apiContext).fetchOneArticle
+    const fetchPagedArticles = useContext(apiContext).fetchPagedArticles
 
     // Из-за того что нет бэкенда дальше будет жесть, всю бэковую работу будет делать фронт
     const [articles, setArticles] = useState<IArticle[]>([]);
@@ -31,25 +31,10 @@ const Articles = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const result = await axios('http://localhost:3030/tags')
-            setSiteTags(result.data)
-        };
-        fetchData();
-        // eslint-disable-next-line
-    }, [])
-
-    useEffect(() => {
-        let url = 'http://localhost:3030/articles?'
-        if (siteState?.search) {
-            url += `q=${siteState?.search.replace(/ /g, '+')}&`
-        }
-        url += `_page=${currentPage.current}&_limit=${ARTICLES_TO_LOAD}`
-
-        const fetchData = async () => {
             setLoading(true)
-            const result = await axios(url);
+            const result = await fetchPagedArticles(currentPage.current, ARTICLES_TO_LOAD, siteState?.search)
             const filteredArray = NewsFilter(
-                result.data,
+                result,
                 user?.ignoredCategories,
                 user?.ignoredTags,
                 siteState?.category,
@@ -71,7 +56,7 @@ const Articles = () => {
         // eslint-disable-next-line
     }, [needToLoad]);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
             setArticles([])
             pageIsLoading.current = false
             setNeedToLoad(true)
@@ -93,12 +78,13 @@ const Articles = () => {
     useEffect(() => {
         const fetchData = async () => {
             setLoadingSuggested(true)
-            const result = await axios(`http://localhost:3030/articles/${siteState?.article}`);
+            const article = await fetchOneArticle(siteState?.article)
             setArticleToShowIsReady(true)
-            setArticleToShow(result.data);
+            setArticleToShow(article);
             setLoadingSuggested(false)
         };
         if (siteState?.article) fetchData();
+        // eslint-disable-next-line
     }, [siteState?.article]);
 
     const LoadMoreHandle = () => {

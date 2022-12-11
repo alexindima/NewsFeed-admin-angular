@@ -1,9 +1,9 @@
 import * as React from "react";
-import {createContext, useEffect, useState} from "react";
-import axios from "axios";
+import {createContext, useContext, useEffect, useState} from "react";
 import {IUser} from "../types/IUser";
 import {IContextProps} from "../types/IContextProps"
 import {useLocalStorage} from "../hooks/useLocalStorage";
+import {apiContext} from "./ApiContext";
 
 export const userContext = createContext<any>({});
 
@@ -11,13 +11,15 @@ const UserContext = (props: IContextProps) => {
     const [user, setUser] = useState<IUser | null>(null)
     const [savedID, setSavedID] = useLocalStorage("ID", null);
 
+    const fetchAllUsers = useContext(apiContext).fetchAllUsers
+
     useEffect(() => {
         if (savedID) {
             if (savedID !== 1) { //админа сохранять нельзя для безопасности
                 const fetchData = async () => {
-                    const result = await axios('http://localhost:3030/users')
+                    const allUsers = await fetchAllUsers()
                     let userIsExist = false
-                    result.data.every((user: IUser) => {
+                    allUsers.every((user: IUser) => {
                         if (user.id === savedID) {
                             userIsExist = true
                             setUser(user)

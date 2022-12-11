@@ -1,5 +1,4 @@
 import React, {useContext, useRef, useState} from "react";
-import axios from "axios";
 import {userContext} from "../../Context/UserContext";
 import {validUserName} from "../../Regex/Regex"
 import {modalContext} from "../../Context/ModalContext";
@@ -7,13 +6,15 @@ import StyliZedInput from "../common/StylizedInput";
 import InputError from "../common/InputError";
 import StylizedSubmitButton from "../common/StylizedSubmitButton";
 import ModalTitle from "../common/ModalTitle";
+import {apiContext} from "../../Context/ApiContext";
 
 const SettingsName = () => {
     const NAME_ERROR = "The user name must contain at least 3 letters, numbers and underscores"
 
-    const user = useContext(userContext).user;
-    const logIn = useContext(userContext).logIn;
-    const hideModal = useContext(modalContext).hideModal;
+    const user = useContext(userContext).user
+    const logIn = useContext(userContext).logIn
+    const hideModal = useContext(modalContext).hideModal
+    const changeUser = useContext(apiContext).changeUser
 
     const [nameInputValue, setNameInputValue] = useState(user.name)
     const [errorMessage, setErrorMessage] = useState('')
@@ -29,9 +30,8 @@ const SettingsName = () => {
         } else {
             const fetchData = async () => {
                 setLoading(true)
-                const result = await axios(`http://localhost:3030/users/${user.id}`)
-                const changedUser = {...result.data, name: nameInputValue}
-                await axios.put(`http://localhost:3030/users/${user.id}`, changedUser)
+                const changedUser = {...user, name: nameInputValue}
+                await changeUser(user.id, changedUser)
                 logIn(changedUser)
                 hideModal()
                 setLoading(false)

@@ -1,5 +1,4 @@
 import React, {useContext, useState} from "react";
-import axios from "axios";
 import {userContext} from "../../Context/UserContext";
 import {modalContext} from "../../Context/ModalContext";
 import {siteContext} from "../../Context/SiteContext";
@@ -9,16 +8,18 @@ import StylizedTextarea from "../common/StylizedTextarea";
 import StylizedSubmitButton from "../common/StylizedSubmitButton";
 import ModalTitle from "../common/ModalTitle";
 import StylizedLinkButton from "../common/StylizedLinkButton";
+import {apiContext} from "../../Context/ApiContext";
 
 const SettingsMain = () => {
     const user = useContext(userContext).user;
     const siteCategoryList = useContext(siteContext).siteCategoryList;
     const siteTagList = useContext(siteContext).siteTagList;
-
     const logIn = useContext(userContext).logIn;
     const hideModal = useContext(modalContext).hideModal;
     const openSettingsNameModal = useContext(modalContext).openSettingsNameModal;
     const openSettingsPasswordModal = useContext(modalContext).openSettingsPasswordModal;
+    const changeUser = useContext(apiContext).changeUser
+
     const [ignoredCategories, setIgnoredCategories] = useState(user?.ignoredCategories.map((ignoredCategory: number) =>
         siteCategoryList?.find((category: ICategory) => category.id === ignoredCategory).name))
     const [ignoredTags, setIgnoredTags] = useState(user?.ignoredTags.map((ignoredTag: number) =>
@@ -51,9 +52,8 @@ const SettingsMain = () => {
                 })
                 return tagIsValid
             })
-            const result = await axios(`http://localhost:3030/users/${user.id}`)
             const changedUser = {
-                ...result.data,
+                ...user,
                 ignoredCategories: categoriesNameList.map((ignoredCategory: string) =>
                     siteCategoryList?.find((category: ICategory) =>
                         category.name.toLowerCase().trim() === ignoredCategory.toLowerCase().trim()).id),
@@ -61,7 +61,7 @@ const SettingsMain = () => {
                     siteTagList?.find((tag: ITag) =>
                         tag.name.toLowerCase().trim() === ignoredTag.toLowerCase().trim()).id)
             }
-            await axios.put(`http://localhost:3030/users/${user.id}`, changedUser)
+            await changeUser(user.id, changedUser)
             logIn(changedUser)
             hideModal()
             setLoading(false)

@@ -1,5 +1,4 @@
 import React, {useContext, useRef, useState} from "react";
-import axios from "axios";
 import {calculateHash} from "../../encrypt/Hash"
 import {validPassword} from "../../Regex/Regex"
 import {userContext} from "../../Context/UserContext";
@@ -7,6 +6,7 @@ import {modalContext} from "../../Context/ModalContext";
 import StyliZedInput from "./StylizedInput";
 import StylizedSubmitButton from "./StylizedSubmitButton";
 import InputError from "./InputError";
+import {apiContext} from "../../Context/ApiContext";
 
 interface IChangePasswordProps {
     userID: number
@@ -22,6 +22,8 @@ const ChangePassword = (props: IChangePasswordProps) => {
 
     const logIn = useContext(userContext).logIn;
     const hideModal = useContext(modalContext).hideModal;
+    const fetchUser = useContext(apiContext).fetchUser
+    const changeUser = useContext(apiContext).changeUser
 
     const [passwordInputValue, setPasswordInputValue] = useState('')
     const [password2InputValue, setPassword2InputValue] = useState('')
@@ -43,9 +45,9 @@ const ChangePassword = (props: IChangePasswordProps) => {
         } else {
             const fetchData = async () => {
                 setLoading(true)
-                const result = await axios(`http://localhost:3030/users/${recoveredUser}`)
-                const user = {...result.data, password: await calculateHash(passwordInputValue)}
-                await axios.put(`http://localhost:3030/users/${recoveredUser}`, user)
+                const user = await fetchUser(recoveredUser)
+                const changedUser = {...user, password: await calculateHash(passwordInputValue)}
+                await changeUser(recoveredUser, changedUser)
                 setLoading(false)
                 logIn(user)
                 hideModal()

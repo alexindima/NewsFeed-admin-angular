@@ -1,6 +1,5 @@
 import React, {useContext, useRef, useState} from "react";
 import styles from "./Login.module.scss"
-import axios from "axios";
 import {calculateHash} from "../../encrypt/Hash"
 import {userContext} from "../../Context/UserContext";
 import {IUser} from "../../types/IUser";
@@ -10,6 +9,7 @@ import InputError from "../common/InputError";
 import StylizedSubmitButton from "../common/StylizedSubmitButton";
 import ModalTitle from "../common/ModalTitle";
 import StylizedLinkButton from "../common/StylizedLinkButton";
+import {apiContext} from "../../Context/ApiContext";
 
 const Login = () => {
     const EMAIL_ERROR = "There is no user with this email"
@@ -19,6 +19,7 @@ const Login = () => {
     const openSignupModal = useContext(modalContext).openSignupModal;
     const openRecoveryModal = useContext(modalContext).openRecoveryModal;
     const hideModal = useContext(modalContext).hideModal;
+    const fetchAllUsers = useContext(apiContext).fetchAllUsers;
 
     const [emailInputValue, setEmailInputValue] = useState('')
     const [passwordInputValue, setPasswordInputValue] = useState('')
@@ -32,15 +33,10 @@ const Login = () => {
         event.preventDefault();
         const fetchData = async () => {
             setLoading(true)
-            const result = await axios(
-                'http://localhost:3030/users',
-            );
-
-            /*  Это должен делать бэк
-             */
+            const allUsers = await fetchAllUsers()
             let emailIsExist = false
             const passwordHash = await calculateHash(passwordInputValue)
-            result.data.every((user: IUser) => {
+            allUsers.every((user: IUser) => {
                 if (user.email === emailInputValue.trim().toLowerCase()) {
                     emailIsExist = true
                     if (user.password === passwordHash) {//need convert to hash
@@ -63,9 +59,9 @@ const Login = () => {
                 setPasswordInputValue("")
                 emailInputDOM.current!.focus();
             }
-        };
-        fetchData();
-    };
+        }
+        fetchData()
+    }
 
     return (
         <>
