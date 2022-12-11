@@ -86,7 +86,6 @@ const Articles = () => {
         ]
     );
 
-
     useEffect(() => {
         setArticleToShowIsReady(false)
     }, [siteState?.article]);
@@ -101,26 +100,6 @@ const Articles = () => {
         };
         if (siteState?.article) fetchData();
     }, [siteState?.article]);
-
-    /*useEffect(() => {
-        const ScrollHandle = () => {
-            if (loadMoreDOM.current) {
-
-                if (loadMoreDOM.current.getBoundingClientRect().bottom < LOAD_ON_POSITION) {
-                    if (!wasLoading.current) {
-                        LoadMoreHandle()
-                    }
-                } else {
-                    wasLoading.current = false
-                }
-            }
-        }
-        window.addEventListener('scroll', ScrollHandle)
-        return () => {
-            window.removeEventListener('scroll', ScrollHandle)
-        }
-    }, []);*/
-
 
     const LoadMoreHandle = () => {
         setNeedToLoad(true)

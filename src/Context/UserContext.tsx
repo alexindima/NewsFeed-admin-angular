@@ -2,46 +2,44 @@ import * as React from "react";
 import {createContext, useEffect, useState} from "react";
 import axios from "axios";
 import {IUser} from "../types/IUser";
-import {IContextProps} from "../types/IContextProps";
+import {IContextProps} from "../types/IContextProps"
+import {useLocalStorage} from "../hooks/useLocalStorage";
 
 export const userContext = createContext<any>({});
 
 const UserContext = (props: IContextProps) => {
     const [user, setUser] = useState<IUser | null>(null)
+    const [savedID, setSavedID] = useLocalStorage("ID", null);
 
     useEffect(() => {
-        const data = localStorage.getItem("userID")
-        if (data) {
-            const savedUser = JSON.parse(data);
-            if (savedUser !== 1) { //админа сохранять нельзя для безопасности
+        if (savedID) {
+            if (savedID !== 1) { //админа сохранять нельзя для безопасности
                 const fetchData = async () => {
-                    const result = await axios(
-                        'http://localhost:3030/users',
-                    );
-
-                    /*  Это должен делать бэк
-                     */
+                    const result = await axios('http://localhost:3030/users')
+                    let userIsExist = false
                     result.data.every((user: IUser) => {
-                        if (user.id === savedUser) {
+                        if (user.id === savedID) {
+                            userIsExist = true
                             setUser(user)
                             return false
                         }
                         return true
                     })
-                };
-                fetchData();
+                    if (!userIsExist) setSavedID(null)
+                }
+                fetchData()
             }
         }
-    }, [])
+    }, [savedID])
 
     const logIn = (loggedUser: IUser) => {
         setUser(loggedUser)
-        localStorage.setItem("userID", JSON.stringify(loggedUser.id))
+        setSavedID(loggedUser.id)
     }
 
     const logOut = () => {
         setUser(null)
-        localStorage.removeItem("userID")
+        setSavedID(null)
     }
 
     const value = {
