@@ -6,11 +6,11 @@ import {userContext} from "../../../Context/UserContext";
 import NewsFilter from "../../../lib/NewsFilter";
 import {siteContext} from "../../../Context/SiteContext";
 import Spinner from "../../common/Spinner";
-import NoResult from "../../common/NoResult";
+import InfinityScroll from "../../common/InfinityScroll";
 
 const Articles = () => {
     const ARTICLES_TO_LOAD = 5
-    const LOAD_ON_POSITION = 2000
+
 
     const user = useContext(userContext).user;
     const siteState = useContext(siteContext).siteState
@@ -27,9 +27,7 @@ const Articles = () => {
     const [loadingSuggested, setLoadingSuggested] = useState(true);
 
     let pageIsLoading = useRef(false)
-    let wasLoading = useRef(false)
     let dataIsMissing = useRef(false)
-    let loadMoreDOM = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -104,7 +102,7 @@ const Articles = () => {
         if (siteState?.article) fetchData();
     }, [siteState?.article]);
 
-    useEffect(() => {
+    /*useEffect(() => {
         const ScrollHandle = () => {
             if (loadMoreDOM.current) {
 
@@ -121,7 +119,7 @@ const Articles = () => {
         return () => {
             window.removeEventListener('scroll', ScrollHandle)
         }
-    }, []);
+    }, []);*/
 
 
     const LoadMoreHandle = () => {
@@ -138,13 +136,12 @@ const Articles = () => {
             }
 
             {!!siteState?.article ||
-                <>
+                <InfinityScroll
+                    action={LoadMoreHandle}
+                    loading={loading}
+                    noResults={dataIsMissing.current && !loading}>
                     {articles.map((article: IArticle) => <Article key={article.id} article={article}/>)}
-                    <div ref={loadMoreDOM} onClick={LoadMoreHandle}>
-                        {loading && <Spinner color={"#000000"} size={20}/>}
-                        {dataIsMissing.current && !loading && <NoResult/>}
-                    </div>
-                </>}
+                </InfinityScroll>}
 
         </>
     )
