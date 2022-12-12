@@ -26,8 +26,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "concurrently \"json-server --watch ./src/data/db.json --port 3030 --delay 1000\" \"react-scripts start\"",
-    "start-without-server": "react-scripts start",
+    "start": "react-scripts start",
+    "server-start": "json-server --watch ./src/data/db.json --port 3030 --delay 1000",
+    "start-with-server": "concurrently \"json-server --watch ./src/data/db.json --port 3030 --delay 1000\" \"react-scripts start\"",
     "build": "webpack --mode=production --define-process-env-node-env=production",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

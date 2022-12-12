@@ -7,19 +7,24 @@ import {IUser} from "../types/IUser";
 export const apiContext = createContext<any>({});
 
 const ApiContext = (props: IContextProps) => {
+    const ARTICLES_URL = 'http://localhost:3030/articles'
+    const SUGGESTED_URL = 'http://localhost:3030/suggestedNews'
+    const CATEGORIES_URL = 'http://localhost:3030/categories'
+    const TAGS_URL = 'http://localhost:3030/tags'
+    const USERS_URL = 'http://localhost:3030/users'
 
     const fetchSuggestedNews = async () => {
-        const result = await axios.get('http://localhost:3030/suggestedNews')
+        const result = await axios.get(SUGGESTED_URL)
         return result.data
     }
 
     const fetchAllArticles = async () => {
-        const result = await axios.get('http://localhost:3030/articles')
+        const result = await axios.get(ARTICLES_URL)
         return result.data
     }
 
     const fetchPagedArticles = async (page: number, limit: number, search: string | null = null) => {
-        let url = 'http://localhost:3030/articles?'
+        let url = `${ARTICLES_URL}?`
         if (search) {
             url += `q=${search.replace(/ /g, '+')}&`
         }
@@ -29,35 +34,35 @@ const ApiContext = (props: IContextProps) => {
     }
 
     const fetchOneArticle = async (id: number) => {
-        const result = await axios.get(`http://localhost:3030/articles/${id}`)
+        const result = await axios.get(`${ARTICLES_URL}/${id}`)
         return result.data
     }
 
     const fetchCategories = async () => {
-        const result = await axios.get('http://localhost:3030/categories')
+        const result = await axios.get(CATEGORIES_URL)
         return result.data
     }
 
     const fetchTags = async () => {
-        const result = await axios.get('http://localhost:3030/tags')
+        const result = await axios.get(TAGS_URL)
         return result.data
     }
 
     const fetchAllUsers = async () => {
-        const result = await axios.get('http://localhost:3030/users')
+        const result = await axios.get(USERS_URL)
         return result.data
     }
 
     const fetchUser = async (id: number) => {
-        await axios.get(`http://localhost:3030/users/${id}`)
+        await axios.get(`${USERS_URL}/${id}`)
     }
 
     const createUser = async (user: IUser) => {
-        await axios.post(`http://localhost:3030/users`, user)
+        await axios.post(USERS_URL, user)
     }
 
     const changeUser = async (id: number, user: IUser) => {
-        await axios.put(`http://localhost:3030/users/${id}`, user)
+        await axios.put(`${USERS_URL}/${id}`, user)
     }
 
     const value = {

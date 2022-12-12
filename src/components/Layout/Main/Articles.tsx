@@ -59,7 +59,7 @@ const Articles = () => {
 
     useLayoutEffect(() => {
             if (loadingIsAllowed) {
-                setArticles([])
+                setArticles([]) // понять почему не работает
                 pageIsLoading.current = false
                 setNeedToLoad(true)
                 currentPage.current = 1
