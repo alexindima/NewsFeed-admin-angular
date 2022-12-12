@@ -11,6 +11,7 @@ import {apiContext} from "../../../Context/ApiContext";
 const Articles = () => {
     const ARTICLES_TO_LOAD = 5
 
+    const loadingIsAllowed = useContext(userContext).loadingIsAllowed
     const user = useContext(userContext).user;
     const siteState = useContext(siteContext).siteState
     const currentPage = useContext(siteContext).currentPage
@@ -22,7 +23,7 @@ const Articles = () => {
     const [articles, setArticles] = useState<IArticle[]>([]);
     const [articleToShow, setArticleToShow] = useState<IArticle>(Object)
     const [articleToShowIsReady, setArticleToShowIsReady] = useState(false)
-    const [needToLoad, setNeedToLoad] = useState(true)
+    const [needToLoad, setNeedToLoad] = useState(false)
     const [loading, setLoading] = useState(true);
     const [loadingSuggested, setLoadingSuggested] = useState(true);
 
@@ -48,7 +49,7 @@ const Articles = () => {
             setCurrentPage(currentPage.current + 1)
             setLoading(false)
         };
-        if (!pageIsLoading.current && needToLoad) {
+        if (loadingIsAllowed && !pageIsLoading.current && needToLoad) {
             pageIsLoading.current = true
             fetchData();
             pageIsLoading.current = false
@@ -57,11 +58,14 @@ const Articles = () => {
     }, [needToLoad]);
 
     useLayoutEffect(() => {
-            setArticles([])
-            pageIsLoading.current = false
-            setNeedToLoad(true)
-            currentPage.current = 1
+            if (loadingIsAllowed) {
+                setArticles([])
+                pageIsLoading.current = false
+                setNeedToLoad(true)
+                currentPage.current = 1
+            }
         }, [
+            loadingIsAllowed,
             currentPage,
             siteState?.category,
             siteState?.tag,

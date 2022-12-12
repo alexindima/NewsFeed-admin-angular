@@ -10,6 +10,7 @@ import {apiContext} from "../../Context/ApiContext";
 
 
 const Suggested = () => {
+    const loadingIsAllowed = useContext(userContext).loadingIsAllowed
     const user = useContext(userContext).user;
     const fetchSuggestedNews = useContext(apiContext).fetchSuggestedNews
     const fetchAllArticles = useContext(apiContext).fetchAllArticles
@@ -37,9 +38,9 @@ const Suggested = () => {
             setArticles(filteredArticles)
             setLoading(false)
         }
-        fetch()
+        if (loadingIsAllowed) fetch()
         // eslint-disable-next-line
-    }, [user?.ignoredCategories, user?.ignoredTags]);
+    }, [user?.ignoredCategories, user?.ignoredTags, loadingIsAllowed]);
 
     useEffect(() => {
         const newsArray = articles.filter((article) => {

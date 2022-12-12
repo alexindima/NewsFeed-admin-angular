@@ -8,6 +8,7 @@ import {apiContext} from "./ApiContext";
 export const userContext = createContext<any>({});
 
 const UserContext = (props: IContextProps) => {
+    const [loadingIsAllowed, setLoadingIsAllowed] = useState(false)
     const [user, setUser] = useState<IUser | null>(null)
     const [savedID, setSavedID] = useLocalStorage("ID", null);
 
@@ -23,6 +24,7 @@ const UserContext = (props: IContextProps) => {
                         if (user.id === savedID) {
                             userIsExist = true
                             setUser(user)
+                            setLoadingIsAllowed(true)
                             return false
                         }
                         return true
@@ -31,8 +33,11 @@ const UserContext = (props: IContextProps) => {
                 }
                 fetchData()
             }
+        } else {
+            setLoadingIsAllowed(true)
         }
-    }, [savedID])
+        // eslint-disable-next-line
+    }, [])
 
     const logIn = (loggedUser: IUser) => {
         setUser(loggedUser)
@@ -45,6 +50,7 @@ const UserContext = (props: IContextProps) => {
     }
 
     const value = {
+        loadingIsAllowed,
         user,
         logIn,
         logOut,
