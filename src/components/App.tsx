@@ -1,4 +1,5 @@
 import * as React from "react";
+import {BrowserRouter as Router} from 'react-router-dom';
 import Header from "./Header/Header";
 import Layout from "./Layout/Layout";
 import Modal from "./Modal/Modal";
@@ -13,11 +14,13 @@ const App = () => {
             <UserContext>
                 <ModalContext>
                     <SiteContext>
-                        <div className="body-general">
-                            <Header/>
-                            <Layout/>
-                            <Modal/>
-                        </div>
+                        <Router>
+                            <div className="body-general">
+                                <Header/>
+                                <Layout/>
+                                <Modal/>
+                            </div>
+                        </Router>
                     </SiteContext>
                 </ModalContext>
             </UserContext>

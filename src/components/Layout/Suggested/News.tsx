@@ -1,15 +1,19 @@
-import React, {useContext} from "react";
+import React from "react";
 import {ISuggestedNews} from "../../../types/ISuggestedNews";
-import {siteContext} from "../../../Context/SiteContext";
 import styles from './News.module.scss'
+import {useNavigate} from 'react-router-dom';
 
 const News = ({news}: { news: ISuggestedNews }) => {
+    const navigate = useNavigate()
+
     const createdDate = new Date(news.createdDate)
 
-    const chooseArticleToShow = useContext(siteContext).chooseArticleToShow;
+    const clickHandle = () => {
+        navigate(`/article/${news.id}`)
+    }
 
     return (
-        <div onClick={() => chooseArticleToShow(news.id)} className={styles.suggestedNews}>
+        <div onClick={clickHandle} className={styles.suggestedNews}>
             <div className={styles.suggestedNews__time}>
                 <div>{createdDate.toLocaleDateString()}</div>
                 <div>{createdDate.toLocaleTimeString()}</div>

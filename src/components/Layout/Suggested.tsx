@@ -7,28 +7,23 @@ import {IArticle} from "../../types/IArticle";
 import Spinner from "../common/Spinner";
 import NoResult from "../common/NoResult";
 import {apiContext} from "../../Context/ApiContext";
-
+import {siteContext} from "../../Context/SiteContext";
 
 const Suggested = () => {
     const loadingIsAllowed = useContext(userContext).loadingIsAllowed
     const user = useContext(userContext).user;
-    const fetchSuggestedNews = useContext(apiContext).fetchSuggestedNews
     const fetchAllArticles = useContext(apiContext).fetchAllArticles
+    const suggestedNews = useContext(siteContext).suggestedNews
 
-    const [newsID, setNewsID] = useState([])
     const [articles, setArticles] = useState<IArticle[]>([]);
     const [news, setNews] = useState<IArticle[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetch = async () => {
-            setLoading(true)
-            const suggestedNews = await fetchSuggestedNews()
-            setNewsID(suggestedNews)
+        if (suggestedNews) {
+            setLoading(false)
         }
-        fetch()
-        // eslint-disable-next-line
-    }, [])
+    }, [suggestedNews])
 
     useEffect(() => {
         const fetch = async () => {
@@ -45,7 +40,7 @@ const Suggested = () => {
     useEffect(() => {
         const newsArray = articles.filter((article) => {
             let articleIsSuggested = false
-            newsID.every((ID) => {
+            suggestedNews?.every((ID: number) => {
                 if (article.id === ID) {
                     articleIsSuggested = true
                     return false
@@ -55,7 +50,7 @@ const Suggested = () => {
             return articleIsSuggested
         })
         setNews(newsArray)
-    }, [newsID, articles]);
+    }, [suggestedNews, articles]);
 
     return (
         <div className="layout__suggested">

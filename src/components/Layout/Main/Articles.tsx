@@ -4,9 +4,10 @@ import Article from "../Articles/Article";
 import {userContext} from "../../../Context/UserContext";
 import NewsFilter from "../../../lib/NewsFilter";
 import {siteContext} from "../../../Context/SiteContext";
-import Spinner from "../../common/Spinner";
 import InfinityScroll from "../../common/InfinityScroll";
 import {apiContext} from "../../../Context/ApiContext";
+import {Route, Routes} from "react-router-dom";
+import SuggestedArticle from "../Articles/SuggestedArticle";
 
 const Articles = () => {
     const ARTICLES_TO_LOAD = 5
@@ -16,16 +17,12 @@ const Articles = () => {
     const siteState = useContext(siteContext).siteState
     const currentPage = useContext(siteContext).currentPage
     const setCurrentPage = useContext(siteContext).setCurrentPage
-    const fetchOneArticle = useContext(apiContext).fetchOneArticle
     const fetchPagedArticles = useContext(apiContext).fetchPagedArticles
 
-    // Из-за того что нет бэкенда дальше будет жесть, всю бэковую работу будет делать фронт
-    const [articles, setArticles] = useState<IArticle[]>([]);
-    const [articleToShow, setArticleToShow] = useState<IArticle>(Object)
-    const [articleToShowIsReady, setArticleToShowIsReady] = useState(false)
+    const [allArticles, setAllArticles] = useState<IArticle[]>([])
+    const [articles, setArticles] = useState<IArticle[]>([])
     const [needToLoad, setNeedToLoad] = useState(false)
-    const [loading, setLoading] = useState(true);
-    const [loadingSuggested, setLoadingSuggested] = useState(true);
+    const [loading, setLoading] = useState(true)
 
     let pageIsLoading = useRef(false)
     let dataIsMissing = useRef(false)
@@ -75,43 +72,23 @@ const Articles = () => {
         ]
     );
 
-    useEffect(() => {
-        setArticleToShowIsReady(false)
-    }, [siteState?.article]);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoadingSuggested(true)
-            const article = await fetchOneArticle(siteState?.article)
-            setArticleToShowIsReady(true)
-            setArticleToShow(article);
-            setLoadingSuggested(false)
-        };
-        if (siteState?.article) fetchData();
-        // eslint-disable-next-line
-    }, [siteState?.article]);
-
     const LoadMoreHandle = () => {
         setNeedToLoad(true)
     }
 
     return (
         <>
-            {!!siteState?.article &&
-                <>
-                    {loadingSuggested && <Spinner color={"#000000"} size={20}/>}
-                    {articleToShowIsReady && <Article article={articleToShow}/>}
-                </>
-            }
-
-            {!!siteState?.article ||
-                <InfinityScroll
-                    action={LoadMoreHandle}
-                    loading={loading}
-                    noResults={dataIsMissing.current && !loading}>
-                    {articles.map((article: IArticle) => <Article key={article.id} article={article}/>)}
-                </InfinityScroll>}
-
+            <Routes>
+                <Route path="/" element={
+                    <InfinityScroll
+                        action={LoadMoreHandle}
+                        loading={loading}
+                        noResults={dataIsMissing.current && !loading}>
+                        {articles.map((article: IArticle) => <Article key={article.id} article={article}/>)}
+                    </InfinityScroll>
+                }/>
+                <Route path={"/article/:id"} element={<SuggestedArticle/>}/>
+            </Routes>
         </>
     )
 }

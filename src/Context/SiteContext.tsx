@@ -13,10 +13,13 @@ const SiteContext = (props: IContextProps) => {
 
     const [siteCategoryList, setSiteCategoryList] = useState<ICategory[] | null>(null) //нужно теперь хранить для Back элемента
     const [siteTagList, setSiteTagList] = useState<ITag[] | null>(null) //то же самое
+    const [suggestedNews, setSuggestedNews] = useState<number[] | null>(null)
+
     const currentPage = useRef(1)
 
     const fetchCategories = useContext(apiContext).fetchCategories
     const fetchTags = useContext(apiContext).fetchTags
+    const fetchSuggestedNews = useContext(apiContext).fetchSuggestedNews
 
     const setStateWithCheck = (state: ISiteState) => {
         if (!(state?.category || state?.tag || state?.search || state?.article)) {
@@ -54,15 +57,6 @@ const SiteContext = (props: IContextProps) => {
         currentPage.current = 1
     }
 
-    const chooseArticleToShow = (id: number) => {
-        setSiteState({article: id} as ISiteState)
-    }
-
-    const clearArticleToShow = () => {
-        setStateWithCheck({...siteState, article: null} as ISiteState)
-        currentPage.current = 1
-    }
-
     const clearAll = () => {
         setSiteState(null)
         currentPage.current = 1
@@ -78,6 +72,7 @@ const SiteContext = (props: IContextProps) => {
             setSiteCategoryList(list)
         }
         fetch()
+        // eslint-disable-next-line
     }, [])
 
     useEffect(() => {
@@ -86,18 +81,27 @@ const SiteContext = (props: IContextProps) => {
             setSiteTagList(list)
         }
         fetch()
+        // eslint-disable-next-line
+    }, [])
+
+    useEffect(() => {
+        const fetch = async () => {
+            const news = await fetchSuggestedNews()
+            setSuggestedNews(news)
+        }
+        fetch()
+        // eslint-disable-next-line
     }, [])
 
     const value = {
         siteState,
+        suggestedNews,
         chooseCategory,
         clearCategory,
         chooseTag,
         clearTag,
         chooseSearchPhrase,
         clearSearchPhrase,
-        chooseArticleToShow,
-        clearArticleToShow,
         currentPage,
         setCurrentPage,
         siteCategoryList,
