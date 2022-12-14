@@ -17,3 +17,11 @@
   }
 }
 
+.suggestedNews {
+  display: block;
+  text-decoration: none;
+}
+
+.suggestedNews + .suggestedNews {
+  border-top: 1px solid var(--border-color);
+}

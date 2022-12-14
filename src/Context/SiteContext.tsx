@@ -5,10 +5,14 @@ import {ISiteState} from "../types/ISiteState";
 import {ICategory} from "../types/ICategory";
 import {ITag} from "../types/ITag";
 import {apiContext} from "./ApiContext";
+import {useLocation, useNavigate} from "react-router-dom";
 
 export const siteContext = createContext<any>({});
 
 const SiteContext = (props: IContextProps) => {
+    const navigate = useNavigate()
+    const location = useLocation()
+
     const [siteState, setSiteState] = useState<ISiteState | null>(null)
 
     const [siteCategoryList, setSiteCategoryList] = useState<ICategory[] | null>(null) //нужно теперь хранить для Back элемента
@@ -22,7 +26,7 @@ const SiteContext = (props: IContextProps) => {
     const fetchSuggestedNews = useContext(apiContext).fetchSuggestedNews
 
     const setStateWithCheck = (state: ISiteState) => {
-        if (!(state?.category || state?.tag || state?.search || state?.article)) {
+        if (!(state?.category || state?.tag || state?.search)) {
             setSiteState(null)
         } else {
             setSiteState(state)
@@ -30,7 +34,7 @@ const SiteContext = (props: IContextProps) => {
     }
 
     const chooseCategory = (category: number) => {
-        setSiteState({...siteState, category: category, article: null} as ISiteState)
+        setSiteState({...siteState, category: category} as ISiteState)
     }
 
     const clearCategory = () => {
@@ -39,7 +43,7 @@ const SiteContext = (props: IContextProps) => {
     }
 
     const chooseTag = (tag: number) => {
-        setSiteState({...siteState, tag: tag, article: null} as ISiteState)
+        setSiteState({...siteState, tag: tag} as ISiteState)
     }
 
     const clearTag = () => {
@@ -48,7 +52,7 @@ const SiteContext = (props: IContextProps) => {
     }
 
     const chooseSearchPhrase = (search: string) => {
-        setSiteState({...siteState, search: search, article: null} as ISiteState)
+        setSiteState({...siteState, search: search} as ISiteState)
         currentPage.current = 1
     }
 
@@ -93,8 +97,35 @@ const SiteContext = (props: IContextProps) => {
         // eslint-disable-next-line
     }, [])
 
+    useEffect(() => {
+        if (siteState) {
+            let query = ""
+            if (siteState?.category) {
+                query += "category=" + siteState.category
+            }
+            if (siteState?.tag) {
+                if (query) query += '&'
+                query += "tag=" + siteState.tag
+            }
+            if (siteState?.search) {
+                if (query) query += '&'
+                query += "search=" + siteState.search
+            }
+            navigate(`/?${query}`)
+        } else {
+            const clearQueryParams = () => {
+                const currentUrl = location.pathname
+                const newUrl = currentUrl.split('?')[0]
+                navigate(newUrl, {replace: true})
+            }
+            clearQueryParams()
+        }
+        // eslint-disable-next-line
+    }, [siteState])
+
     const value = {
         siteState,
+        setSiteState,
         suggestedNews,
         chooseCategory,
         clearCategory,

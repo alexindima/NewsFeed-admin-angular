@@ -8,6 +8,7 @@ import Spinner from "../common/Spinner";
 import NoResult from "../common/NoResult";
 import {apiContext} from "../../Context/ApiContext";
 import {siteContext} from "../../Context/SiteContext";
+import {Link} from "react-router-dom";
 
 const Suggested = () => {
     const loadingIsAllowed = useContext(userContext).loadingIsAllowed
@@ -57,7 +58,10 @@ const Suggested = () => {
             <div className={styles.suggestedContainer}>
                 {loading && <Spinner color={"#000000"} size={20}/>}
                 {!!news.length || loading || <NoResult/>}
-                {news.map(news => <News key={news.id} news={news}/>)}
+                {news.map(news =>
+                    <Link key={news.id} className={styles.suggestedNews} to={`/articles/${news.id}`}>
+                        <News news={news}/>
+                    </Link>)}
             </div>
         </div>
     )

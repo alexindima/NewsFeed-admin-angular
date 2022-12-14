@@ -1,12 +1,11 @@
 .suggestedNews {
   display: flex;
   flex-direction: row;
-  cursor: pointer;
   width: 100%;
   padding: 20px 0;
   color: var(--primary-text-color);
   overflow-wrap: anywhere;
-  text-decoration: none;
+
   &__time {
     flex: none;
     width: 60px;
@@ -18,16 +17,13 @@
     letter-spacing: -.02em;
     text-align: left;
   }
+
   &__title {
     font-weight: 700;
     font-size: 19px;
-    font-family: Inter,sans-serif;
+    font-family: Inter, sans-serif;
     line-height: 24px;
     letter-spacing: -.02em;
     flex: 3;
   }
-}
-
-.suggestedNews + .suggestedNews {
-  border-top: 1px solid var(--border-color);
 }

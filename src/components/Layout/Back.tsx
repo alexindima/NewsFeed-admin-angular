@@ -15,7 +15,6 @@ const Back = () => {
     const clearCategory = useContext(siteContext).clearCategory;
     const clearTag = useContext(siteContext).clearTag;
     const clearSearchPhrase = useContext(siteContext).clearSearchPhrase;
-    const clearArticleToShow = useContext(siteContext).clearArticleToShow;
 
     return (
         <div className={styles.back}>
@@ -24,7 +23,7 @@ const Back = () => {
                     <BiArrowBack title="Go back"/>
                 </div>
                 <div className={styles.back__labelContainer}>
-                    Go back
+                    Go home
                 </div>
             </div>
             <div className={styles.back__infoContainer}>
@@ -32,20 +31,19 @@ const Back = () => {
                     <div onClick={clearCategory} className={styles.back__info}>
                         Current category: {siteCategoryList?.find(
                         (category: ICategory) => category.id === siteState?.category).name} <RiCloseCircleFill/>
-                    </div>}
+                    </div>
+                }
                 {!!siteState?.tag &&
                     <div onClick={clearTag} className={styles.back__info}>
                         Current tag: {siteTagList?.find((tag: ITag) =>
                         tag.id === siteState?.tag).name} <RiCloseCircleFill/>
-                    </div>}
+                    </div>
+                }
                 {!!siteState?.search &&
                     <div onClick={clearSearchPhrase} className={styles.back__info}>
                         Current search: {siteState?.search} <RiCloseCircleFill/>
-                    </div>}
-                {!!siteState?.article &&
-                    <div onClick={clearArticleToShow} className={styles.back__info}>
-                        Selected suggested news <RiCloseCircleFill/>
-                    </div>}
+                    </div>
+                }
             </div>
         </div>
     )

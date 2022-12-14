@@ -10,7 +10,7 @@ interface IInfinityScrollProps {
 }
 
 const InfinityScroll = (props: IInfinityScrollProps) => {
-    const LOAD_ON_POSITION = 2000
+    const LOAD_ON_POSITION = 1000
 
     let wasLoading = useRef(false)
     let loadMoreDOM = useRef<HTMLDivElement>(null)

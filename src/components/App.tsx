@@ -10,21 +10,21 @@ import ApiContext from "../Context/ApiContext";
 
 const App = () => {
     return (
-        <ApiContext>
-            <UserContext>
-                <ModalContext>
-                    <SiteContext>
-                        <Router>
+        <Router>
+            <ApiContext>
+                <UserContext>
+                    <ModalContext>
+                        <SiteContext>
                             <div className="body-general">
                                 <Header/>
                                 <Layout/>
                                 <Modal/>
                             </div>
-                        </Router>
-                    </SiteContext>
-                </ModalContext>
-            </UserContext>
-        </ApiContext>
+                        </SiteContext>
+                    </ModalContext>
+                </UserContext>
+            </ApiContext>
+        </Router>
     )
 }
 

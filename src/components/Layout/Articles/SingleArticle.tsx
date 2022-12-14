@@ -4,8 +4,10 @@ import Article from "../Articles/Article";
 import Spinner from "../../common/Spinner";
 import {apiContext} from "../../../Context/ApiContext";
 import {useParams} from "react-router-dom";
+import {siteContext} from "../../../Context/SiteContext";
 
-const SuggestedArticle = () => {
+const SingleArticle = () => {
+    const clearAll = useContext(siteContext).clearAll
     const fetchOneArticle = useContext(apiContext).fetchOneArticle
 
     const {id} = useParams()
@@ -18,19 +20,25 @@ const SuggestedArticle = () => {
         const fetchData = async () => {
             setLoading(true)
             const article = await fetchOneArticle(id)
-            setArticleToShow(article);
+            setArticleToShow(article)
             setLoading(false)
-        };
-        fetchData();
-    }, [id]);
+        }
+        fetchData()
+        // eslint-disable-next-line
+    }, [])
+
+    useEffect(() => {
+        clearAll()
+        // eslint-disable-next-line
+    }, [])
 
 
     return (
         <>
             {loading && <Spinner color={"#000000"} size={20}/>}
-            {!loading && <Article article={articleToShow}/>}
+            {!loading && <Article article={articleToShow} preview={false}/>}
         </>
     )
 }
 
-export default SuggestedArticle
+export default SingleArticle
