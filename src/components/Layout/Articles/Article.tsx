@@ -4,6 +4,7 @@ import {IArticleElement} from "../../../types/IArticleElement";
 import styles from "./Article.module.scss"
 import {siteContext} from "../../../Context/SiteContext";
 import {ITag} from "../../../types/ITag";
+import {Link} from "react-router-dom";
 
 interface IArticleProps {
     article: IArticle
@@ -27,8 +28,9 @@ const Article = (props: IArticleProps) => {
                          &ensp;(updated {upgradeDate.toLocaleDateString()} {upgradeDate.toLocaleTimeString()})
                     </span>
                 </div>
-                <div className={styles.article__titleMain}>{props.article.mainTitle}
-                </div>
+                <Link className={styles.article__titleMain} to={`/articles/${props.article.id}`}>
+                    {props.article.mainTitle}
+                </Link>
                 <h1 className={styles.article__titleSecond}>{props.article.secondTitle}</h1>
                 <div className={styles.article__photo}>
                     <img src={props.article.mainPhoto} alt={props.article.mainPhotoDescription}

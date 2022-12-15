@@ -1,7 +1,7 @@
 .back {
   position: fixed;
   bottom: 0;
-  height: 50px;
+  height: 40px;
   width: 100%;
   background: #f1f1f1;
   background: var(--primary-bg-color);
@@ -9,18 +9,22 @@
   display: flex;
   gap: 20px;
   align-items: center;
+
   &__container {
     cursor: pointer;
     display: flex;
     align-items: center;
     font-size: 30px;
+
     &:hover {
-      font-size: 40px;
+      font-size: 35px;
     }
   }
+
   &__labelContainer {
     width: 150px;
   }
+
   &__iconWrapper {
     display: flex;
     position: relative; /* Чтобы край попапов был под кнопкой */
@@ -29,11 +33,13 @@
     height: 45px;
     width: 45px;
   }
+
   &__infoContainer {
     display: flex;
-    gap:10px;
+    gap: 10px;
   }
-  &__info{
+
+  &__info {
     display: flex;
     align-items: center;
     gap: 5px;
@@ -44,6 +50,7 @@
     border-radius: 5px;
     background: var(--btn-bg-color);
     color: var(--btn-text-color);
+
     &:hover {
       background: var(--btn-bg-hover-color);
     }

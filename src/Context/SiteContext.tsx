@@ -1,25 +1,21 @@
 import * as React from "react";
-import {createContext, useContext, useEffect, useRef, useState} from "react";
+import {createContext, useContext, useEffect, useState} from "react";
 import {IContextProps} from "../types/IContextProps";
 import {ISiteState} from "../types/ISiteState";
 import {ICategory} from "../types/ICategory";
 import {ITag} from "../types/ITag";
 import {apiContext} from "./ApiContext";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 export const siteContext = createContext<any>({});
 
 const SiteContext = (props: IContextProps) => {
     const navigate = useNavigate()
-    const location = useLocation()
 
     const [siteState, setSiteState] = useState<ISiteState | null>(null)
-
     const [siteCategoryList, setSiteCategoryList] = useState<ICategory[] | null>(null) //нужно теперь хранить для Back элемента
     const [siteTagList, setSiteTagList] = useState<ITag[] | null>(null) //то же самое
     const [suggestedNews, setSuggestedNews] = useState<number[] | null>(null)
-
-    const currentPage = useRef(1)
 
     const fetchCategories = useContext(apiContext).fetchCategories
     const fetchTags = useContext(apiContext).fetchTags
@@ -28,46 +24,47 @@ const SiteContext = (props: IContextProps) => {
     const setStateWithCheck = (state: ISiteState) => {
         if (!(state?.category || state?.tag || state?.search)) {
             setSiteState(null)
+            goHome()
         } else {
             setSiteState(state)
         }
     }
 
     const chooseCategory = (category: number) => {
-        setSiteState({...siteState, category: category} as ISiteState)
+        setSiteState({...siteState, category: category, isSingleArticle: null} as ISiteState)
     }
 
     const clearCategory = () => {
         setStateWithCheck({...siteState, category: null} as ISiteState)
-        currentPage.current = 1
     }
 
     const chooseTag = (tag: number) => {
-        setSiteState({...siteState, tag: tag} as ISiteState)
+        setSiteState({...siteState, tag: tag, isSingleArticle: null} as ISiteState)
     }
 
     const clearTag = () => {
         setStateWithCheck({...siteState, tag: null} as ISiteState)
-        currentPage.current = 1
     }
 
     const chooseSearchPhrase = (search: string) => {
-        setSiteState({...siteState, search: search} as ISiteState)
-        currentPage.current = 1
+        setStateWithCheck({...siteState, search: search, isSingleArticle: null} as ISiteState)
     }
 
     const clearSearchPhrase = () => {
         setStateWithCheck({...siteState, search: null} as ISiteState)
-        currentPage.current = 1
     }
 
-    const clearAll = () => {
+    const setSingleArticle = () => {
+        setSiteState({isSingleArticle: true} as ISiteState)
+    }
+
+    const clearSingleArticle = () => {
         setSiteState(null)
-        currentPage.current = 1
     }
 
-    const setCurrentPage = (page: number) => {
-        currentPage.current = page
+    const goHome = () => {
+        setSiteState(null)
+        navigate("/")
     }
 
     useEffect(() => {
@@ -99,26 +96,21 @@ const SiteContext = (props: IContextProps) => {
 
     useEffect(() => {
         if (siteState) {
-            let query = ""
-            if (siteState?.category) {
-                query += "category=" + siteState.category
+            if (!siteState.isSingleArticle) {
+                let query = ""
+                if (siteState?.category) {
+                    query += "category=" + siteState.category
+                }
+                if (siteState?.tag) {
+                    if (query) query += '&'
+                    query += "tag=" + siteState.tag
+                }
+                if (siteState?.search) {
+                    if (query) query += '&'
+                    query += "search=" + siteState.search
+                }
+                navigate(`/?${query}`)
             }
-            if (siteState?.tag) {
-                if (query) query += '&'
-                query += "tag=" + siteState.tag
-            }
-            if (siteState?.search) {
-                if (query) query += '&'
-                query += "search=" + siteState.search
-            }
-            navigate(`/?${query}`)
-        } else {
-            const clearQueryParams = () => {
-                const currentUrl = location.pathname
-                const newUrl = currentUrl.split('?')[0]
-                navigate(newUrl, {replace: true})
-            }
-            clearQueryParams()
         }
         // eslint-disable-next-line
     }, [siteState])
@@ -133,11 +125,11 @@ const SiteContext = (props: IContextProps) => {
         clearTag,
         chooseSearchPhrase,
         clearSearchPhrase,
-        currentPage,
-        setCurrentPage,
+        setSingleArticle,
+        clearSingleArticle,
         siteCategoryList,
         siteTagList,
-        clearAll
+        goHome
     }
 
     return (

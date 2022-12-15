@@ -7,7 +7,7 @@ import {useParams} from "react-router-dom";
 import {siteContext} from "../../../Context/SiteContext";
 
 const SingleArticle = () => {
-    const clearAll = useContext(siteContext).clearAll
+    const setSingleArticle = useContext(siteContext).setSingleArticle
     const fetchOneArticle = useContext(apiContext).fetchOneArticle
 
     const {id} = useParams()
@@ -25,12 +25,12 @@ const SingleArticle = () => {
         }
         fetchData()
         // eslint-disable-next-line
-    }, [])
+    }, [id])
 
     useEffect(() => {
-        clearAll()
+        setSingleArticle()
         // eslint-disable-next-line
-    }, [])
+    }, [id])
 
 
     return (

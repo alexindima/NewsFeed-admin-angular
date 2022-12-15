@@ -4,8 +4,9 @@ import {MdManageSearch} from 'react-icons/md';
 import "./Search.scss"
 import classNames from "classnames";
 import {siteContext} from "../../Context/SiteContext";
+import {IPopupProps} from "../../types/IPopupProps";
 
-const Search = () => {
+const Search = (props: IPopupProps) => {
     const siteState = useContext(siteContext).siteState
     const chooseSearchPhrase = useContext(siteContext).chooseSearchPhrase
 
@@ -16,11 +17,9 @@ const Search = () => {
     const searchWindowDOM = useRef(null)
 
     useEffect(() => {
-        if (!searchIsClosed) {
-            searchInputDOM.current!.focus();
-        }
-
-    }, [searchIsClosed])
+        if (!searchIsClosed) setSearchIsClosed(true)
+        // eslint-disable-next-line
+    }, [props.wasClick])
 
     const showOrHideSearch = (event: React.MouseEvent<HTMLDivElement>) => {
         if ((event.target !== searchWindowDOM.current) && (event.target !== searchInputDOM.current)) {
@@ -29,7 +28,7 @@ const Search = () => {
     }
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+        event.preventDefault()
         chooseSearchPhrase(searchInputValue)
         setSearchIsClosed(true)
         setSearchInputValue("")

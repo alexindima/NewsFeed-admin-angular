@@ -24,9 +24,13 @@
   }
 
   &__titleMain {
+    cursor: pointer;
+    text-decoration: none;
     font-size: 36px;
     line-height: 45px;
     font-weight: 700;
+    color: var(--primary-text-color);
+    // pikabu doesn't have color change on hover, so me to
   }
 
   &__titleSecond {

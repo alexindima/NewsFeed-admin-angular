@@ -1,24 +1,29 @@
-import React, {useContext, useEffect, useState} from "react";
-import {CgMenuRound, CgPlayListCheck} from 'react-icons/cg';
+import React, {useContext, useEffect, useState} from "react"
+import {CgMenuRound, CgPlayListCheck} from 'react-icons/cg'
 import "./Categories.scss"
-import classNames from "classnames";
-import {userContext} from "../../Context/UserContext";
-import {siteContext} from "../../Context/SiteContext";
-import {ICategory} from "../../types/ICategory";
+import classNames from "classnames"
+import {userContext} from "../../Context/UserContext"
+import {siteContext} from "../../Context/SiteContext"
+import {ICategory} from "../../types/ICategory"
+import {IPopupProps} from "../../types/IPopupProps";
 
-const Categories = () => {
+const Categories = (props: IPopupProps) => {
     const [categoryList, setCategoryList] = useState<ICategory[] | null>(null)
     const [categoryIsClosed, setCategoryIsClosed] = useState(true)
 
-    const user = useContext(userContext).user;
+    const user = useContext(userContext).user
     const siteState = useContext(siteContext).siteState
     const siteCategoryList = useContext(siteContext).siteCategoryList
     const chooseCategory = useContext(siteContext).chooseCategory
 
-
     const showOrHideCategory = () => {
         setCategoryIsClosed(!categoryIsClosed)
     }
+
+    useEffect(() => {
+        if (!categoryIsClosed) setCategoryIsClosed(true)
+        // eslint-disable-next-line
+    }, [props.wasClick])
 
     useEffect(() => {
         setCategoryList(siteCategoryList?.filter((category: ICategory) => {
@@ -48,7 +53,7 @@ const Categories = () => {
                         categoryList?.map((category: ICategory) => (
                             <button onClick={() => chooseCategory(category.id)}
                                     className={
-                                        category === siteState?.category
+                                        category.id === siteState?.category
                                             ? "category-dropdown__element category-dropdown__element--active"
                                             : "category-dropdown__element"
                                     }

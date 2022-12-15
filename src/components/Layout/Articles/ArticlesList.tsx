@@ -22,16 +22,16 @@ const ArticlesList = () => {
 
     const loadingIsAllowed = useContext(userContext).loadingIsAllowed
     const user = useContext(userContext).user;
-    const currentPage = useContext(siteContext).currentPage
-    const setCurrentPage = useContext(siteContext).setCurrentPage
     const fetchPagedArticles = useContext(apiContext).fetchPagedArticles
 
     const [articles, setArticles] = useState<IArticle[]>([])
     const [needToLoad, setNeedToLoad] = useState(false)
+    const [needToReload, setNeedToReload] = useState(false)
     const [loading, setLoading] = useState(true)
 
     let pageIsLoading = useRef(false)
     let dataIsMissing = useRef(false)
+    const currentPage = useRef(1)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -47,12 +47,16 @@ const ArticlesList = () => {
             if (!dataIsMissing.current) {
                 const newArray = [...articles, ...filteredArray]
                 setArticles(newArray)
+            } else {
+                if (result.length) {
+                    setNeedToReload(true)
+                }
             }
             setNeedToLoad(false)
-            setCurrentPage(currentPage.current + 1)
+            currentPage.current = currentPage.current + 1
             setLoading(false)
         }
-        if (loadingIsAllowed && !pageIsLoading.current && needToLoad) {
+        if (loadingIsAllowed && !pageIsLoading.current && (needToLoad)) {
             pageIsLoading.current = true
             fetchData()
             pageIsLoading.current = false
@@ -61,15 +65,21 @@ const ArticlesList = () => {
     }, [needToLoad])
 
     useEffect(() => {
+        if (needToReload) {
+            setNeedToLoad(true)
+            setNeedToReload(false)
+        }
+    }, [needToReload])
+
+    useEffect(() => {
             if (loadingIsAllowed) {
-                setArticles([]) // понять почему не работает
+                setArticles([])
                 pageIsLoading.current = false
                 setNeedToLoad(true)
                 currentPage.current = 1
             }
         }, [
             loadingIsAllowed,
-            currentPage,
             currentCategory,
             currentTag,
             currentSearch,
@@ -86,6 +96,7 @@ const ArticlesList = () => {
                     search: currentSearch
                 })
             }
+            // eslint-disable-next-line
         }, []
     )
 

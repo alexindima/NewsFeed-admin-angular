@@ -1,11 +1,12 @@
-import React, {useContext, useRef, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import {BiUserCircle,} from 'react-icons/bi';
 import {BiUserCheck} from 'react-icons/bi';
 import {userContext} from "../../Context/UserContext";
 import {modalContext} from "../../Context/ModalContext";
 import classNames from "classnames";
+import {IPopupProps} from "../../types/IPopupProps";
 
-const User = () => {
+const User = (props: IPopupProps) => {
     const [userIsClosed, setUserIsClosed] = useState(true)
 
     const userDOM = useRef(null)
@@ -21,6 +22,11 @@ const User = () => {
             setUserIsClosed(!userIsClosed)
         }
     }
+
+    useEffect(() => {
+        if (!userIsClosed) setUserIsClosed(true)
+        // eslint-disable-next-line
+    }, [props.wasClick])
 
     const userWindowClass = classNames({
         "icon-wrapper__popup": true,
