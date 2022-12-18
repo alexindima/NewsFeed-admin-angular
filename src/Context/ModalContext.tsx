@@ -9,7 +9,7 @@ export const modalContext = createContext<any>({});
 * с открытием модалки из модалки, закрывая первую модалку, приходится
 * распологать модалки рядом и прокидывать пропс в родитель, сильно
 * усложняя код и его читаемость*/
-
+// Лёха говорил про модалки, много говорил, но изменений тут я не вижу толком.
 const ModalContext = (props: IContextProps) => {
     const [currentModal, setCurrentModal] = useState<string|null>(null)
 

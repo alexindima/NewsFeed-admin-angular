@@ -102,6 +102,8 @@ const SiteContext = (props: IContextProps) => {
                     query += "category=" + siteState.category
                 }
                 if (siteState?.tag) {
+                    // https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
+                    // посмотри, оно уже есть, если  ты это пытался реализовать
                     if (query) query += '&'
                     query += "tag=" + siteState.tag
                 }
@@ -112,6 +114,7 @@ const SiteContext = (props: IContextProps) => {
                 navigate(`/?${query}`)
             }
         }
+        // Плохо, не стоит отключать линтер таким образом
         // eslint-disable-next-line
     }, [siteState])
 

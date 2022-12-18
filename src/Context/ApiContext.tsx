@@ -7,12 +7,15 @@ import {IUser} from "../types/IUser";
 export const apiContext = createContext<any>({});
 
 const ApiContext = (props: IContextProps) => {
+    // А представь у тебя поменяется хост? Придется во всех 5 файлах менять.
+    // Почему нельзя вынести http://localhost:3030 в отдельную переменную?
     const ARTICLES_URL = 'http://localhost:3030/articles'
     const SUGGESTED_URL = 'http://localhost:3030/suggestedNews'
     const CATEGORIES_URL = 'http://localhost:3030/categories'
     const TAGS_URL = 'http://localhost:3030/tags'
     const USERS_URL = 'http://localhost:3030/users'
 
+    // Не уверен, что хранить все возможные запросы в одном месте норм идея, иначе всё превратится в свалку, погугли, должен быть подход лучше
     const fetchSuggestedNews = async () => {
         const result = await axios.get(SUGGESTED_URL)
         return result.data
@@ -33,6 +36,7 @@ const ApiContext = (props: IContextProps) => {
         return result.data
     }
 
+    // Не забывай про возвращаемое значение, интерфейсы и типы наше всё
     const fetchOneArticle = async (id: number) => {
         const result = await axios.get(`${ARTICLES_URL}/${id}`)
         return result.data

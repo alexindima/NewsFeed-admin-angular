@@ -5,6 +5,7 @@ import {IContextProps} from "../types/IContextProps"
 import {useLocalStorage} from "../hooks/useLocalStorage";
 import {apiContext} from "./ApiContext";
 
+// Ты же можешь без проблем указать тип контекста, any использовать не самая лучшая идея, старайся типизировать, тогда IDE будет тебе помогать и на стадии билда приложение будет падать в случае чего
 export const userContext = createContext<any>({});
 
 const UserContext = (props: IContextProps) => {
