@@ -1,0 +1,43 @@
+@import "../../../styles/mixins";
+
+.scroll-button {
+  position: fixed;
+  left: 0;
+  width: 114px; /* как у ВК*/
+  top: 0;
+  background: var(--scroll-bg-color);
+  opacity: 0;
+  color: var(--scroll-primary-color);
+  bottom: 0;
+  cursor: pointer;
+  transition: background-color 200ms linear, opacity 200ms linear;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &__img {
+    height: 15px;
+    width: 15px;
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+
+    &--down {
+      top: 74px;
+    }
+  }
+}
+
+@include desktop-small {
+  .scroll-button {
+    width: 40px;
+  }
+}
+
+@include mobile {
+  .scroll {
+    display: none;
+  }
+}
