@@ -34,41 +34,48 @@ const ArticlesList = () => {
     const currentPage = useRef(1);
 
     useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            const result = await fetchPagedArticles(
-                currentPage.current,
-                ARTICLES_TO_LOAD,
-                currentSearch
-            );
-            const filteredArray = NewsFilter(
-                result,
-                user?.ignoredCategories || [],
-                user?.ignoredTags || [],
-                currentCategory,
-                currentTag
-            );
-            dataIsMissing.current = !filteredArray.length;
-            if (!dataIsMissing.current) {
-                const newArray = [...articles, ...filteredArray];
-                setArticles(newArray);
-            } else {
-                if (result.length) {
-                    setNeedToReload(true);
+            const fetchData = async () => {
+                setLoading(true);
+                const result = await fetchPagedArticles(
+                    currentPage.current,
+                    ARTICLES_TO_LOAD,
+                    currentSearch
+                );
+                const filteredArray = NewsFilter(
+                    result,
+                    user?.ignoredCategories || [],
+                    user?.ignoredTags || [],
+                    currentCategory,
+                    currentTag
+                );
+                dataIsMissing.current = !filteredArray.length;
+                if (!dataIsMissing.current) {
+                    const newArray = [...articles, ...filteredArray];
+                    setArticles(newArray);
+                } else {
+                    if (result.length) {
+                        setNeedToReload(true);
+                    }
                 }
+                setNeedToLoad(false);
+                currentPage.current = currentPage.current + 1;
+                setLoading(false);
+            };
+            if (loadingIsAllowed && !pageIsLoading.current && needToLoad) {
+                pageIsLoading.current = true;
+                fetchData();
+                pageIsLoading.current = false;
             }
-            setNeedToLoad(false);
-            currentPage.current = currentPage.current + 1;
-            setLoading(false);
-        };
-        if (loadingIsAllowed && !pageIsLoading.current && needToLoad) {
-            pageIsLoading.current = true;
-            fetchData();
-            pageIsLoading.current = false;
-        }
-        //это умышленно
-        // eslint-disable-next-line
-    }, [needToLoad]);
+        },
+        [needToLoad,
+            articles,
+            currentCategory,
+            currentSearch,
+            currentTag,
+            fetchPagedArticles,
+            loadingIsAllowed,
+            user?.ignoredCategories,
+            user?.ignoredTags]);
 
     useEffect(() => {
         if (needToReload) {
