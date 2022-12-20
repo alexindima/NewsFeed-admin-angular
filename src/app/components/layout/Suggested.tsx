@@ -30,11 +30,11 @@ const Suggested = () => {
         const fetch = async () => {
             setLoading(true);
             const articles = await fetchAllArticles();
-            const filteredArticles = NewsFilter(
-                articles,
-                user?.ignoredCategories || [],
-                user?.ignoredTags || []
-            );
+            const filteredArticles = NewsFilter({
+                articles: articles,
+                ignoredCategories: user?.ignoredCategories || [],
+                ignoredTags: user?.ignoredTags || []
+            });
             setArticles(filteredArticles);
             setLoading(false);
         };

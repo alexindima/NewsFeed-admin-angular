@@ -41,13 +41,13 @@ const ArticlesList = () => {
                     ARTICLES_TO_LOAD,
                     currentSearch
                 );
-                const filteredArray = NewsFilter(
-                    result,
-                    user?.ignoredCategories || [],
-                    user?.ignoredTags || [],
-                    currentCategory,
-                    currentTag
-                );
+                const filteredArray = NewsFilter({
+                    articles: result,
+                    ignoredCategories: user?.ignoredCategories || [],
+                    ignoredTags: user?.ignoredTags || [],
+                    categoryToShow: currentCategory,
+                    tagToShow:currentTag
+                });
                 dataIsMissing.current = !filteredArray.length;
                 if (!dataIsMissing.current) {
                     const newArray = [...articles, ...filteredArray];
