@@ -30,18 +30,30 @@ const SettingsMain = () => {
     const changeUser = useContext(apiContext).changeUser;
 
     const [ignoredCategories, setIgnoredCategories] = useState(
-        user?.ignoredCategories.map(
-            (ignoredCategory: number) =>
-                siteCategoryList?.find(
-                    (category: Category) => category.id === ignoredCategory
-                )?.name
-        )
+        user?.ignoredCategories.map((ignoredCategory: number) => {
+            let categoryName = ''
+            siteCategoryList?.every((category: Category) => {
+                if (category.id === ignoredCategory) {
+                    categoryName = category.name
+                    return false
+                }
+                return true
+            })
+            return categoryName
+        }) || []
     );
     const [ignoredTags, setIgnoredTags] = useState(
-        user?.ignoredTags.map(
-            (ignoredTag: number) =>
-                siteTagList?.find((tag: ITag) => tag.id === ignoredTag)?.name
-        )
+        user?.ignoredTags.map((ignoredTag: number) => {
+            let tagName = ''
+            siteTagList?.every((tag: ITag) => {
+                if (tag.id === ignoredTag) {
+                    tagName = tag.name
+                    return false
+                }
+                return true
+            })
+            return tagName
+        }) || []
     );
     const [loading, setLoading] = useState(false);
 
@@ -65,7 +77,7 @@ const SettingsMain = () => {
                     return categoryIsValid;
                 }
             );
-            const tagsNameList: string[] = ignoredTags.filter(
+            const tagsNameList: string[] = ignoredTags?.filter(
                 (ignoredTag: string) => {
                     let tagIsValid = false;
                     siteTagList?.every((tag: ITag) => {
@@ -79,7 +91,7 @@ const SettingsMain = () => {
                     });
                     return tagIsValid;
                 }
-            );
+            ) || [];
             const changedUser = {
                 ...user,
                 ignoredCategories: categoriesNameList.map(
@@ -113,7 +125,7 @@ const SettingsMain = () => {
             <form onSubmit={handleSubmit}>
                 <StylizedTextarea
                     name={"Ignored categories"}
-                    value={ignoredCategories}
+                    value={ignoredCategories.join(',')}
                     rows={3}
                     onChange={(event) => {
                         setIgnoredCategories(event.target.value.split(","));
@@ -121,7 +133,7 @@ const SettingsMain = () => {
                 />
                 <StylizedTextarea
                     name={"Ignored tags"}
-                    value={ignoredTags}
+                    value={ignoredTags.join(',')}
                     rows={3}
                     onChange={(event) => {
                         setIgnoredTags(event.target.value.split(","));

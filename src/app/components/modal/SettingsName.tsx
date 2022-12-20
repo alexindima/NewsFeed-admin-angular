@@ -12,7 +12,7 @@ const SettingsName = () => {
     const NAME_ERROR =
         "The user name must contain at least 3 letters, numbers and underscores";
 
-    const user = useContext(userContext).user;
+    const user = useContext(userContext).user!; //this component exist only if user exist
     const logIn = useContext(userContext).logIn;
     const setCurrentModal = useContext(modalContext).setCurrentModal;
     const hideModal = () => {
@@ -20,7 +20,7 @@ const SettingsName = () => {
     };
     const changeUser = useContext(apiContext).changeUser;
 
-    const [nameInputValue, setNameInputValue] = useState(user?.name);
+    const [nameInputValue, setNameInputValue] = useState(user.name);
     const [errorMessage, setErrorMessage] = useState("");
     const [loading, setLoading] = useState(false);
 
