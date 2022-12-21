@@ -1,11 +1,14 @@
 import * as React from "react";
-import {createContext, MouseEventHandler, useContext, useEffect, useRef, useState} from "react";
+import {createContext, MouseEventHandler, useEffect, useRef, useState} from "react";
 import {ContextProps} from "../../types/ContextProps";
 import {SiteState} from "../../types/SiteState";
 import {Category} from "../../types/Category";
 import {ITag} from "../../types/Tag";
-import {apiContext} from "./ApiContext";
 import {useNavigate} from "react-router-dom";
+import useApi from "../../hooks/useApi";
+import categoriesApi from "../../api/siteContext/categories"
+import tagsApi from "../../api/siteContext/tags"
+import suggestedNewsApi from "../../api/siteContext/suggestedNews"
 
 interface ISiteContext {
     siteState: SiteState | null;
@@ -63,9 +66,9 @@ const SiteContext = (props: ContextProps) => {
     const [siteTagList, setSiteTagList] = useState<ITag[] | null>(null); //то же самое
     const [suggestedNews, setSuggestedNews] = useState<number[] | null>(null);
 
-    const fetchCategories = useContext(apiContext).fetchCategories;
-    const fetchTags = useContext(apiContext).fetchTags;
-    const fetchSuggestedNews = useContext(apiContext).fetchSuggestedNews;
+    const fetchCategories = useApi(categoriesApi.fetchCategories);
+    const fetchTags = useApi(tagsApi.fetchTags);
+    const fetchSuggestedNews = useApi(suggestedNewsApi.fetchSuggestedNews);
 
     const setStateWithCheck = (state: SiteState) => {
         if (!(state?.category || state?.tag || state?.search)) {
@@ -126,28 +129,40 @@ const SiteContext = (props: ContextProps) => {
     };
 
     useEffect(() => {
-        const fetch = async () => {
-            const list = await fetchCategories!();
-            setSiteCategoryList(list);
-        };
-        fetch();
+        if (!fetchCategories.data && !fetchCategories.loading) {
+            fetchCategories.request()
+        }
     }, [fetchCategories]);
 
     useEffect(() => {
-        const fetch = async () => {
-            const list = await fetchTags!();
-            setSiteTagList(list);
-        };
-        fetch();
+        if (fetchCategories.data) {
+            setSiteCategoryList(fetchCategories.data)
+        }
+    }, [fetchCategories.data]);
+
+    useEffect(() => {
+        if (!fetchTags.data && !fetchTags.loading) {
+            fetchTags.request()
+        }
     }, [fetchTags]);
 
     useEffect(() => {
-        const fetch = async () => {
-            const news = await fetchSuggestedNews!();
-            setSuggestedNews(news);
-        };
-        fetch();
+        if (fetchTags.data) {
+            setSiteTagList(fetchTags.data)
+        }
+    }, [fetchTags.data]);
+
+    useEffect(() => {
+        if (!fetchSuggestedNews.data && !fetchSuggestedNews.loading) {
+            fetchSuggestedNews.request()
+        }
     }, [fetchSuggestedNews]);
+
+    useEffect(() => {
+        if (fetchSuggestedNews.data) {
+            setSuggestedNews(fetchSuggestedNews.data)
+        }
+    }, [fetchSuggestedNews.data]);
 
     useEffect(() => {
         if (siteState) {

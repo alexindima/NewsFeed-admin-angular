@@ -1,4 +1,4 @@
-import React, {useContext, useRef, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import {calculateHash} from "../../../lib/Hash";
 import {validPassword} from "../../../lib/ValidRules";
 import {userContext} from "../../context/UserContext";
@@ -6,7 +6,9 @@ import {modalContext} from "../../context/ModalContext";
 import StyliZedInput from "./StylizedInput";
 import StylizedSubmitButton from "./StylizedSubmitButton";
 import InputError from "./InputError";
-import {apiContext} from "../../context/ApiContext";
+import useApi from "../../../hooks/useApi";
+import userApi from "../../../api/users"
+import {User} from "../../../types/User";
 
 interface IChangePasswordProps {
     userID: number;
@@ -23,8 +25,8 @@ const ChangePassword = (props: IChangePasswordProps) => {
 
     const logIn = useContext(userContext).logIn;
     const setCurrentModal = useContext(modalContext).setCurrentModal;
-    const fetchUser = useContext(apiContext).fetchUser;
-    const changeUser = useContext(apiContext).changeUser;
+    const fetchUser = useApi(userApi.fetchUser);
+    const changeUser = useApi(userApi.changeUser);
 
     const [passwordInputValue, setPasswordInputValue] = useState("");
     const [password2InputValue, setPassword2InputValue] = useState("");
@@ -48,21 +50,27 @@ const ChangePassword = (props: IChangePasswordProps) => {
             setPassword2InputValue("");
             passwordInputDOM.current!.focus();
         } else {
-            const fetchData = async () => {
-                setLoading(true);
-                const user = await fetchUser(recoveredUser);
-                const changedUser = {
-                    ...user,
-                    password: await calculateHash(passwordInputValue),
-                };
-                await changeUser(recoveredUser, changedUser);
-                setLoading(false);
-                logIn(user);
-                hideModal();
-            };
-            fetchData();
+            fetchUser.request(recoveredUser)
+            setLoading(true);
         }
-    };
+    }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const user: User = fetchUser.data!;
+            const changedUser = {
+                ...user,
+                password: await calculateHash(passwordInputValue),
+            };
+            changeUser.request(recoveredUser, changedUser);
+            setLoading(false);
+            logIn(user);
+            hideModal();
+        };
+        if (fetchUser.data) {
+            fetchData()
+        }
+    }, [fetchUser.data])
 
     return (
         <form onSubmit={handleSubmit}>

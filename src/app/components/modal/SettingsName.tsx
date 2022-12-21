@@ -6,7 +6,8 @@ import StyliZedInput from "../common/StylizedInput";
 import InputError from "../common/InputError";
 import StylizedSubmitButton from "../common/StylizedSubmitButton";
 import ModalTitle from "../common/ModalTitle";
-import {apiContext} from "../../context/ApiContext";
+import useApi from "../../../hooks/useApi";
+import userApi from "../../../api/users"
 
 const SettingsName = () => {
     const NAME_ERROR =
@@ -18,7 +19,7 @@ const SettingsName = () => {
     const hideModal = () => {
         setCurrentModal(null);
     };
-    const changeUser = useContext(apiContext).changeUser;
+    const changeUser = useApi(userApi.changeUser)
 
     const [nameInputValue, setNameInputValue] = useState(user.name);
     const [errorMessage, setErrorMessage] = useState("");
@@ -32,15 +33,12 @@ const SettingsName = () => {
             setErrorMessage(NAME_ERROR);
             nameInputDOM.current!.focus();
         } else {
-            const fetchData = async () => {
-                setLoading(true);
-                const changedUser = {...user, name: nameInputValue};
-                await changeUser(user.id, changedUser);
-                logIn(changedUser);
-                hideModal();
-                setLoading(false);
-            };
-            fetchData();
+            setLoading(true);
+            const changedUser = {...user, name: nameInputValue};
+            changeUser.request(user.id, changedUser);
+            logIn(changedUser);
+            hideModal();
+            setLoading(false);
         }
     };
 

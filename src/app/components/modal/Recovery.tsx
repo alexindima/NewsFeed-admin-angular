@@ -1,19 +1,20 @@
-import React, {useContext, useRef, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import {User} from "../../../types/User";
 import {modalContext} from "../../context/ModalContext";
 import StyliZedInput from "../common/StylizedInput";
 import InputError from "../common/InputError";
 import StylizedSubmitButton from "../common/StylizedSubmitButton";
 import ModalTitle from "../common/ModalTitle";
-import {apiContext} from "../../context/ApiContext";
 import NewPassword from "./NewPassword";
+import useApi from "../../../hooks/useApi";
+import userApi from "../../../api/users"
 
 const Recovery = () => {
     const EMAIL_ERROR = "There is no user with this email";
 
     const emailInputDOM = useRef<HTMLInputElement>(null);
 
-    const fetchAllUsers = useContext(apiContext).fetchAllUsers;
+    const fetchAllUsers = useApi(userApi.fetchAllUsers);
     const setCurrentModal = useContext(modalContext).setCurrentModal;
     const openNewPasswordModal = (userId: number) => {
         setCurrentModal(<NewPassword userID={userId}/>);
@@ -23,15 +24,22 @@ const Recovery = () => {
     const [errorMessage, setErrorMessage] = useState("");
     const [loading, setLoading] = useState(false);
 
+    const wasSubmitted = useRef(false);
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setEmailInputValue(emailInputValue.toLowerCase());
+        setLoading(true);
+        fetchAllUsers.request()
+        wasSubmitted.current = true
+    };
 
-        const fetchData = async () => {
-            setLoading(true);
-            const allUsers = await fetchAllUsers();
+    useEffect(() => {
+        if (wasSubmitted && fetchAllUsers.data) {
+            wasSubmitted.current = false
+            const allUsers: User[] = fetchAllUsers.data!
             let userExist = false;
-            allUsers.every((user: User) => {
+            allUsers?.every((user: User) => {
                 if (user.email === emailInputValue.trim().toLowerCase()) {
                     userExist = true;
                     setLoading(false);
@@ -45,9 +53,8 @@ const Recovery = () => {
                 setLoading(false);
                 emailInputDOM.current!.focus();
             }
-        };
-        fetchData();
-    };
+        }
+    }, [fetchAllUsers.data])
 
     return (
         <>

@@ -1,4 +1,4 @@
-import React, {useContext, useRef, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import {User} from "../../../types/User";
 import {calculateHash} from "../../../lib/Hash";
 import {validUserName, validPassword} from "../../../lib/ValidRules";
@@ -8,7 +8,8 @@ import StyliZedInput from "../common/StylizedInput";
 import InputError from "../common/InputError";
 import StylizedSubmitButton from "../common/StylizedSubmitButton";
 import ModalTitle from "../common/ModalTitle";
-import {apiContext} from "../../context/ApiContext";
+import useApi from "../../../hooks/useApi";
+import userApi from "../../../api/users"
 
 const Signup = () => {
     const NAME_ERROR =
@@ -23,12 +24,13 @@ const Signup = () => {
     const hideModal = () => {
         setCurrentModal(null);
     };
-    const fetchAllUsers = useContext(apiContext).fetchAllUsers;
-    const createUser = useContext(apiContext).createUser;
+    const fetchAllUsers = useApi(userApi.fetchAllUsers);
+    const createUser = useApi(userApi.createUser)
 
     const nameInputDOM = useRef<HTMLInputElement>(null);
     const emailInputDOM = useRef<HTMLInputElement>(null);
     const passwordInputDOM = useRef<HTMLInputElement>(null);
+    const wasSubmitted = useRef(false);
 
     const [nameInputValue, setNameInputValue] = useState("");
     const [emailInputValue, setEmailInputValue] = useState("");
@@ -56,44 +58,52 @@ const Signup = () => {
             setPassword2InputValue("");
             passwordInputDOM.current!.focus();
         } else {
-            const fetchData = async () => {
-                setLoading(true);
-                const allUsers = await fetchAllUsers();
-                let userAlreadyExist = false;
-                let lastID = 0;
-                allUsers.every((user: User) => {
-                    if (user.id > lastID) {
-                        lastID = user.id;
-                    }
-                    if (user.email === emailInputValue.trim().toLowerCase()) {
-                        userAlreadyExist = true;
-                        setErrorMessage(EMAIL_ERROR);
-                        setPasswordInputValue("");
-                        setPassword2InputValue("");
-                        setLoading(false);
-                        emailInputDOM.current!.focus();
-                        return false;
-                    }
-                    return true;
-                });
-                if (!userAlreadyExist) {
-                    const newUser = {
-                        id: lastID + 1,
-                        name: nameInputValue,
-                        email: emailInputValue,
-                        password: await calculateHash(passwordInputValue),
-                        ignoredCategories: [],
-                        ignoredTags: [],
-                    };
-                    await createUser(newUser);
-                    logIn(newUser);
-                    hideModal();
-                    setLoading(false);
-                }
-            };
-            fetchData();
+            setLoading(true);
+            fetchAllUsers.request()
+            wasSubmitted.current = true
         }
     };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const allUsers: User[] = fetchAllUsers.data!;
+            wasSubmitted.current = false;
+            let userAlreadyExist = false;
+            let lastID = 0;
+            allUsers?.every((user: User) => {
+                if (user.id > lastID) {
+                    lastID = user.id;
+                }
+                if (user.email === emailInputValue.trim().toLowerCase()) {
+                    userAlreadyExist = true;
+                    setErrorMessage(EMAIL_ERROR);
+                    setPasswordInputValue("");
+                    setPassword2InputValue("");
+                    setLoading(false);
+                    emailInputDOM.current!.focus();
+                    return false;
+                }
+                return true;
+            });
+            if (!userAlreadyExist) {
+                const newUser = {
+                    id: lastID + 1,
+                    name: nameInputValue,
+                    email: emailInputValue,
+                    password: await calculateHash(passwordInputValue),
+                    ignoredCategories: [],
+                    ignoredTags: [],
+                };
+                createUser.request(newUser);
+                logIn(newUser);
+                hideModal();
+                setLoading(false);
+            }
+        };
+        if (wasSubmitted.current && fetchAllUsers.data) {
+            fetchData();
+        }
+    }, [fetchAllUsers.data])
 
     return (
         <>

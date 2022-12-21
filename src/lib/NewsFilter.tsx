@@ -7,9 +7,8 @@ interface INewsFilterProps {
     categoryToShow?: number
     tagToShow?: number
 }
-// уж больно большая функция, можно разделить на мелкие подфункции, чтобы было проще читать и поддерживать. Плюс скорее всего у тебя и алгоритм изменится (надеюсь)
-// Сделай лучше вместо 5 параметров 1 параметр - объект, так проще поддерживать и управлять параметрами будет
-const NewsFilter = (params:INewsFilterProps) => {
+
+const NewsFilter = (params: INewsFilterProps) => {
     const articles = params.articles;
     const ignoredCategories = params.ignoredCategories;
     const ignoredTags = params.ignoredTags;

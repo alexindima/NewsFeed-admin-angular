@@ -6,24 +6,21 @@ import Modal from "./modal/Modal";
 import UserContext from "../context/UserContext";
 import ModalContext from "../context/ModalContext";
 import SiteContext from "../context/SiteContext";
-import ApiContext from "../context/ApiContext";
 
 const App = () => {
     return (
         <Router>
-            <ApiContext>
-                <UserContext>
-                    <ModalContext>
-                        <SiteContext>
-                            <div className="body-general">
-                                <Header/>
-                                <Layout/>
-                                <Modal/>
-                            </div>
-                        </SiteContext>
-                    </ModalContext>
-                </UserContext>
-            </ApiContext>
+            <UserContext>
+                <ModalContext>
+                    <SiteContext>
+                        <div className="body-general">
+                            <Header/>
+                            <Layout/>
+                            <Modal/>
+                        </div>
+                    </SiteContext>
+                </ModalContext>
+            </UserContext>
         </Router>
     );
 };

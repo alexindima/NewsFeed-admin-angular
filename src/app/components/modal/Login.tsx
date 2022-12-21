@@ -1,4 +1,4 @@
-import React, {useContext, useRef, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import styles from "./Login.module.scss";
 import {calculateHash} from "../../../lib/Hash";
 import {userContext} from "../../context/UserContext";
@@ -9,9 +9,10 @@ import InputError from "../common/InputError";
 import StylizedSubmitButton from "../common/StylizedSubmitButton";
 import ModalTitle from "../common/ModalTitle";
 import StylizedLinkButton from "../common/StylizedLinkButton";
-import {apiContext} from "../../context/ApiContext";
 import Signup from "./Signup";
 import Recovery from "./Recovery";
+import useApi from "../../../hooks/useApi";
+import userApi from "../../../api/users"
 
 const Login = () => {
     const EMAIL_ERROR = "There is no user with this email";
@@ -28,28 +29,34 @@ const Login = () => {
     const hideModal = () => {
         setCurrentModal(null);
     };
-    const fetchAllUsers = useContext(apiContext).fetchAllUsers;
+    const fetchAllUsers = useApi(userApi.fetchAllUsers);
 
     const [emailInputValue, setEmailInputValue] = useState("");
     const [passwordInputValue, setPasswordInputValue] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [loading, setLoading] = useState(false);
 
+    const wasSubmitted = useRef(false);
     const emailInputDOM = useRef<HTMLInputElement>(null);
     const passwordInputDOM = useRef<HTMLInputElement>(null);
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        setLoading(true);
+        wasSubmitted.current = true
+        fetchAllUsers.request()
+    };
+
+    useEffect(() => {
         const fetchData = async () => {
-            setLoading(true);
-            const allUsers = await fetchAllUsers();
+            wasSubmitted.current = false
             let emailIsExist = false;
+            const allUsers: User[] = fetchAllUsers.data!
             const passwordHash = await calculateHash(passwordInputValue);
-            allUsers.every((user: User) => {
+            allUsers?.every((user: User) => {
                 if (user.email === emailInputValue.trim().toLowerCase()) {
                     emailIsExist = true;
                     if (user.password === passwordHash) {
-                        //need convert to hash
                         logIn(user);
                         hideModal();
                         setLoading(false);
@@ -70,8 +77,8 @@ const Login = () => {
                 emailInputDOM.current!.focus();
             }
         };
-        fetchData();
-    };
+        if (wasSubmitted.current) fetchData()
+    }, [fetchAllUsers.data, emailInputValue, hideModal, logIn, passwordInputValue])
 
     return (
         <>

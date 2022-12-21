@@ -5,8 +5,9 @@ import {userContext} from "../../../context/UserContext";
 import NewsFilter from "../../../../lib/NewsFilter";
 import {siteContext} from "../../../context/SiteContext";
 import InfinityScroll from "../../common/InfinityScroll";
-import {apiContext} from "../../../context/ApiContext";
 import {useLocation} from "react-router-dom";
+import useApi from "../../../../hooks/useApi";
+import articlesApi from "../../../../api/articles";
 
 const ArticlesList = () => {
     const ARTICLES_TO_LOAD = 5;
@@ -22,60 +23,71 @@ const ArticlesList = () => {
 
     const loadingIsAllowed = useContext(userContext).loadingIsAllowed;
     const user = useContext(userContext).user;
-    const fetchPagedArticles = useContext(apiContext).fetchPagedArticles;
+    const fetchPagedArticles = useApi(articlesApi.fetchPagedArticles);
 
     const [articles, setArticles] = useState<Article[]>([]);
     const [needToLoad, setNeedToLoad] = useState(false);
     const [needToReload, setNeedToReload] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [dataWasGot, setDataWasGot] = useState(false);
 
     let pageIsLoading = useRef(false);
     let dataIsMissing = useRef(false);
     const currentPage = useRef(1);
 
     useEffect(() => {
-            const fetchData = async () => {
-                setLoading(true);
-                const result = await fetchPagedArticles(
-                    currentPage.current,
-                    ARTICLES_TO_LOAD,
-                    currentSearch
-                );
+        if (loadingIsAllowed && !pageIsLoading.current && needToLoad) {
+            setLoading(true);
+            pageIsLoading.current = true;
+            fetchPagedArticles.request(
+                currentPage.current,
+                ARTICLES_TO_LOAD,
+                currentSearch ? currentSearch : ""
+            );
+        }
+    }, [needToLoad, currentSearch, fetchPagedArticles, loadingIsAllowed]);
+
+    useEffect(() => {
+        setDataWasGot(true);
+    }, [fetchPagedArticles.data]);
+
+    useEffect(() => {
+        if (dataWasGot) {
+            setDataWasGot(false);
+            if (fetchPagedArticles.data && pageIsLoading.current) {
+                setLoading(fetchPagedArticles.loading);
+                pageIsLoading.current = false;
                 const filteredArray = NewsFilter({
-                    articles: result,
+                    articles: fetchPagedArticles.data,
                     ignoredCategories: user?.ignoredCategories || [],
                     ignoredTags: user?.ignoredTags || [],
                     categoryToShow: currentCategory,
-                    tagToShow:currentTag
+                    tagToShow: currentTag,
                 });
                 dataIsMissing.current = !filteredArray.length;
                 if (!dataIsMissing.current) {
                     const newArray = [...articles, ...filteredArray];
                     setArticles(newArray);
                 } else {
-                    if (result.length) {
+                    if (fetchPagedArticles.data) {
                         setNeedToReload(true);
                     }
                 }
                 setNeedToLoad(false);
                 currentPage.current = currentPage.current + 1;
-                setLoading(false);
-            };
-            if (loadingIsAllowed && !pageIsLoading.current && needToLoad) {
-                pageIsLoading.current = true;
-                fetchData();
-                pageIsLoading.current = false;
             }
-        },
-        [needToLoad,
-            articles,
-            currentCategory,
-            currentSearch,
-            currentTag,
-            fetchPagedArticles,
-            loadingIsAllowed,
-            user?.ignoredCategories,
-            user?.ignoredTags]);
+        }
+    }, [
+        needToLoad,
+        articles,
+        currentCategory,
+        currentSearch,
+        currentTag,
+        fetchPagedArticles,
+        loadingIsAllowed,
+        user?.ignoredCategories,
+        user?.ignoredTags,
+    ]);
 
     useEffect(() => {
         if (needToReload) {

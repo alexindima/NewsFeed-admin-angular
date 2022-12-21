@@ -6,40 +6,44 @@ import {userContext} from "../../context/UserContext";
 import {Article} from "../../../types/Article";
 import Spinner from "../common/Spinner";
 import NoResult from "../common/NoResult";
-import {apiContext} from "../../context/ApiContext";
 import {siteContext} from "../../context/SiteContext";
 import {Link} from "react-router-dom";
+import useApi from "../../../hooks/useApi";
+import articlesApi from "../../../api/articles";
 
 const Suggested = () => {
     const loadingIsAllowed = useContext(userContext).loadingIsAllowed;
     const user = useContext(userContext).user;
-    const fetchAllArticles = useContext(apiContext).fetchAllArticles;
     const suggestedNews = useContext(siteContext).suggestedNews;
+    const fetchAllArticles = useApi(articlesApi.fetchAllArticles);
 
     const [articles, setArticles] = useState<Article[]>([]);
     const [news, setNews] = useState<Article[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (suggestedNews) {
-            setLoading(false);
+        if (!fetchAllArticles.data && !fetchAllArticles.loading) {
+            fetchAllArticles.request();
         }
-    }, [suggestedNews]);
+    }, [fetchAllArticles]);
 
     useEffect(() => {
-        const fetch = async () => {
-            setLoading(true);
-            const articles = await fetchAllArticles();
+        if (fetchAllArticles.data && loadingIsAllowed) {
+            setLoading(fetchAllArticles.loading);
             const filteredArticles = NewsFilter({
-                articles: articles,
+                articles: fetchAllArticles.data,
                 ignoredCategories: user?.ignoredCategories || [],
-                ignoredTags: user?.ignoredTags || []
+                ignoredTags: user?.ignoredTags || [],
             });
             setArticles(filteredArticles);
-            setLoading(false);
-        };
-        if (loadingIsAllowed) fetch();
-    }, [user?.ignoredCategories, user?.ignoredTags, loadingIsAllowed, fetchAllArticles]);
+        }
+    }, [
+        fetchAllArticles.data,
+        user?.ignoredCategories,
+        user?.ignoredTags,
+        fetchAllArticles.loading,
+        loadingIsAllowed,
+    ]);
 
     useEffect(() => {
         const newsArray = articles.filter((article) => {
@@ -60,7 +64,7 @@ const Suggested = () => {
         <div className="layout__suggested">
             <div className={styles.suggestedContainer}>
                 {loading && <Spinner color={"#000000"} size={20}/>}
-                {!!news.length || loading || <NoResult/>}
+                {!!news.length || loading || !loadingIsAllowed || <NoResult/>}
                 {news.map((news) => (
                     <Link
                         key={news.id}

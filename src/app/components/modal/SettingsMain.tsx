@@ -8,9 +8,10 @@ import StylizedTextarea from "../common/StylizedTextarea";
 import StylizedSubmitButton from "../common/StylizedSubmitButton";
 import ModalTitle from "../common/ModalTitle";
 import StylizedLinkButton from "../common/StylizedLinkButton";
-import {apiContext} from "../../context/ApiContext";
 import SettingsName from "./SettingsName";
 import SettingsPassword from "./SettingsPassword";
+import useApi from "../../../hooks/useApi";
+import userApi from "../../../api/users"
 
 const SettingsMain = () => {
     const user = useContext(userContext).user;
@@ -27,7 +28,7 @@ const SettingsMain = () => {
     const openSettingsPasswordModal = () => {
         setCurrentModal(<SettingsPassword/>);
     };
-    const changeUser = useContext(apiContext).changeUser;
+    const changeUser = useApi(userApi.changeUser);
 
     const [ignoredCategories, setIgnoredCategories] = useState(
         user?.ignoredCategories.map((ignoredCategory: number) => {
@@ -59,64 +60,61 @@ const SettingsMain = () => {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const fetchData = async () => {
-            setLoading(true);
-            const categoriesNameList: string[] = ignoredCategories.filter(
-                (ignoredCategory: string) => {
-                    let categoryIsValid = false;
-                    siteCategoryList?.every((category: Category) => {
-                        if (
+        setLoading(true);
+        const categoriesNameList: string[] = ignoredCategories.filter(
+            (ignoredCategory: string) => {
+                let categoryIsValid = false;
+                siteCategoryList?.every((category: Category) => {
+                    if (
+                        category.name.toLowerCase().trim() ===
+                        ignoredCategory.toLowerCase().trim()
+                    ) {
+                        categoryIsValid = true;
+                        return false;
+                    }
+                    return true;
+                });
+                return categoryIsValid;
+            }
+        );
+        const tagsNameList: string[] = ignoredTags?.filter(
+            (ignoredTag: string) => {
+                let tagIsValid = false;
+                siteTagList?.every((tag: ITag) => {
+                    if (
+                        tag.name.toLowerCase().trim() === ignoredTag.toLowerCase().trim()
+                    ) {
+                        tagIsValid = true;
+                        return false;
+                    }
+                    return true;
+                });
+                return tagIsValid;
+            }
+        ) || [];
+        const changedUser = {
+            ...user,
+            ignoredCategories: categoriesNameList.map(
+                (ignoredCategory: string) =>
+                    siteCategoryList?.find(
+                        (category: Category) =>
                             category.name.toLowerCase().trim() ===
                             ignoredCategory.toLowerCase().trim()
-                        ) {
-                            categoryIsValid = true;
-                            return false;
-                        }
-                        return true;
-                    });
-                    return categoryIsValid;
-                }
-            );
-            const tagsNameList: string[] = ignoredTags?.filter(
-                (ignoredTag: string) => {
-                    let tagIsValid = false;
-                    siteTagList?.every((tag: ITag) => {
-                        if (
-                            tag.name.toLowerCase().trim() === ignoredTag.toLowerCase().trim()
-                        ) {
-                            tagIsValid = true;
-                            return false;
-                        }
-                        return true;
-                    });
-                    return tagIsValid;
-                }
-            ) || [];
-            const changedUser = {
-                ...user,
-                ignoredCategories: categoriesNameList.map(
-                    (ignoredCategory: string) =>
-                        siteCategoryList?.find(
-                            (category: Category) =>
-                                category.name.toLowerCase().trim() ===
-                                ignoredCategory.toLowerCase().trim()
-                        )?.id
-                ),
-                ignoredTags: tagsNameList.map(
-                    (ignoredTag: string) =>
-                        siteTagList?.find(
-                            (tag: ITag) =>
-                                tag.name.toLowerCase().trim() ===
-                                ignoredTag.toLowerCase().trim()
-                        )?.id
-                ),
-            };
-            await changeUser(user?.id, changedUser);
-            logIn(changedUser);
-            hideModal();
-            setLoading(false);
+                    )?.id
+            ),
+            ignoredTags: tagsNameList.map(
+                (ignoredTag: string) =>
+                    siteTagList?.find(
+                        (tag: ITag) =>
+                            tag.name.toLowerCase().trim() ===
+                            ignoredTag.toLowerCase().trim()
+                    )?.id
+            ),
         };
-        fetchData();
+        changeUser.request(user?.id, changedUser);
+        logIn(changedUser);
+        hideModal();
+        setLoading(false);
     };
 
     return (
