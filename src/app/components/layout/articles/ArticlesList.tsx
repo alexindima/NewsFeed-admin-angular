@@ -21,8 +21,8 @@ const ArticlesList = () => {
 
     const setSiteState = useContext(siteContext).setSiteState;
 
-    const loadingIsAllowed = useContext(userContext).loadingIsAllowed;
     const user = useContext(userContext).user;
+    const loadingIsAllowed = useContext(userContext).loadingIsAllowed;
     const fetchPagedArticles = useApi(articlesApi.fetchPagedArticles);
 
     const [articles, setArticles] = useState<Article[]>([]);
@@ -54,11 +54,13 @@ const ArticlesList = () => {
     useEffect(() => {
         if (dataWasGot) {
             setDataWasGot(false);
-            if (fetchPagedArticles.data && pageIsLoading.current) {
+            const data: Article[] | null = fetchPagedArticles.data
+            if (data && pageIsLoading.current) {
+                const result: Article[] = data
                 setLoading(fetchPagedArticles.loading);
                 pageIsLoading.current = false;
                 const filteredArray = NewsFilter({
-                    articles: fetchPagedArticles.data,
+                    articles: result,
                     ignoredCategories: user?.ignoredCategories || [],
                     ignoredTags: user?.ignoredTags || [],
                     categoryToShow: currentCategory,
@@ -69,7 +71,7 @@ const ArticlesList = () => {
                     const newArray = [...articles, ...filteredArray];
                     setArticles(newArray);
                 } else {
-                    if (fetchPagedArticles.data) {
+                    if (result.length) {
                         setNeedToReload(true);
                     }
                 }

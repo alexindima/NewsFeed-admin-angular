@@ -37,12 +37,15 @@ const UserContext = (props: ContextProps) => {
                     fetchAllUsers.request()
                 }
             }
+        } else {
+            setLoadingIsAllowed(true);
         }
     }, [savedID, fetchAllUsers]);
 
     useEffect(() => {
-        if (fetchAllUsers.data) {
-            const allUsers: User[] = fetchAllUsers.data;
+        const data: User[] | null = fetchAllUsers.data;
+        if (data) {
+            const allUsers: User[] = data;
             let userIsExist = false;
             allUsers.every((user: User) => {
                 if (user.id === savedID) {
@@ -54,8 +57,6 @@ const UserContext = (props: ContextProps) => {
                 return true;
             });
             if (!userIsExist) setSavedID(null);
-        } else {
-            setLoadingIsAllowed(true);
         }
     }, [fetchAllUsers.data, savedID, setSavedID]);
 
