@@ -9,7 +9,7 @@ import InputError from "../common/InputError";
 import StylizedSubmitButton from "../common/StylizedSubmitButton";
 import ModalTitle from "../common/ModalTitle";
 import useApi from "../../../hooks/useApi";
-import userApi from "../../../api/users"
+import usersApi from "../../../api/users";
 
 const Signup = () => {
     const NAME_ERROR =
@@ -21,11 +21,9 @@ const Signup = () => {
 
     const logIn = useContext(userContext).logIn;
     const setCurrentModal = useContext(modalContext).setCurrentModal;
-    const hideModal = () => {
-        setCurrentModal(null);
-    };
-    const fetchAllUsers = useApi(userApi.fetchAllUsers);
-    const createUser = useApi(userApi.createUser)
+
+    const fetchAllUsers = useApi(usersApi.fetchAllUsers);
+    const createUser = useApi(usersApi.createUser)
 
     const nameInputDOM = useRef<HTMLInputElement>(null);
     const emailInputDOM = useRef<HTMLInputElement>(null);
@@ -65,9 +63,8 @@ const Signup = () => {
     };
 
     useEffect(() => {
-        const fetchData = async () => {
+        const postNewUser = async () => {
             const allUsers: User[] = fetchAllUsers.data!;
-            wasSubmitted.current = false;
             let userAlreadyExist = false;
             let lastID = 0;
             allUsers?.every((user: User) => {
@@ -96,14 +93,15 @@ const Signup = () => {
                 };
                 createUser.request(newUser);
                 logIn(newUser);
-                hideModal();
+                setCurrentModal(null);
                 setLoading(false);
             }
         };
         if (wasSubmitted.current && fetchAllUsers.data) {
-            fetchData();
+            wasSubmitted.current = false;
+            postNewUser();
         }
-    }, [fetchAllUsers.data])
+    }, [fetchAllUsers.data, createUser, emailInputValue, setCurrentModal, logIn, nameInputValue, passwordInputValue])
 
     return (
         <>

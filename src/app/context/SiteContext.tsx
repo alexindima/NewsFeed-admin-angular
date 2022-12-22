@@ -71,7 +71,7 @@ const SiteContext = (props: ContextProps) => {
     const fetchSuggestedNews = useApi(suggestedNewsApi.fetchSuggestedNews);
 
     const setStateWithCheck = (state: SiteState) => {
-        if (!(state?.category || state?.tag || state?.search)) {
+        if (!(state?.category || state?.tag || state?.search || state?.isSingleArticle)) {
             setSiteState(null);
             goHome();
         } else {
@@ -115,8 +115,8 @@ const SiteContext = (props: ContextProps) => {
         setStateWithCheck({...siteState, search: null} as SiteState);
     };
 
-    const setSingleArticle = () => {
-        setSiteState({isSingleArticle: true} as SiteState);
+    const setSingleArticle = (id: number) => {
+        setSiteState({isSingleArticle: id} as SiteState);
     };
 
     const clearSingleArticle = () => {
@@ -180,10 +180,10 @@ const SiteContext = (props: ContextProps) => {
                     query += "search=" + siteState.search;
                 }
                 if (query !== lastUrl.current) {
-                    lastUrl.current = query
                     navigate(`/?${query}`);
                 }
-
+            } else {
+                lastUrl.current = `/article/${siteState.isSingleArticle}`
             }
         }
     }, [siteState, navigate]);

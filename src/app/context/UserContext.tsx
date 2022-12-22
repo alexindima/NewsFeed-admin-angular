@@ -4,7 +4,7 @@ import {User} from "../../types/User";
 import {ContextProps} from "../../types/ContextProps";
 import {useLocalStorage} from "../../hooks/useLocalStorage";
 import useApi from "../../hooks/useApi";
-import userApi from "../../api/users"
+import usersApi from "../../api/users"
 
 interface IUserContext {
     loadingIsAllowed: boolean;
@@ -27,7 +27,7 @@ const UserContext = (props: ContextProps) => {
     const [user, setUser] = useState<User | null>(null);
     const [savedID, setSavedID] = useLocalStorage("ID", null);
 
-    const fetchAllUsers = useApi(userApi.fetchAllUsers);
+    const fetchAllUsers = useApi(usersApi.fetchAllUsers);
 
     useEffect(() => {
         if (savedID) {

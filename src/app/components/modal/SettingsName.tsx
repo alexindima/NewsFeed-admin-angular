@@ -7,7 +7,7 @@ import InputError from "../common/InputError";
 import StylizedSubmitButton from "../common/StylizedSubmitButton";
 import ModalTitle from "../common/ModalTitle";
 import useApi from "../../../hooks/useApi";
-import userApi from "../../../api/users"
+import usersApi from "../../../api/users";
 
 const SettingsName = () => {
     const NAME_ERROR =
@@ -19,7 +19,7 @@ const SettingsName = () => {
     const hideModal = () => {
         setCurrentModal(null);
     };
-    const changeUser = useApi(userApi.changeUser)
+    const changeUser = useApi(usersApi.changeUser)
 
     const [nameInputValue, setNameInputValue] = useState(user.name);
     const [errorMessage, setErrorMessage] = useState("");

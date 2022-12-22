@@ -38,7 +38,7 @@ const Back = () => {
                 )}
                 {!!siteState?.tag && (
                     <div onClick={clearTag} className={styles.back__info}>
-                        Current tag:{" "}
+                        Current tag:{""}
                         {siteTagList?.find((tag: ITag) => tag.id === siteState?.tag)?.name}{" "}
                         <RiCloseCircleFill/>
                     </div>

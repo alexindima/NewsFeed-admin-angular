@@ -18,8 +18,10 @@ const fetchPagedArticles = (
 const fetchOneArticle = async (id: number) => client.get<Article | null>(`${ARTICLES_URL}/${id}`);
 
 
-export default {
-    fetchAllArticles,
-    fetchPagedArticles,
-    fetchOneArticle
+const articlesApi = {
+    fetchAllArticles: fetchAllArticles,
+    fetchPagedArticles: fetchPagedArticles,
+    fetchOneArticle: fetchOneArticle
 };
+
+export default articlesApi;

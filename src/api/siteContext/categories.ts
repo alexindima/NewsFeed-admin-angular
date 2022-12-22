@@ -4,6 +4,8 @@ const CATEGORIES_URL = `/categories`;
 
 const fetchCategories = () => client.get<number[] | null>(CATEGORIES_URL);
 
-export default {
-    fetchCategories
+const categoriesAPI = {
+    fetchCategories: fetchCategories
 };
+
+export default categoriesAPI;

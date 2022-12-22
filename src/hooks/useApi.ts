@@ -25,4 +25,4 @@ const useApi = (apiFunc: Function) => {
     };
 };
 
-export default useApi
+export default useApi;

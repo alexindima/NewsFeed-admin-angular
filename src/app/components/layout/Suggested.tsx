@@ -16,6 +16,7 @@ const Suggested = () => {
     const user = useContext(userContext).user;
     const suggestedNews = useContext(siteContext).suggestedNews;
     const fetchAllArticles = useApi(articlesApi.fetchAllArticles);
+    const setSingleArticle = useContext(siteContext).setSingleArticle;
 
     const [articles, setArticles] = useState<Article[]>([]);
     const [news, setNews] = useState<Article[]>([]);
@@ -67,6 +68,7 @@ const Suggested = () => {
                 {!!news.length || loading || !loadingIsAllowed || <NoResult/>}
                 {news.map((news) => (
                     <Link
+                        onClick={() => setSingleArticle(news.id)}
                         key={news.id}
                         className={styles.suggestedNews}
                         to={`/articles/${news.id}`}

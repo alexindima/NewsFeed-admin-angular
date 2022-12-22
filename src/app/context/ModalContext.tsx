@@ -22,9 +22,7 @@ const ModalContext = (props: ContextProps) => {
     };
 
     return (
-        <modalContext.Provider value={value}>
-            {props.children}
-        </modalContext.Provider>
+        <modalContext.Provider value={value}>{props.children}</modalContext.Provider>
     );
 };
 

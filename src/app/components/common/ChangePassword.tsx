@@ -20,6 +20,7 @@ const ChangePassword = (props: IChangePasswordProps) => {
     const PASSWORD2_ERROR = "Passwords must match";
 
     const passwordInputDOM = useRef<HTMLInputElement>(null);
+    const wasSubmitted = useRef(false);
 
     const recoveredUser = props.userID;
 
@@ -32,10 +33,6 @@ const ChangePassword = (props: IChangePasswordProps) => {
     const [password2InputValue, setPassword2InputValue] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [loading, setLoading] = useState(false);
-
-    const hideModal = () => {
-        setCurrentModal(null);
-    };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -50,13 +47,14 @@ const ChangePassword = (props: IChangePasswordProps) => {
             setPassword2InputValue("");
             passwordInputDOM.current!.focus();
         } else {
+            wasSubmitted.current = true
             fetchUser.request(recoveredUser)
             setLoading(true);
         }
     }
 
     useEffect(() => {
-        const fetchData = async () => {
+        const putNewPassword = async () => {
             const user: User = fetchUser.data!;
             const changedUser = {
                 ...user,
@@ -65,12 +63,13 @@ const ChangePassword = (props: IChangePasswordProps) => {
             changeUser.request(recoveredUser, changedUser);
             setLoading(false);
             logIn(user);
-            hideModal();
+            setCurrentModal(null);
         };
-        if (fetchUser.data) {
-            fetchData()
+        if (fetchUser.data && wasSubmitted.current) {
+            wasSubmitted.current = false
+            putNewPassword()
         }
-    }, [fetchUser.data])
+    }, [fetchUser.data, changeUser, setCurrentModal, logIn, passwordInputValue, recoveredUser])
 
     return (
         <form onSubmit={handleSubmit}>

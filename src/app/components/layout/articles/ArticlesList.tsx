@@ -42,7 +42,7 @@ const ArticlesList = () => {
             fetchPagedArticles.request(
                 currentPage.current,
                 ARTICLES_TO_LOAD,
-                currentSearch ? currentSearch : ""
+                currentSearch
             );
         }
     }, [needToLoad, currentSearch, fetchPagedArticles, loadingIsAllowed]);
@@ -79,6 +79,7 @@ const ArticlesList = () => {
         }
     }, [
         needToLoad,
+        dataWasGot,
         articles,
         currentCategory,
         currentSearch,

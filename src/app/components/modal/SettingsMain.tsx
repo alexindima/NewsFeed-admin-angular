@@ -11,7 +11,7 @@ import StylizedLinkButton from "../common/StylizedLinkButton";
 import SettingsName from "./SettingsName";
 import SettingsPassword from "./SettingsPassword";
 import useApi from "../../../hooks/useApi";
-import userApi from "../../../api/users"
+import usersApi from "../../../api/users"
 
 const SettingsMain = () => {
     const user = useContext(userContext).user;
@@ -28,7 +28,7 @@ const SettingsMain = () => {
     const openSettingsPasswordModal = () => {
         setCurrentModal(<SettingsPassword/>);
     };
-    const changeUser = useApi(userApi.changeUser);
+    const changeUser = useApi(usersApi.changeUser);
 
     const [ignoredCategories, setIgnoredCategories] = useState(
         user?.ignoredCategories.map((ignoredCategory: number) => {

@@ -12,7 +12,7 @@ import StylizedLinkButton from "../common/StylizedLinkButton";
 import Signup from "./Signup";
 import Recovery from "./Recovery";
 import useApi from "../../../hooks/useApi";
-import userApi from "../../../api/users"
+import usersApi from "../../../api/users";
 
 const Login = () => {
     const EMAIL_ERROR = "There is no user with this email";
@@ -26,10 +26,7 @@ const Login = () => {
     const openRecoveryModal = () => {
         setCurrentModal(<Recovery/>);
     };
-    const hideModal = () => {
-        setCurrentModal(null);
-    };
-    const fetchAllUsers = useApi(userApi.fetchAllUsers);
+    const fetchAllUsers = useApi(usersApi.fetchAllUsers);
 
     const [emailInputValue, setEmailInputValue] = useState("");
     const [passwordInputValue, setPasswordInputValue] = useState("");
@@ -43,22 +40,21 @@ const Login = () => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setLoading(true);
-        wasSubmitted.current = true
-        fetchAllUsers.request()
+        wasSubmitted.current = true;
+        fetchAllUsers.request();
     };
 
     useEffect(() => {
-        const fetchData = async () => {
-            wasSubmitted.current = false
+        const tryToLogin = async () => {
             let emailIsExist = false;
-            const allUsers: User[] = fetchAllUsers.data!
+            const allUsers: User[] = fetchAllUsers.data!;
             const passwordHash = await calculateHash(passwordInputValue);
             allUsers?.every((user: User) => {
                 if (user.email === emailInputValue.trim().toLowerCase()) {
                     emailIsExist = true;
                     if (user.password === passwordHash) {
                         logIn(user);
-                        hideModal();
+                        setCurrentModal(null);
                         setLoading(false);
                         return false;
                     } else {
@@ -77,8 +73,17 @@ const Login = () => {
                 emailInputDOM.current!.focus();
             }
         };
-        if (wasSubmitted.current) fetchData()
-    }, [fetchAllUsers.data, emailInputValue, hideModal, logIn, passwordInputValue])
+        if (fetchAllUsers.data && wasSubmitted.current) {
+            wasSubmitted.current = false;
+            tryToLogin();
+        }
+    }, [
+        fetchAllUsers.data,
+        setCurrentModal,
+        emailInputValue,
+        logIn,
+        passwordInputValue,
+    ]);
 
     return (
         <>
