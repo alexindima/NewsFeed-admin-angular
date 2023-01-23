@@ -87,6 +87,8 @@ const Login = () => {
 
     return (
         <>
+            {/*Я бы посоветовал передавать заголовок модалки как параметр. То есть setCurrentModal у тебя будет принимать еще и заголовок и он будет вставляться в общий ModalComponent. */}
+            {/*Не придется каждый раз писать ModalTitle и тп*/}
             <ModalTitle>Login to the site</ModalTitle>
             <form onSubmit={handleSubmit}>
                 <StyliZedInput
