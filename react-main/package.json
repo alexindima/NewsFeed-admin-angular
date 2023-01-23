@@ -28,16 +28,16 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "node_modules/.bin/react-scripts start",
-    "server-start": "node_modules/.bin/json-server --watch ./src/data/db.json --port 3030 --delay 1000 -m ./node_modules/json-server-auth",
-    "start-with-server": "node_modules/.bin/concurrently \\\"json-server --watch ./src/data/db.json --port 3030 --delay 1000\\\" \\\"react-scripts start\\\"",
-    "build": "node_modules/.bin/webpack --mode=production --define-process-env-node-env=production",
-    "test": "node_modules/.bin/react-scripts test",
-    "eject": "node_modules/.bin/react-scripts eject",
-    "build:dev": "node_modules/.bin/webpack --mode=development",
-    "build:prod": "node_modules/.bin/webpack --mode=production --define-process-env-node-env=production",
-    "watch": "node_modules/.bin/webpack --watch",
-    "serve": "node_modules/.bin/webpack serve"
+    "start": "cross-env node_modules/.bin/react-scripts start",
+    "server-start": "cross-env node_modules/.bin/json-server --watch ./src/data/db.json --port 3030 --delay 1000 -m ./node_modules/json-server-auth",
+    "start-with-server": "cross-env node_modules/.bin/concurrently \\\"json-server --watch ./src/data/db.json --port 3030 --delay 1000\\\" \\\"react-scripts start\\\"",
+    "build": "cross-env node_modules/.bin/webpack --mode=production --define-process-env-node-env=production",
+    "test": "cross-env node_modules/.bin/react-scripts test",
+    "eject": "cross-env node_modules/.bin/react-scripts eject",
+    "build:dev": "cross-env node_modules/.bin/webpack --mode=development",
+    "build:prod": "cross-env node_modules/.bin/webpack --mode=production --define-process-env-node-env=production",
+    "watch": "cross-env node_modules/.bin/webpack --watch",
+    "serve": "cross-env node_modules/.bin/webpack serve"
   },
   "eslintConfig": {
     "extends": [
@@ -62,6 +62,7 @@
     "@types/react-dom": "^18.0.8",
     "@webpack-cli/generators": "^3.0.0",
     "concurrently": "^7.6.0",
+    "cross-env": "^7.0.3",
     "css-loader": "^6.7.1",
     "html-webpack-plugin": "^5.5.0",
     "json-server": "^0.17.1",
