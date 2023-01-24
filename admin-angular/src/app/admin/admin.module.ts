@@ -17,6 +17,7 @@ import {CategoriesService} from "./services/categories.service";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatInputModule} from "@angular/material/input";
+import {TagsService} from "./services/tags.service";
 
 @NgModule({
   imports: [
@@ -52,7 +53,7 @@ import {MatInputModule} from "@angular/material/input";
     UserCreatePageComponent,
     UserEditPageComponent
   ],
-  providers: [AuthService, AuthGuard, CategoriesService]
+  providers: [AuthService, AuthGuard, CategoriesService, TagsService]
 })
 export class AdminModule {
 }

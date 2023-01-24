@@ -1,10 +1,11 @@
 import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {CategoriesService} from "../services/categories.service";
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
-import {Article} from "../../interfaces";
+import {Article, Category, Tag} from "../../interfaces";
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {ArticlesService} from "../../articles.service";
 import {map, Observable, startWith} from "rxjs";
+import {TagsService} from "../services/tags.service";
 
 export interface User {
   name: string;
@@ -19,37 +20,21 @@ export interface User {
 export class ArticleCreatePageComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   public Editor = ClassicEditor;
-
+  CKEditorConfig = {
+    placeholder: 'Create your article'
+  };
+  categoriesOptions: Category[] = [];
+  tagsOptions: Tag[] = [];
   categoryControl = new FormControl<string | User>('');
-  filteredOptions: Observable<User[]> | undefined;
+  tagControls = new FormArray<FormControl>([new FormControl('', Validators.required)]);
 
-  public tagInputs: FormArray<FormControl> = new FormArray<FormControl>([new FormControl('', Validators.required)]);
-
-  addTag() {
-    this.tagInputs.push(new FormControl('', Validators.required));
-  }
-
-  RemoveTag(index: number) {
-    this.tagInputs.removeAt(index);
-  }
-
-
-  showValue() {
-    console.log(this.form)
-    console.log(this.tagInputs.value);
-  }
-
-  constructor(public categories: CategoriesService,
+  constructor(public categoriesService: CategoriesService,
+              public tagsService: TagsService,
               private articlesService: ArticlesService) {
   }
 
-  trackByFn(index: number, item: any) {
-    return item.id;
-  }
-
   ngOnInit() {
-    this.categories.getCategoriesList()
-    this.form.addControl('tags', this.tagInputs);
+    this.form.addControl('tags', this.tagControls);
     this.form.addControl('category', this.categoryControl);
     this.form.addControl('mainTitle', new FormControl(null, [Validators.required]));
     this.form.addControl('secondTitle', new FormControl(null, [Validators.required]));
@@ -57,26 +42,33 @@ export class ArticleCreatePageComponent implements OnInit {
     this.form.addControl('photoText', new FormControl(null, [Validators.required]));
     this.form.addControl('body', new FormControl(null, [Validators.required]));
 
-    this.categories.getCategoriesList().subscribe((result) => {
-      this.filteredOptions = this.categoryControl.valueChanges.pipe(
-        startWith(''),
-        map(value => {
-          function filter(name: string): User[] {
-            const filterValue = name.toLowerCase();
-            return result.filter(option => option.name.toLowerCase().includes(filterValue));
-          }
+    this.categoriesService.getCategoriesList().subscribe((result: Category[]) => {
+      this.categoriesOptions = result;
+    })
 
-          const name = typeof value === 'string' ? value : value?.name;
-          return name ? filter(name as string) : result.slice();
-        }),
-      );
+    this.tagsService.getTagsList().subscribe((result: Tag[]) => {
+      this.tagsOptions = result;
     })
   }
-
-  displayFn(user: User): string {
-    return user && user.name ? user.name : '';
+  
+  addTag() {
+    this.tagControls.push(new FormControl('', Validators.required));
   }
 
+  RemoveTag(index: number) {
+    this.tagControls.removeAt(index);
+  }
+
+  createFilteredOptions(control: FormControl, options: Tag[] | Category[]): Tag[] | Category[] {
+    return options.filter(option => {
+      const isNameString = typeof control.value === 'string' ? control.value : option?.name;
+      return option.name.toLowerCase().includes(isNameString.toLowerCase())
+    });
+  }
+
+  displayFn(obj: Tag | Category): string {
+    return obj && obj.name ? obj.name : '';
+  }
 
   submit() {
     if (this.form.invalid) {
@@ -95,6 +87,11 @@ export class ArticleCreatePageComponent implements OnInit {
     this.articlesService.create(article).subscribe(() => {
       this.form.reset()
     })
+  }
+
+  showValue() {
+    console.log(this.form)
+    console.log(this.tagControls.value);
   }
 }
 

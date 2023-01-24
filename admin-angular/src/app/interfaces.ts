@@ -13,6 +13,12 @@ export interface Category {
   readonly name: string
 }
 
+export interface Tag {
+  readonly id: number;
+  readonly name: string;
+}
+
+
 export interface Article {
   readonly id?: number;
   readonly createdDate: Date;
