@@ -80,8 +80,8 @@
     <div formArrayName="tags" *ngFor="let tag of tagControls.controls; let i = index">
       <div class="input-group mb-3">
         <input type="text" class="form-control" [formControl]="tag" matInput [matAutocomplete]="auto">
-        <button class="btn btn-info" (click)="addTag()">Add another tag</button>
-        <button [disabled]="i === 0" (click)="RemoveTag(i)" class="btn btn-danger">Remove tag</button>
+        <button type="button" (click)="addTag()" class="btn btn-info">Add another tag</button>
+        <button type="button" [disabled]="i === 0" (click)="RemoveTag(i)" class="btn btn-danger">Remove tag</button>
       </div>
       <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
         <mat-option *ngFor="let option of createFilteredOptions(tag, tagsOptions)" [value]="option">
@@ -93,8 +93,8 @@
     <button (click)="showValue()">Show Value</button>
 
     <a href="#" class="btn btn-light m">Preview</a>
-    <button type="submit" [disabled]="form.invalid" class="btn btn-primary">Save</button>
+    <button type="submit" class="btn btn-primary">Save</button>
 
   </form>
 </div>
-
+<!--[disabled]="form.invalid"-->

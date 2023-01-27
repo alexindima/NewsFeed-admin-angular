@@ -1,16 +1,11 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CategoriesService} from "../services/categories.service";
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Article, Category, Tag} from "../../interfaces";
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {ArticlesService} from "../../articles.service";
-import {map, Observable, startWith} from "rxjs";
+import {forkJoin, Observable} from "rxjs";
 import {TagsService} from "../services/tags.service";
-
-export interface User {
-  name: string;
-  id: number
-}
 
 @Component({
   selector: 'app-article-create-page',
@@ -25,7 +20,7 @@ export class ArticleCreatePageComponent implements OnInit {
   };
   categoriesOptions: Category[] = [];
   tagsOptions: Tag[] = [];
-  categoryControl = new FormControl<string | User>('');
+  categoryControl = new FormControl<string>('');
   tagControls = new FormArray<FormControl>([new FormControl('', Validators.required)]);
 
   constructor(public categoriesService: CategoriesService,
@@ -50,7 +45,7 @@ export class ArticleCreatePageComponent implements OnInit {
       this.tagsOptions = result;
     })
   }
-  
+
   addTag() {
     this.tagControls.push(new FormControl('', Validators.required));
   }
@@ -71,21 +66,63 @@ export class ArticleCreatePageComponent implements OnInit {
   }
 
   submit() {
-    if (this.form.invalid) {
+    /*if (this.form.invalid) {
       return
+    }*/
+
+    const createArticle = () => {
+      const article: Article = {
+        createdDate: new Date(),
+        category: category!,
+        mainTitle: this.form.value.mainTitle,
+        secondTitle: this.form.value.secondTitle,
+        mainPhoto: '',
+        mainPhotoDescription: this.form.value.photoText,
+        tags: tags
+      }
+      console.log(article)
+      /*this.articlesService.create(article).subscribe(() => {
+        this.form.reset()
+      })*/
     }
-    console.log(this.form)
-    const article: Article = {
-      createdDate: new Date(),
-      mainTitle: this.form.value.mainTitle,
-      secondTitle: this.form.value.secondTitle,
-      mainPhoto: '',
-      mainPhotoDescription: this.form.value.photoText,
-      category: this.form.value.category,
-      tags: [1, 2]
+
+    let category: number | null = null
+    let tags: number[] = []
+    const observables: Observable<Category | Tag>[] = []
+
+    if (typeof this.form.value.category === "string") {
+      observables.push(this.categoriesService.createCategory(this.form.value.category))
+    } else {
+      category = this.form.value.category.id
     }
-    this.articlesService.create(article).subscribe(() => {
-      this.form.reset()
+
+    for (let tag of this.tagControls.value) {
+      if (typeof tag === "string" && tag.trim()) {
+        observables.push(this.tagsService.createTag(tag))
+      } else {
+        tags.push(tag.id)
+      }
+    }
+
+    if (observables.length) {
+      forkJoin(observables).subscribe(result => {
+        for (let i = 0; i < observables.length; i++) {
+          if (!category && i === 0) {
+            category = result[0].id
+          } else {
+            tags.push(result[i].id)
+          }
+        }
+        createArticle()
+      })
+    } else {
+      createArticle()
+    }
+  }
+
+  addcat(name: string) {
+    this.categoriesService.createCategory(name).subscribe(result => {
+      console.log(result)
     })
   }
 

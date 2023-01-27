@@ -1,7 +1,11 @@
 export interface User {
+  createdDate?: Date;
+  id?: number,
   email: string,
   password: string,
   name?: string
+  ignoredCategories?: number[];
+  ignoredTags?: number[];
 }
 
 export interface JSAuthResponse {
