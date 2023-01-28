@@ -4,8 +4,9 @@ import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Article, Category, Tag} from "../../interfaces";
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {ArticlesService} from "../../articles.service";
-import {forkJoin, Observable} from "rxjs";
+import {concat, map, Observable, toArray} from "rxjs";
 import {TagsService} from "../services/tags.service";
+import {UniqueArray} from "../shared/form.common";
 
 @Component({
   selector: 'app-article-create-page',
@@ -87,7 +88,7 @@ export class ArticleCreatePageComponent implements OnInit {
     }
 
     let category: number | null = null
-    let tags: number[] = []
+    let tags = new UniqueArray<number>()
     const observables: Observable<Category | Tag>[] = []
 
     if (typeof this.form.value.category === "string") {
@@ -100,24 +101,24 @@ export class ArticleCreatePageComponent implements OnInit {
       if (typeof tag === "string" && tag.trim()) {
         observables.push(this.tagsService.createTag(tag))
       } else {
-        tags.push(tag.id)
+        tags.add(tag.id)
       }
     }
 
-    if (observables.length) {
-      forkJoin(observables).subscribe(result => {
+    concat(...observables).pipe(
+      map(result => result.id),
+      toArray())
+      .subscribe(result => {
         for (let i = 0; i < observables.length; i++) {
           if (!category && i === 0) {
-            category = result[0].id
+            category = result[0]
           } else {
-            tags.push(result[i].id)
+            tags.add(result[i])
           }
         }
         createArticle()
       })
-    } else {
-      createArticle()
-    }
+
   }
 
   addcat(name: string) {

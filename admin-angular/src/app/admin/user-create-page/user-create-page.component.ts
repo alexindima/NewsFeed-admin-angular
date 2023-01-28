@@ -4,8 +4,9 @@ import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Article, Category, Tag, User} from "../../interfaces";
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {ArticlesService} from "../../articles.service";
-import {forkJoin, map, Observable, startWith} from "rxjs";
+import {concat, forkJoin, map, Observable, of, startWith, toArray} from "rxjs";
 import {TagsService} from "../services/tags.service";
+import {UniqueArray} from "../shared/form.common";
 
 @Component({
   selector: 'app-user-create-page',
@@ -92,30 +93,52 @@ export class UserCreatePageComponent implements OnInit {
       })*/
     }
 
-    let ignoredCategories: number[] = []
-    let ignoredTags: number[] = []
+    let ignoredCategories = new UniqueArray<number>()
+    let ignoredTags = new UniqueArray<number>()
     const categoriesObservables: Observable<Category>[] = []
     const tagsObservables: Observable<Tag>[] = []
 
     for (let category of this.categoriesControls.value) {
-      if (typeof category === "string" && category.trim()) {
-        categoriesObservables.push(this.categoriesService.createCategory(category))
+      if (typeof category === "string") {
+        if (category.trim()) {
+          categoriesObservables.push(this.categoriesService.createCategory(category))
+        }
       } else {
-        ignoredCategories.push(category.id)
+        ignoredCategories.add(category.id)
       }
     }
 
     for (let tag of this.tagControls.value) {
-      if (typeof tag === "string" && tag.trim()) {
-        tagsObservables.push(this.tagsService.createTag(tag))
+      if (typeof tag === "string") {
+        if (tag.trim()) {
+          tagsObservables.push(this.tagsService.createTag(tag))
+        }
       } else {
-        ignoredTags.push(tag.id)
+        ignoredTags.add(tag.id)
       }
     }
 
+    // если будут одинаковые новые теги, форкджойн сделает запросы параллельно, сервер создаст для каждого свой ид
+    const categoriesObservable = categoriesObservables.length
+      ? concat(...categoriesObservables).pipe(
+        map(category => category.id),
+        toArray())
+      : of([]);
+    const tagsObservable = tagsObservables.length
+      ? concat(...tagsObservables).pipe(
+        map(tag => tag.id),
+        toArray())
+      : of([]);
 
-    forkJoin(categoriesObservables).subscribe((res) => {
-      console.log(res)
+
+    forkJoin([categoriesObservable, tagsObservable]).subscribe(([categoriesIDs, tagsIDs]) => {
+      for (let categoryID of categoriesIDs) {
+        ignoredCategories.add(categoryID)
+      }
+      for (let tagID of tagsIDs) {
+        ignoredTags.add(tagID)
+      }
+      createUser()
     })
   }
 
