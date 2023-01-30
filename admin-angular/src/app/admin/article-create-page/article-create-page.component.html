@@ -43,7 +43,9 @@
     <h4>Photo</h4>
     <div class="mb-3" [ngClass]="{isInvalid: form.get('photoUploader')?.touched && form.get('photoUploader')?.invalid}">
       <label for="photoUploader" class="form-label">Photo Upload</label>
-      <input type="file" class="form-control" id="photoUploader"
+      <!-- <input type="file" class="form-control" id="photoUploader"
+              formControlName="photoUploader">-->
+      <input type="text" class="form-control" id="photoUploader"
              formControlName="photoUploader">
       <div id="photoUploaderValidation"
            *ngIf="form.get('photoUploader') && form.get('photoUploader')?.touched && form.get('photoUploader')?.invalid"
@@ -90,11 +92,7 @@
       </mat-autocomplete>
     </div>
 
-    <button (click)="showValue()">Show Value</button>
-
     <a href="#" class="btn btn-light m">Preview</a>
-    <button type="submit" class="btn btn-primary">Save</button>
-
+    <button type="submit" [disabled]="form.invalid" class="btn btn-primary">Save</button>
   </form>
 </div>
-<!--[disabled]="form.invalid"-->

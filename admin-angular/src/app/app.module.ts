@@ -48,6 +48,9 @@ import {MatFormFieldModule} from "@angular/material/form-field";
     MatNativeDateModule
   ],
   providers: [],
+  exports: [
+    ArticlesListComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

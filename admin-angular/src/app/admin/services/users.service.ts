@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {User} from "../../interfaces";
-import {Observable} from "rxjs";
+import {Article, User} from "../../interfaces";
+import {map, Observable} from "rxjs";
 
 @Injectable()
 export class UsersService {
@@ -9,30 +9,39 @@ export class UsersService {
   constructor(private http: HttpClient) {
   }
 
-  getUsersList(): Observable<User[]> {
-    return this.http.get<User[]>(`http://localhost:3030/users`)
+  getCountOfUsers(search: string | null = null): Observable<number> {
+    let url = `http://localhost:3030/users`;
+    if (search) {
+      url += `?q=${search.replace(/ /g, "+")}&`;
+    }
+    return this.http.get<User[]>(url).pipe(
+      map((users: User[]) => users.length)
+    )
   }
 
-  createUser(newUser: User) {
-    this.http.post<User>(`http://localhost:3030/users`, newUser).subscribe()
+  getUsers(page: number, limit: number, search: string | null = null): Observable<User[]> {
+    let url = `http://localhost:3030/users?`;
+    if (search) {
+      url += `q=${search.replace(/ /g, "+")}&`;
+    }
+    url += `_page=${page}&_limit=${limit}`;
+    return this.http.get<User[]>(url)
   }
 
-  deleteUser(deletedUser: number | string | User) {
-    if (typeof deletedUser === "number") {
-      this.http.delete(`http://localhost:3030/users/${deletedUser}`).subscribe()
+
+  createUser(newUser: User): Observable<User> {
+    return this.http.post<User>(`http://localhost:3030/users/register`, newUser)
+  }
+
+  deleteUser(user: number | User): Observable<any> {
+    let id: number | undefined
+    if (typeof user === "number") {
+      id = user
     }
-    if (typeof deletedUser === "string") {
-      this.getUsersList().subscribe((users: User[]) => {
-        const isUserExist = users.some((user: User) => user.email.toLowerCase() === deletedUser.toLowerCase())
-        if (isUserExist) {
-          const foundUser = users.find((user: User) => user.name!.toLowerCase() === deletedUser.toLowerCase())
-          this.http.delete(`http://localhost:3030/users/${foundUser!.id}`).subscribe()
-        }
-      })
+    if (typeof user === "object") {
+      id = user.id
     }
-    if (typeof deletedUser === "object") {
-      this.http.delete(`http://localhost:3030/users/${deletedUser.id}`).subscribe()
-    }
+    return this.http.delete(`http://localhost:3030/users/${id}`)
   }
 }
 

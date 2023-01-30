@@ -45,7 +45,7 @@
       <label for="confirmPassword" class="form-label">Confirm password</label>
       <input id="confirmPassword" class="form-control"
              placeholder="What is the name of the article?"
-             formControlName="password">
+             formControlName="confirmPassword">
       <div id="confirmPasswordValidation"
            *ngIf="form.get('confirmPassword') && form.get('confirmPassword')?.touched && form.get('confirmPassword')?.invalid"
            class="form-text">
@@ -82,12 +82,8 @@
         </mat-option>
       </mat-autocomplete>
     </div>
-    
-    <button (click)="showValue()">Show Value</button>
 
-    <a href="#" class="btn btn-light m">Preview</a>
-    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="submit" [disabled]="form.invalid" class="btn btn-primary">Save</button>
 
   </form>
 </div>
-<!--[disabled]="form.invalid"-->

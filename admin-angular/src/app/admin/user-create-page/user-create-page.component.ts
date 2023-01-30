@@ -1,12 +1,12 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CategoriesService} from "../services/categories.service";
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
-import {Article, Category, Tag, User} from "../../interfaces";
+import {Category, Tag, User} from "../../interfaces";
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import {ArticlesService} from "../../articles.service";
-import {concat, forkJoin, map, Observable, of, startWith, toArray} from "rxjs";
+import {concat, forkJoin, map, Observable, of, toArray} from "rxjs";
 import {TagsService} from "../services/tags.service";
 import {UniqueArray} from "../shared/form.common";
+import {UsersService} from "../services/users.service";
 
 @Component({
   selector: 'app-user-create-page',
@@ -26,7 +26,7 @@ export class UserCreatePageComponent implements OnInit {
 
   constructor(public categoriesService: CategoriesService,
               public tagsService: TagsService,
-              private articlesService: ArticlesService) {
+              private usersService: UsersService) {
   }
 
   ngOnInit() {
@@ -74,9 +74,13 @@ export class UserCreatePageComponent implements OnInit {
   }
 
   submit() {
-    /*if (this.form.invalid) {
+    if (this.form.invalid) {
       return
-    }*/
+    }
+
+    if (this.form.value.password !== this.form.value.confirmPassword) {
+      return;
+    }
 
     const createUser = () => {
       const user: User = {
@@ -87,10 +91,9 @@ export class UserCreatePageComponent implements OnInit {
         ignoredCategories: ignoredCategories,
         ignoredTags: ignoredTags
       }
-      console.log(user)
-      /*this.articlesService.create(article).subscribe(() => {
+      this.usersService.createUser(user).subscribe(() => {
         this.form.reset()
-      })*/
+      })
     }
 
     let ignoredCategories = new UniqueArray<number>()
@@ -131,26 +134,15 @@ export class UserCreatePageComponent implements OnInit {
       : of([]);
 
 
-    forkJoin([categoriesObservable, tagsObservable]).subscribe(([categoriesIDs, tagsIDs]) => {
-      for (let categoryID of categoriesIDs) {
+    forkJoin([categoriesObservable, tagsObservable]).subscribe(([categoriesID, tagsID]) => {
+      for (let categoryID of categoriesID) {
         ignoredCategories.add(categoryID)
       }
-      for (let tagID of tagsIDs) {
+      for (let tagID of tagsID) {
         ignoredTags.add(tagID)
       }
       createUser()
     })
-  }
-
-  addcat(name: string) {
-    this.categoriesService.createCategory(name).subscribe(result => {
-      console.log(result)
-    })
-  }
-
-  showValue() {
-    console.log(this.form)
-    console.log(this.tagControls.value);
   }
 }
 

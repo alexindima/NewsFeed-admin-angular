@@ -3,7 +3,7 @@ import {CategoriesService} from "../services/categories.service";
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Article, Category, Tag} from "../../interfaces";
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import {ArticlesService} from "../../articles.service";
+import {ArticlesService} from "../services/articles.service";
 import {concat, map, Observable, toArray} from "rxjs";
 import {TagsService} from "../services/tags.service";
 import {UniqueArray} from "../shared/form.common";
@@ -67,9 +67,9 @@ export class ArticleCreatePageComponent implements OnInit {
   }
 
   submit() {
-    /*if (this.form.invalid) {
+    if (this.form.invalid) {
       return
-    }*/
+    }
 
     const createArticle = () => {
       const article: Article = {
@@ -77,14 +77,14 @@ export class ArticleCreatePageComponent implements OnInit {
         category: category!,
         mainTitle: this.form.value.mainTitle,
         secondTitle: this.form.value.secondTitle,
-        mainPhoto: '',
+        mainPhoto: this.form.value.secondTitle,
         mainPhotoDescription: this.form.value.photoText,
         tags: tags
       }
       console.log(article)
-      /*this.articlesService.create(article).subscribe(() => {
+      this.articlesService.createArticle(article).subscribe(() => {
         this.form.reset()
-      })*/
+      })
     }
 
     let category: number | null = null
@@ -118,18 +118,6 @@ export class ArticleCreatePageComponent implements OnInit {
         }
         createArticle()
       })
-
-  }
-
-  addcat(name: string) {
-    this.categoriesService.createCategory(name).subscribe(result => {
-      console.log(result)
-    })
-  }
-
-  showValue() {
-    console.log(this.form)
-    console.log(this.tagControls.value);
   }
 }
 

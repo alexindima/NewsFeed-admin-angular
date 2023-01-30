@@ -18,6 +18,13 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatInputModule} from "@angular/material/input";
 import {TagsService} from "./services/tags.service";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {UsersService} from "./services/users.service";
+import {ArticlesService} from "./services/articles.service";
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatButtonModule} from "@angular/material/button";
+import {ConfirmDialogModalComponent} from './shared/confirm-dialog-modal/confirm-dialog-modal.component';
+import {ArrayToStringPipe} from "./shared/array-to-string.pipe";
 
 @NgModule({
   imports: [
@@ -41,7 +48,10 @@ import {TagsService} from "./services/tags.service";
     ]),
     MatFormFieldModule,
     MatAutocompleteModule,
-    MatInputModule
+    MatInputModule,
+    MatPaginatorModule,
+    MatDialogModule,
+    MatButtonModule
   ],
   exports: [RouterModule],
   declarations: [
@@ -51,9 +61,17 @@ import {TagsService} from "./services/tags.service";
     ArticleEditPageComponent,
     UserDashboardPageComponent,
     UserCreatePageComponent,
-    UserEditPageComponent
+    UserEditPageComponent,
+    ConfirmDialogModalComponent,
+    ArrayToStringPipe
   ],
-  providers: [AuthService, AuthGuard, CategoriesService, TagsService]
+  providers: [
+    AuthService,
+    AuthGuard,
+    CategoriesService,
+    TagsService,
+    UsersService,
+    ArticlesService]
 })
 export class AdminModule {
 }
