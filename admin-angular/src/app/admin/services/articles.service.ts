@@ -28,6 +28,10 @@ export class ArticlesService {
     return this.http.get<Article[]>(url)
   }
 
+  getSingleArticle(article: number): Observable<Article> {
+    return this.http.get<Article>(`http://localhost:3030/articles/${article}`)
+  }
+
   createArticle(article: Article): Observable<Article> {
     return this.http.post<Article>('http://localhost:3030/articles', article)
   }

@@ -1,0 +1,99 @@
+<div class="mt-3 container">
+  <h1 class="mb-3">Create an Article</h1>
+
+  <form class="pb-3 example-form" [formGroup]="form" (ngSubmit)="submit()">
+    <h4>Category</h4>
+    <input type="text"
+           placeholder="Choose category or enter a new one"
+           [formControl]="categoryControl"
+           [matAutocomplete]="auto"
+           formControlName="category"
+           class=" form-control mb-3">
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let option of createFilteredOptions(categoryControl, categoriesOptions)"
+                  [value]="option">
+        {{option.name}}
+      </mat-option>
+    </mat-autocomplete>
+
+    <h2>Header</h2>
+    <div class="mb-3" [ngClass]="{isInvalid: form.get('mainTitle')?.touched && form.get('mainTitle')?.invalid}">
+      <label for="mainTitle" class="form-label">Main Title</label>
+      <textarea id="mainTitle" class="form-control" rows="2"
+                placeholder="What is the name of the article?"
+                formControlName="mainTitle"></textarea>
+      <div id="mainTitleValidation"
+           *ngIf="form.get('mainTitle') && form.get('mainTitle')?.touched && form.get('mainTitle')?.invalid"
+           class="form-text">
+        <small *ngIf="form.get('mainTitle')?.errors?.['mainTitle']">Field can not be empty</small>
+      </div>
+    </div>
+
+    <div class="mb-3" [ngClass]="{isInvalid: form.get('secondTitle')?.touched && form.get('secondTitle')?.invalid}">
+      <label for="secondTitle" class="form-label">Second Title</label>
+      <textarea id="secondTitle" class="form-control" rows="2"
+                placeholder="What is the name of the article?"
+                formControlName="secondTitle"></textarea>
+      <div id="secondTitleValidation"
+           *ngIf="form.get('secondTitle') && form.get('secondTitle')?.touched && form.get('secondTitle')?.invalid"
+           class="form-text">
+        <small *ngIf="form.get('secondTitle')?.errors?.['secondTitle']">Field can not be empty</small>
+      </div>
+    </div>
+
+    <h4>Photo</h4>
+    <div class="mb-3" [ngClass]="{isInvalid: form.get('photoUploader')?.touched && form.get('photoUploader')?.invalid}">
+      <label for="photoUploader" class="form-label">Photo Upload</label>
+      <!-- <input type="file" class="form-control" id="photoUploader"
+              formControlName="photoUploader">-->
+      <input type="text" class="form-control" id="photoUploader"
+             formControlName="photoUploader">
+      <div id="photoUploaderValidation"
+           *ngIf="form.get('photoUploader') && form.get('photoUploader')?.touched && form.get('photoUploader')?.invalid"
+           class="form-text">
+        <small *ngIf="form.get('photoUploader')?.errors?.['photoUploader']">Field can not be empty</small>
+      </div>
+    </div>
+
+    <div class="mb-3" [ngClass]="{isInvalid: form.get('photoText')?.touched && form.get('photoText')?.invalid}">
+      <label for="photoText" class="form-label">Photo Text</label>
+      <textarea id="photoText" class="form-control" rows="2"
+                placeholder="What is the name of the article?"
+                formControlName="photoText"></textarea>
+      <div id="photoTextValidation"
+           *ngIf="form.get('photoText') && form.get('photoText')?.touched && form.get('photoText')?.invalid"
+           class="form-text">
+        <small *ngIf="form.get('photoText')?.errors?.['photoText']">Field can not be empty</small>
+      </div>
+    </div>
+
+    <h2>Body</h2>
+    <div class="mb-3" [ngClass]="{isInvalid: form.get('body')?.touched && form.get('body')?.invalid}">
+      <ckeditor [config]="CKEditorConfig" [editor]="Editor"
+                formControlName="body"></ckeditor>
+
+      <div id="bodyValidation"
+           *ngIf="form.get('body') && form.get('body')?.touched && form.get('body')?.invalid"
+           class="form-text">
+        <small *ngIf="form.get('body')?.errors?.['body']">Field can not be empty</small>
+      </div>
+    </div>
+
+    <h4>Tags</h4>
+    <div formArrayName="tags" *ngFor="let tag of tagControls.controls; let i = index">
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" [formControl]="tag" matInput [matAutocomplete]="auto">
+        <button type="button" (click)="addTag()" class="btn btn-info">Add another tag</button>
+        <button type="button" [disabled]="i === 0" (click)="RemoveTag(i)" class="btn btn-danger">Remove tag</button>
+      </div>
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let option of createFilteredOptions(tag, tagsOptions)" [value]="option">
+          {{ option.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </div>
+
+    <a href="#" class="btn btn-light m">Preview</a>
+    <button type="submit" [disabled]="form.invalid" class="btn btn-primary">Save</button>
+  </form>
+</div>

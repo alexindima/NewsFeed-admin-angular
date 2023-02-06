@@ -1,18 +1,16 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
-import {LoginPageComponent} from "./login-page/login-page.component";
-import {AdminLayoutComponent} from './admin-layout/admin-layout.component';
-import {ArticleCreatePageComponent} from './article-create-page/article-create-page.component';
-import {ArticleEditPageComponent} from './article-edit-page/article-edit-page.component';
-import {UserCreatePageComponent} from './user-create-page/user-create-page.component';
-import {UserEditPageComponent} from './user-edit-page/user-edit-page.component';
-import {ArticleDashboardPageComponent} from './article-dashboard-page/article-dashboard-page.component';
-import {UserDashboardPageComponent} from './user-dashboard-page/user-dashboard-page.component';
+import {LoginPageComponent} from "./components/login-page/login-page.component";
+import {AdminLayoutComponent} from './components/admin-layout/admin-layout.component';
+import {ArticleCreatePageComponent} from './components/article-create-page/article-create-page.component';
+import {UserCreatePageComponent} from './components/user-create-page/user-create-page.component';
+import {ArticleDashboardPageComponent} from './components/article-dashboard-page/article-dashboard-page.component';
+import {UserDashboardPageComponent} from './components/user-dashboard-page/user-dashboard-page.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AuthService} from "./services/auth.service";
 import {SharedModule} from "../shared.module";
-import {AuthGuard} from "./services/auth.guard";
+import {AuthGuard} from "./guards/auth.guard";
 import {CategoriesService} from "./services/categories.service";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
@@ -23,8 +21,13 @@ import {UsersService} from "./services/users.service";
 import {ArticlesService} from "./services/articles.service";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
-import {ConfirmDialogModalComponent} from './shared/confirm-dialog-modal/confirm-dialog-modal.component';
-import {ArrayToStringPipe} from "./shared/array-to-string.pipe";
+import {ConfirmDialogModalComponent} from './components/shared/confirm-dialog-modal/confirm-dialog-modal.component';
+import {ArrayToStringPipe} from "./components/shared/array-to-string.pipe";
+import {NotFoundPageComponent} from './components/not-found-page/not-found-page.component';
+import {UserResolver} from "./resorvers/user.resolver";
+import {ArticleResolver} from "./resorvers/article.resolver";
+import {CategoriesResolver} from "./resorvers/categories.resolver";
+import {TagsResolver} from "./resorvers/tags.resolver";
 
 @NgModule({
   imports: [
@@ -39,10 +42,21 @@ import {ArrayToStringPipe} from "./shared/array-to-string.pipe";
           {path: 'login', component: LoginPageComponent},
           {path: 'articles', component: ArticleDashboardPageComponent, canActivate: [AuthGuard]},
           {path: 'new-article', component: ArticleCreatePageComponent, canActivate: [AuthGuard]},
-          {path: 'article/:id/edit', component: ArticleEditPageComponent, canActivate: [AuthGuard]},
+          {
+            path: 'article/:id', component: ArticleCreatePageComponent, canActivate: [AuthGuard], resolve: {
+              article: ArticleResolver,
+              categories: CategoriesResolver,
+              tags: TagsResolver
+            }
+          },
           {path: 'users', component: UserDashboardPageComponent, canActivate: [AuthGuard]},
           {path: 'new-user', component: UserCreatePageComponent, canActivate: [AuthGuard]},
-          {path: 'user/:id/edit', component: UserEditPageComponent, canActivate: [AuthGuard]}
+          {
+            path: 'user/:id', component: UserCreatePageComponent, canActivate: [AuthGuard], resolve: {
+              user: UserResolver
+            }
+          },
+          {path: '**', component: NotFoundPageComponent}
         ]
       }
     ]),
@@ -58,20 +72,23 @@ import {ArrayToStringPipe} from "./shared/array-to-string.pipe";
     AdminLayoutComponent,
     ArticleDashboardPageComponent,
     ArticleCreatePageComponent,
-    ArticleEditPageComponent,
     UserDashboardPageComponent,
     UserCreatePageComponent,
-    UserEditPageComponent,
     ConfirmDialogModalComponent,
-    ArrayToStringPipe
+    ArrayToStringPipe,
+    NotFoundPageComponent
   ],
   providers: [
     AuthService,
     AuthGuard,
     CategoriesService,
+    CategoriesResolver,
     TagsService,
+    TagsResolver,
     UsersService,
-    ArticlesService]
+    UserResolver,
+    ArticlesService,
+    ArticleResolver]
 })
 export class AdminModule {
 }

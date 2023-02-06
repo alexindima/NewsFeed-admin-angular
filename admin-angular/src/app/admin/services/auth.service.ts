@@ -14,7 +14,7 @@ export class AuthService {
     return localStorage.getItem('js-token')
   }
 
-  login(user: User): Observable<any> {
+  login(user: User): Observable<JSAuthResponse | null> {
     return this.http.post<JSAuthResponse>(`http://localhost:3030/login`, user)
       .pipe(
         tap(this.setToken),

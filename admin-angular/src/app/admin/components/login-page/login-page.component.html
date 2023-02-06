@@ -1,0 +1,41 @@
+<div class="container-fluid mt-4">
+  <div class="row">
+    <div class="col-lg-7 offset-lg-1">
+      <div class="alarm">{{message}}</div>
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="mb-3" [ngClass]="{isInvalid: form.get('email')?.touched && form.get('email')?.invalid}">
+          <label for="exampleInputEmail1" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="exampleInputEmail1" formControlName="email">
+          <div id="emailValidation"
+               *ngIf="form.get('email') && form.get('email')?.touched && form.get('email')?.invalid" class="form-text">
+            <small class="text-danger" *ngIf="form.get('email')?.errors?.['required']">Field can not be empty</small>
+            <small class="text-danger" *ngIf="form.get('email')?.errors?.['email']">Enter correct email</small>
+          </div>
+        </div>
+        <div class="mb-3" [ngClass]="{isInvalid: form.get('password')?.touched && form.get('password')?.invalid}">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" formControlName="password">
+          <div id="passwordValidation" class="form-text"
+               *ngIf="form.get('password') && form.get('password')?.touched && form.get('password')?.invalid"
+               class="form-text">
+            <small class="text-danger" *ngIf="form.get('password')?.errors?.['required']">Field can not be empty</small>
+            <small class="text-danger" *ngIf="form.get('password')?.errors?.['minlength']">
+              Password must contain at least {{form.get('password')?.errors?.['minlength'].requiredLength}} symbols.
+              Now
+              here only {{form.get('password')?.errors?.['minlength'].actualLength}}</small>
+          </div>
+        </div>
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+          <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        </div>
+        <div class="error" *ngIf="auth.error$ | async as error">
+          {{error}}
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid || submitted">Submit</button>
+      </form>
+
+    </div>
+  </div>
+</div>
+

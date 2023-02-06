@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {Article, User} from "../../interfaces";
+import {User} from "../../interfaces";
 import {map, Observable} from "rxjs";
 
 @Injectable()
@@ -26,6 +26,10 @@ export class UsersService {
     }
     url += `_page=${page}&_limit=${limit}`;
     return this.http.get<User[]>(url)
+  }
+
+  getSingleUser(user: number): Observable<User> {
+    return this.http.get<User>(`http://localhost:3030/users/${user}`)
   }
 
 

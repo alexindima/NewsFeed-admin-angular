@@ -1,0 +1,79 @@
+<div class="d-flex flex-column">
+  <div class="mt-3 mb-4 container">
+
+
+    <div class="row mb-3">
+      <h1 class="mb-3">Articles</h1>
+      <div class="col"></div>
+      <div class="col-auto">
+        <a class="btn btn-outline-primary" [routerLink]="['/admin', 'new-article']">Create an Article</a>
+      </div>
+    </div>
+
+    <table class="table">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Title</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <tr *ngFor="let article of articlesList">
+        <td>{{article.id}}</td>
+        <td>{{article.createdDate | date: 'short'}}</td>
+        <td>{{article.createdDate | date: 'short'}}</td>
+        <td>{{article.mainTitle}}</td>
+        <td class="text-nowrap">
+          <a class="btn btn-outline-primary me-3" [routerLink]="['/admin', 'article', article.id]">Edit</a>
+
+          <button type="button" class="btn btn-danger" (click)="openDeleteModal(article)">
+            Delete
+          </button>
+        </td>
+      </tr>
+
+      </tbody>
+    </table>
+
+  </div>
+  <div class="mt-3">
+    <mat-paginator class="bg-light demo-paginator"
+                   (page)="handlePageEvent($event)"
+                   [length]="paginatorSettings.length"
+                   [pageSize]="paginatorSettings.pageSize"
+                   [disabled]="paginatorSettings.disabled"
+                   [showFirstLastButtons]="paginatorSettings.showFirstLastButtons"
+                   [pageSizeOptions]="paginatorSettings.pageSizeOptions"
+                   [hidePageSize]="paginatorSettings.hidePageSize"
+                   [pageIndex]="paginatorSettings.pageIndex"
+                   aria-label="Select page">
+    </mat-paginator>
+  </div>
+</div>
+
+
+<div class="modal fade" id="confirm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Delete?</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Do you really want to delete the article?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
