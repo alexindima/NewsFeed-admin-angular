@@ -25,8 +25,8 @@ export class UserResolver implements Resolve<User> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<User> {
     return this.usersService.getSingleUser(route.params?.['id']).pipe(
       catchError(() => {
-        this.router.navigate(['/admin', 'users'])
-        return EMPTY
+        this.router.navigate(['/admin', 'users']);
+        return EMPTY;
       })
     )
   }

@@ -1,89 +1,176 @@
 <div class="mt-3 container">
-  <h1 class="mb-3">Create a User</h1>
+  <h1 class="mb-3">{{userFromResolver ? 'Edit the User' : 'Create a User'}}</h1>
 
-  <form class="pb-3 example-form" [formGroup]="form" (ngSubmit)="submit()">
+  <form
+    class="pb-3 example-form"
+    [formGroup]="form"
+    (ngSubmit)="submit()">
 
     <h2>Personal data</h2>
-    <div class="mb-3" [ngClass]="{isInvalid: form.get('name')?.touched && form.get('name')?.invalid}">
+    <div
+      class="mb-3"
+      [ngClass]="{isInvalid: form.get('name')?.touched && form.get('name')?.invalid}"
+    >
       <label for="name" class="form-label">Name</label>
       <input id="name" class="form-control"
-             placeholder="What is the name of the article?"
-             formControlName="name">
-      <div id="nameValidation"
-           *ngIf="form.get('name') && form.get('name')?.touched && form.get('name')?.invalid"
-           class="form-text">
+             placeholder="What is the name of the user?"
+             formControlName="name"
+      >
+      <div
+        id="nameValidation"
+        class="form-text"
+        *ngIf="form.get('name') && form.get('name')?.touched && form.get('name')?.invalid"
+      >
         <small *ngIf="form.get('name')?.errors?.['name']">Field can not be empty</small>
       </div>
     </div>
 
-    <div class="mb-3" [ngClass]="{isInvalid: form.get('email')?.touched && form.get('email')?.invalid}">
+    <div
+      class="mb-3"
+      [ngClass]="{isInvalid: form.get('email')?.touched && form.get('email')?.invalid}"
+    >
       <label for="email" class="form-label">Email</label>
       <input id="email" class="form-control"
-             placeholder="What is the name of the article?"
+             placeholder="What is the email of the user?"
              formControlName="email">
       <div id="emailValidation"
            *ngIf="form.get('email') && form.get('email')?.touched && form.get('email')?.invalid"
-           class="form-text">
+           class="form-text"
+      >
         <small *ngIf="form.get('email')?.errors?.['email']">Field can not be empty</small>
       </div>
     </div>
 
-    <div class="mb-3" [ngClass]="{isInvalid: form.get('password')?.touched && form.get('password')?.invalid}">
+    <div
+      class="mb-3"
+      [ngClass]="{isInvalid: form.get('password')?.touched && form.get('password')?.invalid}"
+    >
       <label for="password" class="form-label">Password</label>
-      <input id="password" class="form-control"
-             placeholder="What is the name of the article?"
-             formControlName="password">
-      <div id="passwordValidation"
-           *ngIf="form.get('password') && form.get('password')?.touched && form.get('password')?.invalid"
-           class="form-text">
+      <input
+        id="password"
+        class="form-control"
+        placeholder="{{userFromResolver ? 'Enter a new password or leave the field blank for not changing the password' : 'What is the user\'s password?'}}"
+        formControlName="password"
+      >
+      <div
+        id="passwordValidation"
+        class="form-text"
+        *ngIf="form.get('password') && form.get('password')?.touched && form.get('password')?.invalid"
+      >
         <small *ngIf="form.get('password')?.errors?.['password']">Field can not be empty</small>
       </div>
     </div>
 
-    <div class="mb-3"
-         [ngClass]="{isInvalid: form.get('confirmPassword')?.touched && form.get('confirmPassword')?.invalid}">
+    <div
+      class="mb-3"
+      [ngClass]="{isInvalid: form.get('confirmPassword')?.touched && form.get('confirmPassword')?.invalid}"
+    >
       <label for="confirmPassword" class="form-label">Confirm password</label>
-      <input id="confirmPassword" class="form-control"
-             placeholder="What is the name of the article?"
-             formControlName="confirmPassword">
+      <input
+        id="confirmPassword"
+        class="form-control"
+        placeholder="{{userFromResolver ? 'Repeat password or leave the field blank for not changing the password' : 'Repeat password'}}"
+        formControlName="confirmPassword"
+      >
       <div id="confirmPasswordValidation"
            *ngIf="form.get('confirmPassword') && form.get('confirmPassword')?.touched && form.get('confirmPassword')?.invalid"
-           class="form-text">
+           class="form-text"
+      >
         <small *ngIf="form.get('confirmPassword')?.errors?.['confirmPassword']">Field can not be empty</small>
       </div>
     </div>
 
     <h2>Ignore settings</h2>
     <h4>Categories</h4>
-    <div formArrayName="categories" *ngFor="let category of categoriesControls.controls; let i = index">
+    <div
+      formArrayName="categories"
+      *ngFor="let category of categoriesControls.controls; let i = index"
+    >
       <div class="input-group mb-3">
-        <input type="text" class="form-control" [formControl]="category" matInput [matAutocomplete]="auto">
-        <button type="button" (click)="addCategory()" class="btn btn-info">Add another category</button>
-        <button type="button" [disabled]="i === 0" (click)="RemoveCategory(i)" class="btn btn-danger">Remove category
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Select a category or enter a new one"
+          [formControl]="category"
+          matInput
+          [matAutocomplete]="auto"
+        >
+        <button
+          type="button"
+          (click)="addCategory()"
+          class="btn btn-info"
+        >
+          Add another category
+        </button>
+        <button
+          type="button"
+          [disabled]="i === 0"
+          (click)="RemoveCategory(i)"
+          class="btn btn-danger"
+        >
+          Remove category
         </button>
       </div>
-      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-        <mat-option *ngFor="let option of createFilteredOptions(category, categoriesOptions)" [value]="option">
+      <mat-autocomplete
+        #auto="matAutocomplete"
+        [displayWith]="displayFn"
+      >
+        <mat-option
+          *ngFor="let option of createFilteredOptions(category, categoriesOptions)"
+          [value]="option"
+        >
           {{ option.name }}
         </mat-option>
       </mat-autocomplete>
     </div>
 
     <h4>Tags</h4>
-    <div formArrayName="tags" *ngFor="let tag of tagControls.controls; let i = index">
+    <div
+      formArrayName="tags"
+      *ngFor="let tag of tagControls.controls; let i = index">
       <div class="input-group mb-3">
-        <input type="text" class="form-control" [formControl]="tag" matInput [matAutocomplete]="auto">
-        <button type="button" (click)="addTag()" class="btn btn-info">Add another tag</button>
-        <button type="button" [disabled]="i === 0" (click)="RemoveTag(i)" class="btn btn-danger">Remove tag</button>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Select a tag or enter a new one"
+          [formControl]="tag"
+          matInput
+          [matAutocomplete]="auto">
+        <button
+          type="button"
+          class="btn btn-info"
+          (click)="addTag()"
+        >
+          Add another tag
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          [disabled]="i === 0" (click)="RemoveTag(i)"
+        >
+          Remove tag
+        </button>
       </div>
-      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-        <mat-option *ngFor="let option of createFilteredOptions(tag, tagsOptions)" [value]="option">
+      <mat-autocomplete
+        #auto="matAutocomplete"
+        [displayWith]="displayFn"
+      >
+        <mat-option
+          *ngFor="let option of createFilteredOptions(tag, tagsOptions)"
+          [value]="option"
+        >
           {{ option.name }}
         </mat-option>
       </mat-autocomplete>
     </div>
 
-    <button type="submit" [disabled]="form.invalid" class="btn btn-primary">Save</button>
+    <button
+      type="submit"
+      [disabled]="form.invalid"
+      class="btn btn-primary"
+    >
+      {{userFromResolver ? 'Save changes' : 'Create User'}}
+    </button>
 
   </form>
 </div>

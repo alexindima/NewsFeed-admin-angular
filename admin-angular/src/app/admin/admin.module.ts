@@ -41,7 +41,12 @@ import {TagsResolver} from "./resorvers/tags.resolver";
           {path: '', redirectTo: '/admin/login', pathMatch: "full"},
           {path: 'login', component: LoginPageComponent},
           {path: 'articles', component: ArticleDashboardPageComponent, canActivate: [AuthGuard]},
-          {path: 'new-article', component: ArticleCreatePageComponent, canActivate: [AuthGuard]},
+          {
+            path: 'new-article', component: ArticleCreatePageComponent, canActivate: [AuthGuard], resolve: {
+              categories: CategoriesResolver,
+              tags: TagsResolver
+            }
+          },
           {
             path: 'article/:id', component: ArticleCreatePageComponent, canActivate: [AuthGuard], resolve: {
               article: ArticleResolver,
@@ -50,10 +55,17 @@ import {TagsResolver} from "./resorvers/tags.resolver";
             }
           },
           {path: 'users', component: UserDashboardPageComponent, canActivate: [AuthGuard]},
-          {path: 'new-user', component: UserCreatePageComponent, canActivate: [AuthGuard]},
+          {
+            path: 'new-user', component: UserCreatePageComponent, canActivate: [AuthGuard], resolve: {
+              categories: CategoriesResolver,
+              tags: TagsResolver
+            }
+          },
           {
             path: 'user/:id', component: UserCreatePageComponent, canActivate: [AuthGuard], resolve: {
-              user: UserResolver
+              user: UserResolver,
+              categories: CategoriesResolver,
+              tags: TagsResolver
             }
           },
           {path: '**', component: NotFoundPageComponent}

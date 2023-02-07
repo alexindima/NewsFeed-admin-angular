@@ -9,14 +9,23 @@ import {TagsService} from "../../services/tags.service";
 import {UniqueArray} from "../shared/form.common";
 import {ActivatedRoute} from "@angular/router";
 
-interface ArticleForm<T> {
-  mainTitle: T;
-  secondTitle: T;
-  photoUploader: T;
-  photoText: T;
-  body: T;
-  category: T;
+interface ArticleForm {
+  mainTitle: FormControl<string>;
+  secondTitle: FormControl<string>;
+  photoUploader: FormControl<string>;
+  photoText: FormControl<string>;
+  body: FormControl<string>;
+  category: FormControl<string | Category>;
   tags: FormArray<FormControl<string | Tag>>;
+}
+
+interface ArticleFromResolver {
+  mainTitle: string;
+  secondTitle: string;
+  photoUploader: string;
+  photoText: string;
+  body: string;
+  category: string;
 }
 
 @Component({
@@ -49,7 +58,7 @@ export class ArticleCreatePageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.form = new FormGroup<ArticleForm<FormControl<string>>>({
+    this.form = new FormGroup<ArticleForm>({
       mainTitle: new FormControl('', {
         nonNullable: true,
         validators: [Validators.required]
@@ -81,13 +90,21 @@ export class ArticleCreatePageComponent implements OnInit {
     if (article) {
       const categoryName = this.getNameById(this.categoriesOptions, article.category)
       const tagsNames = this.getArrayOfNamesFromIDs(this.tagsOptions, article.tags)
+
+      if (tagsNames.length > 1) {
+        for (let i = 1; i < tagsNames.length; i++) {
+          this.addTag()
+        }
+      }
+
       const articleForForm = {
         ...article,
-        category: categoryName,
-        tags: tagsNames,
-      } as ArticleForm<string>
-      console.log(articleForForm)
+        category: categoryName
+      } as ArticleFromResolver
       this.form.patchValue(articleForForm)
+      this.form.patchValue({
+        tags: tagsNames
+      })
     }
   }
 
@@ -109,8 +126,11 @@ export class ArticleCreatePageComponent implements OnInit {
     });
   }
 
-  displayFn(obj: Tag | Category): string {
-    return obj && obj.name ? obj.name : '';
+  displayFn(data: Tag | Category | string): string {
+    if (typeof data === 'string') {
+      return data;
+    }
+    return data && data.name ? data.name : '';
   }
 
   getArrayOfNamesFromIDs(arrayOfObj: Tag[] | Category[], arrayOfIDs: number[]): string[] {
@@ -181,4 +201,3 @@ export class ArticleCreatePageComponent implements OnInit {
       })
   }
 }
-

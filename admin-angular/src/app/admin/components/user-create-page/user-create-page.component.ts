@@ -7,6 +7,21 @@ import {concat, forkJoin, map, Observable, of, toArray} from "rxjs";
 import {TagsService} from "../../services/tags.service";
 import {UniqueArray} from "../shared/form.common";
 import {UsersService} from "../../services/users.service";
+import {ActivatedRoute, Router} from "@angular/router";
+
+interface UserForm {
+  name: FormControl<string>;
+  email: FormControl<string>;
+  password: FormControl<string>;
+  confirmPassword: FormControl<string>;
+  categories: FormArray<FormControl<string | Category>>;
+  tags: FormArray<FormControl<string | Tag>>;
+}
+
+interface UserFromResolverForForm {
+  name: string;
+  email: string;
+}
 
 @Component({
   selector: 'app-user-create-page',
@@ -14,7 +29,8 @@ import {UsersService} from "../../services/users.service";
   styleUrls: ['./user-create-page.component.scss']
 })
 export class UserCreatePageComponent implements OnInit {
-  form: FormGroup = new FormGroup({});
+  userFromResolver: User | undefined;
+  form!: FormGroup;
   public Editor = ClassicEditor;
   CKEditorConfig = {
     placeholder: 'Create your article'
@@ -26,24 +42,68 @@ export class UserCreatePageComponent implements OnInit {
 
   constructor(public categoriesService: CategoriesService,
               public tagsService: TagsService,
-              private usersService: UsersService) {
+              private usersService: UsersService,
+              private activatedRoute: ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit() {
-    this.form.addControl('tags', this.tagControls);
-    this.form.addControl('categories', this.categoriesControls);
-    this.form.addControl('name', new FormControl(null, [Validators.required]));
-    this.form.addControl('email', new FormControl(null, [Validators.required]));
-    this.form.addControl('password', new FormControl(null, [Validators.required]));
-    this.form.addControl('confirmPassword', new FormControl(null, [Validators.required]));
+    this.form = new FormGroup<UserForm>({
+      name: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required]
+      }),
+      email: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required]
+      }),
+      password: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required]
+      }),
+      confirmPassword: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required]
+      }),
+      categories: this.categoriesControls,
+      tags: this.tagControls
+    });
 
-    this.categoriesService.getCategoriesList().subscribe((result: Category[]) => {
-      this.categoriesOptions = result;
-    })
+    this.userFromResolver = this.activatedRoute.snapshot.data['user'];
+    this.categoriesOptions = this.activatedRoute.snapshot.data['categories'];
+    this.tagsOptions = this.activatedRoute.snapshot.data['tags'];
 
-    this.tagsService.getTagsList().subscribe((result: Tag[]) => {
-      this.tagsOptions = result;
-    })
+    console.log('user', this.userFromResolver)
+
+    if (this.userFromResolver) {
+      const categoriesNames = this.getArrayOfNamesFromIDs(this.categoriesOptions, this.userFromResolver.ignoredCategories!)
+      const tagsNames = this.getArrayOfNamesFromIDs(this.tagsOptions, this.userFromResolver.ignoredTags!)
+
+      if (categoriesNames.length > 1) {
+        for (let i = 1; i < categoriesNames.length; i++) {
+          this.addCategory()
+        }
+      }
+      if (tagsNames.length > 1) {
+        for (let i = 1; i < tagsNames.length; i++) {
+          this.addTag()
+        }
+      }
+
+      const userForForm: UserFromResolverForForm = {
+        name: this.userFromResolver.name!,
+        email: this.userFromResolver.email!
+      };
+      console.log(userForForm)
+      this.form.patchValue(userForForm)
+      this.form.patchValue({
+        categories: categoriesNames,
+        tags: tagsNames
+      })
+      this.form.get('password')!.clearValidators();
+      this.form.get('confirmPassword')!.clearValidators();
+      console.log(this.form)
+    }
   }
 
   addTag() {
@@ -69,8 +129,23 @@ export class UserCreatePageComponent implements OnInit {
     });
   }
 
-  displayFn(obj: Tag | Category): string {
-    return obj && obj.name ? obj.name : '';
+  displayFn(data: Tag | Category | string): string {
+    if (typeof data === 'string') {
+      return data;
+    }
+    return data && data.name ? data.name : '';
+  }
+
+  getArrayOfNamesFromIDs(arrayOfObj: Tag[] | Category[], arrayOfIDs: number[]): string[] {
+    return arrayOfIDs.map((id: number) => {
+      const result = arrayOfObj.find(obj => obj.id === id);
+      return result ? result.name : `!wrong ID: ${id}!`;
+    })
+  }
+
+  getNameById(array: Tag[] | Category[], id: number): string {
+    const result = array.find(obj => obj.id === id);
+    return result ? result.name : `!wrong ID: ${id}!`;
   }
 
   submit() {
@@ -141,7 +216,8 @@ export class UserCreatePageComponent implements OnInit {
       for (let tagID of tagsID) {
         ignoredTags.add(tagID)
       }
-      createUser()
+      createUser();
+      this.router.navigate(['/admin', 'users']);
     })
   }
 }

@@ -2155,6 +2155,162 @@
         2
       ],
       "id": 32
+    },
+    {
+      "createdDate": "2023-01-22T18:02:40.183Z",
+      "mainTitle": "1111",
+      "secondTitle": "111",
+      "mainPhoto": "",
+      "mainPhotoDescription": "1112",
+      "category": "7",
+      "tags": [
+        1,
+        2
+      ],
+      "id": 33
+    },
+    {
+      "createdDate": "2023-01-22T18:02:40.183Z",
+      "mainTitle": "1111",
+      "secondTitle": "111",
+      "mainPhoto": "",
+      "mainPhotoDescription": "1112",
+      "category": "7",
+      "tags": [
+        1,
+        2
+      ],
+      "id": 34
+    },
+    {
+      "createdDate": "2023-01-22T18:02:40.183Z",
+      "mainTitle": "1111",
+      "secondTitle": "111",
+      "mainPhoto": "",
+      "mainPhotoDescription": "1112",
+      "category": "7",
+      "tags": [
+        1,
+        2
+      ],
+      "id": 35
+    },
+    {
+      "createdDate": "2023-01-22T18:02:40.183Z",
+      "mainTitle": "1111",
+      "secondTitle": "111",
+      "mainPhoto": "",
+      "mainPhotoDescription": "1112",
+      "category": "7",
+      "tags": [
+        1,
+        2
+      ],
+      "id": 43
+    },
+    {
+      "createdDate": "2023-01-22T18:02:40.183Z",
+      "mainTitle": "1111",
+      "secondTitle": "111",
+      "mainPhoto": "",
+      "mainPhotoDescription": "1112",
+      "category": "7",
+      "tags": [
+        1,
+        2
+      ],
+      "id": 36
+    },
+    {
+      "createdDate": "2023-01-22T18:02:40.183Z",
+      "mainTitle": "1111",
+      "secondTitle": "111",
+      "mainPhoto": "",
+      "mainPhotoDescription": "1112",
+      "category": "7",
+      "tags": [
+        1,
+        2
+      ],
+      "id": 37
+    },
+    {
+      "createdDate": "2023-01-22T18:02:40.183Z",
+      "mainTitle": "1111",
+      "secondTitle": "111",
+      "mainPhoto": "",
+      "mainPhotoDescription": "1112",
+      "category": "7",
+      "tags": [
+        1,
+        2
+      ],
+      "id": 38
+    },
+    {
+      "createdDate": "2023-01-22T18:02:40.183Z",
+      "mainTitle": "1111",
+      "secondTitle": "111",
+      "mainPhoto": "",
+      "mainPhotoDescription": "1112",
+      "category": "7",
+      "tags": [
+        1,
+        2
+      ],
+      "id": 40
+    },
+    {
+      "createdDate": "2023-01-22T18:02:40.183Z",
+      "mainTitle": "1111",
+      "secondTitle": "111",
+      "mainPhoto": "",
+      "mainPhotoDescription": "1112",
+      "category": "7",
+      "tags": [
+        1,
+        2
+      ],
+      "id": 41
+    },
+    {
+      "createdDate": "2023-01-30T01:59:02.040Z",
+      "category": 3,
+      "mainTitle": "1234",
+      "secondTitle": "4321",
+      "mainPhoto": "4321",
+      "mainPhotoDescription": "312235",
+      "tags": [
+        4
+      ],
+      "id": 44
+    },
+    {
+      "createdDate": "2023-02-05T22:09:50.461Z",
+      "category": 3,
+      "mainTitle": "123",
+      "secondTitle": "123",
+      "mainPhoto": "123",
+      "mainPhotoDescription": "123",
+      "tags": [
+        1
+      ],
+      "id": 45
+    },
+    {
+      "createdDate": "2023-02-06T23:46:05.853Z",
+      "category": 7,
+      "mainTitle": "Science",
+      "secondTitle": "Science",
+      "mainPhoto": "Science",
+      "mainPhotoDescription": "Science",
+      "tags": [
+        5,
+        4,
+        3,
+        33
+      ],
+      "id": 46
     }
   ],
   "suggestedNews": [
@@ -2269,14 +2425,6 @@
       "ignoredTags": []
     },
     {
-      "email": "olivier@mail.com",
-      "password": "$2a$10$Tj7o1cyKk9/sZ.GzjuGlHeFyGBwHvlxoUvSmbkKmeAOcS0jFNhiLa",
-      "firstname": "Olivier",
-      "lastname": "Monge",
-      "age": 32,
-      "id": 11
-    },
-    {
       "email": "admin@mail.com",
       "password": "$2a$10$a5X3uJX07kWzdltpwhYPduQAQlbEWODmd1zDTcHtw0NpKb2A8tU4O",
       "id": 12,
@@ -2287,13 +2435,33 @@
       "ignoredTags": [
         2
       ]
+    },
+    {
+      "email": "test@test.rt",
+      "password": "$2a$10$qMtPWM3CrIdsPNzupqHTsuUZG1e6LTPwGUIX.RWGrzXpJa0Qkqab.",
+      "createdDate": "2023-01-30T01:02:58.414Z",
+      "name": "111",
+      "ignoredCategories": [],
+      "ignoredTags": [],
+      "id": 13
+    },
+    {
+      "email": "test@ttt.eee",
+      "password": "$2a$10$IW8wGawelGhV1B7vs0jfPuRHX5eIOW58lhs3mLGt8P6QTQO4ViGry",
+      "createdDate": "2023-02-06T23:49:24.299Z",
+      "name": "test@ttt.eee",
+      "ignoredCategories": [
+        4,
+        44
+      ],
+      "ignoredTags": [
+        3,
+        34
+      ],
+      "id": 14
     }
   ],
   "categories": [
-    {
-      "id": 1,
-      "name": "Politics"
-    },
     {
       "id": 2,
       "name": "In the world"
@@ -2333,6 +2501,138 @@
     {
       "id": 11,
       "name": "Tourism"
+    },
+    {
+      "name": "test",
+      "id": 12
+    },
+    {
+      "name": "123",
+      "id": 13
+    },
+    {
+      "name": "1234",
+      "id": 14
+    },
+    {
+      "name": "1",
+      "id": 15
+    },
+    {
+      "name": "234",
+      "id": 16
+    },
+    {
+      "name": "",
+      "id": 17
+    },
+    {
+      "name": "moon",
+      "id": 18
+    },
+    {
+      "name": "1111",
+      "id": 19
+    },
+    {
+      "name": "11111",
+      "id": 20
+    },
+    {
+      "name": "2",
+      "id": 21
+    },
+    {
+      "name": "qqqq",
+      "id": 22
+    },
+    {
+      "name": "qqqq",
+      "id": 23
+    },
+    {
+      "name": "qqqq",
+      "id": 24
+    },
+    {
+      "name": "1233333",
+      "id": 25
+    },
+    {
+      "name": "qqqq",
+      "id": 26
+    },
+    {
+      "name": "qqqq1",
+      "id": 27
+    },
+    {
+      "name": "qqqq1",
+      "id": 28
+    },
+    {
+      "name": "qqqq1",
+      "id": 29
+    },
+    {
+      "name": "qqqq1",
+      "id": 30
+    },
+    {
+      "name": "12333331",
+      "id": 31
+    },
+    {
+      "name": "qwe",
+      "id": 32
+    },
+    {
+      "name": "qwe",
+      "id": 33
+    },
+    {
+      "name": "qwe",
+      "id": 34
+    },
+    {
+      "name": "qw",
+      "id": 35
+    },
+    {
+      "name": "qw",
+      "id": 36
+    },
+    {
+      "name": "qw",
+      "id": 37
+    },
+    {
+      "name": "qw",
+      "id": 38
+    },
+    {
+      "name": "111112",
+      "id": 39
+    },
+    {
+      "name": "111112",
+      "id": 40
+    },
+    {
+      "name": "111112",
+      "id": 41
+    },
+    {
+      "name": "456",
+      "id": 42
+    },
+    {
+      "name": "111",
+      "id": 43
+    },
+    {
+      "name": "test@ttt.eee",
+      "id": 44
     }
   ],
   "tags": [
@@ -2379,6 +2679,98 @@
     {
       "id": 11,
       "name": "hair"
+    },
+    {
+      "name": "1",
+      "id": 12
+    },
+    {
+      "name": "",
+      "id": 13
+    },
+    {
+      "name": "12",
+      "id": 14
+    },
+    {
+      "name": "23",
+      "id": 15
+    },
+    {
+      "name": "345",
+      "id": 16
+    },
+    {
+      "name": "333",
+      "id": 17
+    },
+    {
+      "name": "334",
+      "id": 18
+    },
+    {
+      "name": "333434",
+      "id": 19
+    },
+    {
+      "name": "1111",
+      "id": 20
+    },
+    {
+      "name": "11111",
+      "id": 21
+    },
+    {
+      "name": "111111",
+      "id": 22
+    },
+    {
+      "name": "22",
+      "id": 23
+    },
+    {
+      "name": "2",
+      "id": 24
+    },
+    {
+      "name": "222222",
+      "id": 25
+    },
+    {
+      "name": "222222",
+      "id": 26
+    },
+    {
+      "name": "111",
+      "id": 27
+    },
+    {
+      "name": "222",
+      "id": 28
+    },
+    {
+      "name": "111111111",
+      "id": 29
+    },
+    {
+      "name": "2122",
+      "id": 30
+    },
+    {
+      "name": "21112",
+      "id": 31
+    },
+    {
+      "name": "121",
+      "id": 32
+    },
+    {
+      "name": "Science",
+      "id": 33
+    },
+    {
+      "name": "test@ttt.eee",
+      "id": 34
     }
   ]
 }
