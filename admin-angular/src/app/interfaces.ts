@@ -1,11 +1,16 @@
 export interface User {
-  createdDate?: Date;
+  createdDate?: string;
   id?: number,
   email: string,
+  password?: string,
+  name: string
+  ignoredCategories: number[];
+  ignoredTags: number[];
+}
+
+export interface LoginUser {
+  email: string
   password: string,
-  name?: string
-  ignoredCategories?: number[];
-  ignoredTags?: number[];
 }
 
 export interface JSAuthResponse {
@@ -25,13 +30,13 @@ export interface Tag {
 
 export interface Article {
   readonly id?: number;
-  readonly createdDate: Date;
-  readonly upgradeDate?: Date;
+  readonly createdDate?: string;
+  readonly upgradeDate?: string;
   readonly mainTitle: string;
   readonly secondTitle: string;
-  readonly mainPhoto: string;
-  readonly mainPhotoDescription: string;
-  readonly body?: ArticleElement[];
+  readonly photoUrl: string;
+  readonly photoText: string;
+  readonly body: string;
   readonly category: number;
   readonly tags: number[];
 }

@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {JSAuthResponse, User} from "../../interfaces";
+import {JSAuthResponse, LoginUser} from "../../interfaces";
 import {Observable, tap, catchError, of, throwError, Subject} from "rxjs";
 
 @Injectable()
@@ -14,7 +14,7 @@ export class AuthService {
     return localStorage.getItem('js-token')
   }
 
-  login(user: User): Observable<JSAuthResponse | null> {
+  login(user: LoginUser): Observable<JSAuthResponse | null> {
     return this.http.post<JSAuthResponse>(`http://localhost:3030/login`, user)
       .pipe(
         tap(this.setToken),

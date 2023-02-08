@@ -1,8 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {User} from "../../../interfaces";
+import {LoginUser} from "../../../interfaces";
 import {AuthService} from "../../services/auth.service";
 import {ActivatedRoute, Params, Router} from "@angular/router";
+
+interface LoginForm {
+  email: FormControl<string>;
+  password: FormControl<string>;
+}
 
 @Component({
   selector: 'app-login-page',
@@ -11,8 +16,8 @@ import {ActivatedRoute, Params, Router} from "@angular/router";
 })
 export class LoginPageComponent implements OnInit {
   submitted = false;
-  form: FormGroup = new FormGroup({});
-  message: string = ''
+  form!: FormGroup;
+  message: string = '';
 
   constructor(public auth: AuthService,
               private router: Router,
@@ -20,37 +25,46 @@ export class LoginPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.route.queryParams.subscribe((params: Params) => {
       if (params['loginAgain']) {
-        this.message = 'Please, login again'
+        this.message = 'Please, login again';
       }
     })
-    this.form.addControl('email', new FormControl(null, [Validators.email, Validators.required]));
-    this.form.addControl('password', new FormControl(null, [Validators.minLength(6), Validators.required]));
+
+    this.form = new FormGroup<LoginForm>({
+      email: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required, Validators.email]
+      }),
+      password: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required, Validators.minLength(6)]
+      })
+    });
+
     if (this.auth.isAuthenticated()) {
-      this.router.navigate(['/admin', 'articles'])
+      this.router.navigate(['/admin', 'articles']).then();
     }
 
   }
 
   submit() {
     if (this.form.invalid) {
-      return
+      return;
     }
 
-    this.submitted = true
-    const user: User = {
+    this.submitted = true;
+    const user: LoginUser = {
       email: this.form.value.email,
       password: this.form.value.password
-    }
+    };
 
     this.auth.login(user).subscribe(() => {
       this.form.reset();
-      this.router.navigate(['/admin', 'articles']);
+      this.router.navigate(['/admin', 'articles']).then();
+      this.submitted = false;
     })
 
-    this.submitted = false
   }
 
 }

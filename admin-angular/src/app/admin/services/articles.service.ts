@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {Article, Category} from "../../interfaces";
+import {Article} from "../../interfaces";
 import {map, Observable} from "rxjs";
 
 @Injectable()
@@ -34,6 +34,10 @@ export class ArticlesService {
 
   createArticle(article: Article): Observable<Article> {
     return this.http.post<Article>('http://localhost:3030/articles', article)
+  }
+
+  editArticle(article: Article): Observable<Article> {
+    return this.http.patch<Article>(`http://localhost:3030/articles/${article.id}`, article)
   }
 
 

@@ -42,16 +42,16 @@
     </div>
 
     <h4>Photo</h4>
-    <div class="mb-3" [ngClass]="{isInvalid: form.get('photoUploader')?.touched && form.get('photoUploader')?.invalid}">
-      <label for="photoUploader" class="form-label">Photo URL</label>
+    <div class="mb-3" [ngClass]="{isInvalid: form.get('photoUrl')?.touched && form.get('photoUrl')?.invalid}">
+      <label for="photoUrl" class="form-label">Photo URL</label>
       <!-- <input type="file" class="form-control" id="photoUploader"
               formControlName="photoUploader">-->
-      <input type="text" class="form-control" id="photoUploader"
-             formControlName="photoUploader">
-      <div id="photoUploaderValidation"
-           *ngIf="form.get('photoUploader') && form.get('photoUploader')?.touched && form.get('photoUploader')?.invalid"
+      <input type="text" class="form-control" id="photoUrl"
+             formControlName="photoUrl">
+      <div id="photoUrlValidation"
+           *ngIf="form.get('photoUrl') && form.get('photoUrl')?.touched && form.get('photoUrl')?.invalid"
            class="form-text">
-        <small *ngIf="form.get('photoUploader')?.errors?.['photoUploader']">Field can not be empty</small>
+        <small *ngIf="form.get('photoUrl')?.errors?.['photoUrl']">Field can not be empty</small>
       </div>
     </div>
 

@@ -1,6 +1,8 @@
 <div class="mt-3 container">
   <h1 class="mb-3">{{userFromResolver ? 'Edit the User' : 'Create a User'}}</h1>
-
+  <p *ngIf="userFromResolver" class="text-danger">Unfortunately, there are limitations of the fake server, so if you do
+    not enter the password when editing the user, it will change to "123456". Also, the user being edited will be the
+    last in the list</p>
   <form
     class="pb-3 example-form"
     [formGroup]="form"
@@ -166,7 +168,7 @@
 
     <button
       type="submit"
-      [disabled]="form.invalid"
+      [disabled]="form.invalid || submitted"
       class="btn btn-primary"
     >
       {{userFromResolver ? 'Save changes' : 'Create User'}}

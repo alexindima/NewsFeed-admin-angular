@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CategoriesService} from "../../services/categories.service";
-import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Category, Tag, User} from "../../../interfaces";
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {concat, forkJoin, map, Observable, of, toArray} from "rxjs";
@@ -23,6 +23,22 @@ interface UserFromResolverForForm {
   email: string;
 }
 
+function equalTo(otherControlName: string) {
+  return (control: AbstractControl): { [key: string]: boolean } | null => {
+    if (!control.parent || !control.parent.get(otherControlName)) {
+      return null;
+    }
+    const thisValue = control.value;
+    const otherValue = control.parent.get(otherControlName)!.value;
+    if (thisValue === otherValue) {
+      return null;
+    }
+    return {
+      'notEqualTo': true
+    }
+  };
+}
+
 @Component({
   selector: 'app-user-create-page',
   templateUrl: './user-create-page.component.html',
@@ -31,6 +47,7 @@ interface UserFromResolverForForm {
 export class UserCreatePageComponent implements OnInit {
   userFromResolver: User | undefined;
   form!: FormGroup;
+  submitted = false;
   public Editor = ClassicEditor;
   CKEditorConfig = {
     placeholder: 'Create your article'
@@ -48,6 +65,10 @@ export class UserCreatePageComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.userFromResolver = this.activatedRoute.snapshot.data['user'];
+    this.categoriesOptions = this.activatedRoute.snapshot.data['categories'];
+    this.tagsOptions = this.activatedRoute.snapshot.data['tags'];
+
     this.form = new FormGroup<UserForm>({
       name: new FormControl('', {
         nonNullable: true,
@@ -55,7 +76,7 @@ export class UserCreatePageComponent implements OnInit {
       }),
       email: new FormControl('', {
         nonNullable: true,
-        validators: [Validators.required]
+        validators: [Validators.required, Validators.email]
       }),
       password: new FormControl('', {
         nonNullable: true,
@@ -63,17 +84,33 @@ export class UserCreatePageComponent implements OnInit {
       }),
       confirmPassword: new FormControl('', {
         nonNullable: true,
-        validators: [Validators.required]
+        validators: [equalTo('password')]
       }),
       categories: this.categoriesControls,
       tags: this.tagControls
     });
 
-    this.userFromResolver = this.activatedRoute.snapshot.data['user'];
-    this.categoriesOptions = this.activatedRoute.snapshot.data['categories'];
-    this.tagsOptions = this.activatedRoute.snapshot.data['tags'];
-
-    console.log('user', this.userFromResolver)
+    this.form.get('password')!.valueChanges.subscribe(() => {
+      if (this.form.get('password')!.value || this.form.get('confirmPassword')!.value) {
+        this.form.get('password')!.addValidators([Validators.minLength(6)]);
+      } else {
+        this.form.get('password')!.removeValidators([Validators.minLength(6)]);
+      }
+      this.form.get('password')!.updateValueAndValidity({
+        onlySelf: true,
+        emitEvent: false
+      })
+      this.form.get('confirmPassword')!.updateValueAndValidity({
+        onlySelf: true,
+        emitEvent: false
+      })
+    });
+    this.form.get('confirmPassword')!.valueChanges.subscribe(() => {
+      this.form.get('confirmPassword')!.updateValueAndValidity({
+        onlySelf: true,
+        emitEvent: false
+      })
+    });
 
     if (this.userFromResolver) {
       const categoriesNames = this.getArrayOfNamesFromIDs(this.categoriesOptions, this.userFromResolver.ignoredCategories!)
@@ -94,15 +131,12 @@ export class UserCreatePageComponent implements OnInit {
         name: this.userFromResolver.name!,
         email: this.userFromResolver.email!
       };
-      console.log(userForForm)
       this.form.patchValue(userForForm)
       this.form.patchValue({
         categories: categoriesNames,
         tags: tagsNames
       })
-      this.form.get('password')!.clearValidators();
-      this.form.get('confirmPassword')!.clearValidators();
-      console.log(this.form)
+      this.form.get('password')!.removeValidators([Validators.required]);
     }
   }
 
@@ -152,14 +186,14 @@ export class UserCreatePageComponent implements OnInit {
     if (this.form.invalid) {
       return
     }
-
+    this.submitted = true;
     if (this.form.value.password !== this.form.value.confirmPassword) {
       return;
     }
 
     const createUser = () => {
       const user: User = {
-        createdDate: new Date(),
+        createdDate: new Date().toISOString(),
         name: this.form.value.name,
         email: this.form.value.email,
         password: this.form.value.password,
@@ -167,6 +201,20 @@ export class UserCreatePageComponent implements OnInit {
         ignoredTags: ignoredTags
       }
       this.usersService.createUser(user).subscribe(() => {
+        this.form.reset()
+      })
+    }
+
+    const editUser = () => {
+      const user: User = {
+        id: this.userFromResolver!.id,
+        name: this.form.value.name,
+        email: this.form.value.email,
+        password: this.form.value.password,
+        ignoredCategories: ignoredCategories,
+        ignoredTags: ignoredTags
+      }
+      this.usersService.editUser(user).subscribe(() => {
         this.form.reset()
       })
     }
@@ -216,8 +264,13 @@ export class UserCreatePageComponent implements OnInit {
       for (let tagID of tagsID) {
         ignoredTags.add(tagID)
       }
-      createUser();
-      this.router.navigate(['/admin', 'users']);
+      if (this.userFromResolver) {
+        editUser()
+      } else {
+        createUser();
+      }
+      this.router.navigate(['/admin', 'users']).then();
+      this.submitted = false;
     })
   }
 }

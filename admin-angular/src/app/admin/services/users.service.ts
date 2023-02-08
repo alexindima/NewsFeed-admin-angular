@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {User} from "../../interfaces";
-import {map, Observable} from "rxjs";
+import {map, Observable, switchMap} from "rxjs";
 
 @Injectable()
 export class UsersService {
@@ -34,7 +34,18 @@ export class UsersService {
 
 
   createUser(newUser: User): Observable<User> {
-    return this.http.post<User>(`http://localhost:3030/users/register`, newUser)
+    return this.http.post<User>(`http://localhost:3030/users`, newUser)
+  }
+
+  editUser(editedUser: User): Observable<User> {
+    return this.deleteUser(editedUser).pipe(
+      switchMap(() => {
+        if (!editedUser.password) {
+          editedUser = {...editedUser, password: '123456'}
+        }
+        return this.createUser(editedUser)
+      })
+    )
   }
 
   deleteUser(user: number | User): Observable<any> {
