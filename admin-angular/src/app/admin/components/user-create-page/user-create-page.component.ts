@@ -1,13 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {CategoriesService} from "../../services/categories.service";
-import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Category, Tag, User} from "../../../interfaces";
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {concat, forkJoin, map, Observable, of, toArray} from "rxjs";
-import {TagsService} from "../../services/tags.service";
-import {UniqueArray} from "../shared/form.common";
+import {UniqueArray} from "../../utils/unique-array.common";
 import {UsersService} from "../../services/users.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {appValidEqualFactory} from '../../utils/valid-equal'
+import {SharedTagsService} from "../../services/shared-tags.service";
+import {SharedCategoriesService} from "../../services/shared-categories.service";
 
 interface UserForm {
   name: FormControl<string>;
@@ -23,22 +24,6 @@ interface UserFromResolverForForm {
   email: string;
 }
 
-function equalTo(otherControlName: string) {
-  return (control: AbstractControl): { [key: string]: boolean } | null => {
-    if (!control.parent || !control.parent.get(otherControlName)) {
-      return null;
-    }
-    const thisValue = control.value;
-    const otherValue = control.parent.get(otherControlName)!.value;
-    if (thisValue === otherValue) {
-      return null;
-    }
-    return {
-      'notEqualTo': true
-    }
-  };
-}
-
 @Component({
   selector: 'app-user-create-page',
   templateUrl: './user-create-page.component.html',
@@ -52,13 +37,13 @@ export class UserCreatePageComponent implements OnInit {
   CKEditorConfig = {
     placeholder: 'Create your article'
   };
-  categoriesOptions: Category[] = [];
-  tagsOptions: Tag[] = [];
+  categoriesList: Category[] = [];
+  tagsList: Tag[] = [];
   tagControls = new FormArray<FormControl>([new FormControl('')]);
   categoriesControls = new FormArray<FormControl>([new FormControl('')]);
 
-  constructor(public categoriesService: CategoriesService,
-              public tagsService: TagsService,
+  constructor(public sharedCategoriesService: SharedCategoriesService,
+              private sharedTagsService: SharedTagsService,
               private usersService: UsersService,
               private activatedRoute: ActivatedRoute,
               private router: Router) {
@@ -66,8 +51,12 @@ export class UserCreatePageComponent implements OnInit {
 
   ngOnInit() {
     this.userFromResolver = this.activatedRoute.snapshot.data['user'];
-    this.categoriesOptions = this.activatedRoute.snapshot.data['categories'];
-    this.tagsOptions = this.activatedRoute.snapshot.data['tags'];
+    this.sharedCategoriesService.categories.subscribe((data) => {
+      this.categoriesList = data;
+    })
+    this.sharedTagsService.tags.subscribe((data) => {
+      this.tagsList = data;
+    })
 
     this.form = new FormGroup<UserForm>({
       name: new FormControl('', {
@@ -83,12 +72,13 @@ export class UserCreatePageComponent implements OnInit {
         validators: [Validators.required]
       }),
       confirmPassword: new FormControl('', {
-        nonNullable: true,
-        validators: [equalTo('password')]
+        nonNullable: true
       }),
       categories: this.categoriesControls,
       tags: this.tagControls
     });
+
+    this.form.setValidators(appValidEqualFactory(['password', 'confirmPassword'], 'VALIDATION.PASSWORD_MISMATCH'))
 
     this.form.get('password')!.valueChanges.subscribe(() => {
       if (this.form.get('password')!.value || this.form.get('confirmPassword')!.value) {
@@ -100,21 +90,11 @@ export class UserCreatePageComponent implements OnInit {
         onlySelf: true,
         emitEvent: false
       })
-      this.form.get('confirmPassword')!.updateValueAndValidity({
-        onlySelf: true,
-        emitEvent: false
-      })
-    });
-    this.form.get('confirmPassword')!.valueChanges.subscribe(() => {
-      this.form.get('confirmPassword')!.updateValueAndValidity({
-        onlySelf: true,
-        emitEvent: false
-      })
     });
 
     if (this.userFromResolver) {
-      const categoriesNames = this.getArrayOfNamesFromIDs(this.categoriesOptions, this.userFromResolver.ignoredCategories!)
-      const tagsNames = this.getArrayOfNamesFromIDs(this.tagsOptions, this.userFromResolver.ignoredTags!)
+      const categoriesNames = this.getArrayOfNamesFromIDs(this.categoriesList, this.userFromResolver.ignoredCategories!)
+      const tagsNames = this.getArrayOfNamesFromIDs(this.tagsList, this.userFromResolver.ignoredTags!)
 
       if (categoriesNames.length > 1) {
         for (let i = 1; i < categoriesNames.length; i++) {
@@ -227,7 +207,7 @@ export class UserCreatePageComponent implements OnInit {
     for (let category of this.categoriesControls.value) {
       if (typeof category === "string") {
         if (category.trim()) {
-          categoriesObservables.push(this.categoriesService.createCategory(category))
+          categoriesObservables.push(this.sharedCategoriesService.createCategory(category))
         }
       } else {
         ignoredCategories.add(category.id)
@@ -237,7 +217,7 @@ export class UserCreatePageComponent implements OnInit {
     for (let tag of this.tagControls.value) {
       if (typeof tag === "string") {
         if (tag.trim()) {
-          tagsObservables.push(this.tagsService.createTag(tag))
+          tagsObservables.push(this.sharedTagsService.createTag(tag))
         }
       } else {
         ignoredTags.add(tag.id)

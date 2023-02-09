@@ -1,12 +1,20 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Tag} from "../../interfaces";
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 
 @Injectable()
-export class TagsService {
+export class SharedTagsService {
+  private data = new BehaviorSubject<Tag[]>([]);
+  tags: Observable<Tag[]> = this.data.asObservable();
 
   constructor(private http: HttpClient) {
+  }
+
+  updateTagsList() {
+    this.http.get<Tag[]>(`http://localhost:3030/tags`).subscribe(data => {
+      this.data.next(data);
+    })
   }
 
   getTagsList(): Observable<Tag[]> {
@@ -25,6 +33,7 @@ export class TagsService {
           this.http.post<Tag>(`http://localhost:3030/tags`, {name: name}).subscribe((result: Tag) => {
             observer.next(result);
             observer.complete();
+            this.updateTagsList()
           })
         }
       })
@@ -40,12 +49,16 @@ export class TagsService {
         const isTagExist = tags.some((singleTag: Tag) => singleTag.name.toLowerCase() === tag.toLowerCase())
         if (isTagExist) {
           const foundTag = tags.find((singleTag: Tag) => singleTag.name.toLowerCase() === tag.toLowerCase())
-          this.http.delete(`http://localhost:3030/tags/${foundTag!.id}`).subscribe()
+          this.http.delete(`http://localhost:3030/tags/${foundTag!.id}`).subscribe(() => {
+            this.updateTagsList()
+          })
         }
       })
     }
     if (typeof tag === "object") {
-      this.http.delete(`http://localhost:3030/tags/${tag.id}`).subscribe()
+      this.http.delete(`http://localhost:3030/tags/${tag.id}`).subscribe(() => {
+        this.updateTagsList()
+      })
     }
   }
 }

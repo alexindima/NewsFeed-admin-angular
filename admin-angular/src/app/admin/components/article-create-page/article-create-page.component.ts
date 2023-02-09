@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {CategoriesService} from "../../services/categories.service";
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Article, Category, Tag} from "../../../interfaces";
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {ArticlesService} from "../../services/articles.service";
 import {concat, map, Observable, toArray} from "rxjs";
-import {TagsService} from "../../services/tags.service";
-import {UniqueArray} from "../shared/form.common";
+import {UniqueArray} from "../../utils/unique-array.common";
 import {ActivatedRoute, Router} from "@angular/router";
+import {SharedTagsService} from "../../services/shared-tags.service";
+import {SharedCategoriesService} from "../../services/shared-categories.service";
 
 interface ArticleForm {
   mainTitle: FormControl<string>;
@@ -41,8 +41,8 @@ export class ArticleCreatePageComponent implements OnInit {
   CKEditorConfig = {
     placeholder: 'Create your article'
   };
-  categoriesOptions: Category[] = [];
-  tagsOptions: Tag[] = [];
+  categoriesList: Category[] = [];
+  tagsList: Tag[] = [];
   categoryControl = new FormControl('', {
     nonNullable: true,
     validators: [Validators.required]
@@ -52,14 +52,22 @@ export class ArticleCreatePageComponent implements OnInit {
     validators: [Validators.required]
   })]);
 
-  constructor(public categoriesService: CategoriesService,
-              public tagsService: TagsService,
+  constructor(public sharedCategoriesService: SharedCategoriesService,
+              private sharedTagsService: SharedTagsService,
               private articlesService: ArticlesService,
               private activatedRoute: ActivatedRoute,
               private router: Router) {
   }
 
   ngOnInit() {
+    this.articleFromResolver = this.activatedRoute.snapshot.data['article'];
+    this.sharedCategoriesService.categories.subscribe((data) => {
+      this.categoriesList = data;
+    })
+    this.sharedTagsService.tags.subscribe((data) => {
+      this.tagsList = data;
+    })
+
     this.form = new FormGroup<ArticleForm>({
       mainTitle: new FormControl('', {
         nonNullable: true,
@@ -85,13 +93,9 @@ export class ArticleCreatePageComponent implements OnInit {
       tags: this.tagControls
     });
 
-    this.articleFromResolver = this.activatedRoute.snapshot.data['article'];
-    this.categoriesOptions = this.activatedRoute.snapshot.data['categories'];
-    this.tagsOptions = this.activatedRoute.snapshot.data['tags'];
-
     if (this.articleFromResolver) {
-      const categoryName = this.getNameById(this.categoriesOptions, this.articleFromResolver.category)
-      const tagsNames = this.getArrayOfNamesFromIDs(this.tagsOptions, this.articleFromResolver.tags)
+      const categoryName = this.getNameById(this.categoriesList, this.articleFromResolver.category)
+      const tagsNames = this.getArrayOfNamesFromIDs(this.tagsList, this.articleFromResolver.tags)
 
       if (tagsNames.length > 1) {
         for (let i = 1; i < tagsNames.length; i++) {
@@ -193,7 +197,7 @@ export class ArticleCreatePageComponent implements OnInit {
     const observables: Observable<Category | Tag>[] = [];
 
     if (typeof this.form.value.category === "string") {
-      observables.push(this.categoriesService.createCategory(this.form.value.category));
+      observables.push(this.sharedCategoriesService.createCategory(this.form.value.category));
     } else {
       category = this.form.value.category.id;
     }
@@ -201,7 +205,7 @@ export class ArticleCreatePageComponent implements OnInit {
     for (let tag of this.tagControls.value) {
       if (typeof tag === "string") {
         if (tag.trim()) {
-          observables.push(this.tagsService.createTag(tag));
+          observables.push(this.sharedTagsService.createTag(tag));
         }
       } else {
         tags.add(tag.id);

@@ -118,7 +118,7 @@
         [displayWith]="displayFn"
       >
         <mat-option
-          *ngFor="let option of createFilteredOptions(category, categoriesOptions)"
+          *ngFor="let option of createFilteredOptions(category, categoriesList)"
           [value]="option"
         >
           {{ option.name }}
@@ -158,7 +158,7 @@
         [displayWith]="displayFn"
       >
         <mat-option
-          *ngFor="let option of createFilteredOptions(tag, tagsOptions)"
+          *ngFor="let option of createFilteredOptions(tag, tagsList)"
           [value]="option"
         >
           {{ option.name }}
@@ -173,6 +173,5 @@
     >
       {{userFromResolver ? 'Save changes' : 'Create User'}}
     </button>
-
   </form>
 </div>

@@ -10,7 +10,7 @@
            formControlName="category"
            class=" form-control mb-3">
     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-      <mat-option *ngFor="let option of createFilteredOptions(categoryControl, categoriesOptions)"
+      <mat-option *ngFor="let option of createFilteredOptions(categoryControl, categoriesList)"
                   [value]="option">
         {{option.name}}
       </mat-option>
@@ -87,7 +87,7 @@
         <button type="button" [disabled]="i === 0" (click)="RemoveTag(i)" class="btn btn-danger">Remove tag</button>
       </div>
       <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-        <mat-option *ngFor="let option of createFilteredOptions(tag, tagsOptions)" [value]="option">
+        <mat-option *ngFor="let option of createFilteredOptions(tag, tagsList)" [value]="option">
           {{ option.name }}
         </mat-option>
       </mat-autocomplete>

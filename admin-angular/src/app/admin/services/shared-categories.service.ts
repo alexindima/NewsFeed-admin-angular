@@ -1,12 +1,20 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Category} from "../../interfaces";
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 
 @Injectable()
-export class CategoriesService {
+export class SharedCategoriesService {
+  private data = new BehaviorSubject<Category[]>([]);
+  categories: Observable<Category[]> = this.data.asObservable();
 
   constructor(private http: HttpClient) {
+  }
+
+  updateCategoryList() {
+    this.http.get<Category[]>(`http://localhost:3030/categories`).subscribe(data => {
+      this.data.next(data);
+    })
   }
 
   getCategoriesList(): Observable<Category[]> {
@@ -25,6 +33,7 @@ export class CategoriesService {
           this.http.post<Category>(`http://localhost:3030/categories`, {name: name}).subscribe((result: Category) => {
             observer.next(result);
             observer.complete();
+            this.updateCategoryList();
           })
         }
       })
@@ -40,12 +49,16 @@ export class CategoriesService {
         const isCategoryExist = categories.some((singleCategory: Category) => singleCategory.name.toLowerCase() === category.toLowerCase())
         if (isCategoryExist) {
           const foundCategory = categories.find((singleCategory: Category) => singleCategory.name.toLowerCase() === category.toLowerCase())
-          this.http.delete(`http://localhost:3030/categories/${foundCategory!.id}`).subscribe()
+          this.http.delete(`http://localhost:3030/categories/${foundCategory!.id}`).subscribe(() => {
+            this.updateCategoryList();
+          })
         }
       })
     }
     if (typeof category === "object") {
-      this.http.delete(`http://localhost:3030/categories/${category.id}`).subscribe()
+      this.http.delete(`http://localhost:3030/categories/${category.id}`).subscribe(() => {
+        this.updateCategoryList();
+      })
     }
   }
 }

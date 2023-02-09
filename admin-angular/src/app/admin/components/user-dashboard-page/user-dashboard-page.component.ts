@@ -3,15 +3,15 @@ import {PageEvent} from "@angular/material/paginator";
 import {ArticlesService} from "../../services/articles.service";
 import {Article, Category, Tag, User} from "../../../interfaces";
 import {ActivatedRoute, Router} from "@angular/router";
-import {forkJoin, switchMap} from "rxjs";
+import {switchMap} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
 import {
   ConfirmDialogModalComponent,
   ModalDialogData
 } from "../shared/confirm-dialog-modal/confirm-dialog-modal.component";
 import {UsersService} from "../../services/users.service";
-import {CategoriesService} from "../../services/categories.service";
-import {TagsService} from "../../services/tags.service";
+import {SharedTagsService} from "../../services/shared-tags.service";
+import {SharedCategoriesService} from "../../services/shared-categories.service";
 
 interface PaginatorSettings {
   length: number,
@@ -57,14 +57,21 @@ export class UserDashboardPageComponent implements OnInit {
 
   constructor(private articlesService: ArticlesService,
               private usersService: UsersService,
-              private categoriesService: CategoriesService,
-              private tagsService: TagsService,
+              private sharedCategoriesService: SharedCategoriesService,
+              private sharedTagsService: SharedTagsService,
               private activatedRoute: ActivatedRoute,
               private router: Router,
               private matDialog: MatDialog) {
   }
 
   ngOnInit(): void {
+    this.sharedCategoriesService.categories.subscribe((data) => {
+      this.categoriesList = data;
+    })
+    this.sharedTagsService.tags.subscribe((data) => {
+      this.tagsList = data;
+    })
+
     this.usersService.getCountOfUsers()
       .pipe(
         switchMap(result => {
@@ -81,11 +88,7 @@ export class UserDashboardPageComponent implements OnInit {
         if (pageIndex) {
           this.paginatorSettings.pageIndex = pageIndex;
         }
-        forkJoin([this.categoriesService.getCategoriesList(), this.tagsService.getTagsList()]).subscribe(([categoriesList, tagsList]) => {
-          this.categoriesList = categoriesList;
-          this.tagsList = tagsList;
-          this.getUsers();
-        })
+        this.getUsers();
       });
   }
 
