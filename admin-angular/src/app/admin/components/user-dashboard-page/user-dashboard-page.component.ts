@@ -8,7 +8,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {
   ConfirmDialogModalComponent,
   ModalDialogData
-} from "../shared/confirm-dialog-modal/confirm-dialog-modal.component";
+} from "../confirm-dialog-modal/confirm-dialog-modal.component";
 import {UsersService} from "../../services/users.service";
 import {SharedTagsService} from "../../services/shared-tags.service";
 import {SharedCategoriesService} from "../../services/shared-categories.service";
@@ -132,8 +132,10 @@ export class UserDashboardPageComponent implements OnInit {
     const dialogRef = this.matDialog.open(ConfirmDialogModalComponent, {
       width: '600px',
       data: {
+        title: 'Confirm Delete',
         text: `<p class="fw-bold">Are you sure you want to delete user: </p>
-        "${user.email}"?`
+        "${user.email}"?`,
+        button: 'Delete'
       } as ModalDialogData
     });
 

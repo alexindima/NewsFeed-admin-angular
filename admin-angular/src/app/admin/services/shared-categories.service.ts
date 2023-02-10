@@ -1,65 +1,81 @@
-import {Injectable} from "@angular/core";
+import {Injectable, OnDestroy} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Category} from "../../interfaces";
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, catchError, Observable, of, switchMap, tap} from "rxjs";
+import {Subs} from "../utils/subs";
+
+const BASE_URL = 'http://localhost:3030/categories';
 
 @Injectable()
-export class SharedCategoriesService {
-  private data = new BehaviorSubject<Category[]>([]);
-  categories: Observable<Category[]> = this.data.asObservable();
+export class SharedCategoriesService implements OnDestroy {
+  private _subs = new Subs();
+  private _data = new BehaviorSubject<Category[]>([]);
+  categories: Observable<Category[]> = this._data.asObservable();
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private _http: HttpClient) {
   }
 
   updateCategoryList() {
-    this.http.get<Category[]>(`http://localhost:3030/categories`).subscribe(data => {
-      this.data.next(data);
+    this._subs.add = this._http.get<Category[]>(BASE_URL).subscribe(data => {
+      this._data.next(data);
     })
   }
 
   getCategoriesList(): Observable<Category[]> {
-    return this.http.get<Category[]>(`http://localhost:3030/categories`)
+    return this._http.get<Category[]>(BASE_URL)
   }
 
   createCategory(name: string): Observable<Category> {
-    return new Observable(observer => {
-      this.getCategoriesList().subscribe((categories: Category[]) => {
+    return this.getCategoriesList().pipe(
+      switchMap((categories: Category[]) => {
         const isCategoryExist = categories.some((category: Category) => category.name.toLowerCase() === name.toLowerCase())
         if (isCategoryExist) {
-          const foundCategory = categories.find((category: Category) => category.name.toLowerCase() === name.toLowerCase())
-          observer.next(foundCategory);
-          observer.complete();
+          return of(categories.find((category: Category) => category.name.toLowerCase() === name.toLowerCase()))
         } else {
-          this.http.post<Category>(`http://localhost:3030/categories`, {name: name}).subscribe((result: Category) => {
-            observer.next(result);
-            observer.complete();
-            this.updateCategoryList();
-          })
+          return this._http.post<Category>(BASE_URL, {name: name}).pipe(
+            tap(() => {
+              this.updateCategoryList();
+            }),
+            catchError(error => of(error))
+          )
         }
       })
-    });
+    )
   }
 
-  deleteCategory(category: number | string | Category) {
+  deleteCategory(category: number | string | Category): Observable<Category> {
     if (typeof category === "number") {
-      this.http.delete(`http://localhost:3030/categories/${category}`).subscribe()
+      return this._http.delete<Category>(`${BASE_URL}/${category}`)
     }
-    if (typeof category === "string") {
-      this.getCategoriesList().subscribe((categories: Category[]) => {
+
+    if (typeof category === "object") {
+      return this._http.delete<Category>(`${BASE_URL}/${category.id}`).pipe(
+        tap(() => {
+          this.updateCategoryList();
+        }),
+        catchError(error => of(error))
+      )
+    }
+
+    return this.getCategoriesList().pipe(
+      switchMap((categories: Category[]) => {
         const isCategoryExist = categories.some((singleCategory: Category) => singleCategory.name.toLowerCase() === category.toLowerCase())
         if (isCategoryExist) {
           const foundCategory = categories.find((singleCategory: Category) => singleCategory.name.toLowerCase() === category.toLowerCase())
-          this.http.delete(`http://localhost:3030/categories/${foundCategory!.id}`).subscribe(() => {
-            this.updateCategoryList();
-          })
+          return this._http.delete<Category>(`${BASE_URL}/${foundCategory!.id}`).pipe(
+            tap(() => {
+              this.updateCategoryList();
+            })
+          )
         }
+        return of({id: '', name: ''} as unknown as Category);
       })
-    }
-    if (typeof category === "object") {
-      this.http.delete(`http://localhost:3030/categories/${category.id}`).subscribe(() => {
-        this.updateCategoryList();
-      })
-    }
+    )
+  }
+
+  ngOnDestroy() {
+    this._subs.unsubscribe();
   }
 }
 

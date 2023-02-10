@@ -13,16 +13,16 @@ import {User} from "../../interfaces";
 })
 export class UserResolver implements Resolve<User> {
   constructor(
-    private usersService: UsersService,
-    private router: Router) {
+    private _usersService: UsersService,
+    private _router: Router) {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<User> {
-    return this.usersService.getSingleUser(route.params?.['id']).pipe(
+    return this._usersService.getSingleUser(route.params?.['id']).pipe(
       catchError(() => {
-        this.router.navigate(['/admin', 'users']);
+        this._router.navigate(['/admin', 'users']).then();
         return EMPTY;
       })
-    )
+    );
   }
 }

@@ -19,7 +19,7 @@ import {UsersService} from "./services/users.service";
 import {ArticlesService} from "./services/articles.service";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
-import {ConfirmDialogModalComponent} from './components/shared/confirm-dialog-modal/confirm-dialog-modal.component';
+import {ConfirmDialogModalComponent} from './components/confirm-dialog-modal/confirm-dialog-modal.component';
 import {ArrayToStringPipe} from "./utils/array-to-string.pipe";
 import {NotFoundPageComponent} from './components/not-found-page/not-found-page.component';
 import {UserResolver} from "./resorvers/user.resolver";
@@ -85,4 +85,9 @@ import {SharedCategoriesService} from "./services/shared-categories.service";
     ArticleResolver]
 })
 export class AdminModule {
+  constructor(public sharedCategoriesService: SharedCategoriesService,
+              private sharedTagsService: SharedTagsService) {
+    sharedCategoriesService.updateCategoryList();
+    sharedTagsService.updateTagsList();
+  }
 }

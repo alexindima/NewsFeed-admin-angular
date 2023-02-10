@@ -8,7 +8,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {
   ConfirmDialogModalComponent,
   ModalDialogData
-} from "../shared/confirm-dialog-modal/confirm-dialog-modal.component";
+} from "../confirm-dialog-modal/confirm-dialog-modal.component";
 
 interface PaginatorSettings {
   length: number,
@@ -92,8 +92,10 @@ export class ArticleDashboardPageComponent implements OnInit {
     const dialogRef = this.matDialog.open(ConfirmDialogModalComponent, {
       width: '600px',
       data: {
+        title: 'Confirm Delete',
         text: `<p class="fw-bold">Are you sure you want to delete article: </p>
-        "${article.mainTitle}"?`
+        "${article.mainTitle}"?`,
+        button: 'Delete'
       } as ModalDialogData
     });
 

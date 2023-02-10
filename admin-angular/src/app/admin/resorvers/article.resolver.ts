@@ -13,16 +13,16 @@ import {Article} from "../../interfaces";
 })
 export class ArticleResolver implements Resolve<Article> {
   constructor(
-    private articlesService: ArticlesService,
-    private router: Router) {
+    private _articlesService: ArticlesService,
+    private _router: Router) {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Article> {
-    return this.articlesService.getSingleArticle(route.params?.['id']).pipe(
+    return this._articlesService.getSingleArticle(route.params?.['id']).pipe(
       catchError(() => {
-        this.router.navigate(['/admin', 'articles'])
-        return EMPTY
+        this._router.navigate(['/admin', 'articles']).then();
+        return EMPTY;
       })
-    )
+    );
   }
 }
