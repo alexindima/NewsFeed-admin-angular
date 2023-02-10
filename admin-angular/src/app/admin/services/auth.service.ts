@@ -1,39 +1,41 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {JSAuthResponse, LoginUser} from "../../interfaces";
-import {Observable, tap, catchError, of, throwError, Subject} from "rxjs";
+import {Observable, tap, catchError, throwError, Subject} from "rxjs";
+
+const BASE_URL = 'http://localhost:3030/login';
 
 @Injectable()
 export class AuthService {
   public error$: Subject<string> = new Subject<string>()
 
-  constructor(private http: HttpClient) {
+  constructor(private _http: HttpClient) {
   }
 
   get token() {
-    return localStorage.getItem('js-token')
+    return localStorage.getItem('js-token');
   }
 
   login(user: LoginUser): Observable<JSAuthResponse | null> {
-    return this.http.post<JSAuthResponse>(`http://localhost:3030/login`, user)
+    return this._http.post<JSAuthResponse>(BASE_URL, user)
       .pipe(
         tap(this.setToken),
         catchError(this.handleError.bind(this))
-      )
+      );
   }
 
   logout() {
-    this.setToken(null)
+    this.setToken(null);
   }
 
   isAuthenticated(): boolean {
-    return !!this.token
+    return !!this.token;
   }
 
   private handleError(error: HttpErrorResponse) {
     const message = error.error;
-    this.error$.next(message)
-    return throwError(error)
+    this.error$.next(message);
+    return throwError(error);
   }
 
   private setToken(response: JSAuthResponse | null) {

@@ -85,9 +85,9 @@ import {SharedCategoriesService} from "./services/shared-categories.service";
     ArticleResolver]
 })
 export class AdminModule {
-  constructor(public sharedCategoriesService: SharedCategoriesService,
-              private sharedTagsService: SharedTagsService) {
-    sharedCategoriesService.updateCategoryList();
-    sharedTagsService.updateTagsList();
+  constructor(public _sharedCategoriesService: SharedCategoriesService,
+              private _sharedTagsService: SharedTagsService) {
+    _sharedCategoriesService.updateCategoryList();
+    _sharedTagsService.updateTagsList();
   }
 }

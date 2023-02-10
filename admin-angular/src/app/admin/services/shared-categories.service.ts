@@ -23,30 +23,29 @@ export class SharedCategoriesService implements OnDestroy {
   }
 
   getCategoriesList(): Observable<Category[]> {
-    return this._http.get<Category[]>(BASE_URL)
+    return this._http.get<Category[]>(BASE_URL);
   }
 
   createCategory(name: string): Observable<Category> {
     return this.getCategoriesList().pipe(
       switchMap((categories: Category[]) => {
-        const isCategoryExist = categories.some((category: Category) => category.name.toLowerCase() === name.toLowerCase())
+        const isCategoryExist = categories.some((category: Category) => category.name.toLowerCase() === name.toLowerCase());
         if (isCategoryExist) {
-          return of(categories.find((category: Category) => category.name.toLowerCase() === name.toLowerCase()))
-        } else {
-          return this._http.post<Category>(BASE_URL, {name: name}).pipe(
-            tap(() => {
-              this.updateCategoryList();
-            }),
-            catchError(error => of(error))
-          )
+          return of(categories.find((category: Category) => category.name.toLowerCase() === name.toLowerCase()));
         }
+        return this._http.post<Category>(BASE_URL, {name: name}).pipe(
+          tap(() => {
+            this.updateCategoryList();
+          }),
+          catchError(error => of(error))
+        );
       })
-    )
+    );
   }
 
   deleteCategory(category: number | string | Category): Observable<Category> {
     if (typeof category === "number") {
-      return this._http.delete<Category>(`${BASE_URL}/${category}`)
+      return this._http.delete<Category>(`${BASE_URL}/${category}`);
     }
 
     if (typeof category === "object") {
@@ -55,23 +54,24 @@ export class SharedCategoriesService implements OnDestroy {
           this.updateCategoryList();
         }),
         catchError(error => of(error))
-      )
+      );
     }
 
     return this.getCategoriesList().pipe(
       switchMap((categories: Category[]) => {
-        const isCategoryExist = categories.some((singleCategory: Category) => singleCategory.name.toLowerCase() === category.toLowerCase())
+        const isCategoryExist = categories.some((singleCategory: Category) => singleCategory.name.toLowerCase() === category.toLowerCase());
         if (isCategoryExist) {
-          const foundCategory = categories.find((singleCategory: Category) => singleCategory.name.toLowerCase() === category.toLowerCase())
+          const foundCategory = categories.find((singleCategory: Category) => singleCategory.name.toLowerCase() === category.toLowerCase());
           return this._http.delete<Category>(`${BASE_URL}/${foundCategory!.id}`).pipe(
             tap(() => {
               this.updateCategoryList();
-            })
-          )
+            }),
+            catchError(error => of(error))
+          );
         }
         return of({id: '', name: ''} as unknown as Category);
       })
-    )
+    );
   }
 
   ngOnDestroy() {

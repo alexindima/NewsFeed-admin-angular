@@ -3,60 +3,62 @@ import {HttpClient} from "@angular/common/http";
 import {User} from "../../interfaces";
 import {map, Observable, switchMap} from "rxjs";
 
+const BASE_URL = `http://localhost:3030/users`;
+
 @Injectable()
 export class UsersService {
 
-  constructor(private http: HttpClient) {
+  constructor(private _http: HttpClient) {
   }
 
   getCountOfUsers(search: string | null = null): Observable<number> {
-    let url = `http://localhost:3030/users`;
+    let url = BASE_URL;
     if (search) {
       url += `?q=${search.replace(/ /g, "+")}&`;
     }
-    return this.http.get<User[]>(url).pipe(
+    return this._http.get<User[]>(url).pipe(
       map((users: User[]) => users.length)
-    )
+    );
   }
 
   getUsers(page: number, limit: number, search: string | null = null): Observable<User[]> {
-    let url = `http://localhost:3030/users?`;
+    let url = `${BASE_URL}?`;
     if (search) {
       url += `q=${search.replace(/ /g, "+")}&`;
     }
     url += `_page=${page}&_limit=${limit}`;
-    return this.http.get<User[]>(url)
+    return this._http.get<User[]>(url);
   }
 
   getSingleUser(user: number): Observable<User> {
-    return this.http.get<User>(`http://localhost:3030/users/${user}`)
+    return this._http.get<User>(`${BASE_URL}/${user}`);
   }
 
 
   createUser(newUser: User): Observable<User> {
-    return this.http.post<User>(`http://localhost:3030/users`, newUser)
+    return this._http.post<User>(BASE_URL, newUser);
   }
 
   editUser(editedUser: User): Observable<User> {
     return this.deleteUser(editedUser).pipe(
       switchMap(() => {
         if (!editedUser.password) {
-          editedUser = {...editedUser, password: '123456'}
+          editedUser = {...editedUser, password: '123456'};
         }
-        return this.createUser(editedUser)
+        return this.createUser(editedUser);
       })
-    )
+    );
   }
 
-  deleteUser(user: number | User): Observable<any> {
-    let id: number | undefined
+  deleteUser(user: number | User): Observable<User> {
+    let id: number | undefined;
     if (typeof user === "number") {
-      id = user
+      id = user;
     }
     if (typeof user === "object") {
-      id = user.id
+      id = user.id;
     }
-    return this.http.delete(`http://localhost:3030/users/${id}`)
+    return this._http.delete<User>(`${BASE_URL}/${id}`);
   }
 }
 

@@ -27,7 +27,6 @@ export interface Tag {
   readonly name: string;
 }
 
-
 export interface Article {
   readonly id?: number;
   readonly createdDate?: string;
@@ -41,12 +40,5 @@ export interface Article {
   readonly tags: number[];
 }
 
-export interface ArticleElement {
-  readonly id: number;
-  readonly type: string;
-  readonly href?: string;
-  readonly alt?: string;
-  readonly data?: string;
-}
 
 

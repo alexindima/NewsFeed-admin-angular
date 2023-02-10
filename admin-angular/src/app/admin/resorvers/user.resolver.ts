@@ -4,7 +4,7 @@ import {
   RouterStateSnapshot,
   ActivatedRouteSnapshot
 } from '@angular/router';
-import {catchError, EMPTY, Observable, of} from 'rxjs';
+import {catchError, EMPTY, Observable} from 'rxjs';
 import {UsersService} from "../services/users.service";
 import {User} from "../../interfaces";
 

@@ -1,65 +1,80 @@
-import {Injectable} from "@angular/core";
+import {Injectable, OnDestroy} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Tag} from "../../interfaces";
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, catchError, Observable, of, switchMap, tap} from "rxjs";
+import {Subs} from "../utils/subs";
+
+const BASE_URL = 'http://localhost:3030/tags';
 
 @Injectable()
-export class SharedTagsService {
-  private data = new BehaviorSubject<Tag[]>([]);
-  tags: Observable<Tag[]> = this.data.asObservable();
+export class SharedTagsService implements OnDestroy {
+  private _subs = new Subs();
+  private _data = new BehaviorSubject<Tag[]>([]);
+  tags: Observable<Tag[]> = this._data.asObservable();
 
-  constructor(private http: HttpClient) {
+  constructor(private _http: HttpClient) {
   }
 
   updateTagsList() {
-    this.http.get<Tag[]>(`http://localhost:3030/tags`).subscribe(data => {
-      this.data.next(data);
+    this._subs.add = this._http.get<Tag[]>(BASE_URL).subscribe(data => {
+      this._data.next(data);
     })
   }
 
   getTagsList(): Observable<Tag[]> {
-    return this.http.get<Tag[]>(`http://localhost:3030/tags`)
+    return this._http.get<Tag[]>(BASE_URL);
   }
 
   createTag(name: string): Observable<Tag> {
-    return new Observable(observer => {
-      this.getTagsList().subscribe((tags: Tag[]) => {
-        const isTagExist = tags.some((tag: Tag) => tag.name.toLowerCase() === name.toLowerCase())
+    return this.getTagsList().pipe(
+      switchMap((tags: Tag[]) => {
+        const isTagExist = tags.some((tag: Tag) => tag.name.toLowerCase() === name.toLowerCase());
         if (isTagExist) {
-          const foundTag = tags.find((tag: Tag) => tag.name.toLowerCase() === name.toLowerCase())
-          observer.next(foundTag);
-          observer.complete();
-        } else {
-          this.http.post<Tag>(`http://localhost:3030/tags`, {name: name}).subscribe((result: Tag) => {
-            observer.next(result);
-            observer.complete();
-            this.updateTagsList()
-          })
+          return of(tags.find((tag: Tag) => tag.name.toLowerCase() === name.toLowerCase()));
         }
+        return this._http.post<Tag>(BASE_URL, {name: name}).pipe(
+          tap(() => {
+            this.updateTagsList();
+          }),
+          catchError(error => of(error))
+        );
       })
-    });
+    );
   }
 
-  deleteTag(tag: number | string | Tag) {
+  deleteTag(tag: number | string | Tag): Observable<Tag> {
     if (typeof tag === "number") {
-      this.http.delete(`http://localhost:3030/tags/${tag}`).subscribe()
+      return this._http.delete<Tag>(`${BASE_URL}/${tag}`);
     }
-    if (typeof tag === "string") {
-      this.getTagsList().subscribe((tags: Tag[]) => {
-        const isTagExist = tags.some((singleTag: Tag) => singleTag.name.toLowerCase() === tag.toLowerCase())
-        if (isTagExist) {
-          const foundTag = tags.find((singleTag: Tag) => singleTag.name.toLowerCase() === tag.toLowerCase())
-          this.http.delete(`http://localhost:3030/tags/${foundTag!.id}`).subscribe(() => {
-            this.updateTagsList()
-          })
-        }
-      })
-    }
+
     if (typeof tag === "object") {
-      this.http.delete(`http://localhost:3030/tags/${tag.id}`).subscribe(() => {
-        this.updateTagsList()
-      })
+      return this._http.delete<Tag>(`${BASE_URL}/${tag.id}`).pipe(
+        tap(() => {
+          this.updateTagsList();
+        }),
+        catchError(error => of(error))
+      );
     }
+
+    return this.getTagsList().pipe(
+      switchMap((tags: Tag[]) => {
+        const isTagExist = tags.some((singleTag: Tag) => singleTag.name.toLowerCase() === tag.toLowerCase());
+        if (isTagExist) {
+          const foundTag = tags.find((singleTag: Tag) => singleTag.name.toLowerCase() === tag.toLowerCase());
+          return this._http.delete<Tag>(`${BASE_URL}/${foundTag!.id}`).pipe(
+            tap(() => {
+              this.updateTagsList();
+            }),
+            catchError(error => of(error))
+          );
+        }
+        return of({id: '', name: ''} as unknown as Tag);
+      })
+    );
+  }
+
+  ngOnDestroy() {
+    this._subs.unsubscribe();
   }
 }
 

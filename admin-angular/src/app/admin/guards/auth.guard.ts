@@ -2,46 +2,33 @@ import {Injectable} from "@angular/core";
 import {
   ActivatedRouteSnapshot,
   CanActivate,
-  CanDeactivate,
   Router,
-  RouterStateSnapshot,
-  UrlTree
+  RouterStateSnapshot
 } from "@angular/router";
 import {Observable} from "rxjs";
 import {AuthService} from "../services/auth.service";
 
 @Injectable()
-export class AuthGuard implements CanActivate, CanDeactivate<unknown> {
+export class AuthGuard implements CanActivate {
   constructor(
-    private auth: AuthService,
-    private router: Router
+    private _auth: AuthService,
+    private _router: Router
   ) {
   }
-
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    if (this.auth.isAuthenticated()) {
-      return true
+    if (this._auth.isAuthenticated()) {
+      return true;
     } else {
-      this.auth.logout()
-      this.router.navigate(['/admin', 'login'], {
+      this._auth.logout();
+      this._router.navigate(['/admin', 'login'], {
         queryParams: {
           loginAgain: true
         }
-      })
-      return false
+      }).then();
+      return false;
     }
   }
-
-  canDeactivate(
-    component: unknown,
-    currentRoute: ActivatedRouteSnapshot,
-    currentState: RouterStateSnapshot,
-    nextState: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    throw new Error("Method not implemented.");
-  }
-
-
 }
