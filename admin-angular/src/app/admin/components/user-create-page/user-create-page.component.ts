@@ -10,6 +10,7 @@ import {appValidEqualFactory} from '../../utils/valid-equal'
 import {SharedTagsService} from "../../services/shared-tags.service";
 import {SharedCategoriesService} from "../../services/shared-categories.service";
 import {Subs} from "../../utils/subs";
+import {AutocompleteOptionsFiler} from "../../utils/autocomplete-options-filer";
 
 interface UserForm {
   name: FormControl<string>;
@@ -41,14 +42,20 @@ export class UserCreatePageComponent implements OnInit, OnDestroy {
   };
   categoriesList: Category[] = [];
   tagsList: Tag[] = [];
-  tagControls = new FormArray<FormControl>([new FormControl('')]);
-  categoriesControls = new FormArray<FormControl>([new FormControl('')]);
+  categoriesAutocompleteOptions: AutocompleteOptionsFiler[] = [new AutocompleteOptionsFiler(new FormControl('', {
+    nonNullable: true
+  }))];
+  tagsAutocompleteOptions: AutocompleteOptionsFiler[] = [new AutocompleteOptionsFiler(new FormControl('', {
+    nonNullable: true
+  }))];
 
-  constructor(public sharedCategoriesService: SharedCategoriesService,
+  constructor(
+    public sharedCategoriesService: SharedCategoriesService,
               private sharedTagsService: SharedTagsService,
               private usersService: UsersService,
               private activatedRoute: ActivatedRoute,
-              private router: Router) {
+              private router: Router
+  ) {
   }
 
   ngOnInit() {
@@ -76,8 +83,8 @@ export class UserCreatePageComponent implements OnInit, OnDestroy {
       confirmPassword: new FormControl('', {
         nonNullable: true
       }),
-      categories: this.categoriesControls,
-      tags: this.tagControls
+      categories: new FormArray(this.categoriesAutocompleteOptions.map(AutocompleteOptions => AutocompleteOptions.control)),
+      tags: new FormArray(this.tagsAutocompleteOptions.map(AutocompleteOptions => AutocompleteOptions.control))
     });
 
     this.form.setValidators(appValidEqualFactory(['password', 'confirmPassword'], 'VALIDATION.PASSWORD_MISMATCH'))
@@ -122,21 +129,29 @@ export class UserCreatePageComponent implements OnInit, OnDestroy {
     }
   }
 
-  addTag() {
-    this.tagControls.push(new FormControl('', Validators.required));
-  }
 
-  RemoveTag(index: number) {
-    this.tagControls.removeAt(index);
-  }
 
   addCategory() {
-    this.categoriesControls.push(new FormControl('', Validators.required));
+    this.categoriesAutocompleteOptions.push(new AutocompleteOptionsFiler(new FormControl('', {
+      nonNullable: true
+    })))
+  }
+
+  addTag() {
+    this.tagsAutocompleteOptions.push(new AutocompleteOptionsFiler(new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required]
+    })))
   }
 
   RemoveCategory(index: number) {
-    this.categoriesControls.removeAt(index);
+    this.categoriesAutocompleteOptions.splice(index, 1);
   }
+
+  RemoveTag(index: number) {
+    this.tagsAutocompleteOptions.splice(index, 1);
+  }
+
 
   createFilteredOptions(control: FormControl, options: Tag[] | Category[]): Tag[] | Category[] {
     return options.filter(option => {
@@ -206,23 +221,23 @@ export class UserCreatePageComponent implements OnInit, OnDestroy {
     const categoriesObservables: Observable<Category>[] = []
     const tagsObservables: Observable<Tag>[] = []
 
-    for (let category of this.categoriesControls.value) {
-      if (typeof category === "string") {
-        if (category.trim()) {
-          categoriesObservables.push(this.sharedCategoriesService.createCategory(category))
+    for (let category of this.categoriesAutocompleteOptions) {
+      if (typeof category.control.value === "string") {
+        if (category.control.value.trim()) {
+          categoriesObservables.push(this.sharedCategoriesService.createCategory(category.control.value))
         }
       } else {
-        ignoredCategories.add(category.id)
+        ignoredCategories.add(category.control.value.id)
       }
     }
 
-    for (let tag of this.tagControls.value) {
-      if (typeof tag === "string") {
-        if (tag.trim()) {
-          tagsObservables.push(this.sharedTagsService.createTag(tag))
+    for (let tag of this.tagsAutocompleteOptions) {
+      if (typeof tag.control.value === "string") {
+        if (tag.control.value.trim()) {
+          tagsObservables.push(this.sharedTagsService.createTag(tag.control.value))
         }
       } else {
-        ignoredTags.add(tag.id)
+        ignoredTags.add(tag.control.value.id)
       }
     }
 

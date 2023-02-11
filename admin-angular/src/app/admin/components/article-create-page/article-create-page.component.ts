@@ -9,6 +9,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {SharedTagsService} from "../../services/shared-tags.service";
 import {SharedCategoriesService} from "../../services/shared-categories.service";
 import {Subs} from "../../utils/subs";
+import {AutocompleteOptionsFiler} from "../../utils/autocomplete-options-filer";
 
 interface ArticleForm {
   mainTitle: FormControl<string>;
@@ -45,14 +46,13 @@ export class ArticleCreatePageComponent implements OnInit, OnDestroy {
   };
   categoriesList: Category[] = [];
   tagsList: Tag[] = [];
-  categoryControl = new FormControl('', {
+  categoryAutocompleteOptions: AutocompleteOptionsFiler = new AutocompleteOptionsFiler(new FormControl('', {
     nonNullable: true,
     validators: [Validators.required]
-  });
-  tagControls = new FormArray<FormControl<string | Tag>>([new FormControl('', {
-    nonNullable: true,
-    validators: [Validators.required]
-  })]);
+  }));
+  tagsAutocompleteOptions: AutocompleteOptionsFiler[] = [new AutocompleteOptionsFiler(new FormControl('', {
+    nonNullable: true
+  }))];
 
   constructor(
     public sharedCategoriesService: SharedCategoriesService,
@@ -93,8 +93,8 @@ export class ArticleCreatePageComponent implements OnInit, OnDestroy {
         nonNullable: true,
         validators: [Validators.required]
       }),
-      category: this.categoryControl,
-      tags: this.tagControls
+      category: this.categoryAutocompleteOptions.control,
+      tags: new FormArray(this.tagsAutocompleteOptions.map(AutocompleteOptions => AutocompleteOptions.control))
     });
 
     if (this.articleFromResolver) {
@@ -119,21 +119,14 @@ export class ArticleCreatePageComponent implements OnInit, OnDestroy {
   }
 
   addTag() {
-    this.tagControls.push(new FormControl('', {
+    this.tagsAutocompleteOptions.push(new AutocompleteOptionsFiler(new FormControl('', {
       nonNullable: true,
       validators: [Validators.required]
-    }));
+    })))
   }
 
   RemoveTag(index: number) {
-    this.tagControls.removeAt(index);
-  }
-
-  createFilteredOptions(control: FormControl, options: Tag[] | Category[]): Tag[] | Category[] {
-    return options.filter(option => {
-      const isNameString = typeof control.value === 'string' ? control.value : option?.name;
-      return option.name.toLowerCase().includes(isNameString.toLowerCase())
-    });
+    this.tagsAutocompleteOptions.splice(index, 1);
   }
 
   displayFn(data: Tag | Category | string): string {
@@ -204,13 +197,13 @@ export class ArticleCreatePageComponent implements OnInit, OnDestroy {
       category = this.form.value.category.id;
     }
 
-    for (let tag of this.tagControls.value) {
-      if (typeof tag === "string") {
-        if (tag.trim()) {
-          observables.push(this._sharedTagsService.createTag(tag));
+    for (let tag of this.tagsAutocompleteOptions) {
+      if (typeof tag.control.value === "string") {
+        if (tag.control.value.trim()) {
+          observables.push(this._sharedTagsService.createTag(tag.control.value));
         }
       } else {
-        tags.add(tag.id);
+        tags.add(tag.control.value.id);
       }
     }
 

@@ -21,7 +21,7 @@ export class UsersService {
     );
   }
 
-  getUsers(page: number, limit: number, search: string | null = null): Observable<User[]> {
+  getUsers(page: number | null, limit: number | null, search: string | null = null): Observable<User[]> {
     let url = `${BASE_URL}?`;
     if (search) {
       url += `q=${search.replace(/ /g, "+")}&`;

@@ -5,12 +5,14 @@
     <h4>Category</h4>
     <input type="text"
            placeholder="Choose category or enter a new one"
-           [formControl]="categoryControl"
+           [formControl]="categoryAutocompleteOptions.control"
            [matAutocomplete]="auto"
+           (focusin)="categoryAutocompleteOptions.createFilteredOptions(categoriesList)"
+           (input)="categoryAutocompleteOptions.createFilteredOptions(categoriesList)"
            formControlName="category"
            class=" form-control mb-3">
     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-      <mat-option *ngFor="let option of createFilteredOptions(categoryControl, categoriesList)"
+      <mat-option *ngFor="let option of categoryAutocompleteOptions.options"
                   [value]="option">
         {{option.name}}
       </mat-option>
@@ -80,14 +82,22 @@
     </div>
 
     <h4>Tags</h4>
-    <div formArrayName="tags" *ngFor="let tag of tagControls.controls; let i = index">
+    <div formArrayName="tags" *ngFor="let tag of tagsAutocompleteOptions; let i = index">
       <div class="input-group mb-3">
-        <input type="text" class="form-control" [formControl]="tag" matInput [matAutocomplete]="auto">
+        <input
+          type="text"
+          class="form-control"
+          [formControl]="tag.control"
+          (focusin)="tagsAutocompleteOptions[i].createFilteredOptions(tagsList)"
+          (input)="tagsAutocompleteOptions[i].createFilteredOptions(tagsList)"
+          matInput
+          [matAutocomplete]="auto"
+        >
         <button type="button" (click)="addTag()" class="btn btn-info">Add another tag</button>
         <button type="button" [disabled]="i === 0" (click)="RemoveTag(i)" class="btn btn-danger">Remove tag</button>
       </div>
       <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-        <mat-option *ngFor="let option of createFilteredOptions(tag, tagsList)" [value]="option">
+        <mat-option *ngFor="let option of tagsAutocompleteOptions[i].options" [value]="option">
           {{ option.name }}
         </mat-option>
       </mat-autocomplete>
