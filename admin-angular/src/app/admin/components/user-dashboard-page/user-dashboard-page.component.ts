@@ -1,9 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {PageEvent} from "@angular/material/paginator";
-import {ArticlesService} from "../../services/articles.service";
 import {Article, Category, Tag, User} from "../../../interfaces";
 import {ActivatedRoute, Router} from "@angular/router";
-import {switchMap} from "rxjs";
+import {of, switchMap, tap} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
 import {
   ConfirmDialogModalComponent,
@@ -12,6 +11,7 @@ import {
 import {UsersService} from "../../services/users.service";
 import {SharedTagsService} from "../../services/shared-tags.service";
 import {SharedCategoriesService} from "../../services/shared-categories.service";
+import {Subs} from "../../utils/subs";
 
 interface PaginatorSettings {
   length: number,
@@ -38,7 +38,8 @@ interface UserToShow {
   templateUrl: './user-dashboard-page.component.html',
   styleUrls: ['./user-dashboard-page.component.scss']
 })
-export class UserDashboardPageComponent implements OnInit {
+export class UserDashboardPageComponent implements OnInit, OnDestroy {
+  private _subs = new Subs();
   userListToShow: UserToShow[] = [];
   categoriesList: Category[] = []
   tagsList: Tag[] = []
@@ -55,28 +56,29 @@ export class UserDashboardPageComponent implements OnInit {
   };
   pageEvent!: PageEvent;
 
-  constructor(private articlesService: ArticlesService,
-              private usersService: UsersService,
-              private sharedCategoriesService: SharedCategoriesService,
-              private sharedTagsService: SharedTagsService,
-              private activatedRoute: ActivatedRoute,
-              private router: Router,
-              private matDialog: MatDialog) {
+  constructor(
+    private _usersService: UsersService,
+    private _sharedCategoriesService: SharedCategoriesService,
+    private _sharedTagsService: SharedTagsService,
+    private _activatedRoute: ActivatedRoute,
+    private _router: Router,
+    private _matDialog: MatDialog
+  ) {
   }
 
   ngOnInit(): void {
-    this.sharedCategoriesService.categories.subscribe((data) => {
+    this._subs.add = this._sharedCategoriesService.categories.subscribe((data) => {
       this.categoriesList = data;
     })
-    this.sharedTagsService.tags.subscribe((data) => {
+    this._subs.add = this._sharedTagsService.tags.subscribe((data) => {
       this.tagsList = data;
     })
 
-    this.usersService.getCountOfUsers()
+    this._subs.add = this._usersService.getCountOfUsers()
       .pipe(
         switchMap(result => {
           this.paginatorSettings.length = result;
-          return this.activatedRoute.queryParams;
+          return this._activatedRoute.queryParams;
         })
       )
       .subscribe(params => {
@@ -99,7 +101,7 @@ export class UserDashboardPageComponent implements OnInit {
       }
     }
 
-    this.router.navigate([], {
+    this._router.navigate([], {
       queryParams: {
         page: this.paginatorSettings.pageIndex + 1,
         limit: this.paginatorSettings.pageSize
@@ -107,7 +109,7 @@ export class UserDashboardPageComponent implements OnInit {
       queryParamsHandling: 'merge'
     }).then();
 
-    this.usersService.getUsers((this.paginatorSettings.pageIndex + 1), this.paginatorSettings.pageSize)
+    this._subs.add = this._usersService.getUsers((this.paginatorSettings.pageIndex + 1), this.paginatorSettings.pageSize)
       .subscribe((result: User[]) => {
         this.userListToShow = result.map((user: User) => {
           return {
@@ -129,7 +131,7 @@ export class UserDashboardPageComponent implements OnInit {
   }
 
   openDeleteModal(user: UserToShow): void {
-    const dialogRef = this.matDialog.open(ConfirmDialogModalComponent, {
+    const dialogRef = this._matDialog.open(ConfirmDialogModalComponent, {
       width: '600px',
       data: {
         title: 'Confirm Delete',
@@ -139,18 +141,20 @@ export class UserDashboardPageComponent implements OnInit {
       } as ModalDialogData
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.usersService.deleteUser(user.id).pipe(
-          switchMap(() => {
-            return this.usersService.getCountOfUsers()
-          })
-        ).subscribe(count => {
-          this.paginatorSettings.length = count;
-          this.getUsers();
-        })
-      }
-    });
+    this._subs.add = dialogRef.afterClosed().pipe(
+      switchMap(result => {
+        if (result) {
+          return this._usersService.deleteUser(user.id).pipe(
+            switchMap(() => this._usersService.getCountOfUsers()),
+            tap(count => {
+              this.paginatorSettings.length = count;
+              this.getUsers();
+            })
+          );
+        }
+        return of(null);
+      })
+    ).subscribe();
   }
 
   handlePageEvent(e: PageEvent) {
@@ -159,5 +163,9 @@ export class UserDashboardPageComponent implements OnInit {
     this.paginatorSettings.pageSize = e.pageSize;
     this.paginatorSettings.pageIndex = e.pageIndex;
     this.getUsers()
+  }
+
+  ngOnDestroy() {
+    this._subs.unsubscribe();
   }
 }

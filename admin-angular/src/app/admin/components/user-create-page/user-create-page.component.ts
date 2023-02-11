@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Category, Tag, User} from "../../../interfaces";
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -9,6 +9,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {appValidEqualFactory} from '../../utils/valid-equal'
 import {SharedTagsService} from "../../services/shared-tags.service";
 import {SharedCategoriesService} from "../../services/shared-categories.service";
+import {Subs} from "../../utils/subs";
 
 interface UserForm {
   name: FormControl<string>;
@@ -29,7 +30,8 @@ interface UserFromResolverForForm {
   templateUrl: './user-create-page.component.html',
   styleUrls: ['./user-create-page.component.scss']
 })
-export class UserCreatePageComponent implements OnInit {
+export class UserCreatePageComponent implements OnInit, OnDestroy {
+  private _subs = new Subs();
   userFromResolver: User | undefined;
   form!: FormGroup;
   submitted = false;
@@ -51,10 +53,10 @@ export class UserCreatePageComponent implements OnInit {
 
   ngOnInit() {
     this.userFromResolver = this.activatedRoute.snapshot.data['user'];
-    this.sharedCategoriesService.categories.subscribe((data) => {
+    this._subs.add = this.sharedCategoriesService.categories.subscribe((data) => {
       this.categoriesList = data;
     })
-    this.sharedTagsService.tags.subscribe((data) => {
+    this._subs.add = this.sharedTagsService.tags.subscribe((data) => {
       this.tagsList = data;
     })
 
@@ -80,7 +82,7 @@ export class UserCreatePageComponent implements OnInit {
 
     this.form.setValidators(appValidEqualFactory(['password', 'confirmPassword'], 'VALIDATION.PASSWORD_MISMATCH'))
 
-    this.form.get('password')!.valueChanges.subscribe(() => {
+    this._subs.add = this.form.get('password')!.valueChanges.subscribe(() => {
       if (this.form.get('password')!.value || this.form.get('confirmPassword')!.value) {
         this.form.get('password')!.addValidators([Validators.minLength(6)]);
       } else {
@@ -180,7 +182,7 @@ export class UserCreatePageComponent implements OnInit {
         ignoredCategories: ignoredCategories,
         ignoredTags: ignoredTags
       }
-      this.usersService.createUser(user).subscribe(() => {
+      this._subs.add = this.usersService.createUser(user).subscribe(() => {
         this.form.reset()
       })
     }
@@ -194,7 +196,7 @@ export class UserCreatePageComponent implements OnInit {
         ignoredCategories: ignoredCategories,
         ignoredTags: ignoredTags
       }
-      this.usersService.editUser(user).subscribe(() => {
+      this._subs.add = this.usersService.editUser(user).subscribe(() => {
         this.form.reset()
       })
     }
@@ -237,7 +239,7 @@ export class UserCreatePageComponent implements OnInit {
       : of([]);
 
 
-    forkJoin([categoriesObservable, tagsObservable]).subscribe(([categoriesID, tagsID]) => {
+    this._subs.add = forkJoin([categoriesObservable, tagsObservable]).subscribe(([categoriesID, tagsID]) => {
       for (let categoryID of categoriesID) {
         ignoredCategories.add(categoryID)
       }
@@ -252,6 +254,10 @@ export class UserCreatePageComponent implements OnInit {
       this.router.navigate(['/admin', 'users']).then();
       this.submitted = false;
     })
+  }
+
+  ngOnDestroy() {
+    this._subs.unsubscribe();
   }
 }
 

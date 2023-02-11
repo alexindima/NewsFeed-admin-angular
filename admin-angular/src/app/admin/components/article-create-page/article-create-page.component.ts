@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Article, Category, Tag} from "../../../interfaces";
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -8,6 +8,7 @@ import {UniqueArray} from "../../utils/unique-array.common";
 import {ActivatedRoute, Router} from "@angular/router";
 import {SharedTagsService} from "../../services/shared-tags.service";
 import {SharedCategoriesService} from "../../services/shared-categories.service";
+import {Subs} from "../../utils/subs";
 
 interface ArticleForm {
   mainTitle: FormControl<string>;
@@ -33,7 +34,8 @@ interface ArticleForForm {
   templateUrl: './article-create-page.component.html',
   styleUrls: ['./article-create-page.component.scss']
 })
-export class ArticleCreatePageComponent implements OnInit {
+export class ArticleCreatePageComponent implements OnInit, OnDestroy {
+  private _subs = new Subs();
   articleFromResolver: Article | undefined;
   form!: FormGroup;
   submitted = false;
@@ -46,25 +48,27 @@ export class ArticleCreatePageComponent implements OnInit {
   categoryControl = new FormControl('', {
     nonNullable: true,
     validators: [Validators.required]
-  })
+  });
   tagControls = new FormArray<FormControl<string | Tag>>([new FormControl('', {
     nonNullable: true,
     validators: [Validators.required]
   })]);
 
-  constructor(public sharedCategoriesService: SharedCategoriesService,
-              private sharedTagsService: SharedTagsService,
-              private articlesService: ArticlesService,
-              private activatedRoute: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    public sharedCategoriesService: SharedCategoriesService,
+    private _sharedTagsService: SharedTagsService,
+    private _articlesService: ArticlesService,
+    private _activatedRoute: ActivatedRoute,
+    private _router: Router
+  ) {
   }
 
   ngOnInit() {
-    this.articleFromResolver = this.activatedRoute.snapshot.data['article'];
-    this.sharedCategoriesService.categories.subscribe((data) => {
+    this.articleFromResolver = this._activatedRoute.snapshot.data['article'];
+    this._subs.add = this.sharedCategoriesService.categories.subscribe((data) => {
       this.categoriesList = data;
     })
-    this.sharedTagsService.tags.subscribe((data) => {
+    this._subs.add = this._sharedTagsService.tags.subscribe((data) => {
       this.tagsList = data;
     })
 
@@ -168,8 +172,7 @@ export class ArticleCreatePageComponent implements OnInit {
         body: this.form.value.body,
         tags: tags
       };
-      console.log(article)
-      this.articlesService.createArticle(article).subscribe(() => {
+      this._subs.add = this._articlesService.createArticle(article).subscribe(() => {
         this.form.reset();
       })
     }
@@ -186,8 +189,7 @@ export class ArticleCreatePageComponent implements OnInit {
         body: this.form.value.body,
         tags: tags
       }
-      console.log(article)
-      this.articlesService.editArticle(article).subscribe(() => {
+      this._subs.add = this._articlesService.editArticle(article).subscribe(() => {
         this.form.reset();
       })
     }
@@ -205,14 +207,14 @@ export class ArticleCreatePageComponent implements OnInit {
     for (let tag of this.tagControls.value) {
       if (typeof tag === "string") {
         if (tag.trim()) {
-          observables.push(this.sharedTagsService.createTag(tag));
+          observables.push(this._sharedTagsService.createTag(tag));
         }
       } else {
         tags.add(tag.id);
       }
     }
 
-    concat(...observables).pipe(
+    this._subs.add = concat(...observables).pipe(
       map(result => result.id),
       toArray())
       .subscribe(result => {
@@ -229,7 +231,11 @@ export class ArticleCreatePageComponent implements OnInit {
           createArticle();
         }
         this.submitted = false;
-        this.router.navigate(['/admin', 'articles']).then();
+        this._router.navigate(['/admin', 'articles']).then();
       })
+  }
+
+  ngOnDestroy() {
+    this._subs.unsubscribe();
   }
 }

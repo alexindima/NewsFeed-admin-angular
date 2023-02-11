@@ -1,14 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {PageEvent} from "@angular/material/paginator";
 import {ArticlesService} from "../../services/articles.service";
 import {Article} from "../../../interfaces";
 import {ActivatedRoute, Router} from "@angular/router";
-import {switchMap} from "rxjs";
+import {EMPTY, of, switchMap, tap} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
 import {
   ConfirmDialogModalComponent,
   ModalDialogData
 } from "../confirm-dialog-modal/confirm-dialog-modal.component";
+import {Subs} from "../../utils/subs";
 
 interface PaginatorSettings {
   length: number,
@@ -26,7 +27,8 @@ interface PaginatorSettings {
   templateUrl: './article-dashboard-page.component.html',
   styleUrls: ['./article-dashboard-page.component.scss']
 })
-export class ArticleDashboardPageComponent implements OnInit {
+export class ArticleDashboardPageComponent implements OnInit, OnDestroy {
+  private _subs = new Subs();
   articlesList: Article[] = []
   paginatorSettings: PaginatorSettings = {
     length,
@@ -40,18 +42,18 @@ export class ArticleDashboardPageComponent implements OnInit {
   }
   pageEvent: PageEvent | undefined;
 
-  constructor(private articlesService: ArticlesService,
-              private activatedRoute: ActivatedRoute,
-              private router: Router,
-              private matDialog: MatDialog) {
+  constructor(private _articlesService: ArticlesService,
+              private _activatedRoute: ActivatedRoute,
+              private _router: Router,
+              private _matDialog: MatDialog) {
   }
 
-  ngOnInit(): void {
-    this.articlesService.getCountOfArticles()
+  ngOnInit() {
+    this._subs.add = this._articlesService.getCountOfArticles()
       .pipe(
         switchMap(result => {
           this.paginatorSettings.length = result;
-          return this.activatedRoute.queryParams;
+          return this._activatedRoute.queryParams;
         })
       )
       .subscribe(params => {
@@ -67,14 +69,14 @@ export class ArticleDashboardPageComponent implements OnInit {
       });
   }
 
-  getArticles(): void {
+  getArticles() {
     if (this.paginatorSettings.length) {
       while ((this.paginatorSettings.pageIndex + 1) > Math.ceil(this.paginatorSettings.length / this.paginatorSettings.pageSize)) {
         this.paginatorSettings.pageIndex--;
       }
     }
 
-    this.router.navigate([], {
+    this._router.navigate([], {
       queryParams: {
         page: this.paginatorSettings.pageIndex + 1,
         limit: this.paginatorSettings.pageSize
@@ -82,14 +84,14 @@ export class ArticleDashboardPageComponent implements OnInit {
       queryParamsHandling: 'merge'
     }).then();
 
-    this.articlesService.getArticles((this.paginatorSettings.pageIndex + 1), this.paginatorSettings.pageSize)
+    this._subs.add = this._articlesService.getArticles((this.paginatorSettings.pageIndex + 1), this.paginatorSettings.pageSize)
       .subscribe(result => {
         this.articlesList = result;
       })
   }
 
-  openDeleteModal(article: Article): void {
-    const dialogRef = this.matDialog.open(ConfirmDialogModalComponent, {
+  openDeleteModal(article: Article) {
+    const dialogRef = this._matDialog.open(ConfirmDialogModalComponent, {
       width: '600px',
       data: {
         title: 'Confirm Delete',
@@ -99,18 +101,20 @@ export class ArticleDashboardPageComponent implements OnInit {
       } as ModalDialogData
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.articlesService.deleteArticle(article).pipe(
-          switchMap(() => {
-            return this.articlesService.getCountOfArticles()
-          })
-        ).subscribe(count => {
-          this.paginatorSettings.length = count;
-          this.getArticles();
-        })
-      }
-    });
+    this._subs.add = dialogRef.afterClosed().pipe(
+      switchMap(result => {
+        if (result) {
+          return this._articlesService.deleteArticle(article).pipe(
+            switchMap(() => this._articlesService.getCountOfArticles()),
+            tap(count => {
+              this.paginatorSettings.length = count;
+              this.getArticles();
+            })
+          );
+        }
+        return of(null);
+      })
+    ).subscribe();
   }
 
   handlePageEvent(e: PageEvent) {
@@ -118,8 +122,10 @@ export class ArticleDashboardPageComponent implements OnInit {
     this.paginatorSettings.length = e.length;
     this.paginatorSettings.pageSize = e.pageSize;
     this.paginatorSettings.pageIndex = e.pageIndex;
-    this.getArticles()
+    this.getArticles();
   }
 
-
+  ngOnDestroy() {
+    this._subs.unsubscribe();
+  }
 }

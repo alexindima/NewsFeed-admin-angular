@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "../../services/auth.service";
 import {MatDialog} from "@angular/material/dialog";
@@ -6,21 +6,25 @@ import {
   ConfirmDialogModalComponent,
   ModalDialogData
 } from "../confirm-dialog-modal/confirm-dialog-modal.component";
+import {Subs} from "../../utils/subs";
 
 @Component({
   selector: 'app-admin-layout',
   templateUrl: './admin-layout.component.html',
   styleUrls: ['./admin-layout.component.scss']
 })
-export class AdminLayoutComponent {
+export class AdminLayoutComponent implements OnDestroy {
+  private _subs = new Subs();
 
-  constructor(private router: Router,
-              public auth: AuthService,
-              private matDialog: MatDialog) {
+  constructor(
+    public auth: AuthService,
+    private _router: Router,
+    private _matDialog: MatDialog
+  ) {
   }
 
-  openLogoutModal(): void {
-    const dialogRef = this.matDialog.open(ConfirmDialogModalComponent, {
+  openLogoutModal() {
+    const dialogRef = this._matDialog.open(ConfirmDialogModalComponent, {
       width: '600px',
       data: {
         title: 'Confirm LogOut',
@@ -29,15 +33,19 @@ export class AdminLayoutComponent {
       } as ModalDialogData
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this._subs.add = dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.logout()
+        this.logout();
       }
     });
   }
 
   logout() {
-    this.auth.logout()
-    this.router.navigate(['/admin', 'login']).then()
+    this.auth.logout();
+    this._router.navigate(['/admin', 'login']).then();
+  }
+
+  ngOnDestroy() {
+    this._subs.unsubscribe();
   }
 }

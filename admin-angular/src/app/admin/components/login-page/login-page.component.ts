@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {LoginUser} from "../../../interfaces";
 import {AuthService} from "../../services/auth.service";
 import {ActivatedRoute, Params, Router} from "@angular/router";
+import {Subs} from "../../utils/subs";
 
 interface LoginForm {
   email: FormControl<string>;
@@ -14,14 +15,17 @@ interface LoginForm {
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss']
 })
-export class LoginPageComponent implements OnInit {
+export class LoginPageComponent implements OnInit, OnDestroy {
+  private _subs = new Subs();
   submitted = false;
   form!: FormGroup;
   message: string = '';
 
-  constructor(public auth: AuthService,
-              private router: Router,
-              public route: ActivatedRoute) {
+  constructor(
+    public auth: AuthService,
+    public route: ActivatedRoute,
+    private _router: Router,
+  ) {
   }
 
   ngOnInit(): void {
@@ -43,7 +47,7 @@ export class LoginPageComponent implements OnInit {
     });
 
     if (this.auth.isAuthenticated()) {
-      this.router.navigate(['/admin', 'articles']).then();
+      this._router.navigate(['/admin', 'articles']).then();
     }
 
   }
@@ -59,12 +63,15 @@ export class LoginPageComponent implements OnInit {
       password: this.form.value.password
     };
 
-    this.auth.login(user).subscribe(() => {
+    this._subs.add = this.auth.login(user).subscribe(() => {
       this.form.reset();
-      this.router.navigate(['/admin', 'articles']).then();
+      this._router.navigate(['/admin', 'articles']).then();
       this.submitted = false;
     })
 
   }
 
+  ngOnDestroy() {
+    this._subs.unsubscribe();
+  }
 }
