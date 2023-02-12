@@ -166,13 +166,6 @@ export class UserCreatePageComponent implements OnInit, OnDestroy {
     newControls.forEach(control => this.tagsControls.push(control));
   }
 
-  createFilteredOptions(control: FormControl, options: Tag[] | Category[]): Tag[] | Category[] {
-    return options.filter(option => {
-      const isNameString = typeof control.value === 'string' ? control.value : option?.name;
-      return option.name.toLowerCase().includes(isNameString.toLowerCase())
-    });
-  }
-
   getArrayOfNamesFromIDs(arrayOfObj: Tag[] | Category[], arrayOfIDs: number[]): string[] {
     return arrayOfIDs.map((id: number) => {
       const result = arrayOfObj.find(obj => obj.id === id);
@@ -190,9 +183,6 @@ export class UserCreatePageComponent implements OnInit, OnDestroy {
       return
     }
     this.submitted = true;
-    if (this.form.value.password !== this.form.value.confirmPassword) {
-      return;
-    }
 
     const createUser = () => {
       const user: User = {

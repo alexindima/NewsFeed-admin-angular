@@ -27,6 +27,8 @@ import {ArticleResolver} from "./resorvers/article.resolver";
 import {SharedTagsService} from "./services/shared-tags.service";
 import {SharedCategoriesService} from "./services/shared-categories.service";
 import { CustomCategoryTagInputComponent } from './components/custom-category-tag-input/custom-category-tag-input.component';
+import {SharedCategoriesResolver} from "./resorvers/shared-categories.resolver";
+import {SharedTagsResolver} from "./resorvers/shared-tags.resolver";
 
 @NgModule({
   imports: [
@@ -36,7 +38,10 @@ import { CustomCategoryTagInputComponent } from './components/custom-category-ta
     SharedModule,
     RouterModule.forChild([
       {
-        path: '', component: AdminLayoutComponent, children: [
+        path: '', component: AdminLayoutComponent, resolve: {
+          categories: SharedCategoriesResolver,
+          tags: SharedTagsResolver
+        }, children: [
           {path: '', redirectTo: '/admin/login', pathMatch: "full"},
           {path: 'login', component: LoginPageComponent},
           {path: 'articles', component: ArticleDashboardPageComponent, canActivate: [AuthGuard]},
@@ -80,16 +85,14 @@ import { CustomCategoryTagInputComponent } from './components/custom-category-ta
     AuthService,
     AuthGuard,
     SharedTagsService,
+    SharedTagsResolver,
     SharedCategoriesService,
+    SharedCategoriesResolver,
     UsersService,
     UserResolver,
     ArticlesService,
     ArticleResolver]
 })
 export class AdminModule {
-  constructor(public _sharedCategoriesService: SharedCategoriesService,
-              private _sharedTagsService: SharedTagsService) {
-    _sharedCategoriesService.updateCategoryList();
-    _sharedTagsService.updateTagsList();
-  }
+
 }

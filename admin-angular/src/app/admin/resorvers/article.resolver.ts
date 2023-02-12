@@ -1,10 +1,6 @@
 import {Injectable} from '@angular/core';
-import {
-  Router, Resolve,
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot
-} from '@angular/router';
-import {catchError, EMPTY, Observable} from 'rxjs';
+import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
+import {catchError, Observable, throwError} from 'rxjs';
 import {ArticlesService} from "../services/articles.service";
 import {Article} from "../../interfaces";
 
@@ -18,10 +14,11 @@ export class ArticleResolver implements Resolve<Article> {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Article> {
-    return this._articlesService.getSingleArticle(route.params?.['id']).pipe(
-      catchError(() => {
-        this._router.navigate(['/admin', 'articles']).then();
-        return EMPTY;
+    const id: number = Number(route.paramMap.get('id'));
+    return this._articlesService.getSingleArticle(id).pipe(
+      catchError((err) => {
+        this._router.navigate(['/admin', 'articles']);
+        return throwError(err);
       })
     );
   }

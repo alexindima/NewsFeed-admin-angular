@@ -4,7 +4,7 @@ import {
   RouterStateSnapshot,
   ActivatedRouteSnapshot
 } from '@angular/router';
-import {catchError, EMPTY, Observable} from 'rxjs';
+import {catchError, Observable, throwError} from 'rxjs';
 import {UsersService} from "../services/users.service";
 import {User} from "../../interfaces";
 
@@ -18,10 +18,11 @@ export class UserResolver implements Resolve<User> {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<User> {
-    return this._usersService.getSingleUser(route.params?.['id']).pipe(
-      catchError(() => {
-        this._router.navigate(['/admin', 'users']).then();
-        return EMPTY;
+    const id: number = Number(route.paramMap.get('id'));
+    return this._usersService.getSingleUser(id).pipe(
+      catchError((err) => {
+        this._router.navigate(['/admin', 'users']);
+        return throwError(err);
       })
     );
   }
