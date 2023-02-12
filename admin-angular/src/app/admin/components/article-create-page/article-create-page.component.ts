@@ -50,9 +50,8 @@ export class ArticleCreatePageComponent implements OnInit, OnDestroy {
     nonNullable: true,
     validators: [Validators.required]
   }));
-  tagsAutocompleteOptions: AutocompleteOptionsFiler[] = [new AutocompleteOptionsFiler(new FormControl('', {
-    nonNullable: true
-  }))];
+  tagsAutocompleteOptions: AutocompleteOptionsFiler[] = [];
+  tagsControls: FormArray<FormControl<Tag | string>> = new FormArray<FormControl<Tag | string>>([]);
 
   constructor(
     public sharedCategoriesService: SharedCategoriesService,
@@ -94,8 +93,10 @@ export class ArticleCreatePageComponent implements OnInit, OnDestroy {
         validators: [Validators.required]
       }),
       category: this.categoryAutocompleteOptions.control,
-      tags: new FormArray(this.tagsAutocompleteOptions.map(AutocompleteOptions => AutocompleteOptions.control))
+      tags: this.tagsControls
     });
+
+    this.addTag();
 
     if (this.articleFromResolver) {
       const categoryName = this.getNameById(this.categoriesList, this.articleFromResolver.category)
@@ -123,17 +124,18 @@ export class ArticleCreatePageComponent implements OnInit, OnDestroy {
       nonNullable: true,
       validators: [Validators.required]
     })))
+    this.UpdateTagsControls();
   }
 
   RemoveTag(index: number) {
     this.tagsAutocompleteOptions.splice(index, 1);
+    this.UpdateTagsControls();
   }
 
-  displayFn(data: Tag | Category | string): string {
-    if (typeof data === 'string') {
-      return data;
-    }
-    return data && data.name ? data.name : '';
+  UpdateTagsControls() {
+    const newControls = this.tagsAutocompleteOptions.map(o => o.control);
+    this.tagsControls.clear();
+    newControls.forEach(control => this.tagsControls.push(control));
   }
 
   getArrayOfNamesFromIDs(arrayOfObj: Tag[] | Category[], arrayOfIDs: number[]): string[] {

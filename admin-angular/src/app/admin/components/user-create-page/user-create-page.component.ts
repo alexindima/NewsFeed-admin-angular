@@ -42,19 +42,17 @@ export class UserCreatePageComponent implements OnInit, OnDestroy {
   };
   categoriesList: Category[] = [];
   tagsList: Tag[] = [];
-  categoriesAutocompleteOptions: AutocompleteOptionsFiler[] = [new AutocompleteOptionsFiler(new FormControl('', {
-    nonNullable: true
-  }))];
-  tagsAutocompleteOptions: AutocompleteOptionsFiler[] = [new AutocompleteOptionsFiler(new FormControl('', {
-    nonNullable: true
-  }))];
+  categoriesAutocompleteOptions: AutocompleteOptionsFiler[] = [];
+  categoriesControls: FormArray<FormControl<Category | string>> = new FormArray<FormControl<Category | string>>([]);
+  tagsAutocompleteOptions: AutocompleteOptionsFiler[] = [];
+  tagsControls: FormArray<FormControl<Tag | string>> = new FormArray<FormControl<Tag | string>>([]);
 
   constructor(
     public sharedCategoriesService: SharedCategoriesService,
-              private sharedTagsService: SharedTagsService,
-              private usersService: UsersService,
-              private activatedRoute: ActivatedRoute,
-              private router: Router
+    private sharedTagsService: SharedTagsService,
+    private usersService: UsersService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {
   }
 
@@ -83,9 +81,12 @@ export class UserCreatePageComponent implements OnInit, OnDestroy {
       confirmPassword: new FormControl('', {
         nonNullable: true
       }),
-      categories: new FormArray(this.categoriesAutocompleteOptions.map(AutocompleteOptions => AutocompleteOptions.control)),
-      tags: new FormArray(this.tagsAutocompleteOptions.map(AutocompleteOptions => AutocompleteOptions.control))
+      categories: this.categoriesControls,
+      tags: this.tagsControls
     });
+
+    this.addCategory();
+    this.addTag();
 
     this.form.setValidators(appValidEqualFactory(['password', 'confirmPassword'], 'VALIDATION.PASSWORD_MISMATCH'))
 
@@ -129,42 +130,47 @@ export class UserCreatePageComponent implements OnInit, OnDestroy {
     }
   }
 
-
-
   addCategory() {
     this.categoriesAutocompleteOptions.push(new AutocompleteOptionsFiler(new FormControl('', {
       nonNullable: true
-    })))
+    })));
+    this.UpdateCategoriesControls();
   }
 
   addTag() {
     this.tagsAutocompleteOptions.push(new AutocompleteOptionsFiler(new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.required]
-    })))
+      nonNullable: true
+    })));
+    this.UpdateTagsControls();
   }
 
   RemoveCategory(index: number) {
     this.categoriesAutocompleteOptions.splice(index, 1);
+    this.UpdateCategoriesControls();
   }
 
   RemoveTag(index: number) {
     this.tagsAutocompleteOptions.splice(index, 1);
+    this.UpdateTagsControls();
   }
 
+  UpdateCategoriesControls() {
+    const newControls = this.categoriesAutocompleteOptions.map(o => o.control);
+    this.categoriesControls.clear();
+    newControls.forEach(control => this.categoriesControls.push(control));
+  }
+
+  UpdateTagsControls() {
+    const newControls = this.tagsAutocompleteOptions.map(o => o.control);
+    this.tagsControls.clear();
+    newControls.forEach(control => this.tagsControls.push(control));
+  }
 
   createFilteredOptions(control: FormControl, options: Tag[] | Category[]): Tag[] | Category[] {
     return options.filter(option => {
       const isNameString = typeof control.value === 'string' ? control.value : option?.name;
       return option.name.toLowerCase().includes(isNameString.toLowerCase())
     });
-  }
-
-  displayFn(data: Tag | Category | string): string {
-    if (typeof data === 'string') {
-      return data;
-    }
-    return data && data.name ? data.name : '';
   }
 
   getArrayOfNamesFromIDs(arrayOfObj: Tag[] | Category[], arrayOfIDs: number[]): string[] {
@@ -241,7 +247,6 @@ export class UserCreatePageComponent implements OnInit, OnDestroy {
       }
     }
 
-    // если будут одинаковые новые теги, форкджойн сделает запросы параллельно, сервер создаст для каждого свой ид
     const categoriesObservable = categoriesObservables.length
       ? concat(...categoriesObservables).pipe(
         map(category => category.id),

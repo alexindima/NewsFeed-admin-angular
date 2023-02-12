@@ -26,6 +26,7 @@ import {UserResolver} from "./resorvers/user.resolver";
 import {ArticleResolver} from "./resorvers/article.resolver";
 import {SharedTagsService} from "./services/shared-tags.service";
 import {SharedCategoriesService} from "./services/shared-categories.service";
+import { CustomCategoryTagInputComponent } from './components/custom-category-tag-input/custom-category-tag-input.component';
 
 @NgModule({
   imports: [
@@ -72,7 +73,8 @@ import {SharedCategoriesService} from "./services/shared-categories.service";
     UserCreatePageComponent,
     ConfirmDialogModalComponent,
     ArrayToStringPipe,
-    NotFoundPageComponent
+    NotFoundPageComponent,
+    CustomCategoryTagInputComponent
   ],
   providers: [
     AuthService,

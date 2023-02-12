@@ -84,96 +84,70 @@
 
     <h2>Ignore settings</h2>
     <h4>Categories</h4>
-    <div
-      formArrayName="categories"
-      *ngFor="let category of categoriesAutocompleteOptions; let i = index"
-    >
-      <div class="input-group mb-3">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Select a category or enter a new one"
-          [formControl]="category.control"
-          (focusin)="categoriesAutocompleteOptions[i].createFilteredOptions(categoriesList)"
-          (input)="categoriesAutocompleteOptions[i].createFilteredOptions(categoriesList)"
-          matInput
-          [matAutocomplete]="auto"
-        >
-        <button
-          type="button"
-          (click)="addCategory()"
-          class="btn btn-info"
-        >
-          Add another category
-        </button>
-        <button
-          type="button"
-          [disabled]="i === 0"
-          (click)="RemoveCategory(i)"
-          class="btn btn-danger"
-        >
-          Remove category
-        </button>
+    <div formArrayName="tags" *ngFor="let category of categoriesAutocompleteOptions; let i = index">
+      <div class="mb-3 d-flex">
+        <div style="flex: 1">
+          <app-custom-category-tag-input
+            [placeholder]="'Choose category or enter a new one'"
+            [class]="'form-control w-100'"
+            [autocompleteOptions]="categoriesAutocompleteOptions[i]"
+            [options]="tagsList"
+          ></app-custom-category-tag-input>
+        </div>
+        <div class="input-group-append">
+          <button
+            type="button"
+            class="btn btn-info ml-3"
+            (click)="addCategory()"
+          >
+            Add another category
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger ml-3"
+            [disabled]="i === 0"
+            (click)="RemoveCategory(i)"
+          >
+            Remove category
+          </button>
+        </div>
       </div>
-      <mat-autocomplete
-        #auto="matAutocomplete"
-        [displayWith]="displayFn"
-      >
-        <mat-option
-          *ngFor="let option of categoriesAutocompleteOptions[i].options"
-          [value]="option"
-        >
-          {{ option.name }}
-        </mat-option>
-      </mat-autocomplete>
     </div>
 
     <h4>Tags</h4>
-    <div
-      formArrayName="tags"
-      *ngFor="let tag of tagsAutocompleteOptions; let i = index">
-      <div class="input-group mb-3">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Select a tag or enter a new one"
-          [formControl]="tag.control"
-          (focusin)="tagsAutocompleteOptions[i].createFilteredOptions(tagsList)"
-          (input)="tagsAutocompleteOptions[i].createFilteredOptions(tagsList)"
-          matInput
-          [matAutocomplete]="auto">
-        <button
-          type="button"
-          class="btn btn-info"
-          (click)="addTag()"
-        >
-          Add another tag
-        </button>
-        <button
-          type="button"
-          class="btn btn-danger"
-          [disabled]="i === 0" (click)="RemoveTag(i)"
-        >
-          Remove tag
-        </button>
+    <div formArrayName="tags" *ngFor="let tag of tagsAutocompleteOptions; let i = index">
+      <div class="mb-3 d-flex">
+        <div style="flex: 1">
+          <app-custom-category-tag-input
+            [placeholder]="'Choose tag or enter a new one'"
+            [class]="'form-control w-100'"
+            [autocompleteOptions]="tagsAutocompleteOptions[i]"
+            [options]="tagsList"
+          ></app-custom-category-tag-input>
+        </div>
+        <div class="input-group-append">
+          <button
+            type="button"
+            class="btn btn-info ml-3"
+            (click)="addTag()"
+          >
+            Add another tag
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger ml-3"
+            [disabled]="i === 0"
+            (click)="RemoveTag(i)"
+          >
+            Remove tag
+          </button>
+        </div>
       </div>
-      <mat-autocomplete
-        #auto="matAutocomplete"
-        [displayWith]="displayFn"
-      >
-        <mat-option
-          *ngFor="let option of tagsAutocompleteOptions[i].options"
-          [value]="option"
-        >
-          {{ option.name }}
-        </mat-option>
-      </mat-autocomplete>
     </div>
-
     <button
       type="submit"
-      [disabled]="form.invalid || submitted"
       class="btn btn-primary"
+      [disabled]="form.invalid || submitted"
     >
       {{userFromResolver ? 'Save changes' : 'Create User'}}
     </button>
