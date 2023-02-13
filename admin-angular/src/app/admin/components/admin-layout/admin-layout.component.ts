@@ -1,4 +1,4 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "../../services/auth.service";
 import {MatDialog} from "@angular/material/dialog";
@@ -7,21 +7,31 @@ import {
   ModalDialogData
 } from "../confirm-dialog-modal/confirm-dialog-modal.component";
 import {Subs} from "../../utils/subs";
+import {LoaderService} from "../../services/loader.service";
 
 @Component({
   selector: 'app-admin-layout',
   templateUrl: './admin-layout.component.html',
   styleUrls: ['./admin-layout.component.scss']
 })
-export class AdminLayoutComponent implements OnDestroy {
+export class AdminLayoutComponent implements OnInit, OnDestroy {
   private _subs = new Subs();
+  loading: boolean = false;
 
   constructor(
     public auth: AuthService,
     private _router: Router,
-    private _matDialog: MatDialog
+    private _matDialog: MatDialog,
+    private _loaderService: LoaderService
   ) {
   }
+
+  ngOnInit() {
+    this._loaderService.getInterceptCount().subscribe((count) => {
+      setTimeout(() => this.loading = !!count);
+    })
+  }
+
 
   openLogoutModal() {
     const dialogRef = this._matDialog.open(ConfirmDialogModalComponent, {

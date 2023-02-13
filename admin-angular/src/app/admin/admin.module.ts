@@ -26,9 +26,13 @@ import {UserResolver} from "./resorvers/user.resolver";
 import {ArticleResolver} from "./resorvers/article.resolver";
 import {SharedTagsService} from "./services/shared-tags.service";
 import {SharedCategoriesService} from "./services/shared-categories.service";
-import { CustomCategoryTagInputComponent } from './components/custom-category-tag-input/custom-category-tag-input.component';
+import {
+  CustomCategoryTagInputComponent
+} from './components/custom-category-tag-input/custom-category-tag-input.component';
 import {SharedCategoriesResolver} from "./resorvers/shared-categories.resolver";
 import {SharedTagsResolver} from "./resorvers/shared-tags.resolver";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {LoaderInterceptor} from "./interceptors/loader-interceptor";
 
 @NgModule({
   imports: [
@@ -91,7 +95,12 @@ import {SharedTagsResolver} from "./resorvers/shared-tags.resolver";
     UsersService,
     UserResolver,
     ArticlesService,
-    ArticleResolver]
+    ArticleResolver,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
+      multi: true
+    }]
 })
 export class AdminModule {
 
