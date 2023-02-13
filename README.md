@@ -1,6 +1,6 @@
 # News feed with endless news loading
 
-### The news feed is written using a **react**. Main features:
+### The news feed is written using a **react** and **angular**. Main features:
 
 - Articles don't load all at once. Articles are loaded when the scroll approaches the bottom of the browser screen.
 - Articles consist of a title and a body. The body can contain text, links and images in any order and in any quantity
@@ -16,8 +16,7 @@ It is possible to create an account on the site. Registration provides the follo
   selected categories will disappear from the category list.
 - Ability to set tags that will be ignored. Articles containing such tags will not be displayed
 
-The ability to change the user's name and password is implemented. The user with ID 1 is an administrator. This user has
-the opportunity to go to the admin panel (not implemented yet, it is planned to be implemented on the Angular). Also,
+The ability to change the user's name and password is implemented. The user with ID 1 is an administrator. Also,
 the administrator's authorization will not be saved when the page is reloaded for security
 
 Known disadvantages:
