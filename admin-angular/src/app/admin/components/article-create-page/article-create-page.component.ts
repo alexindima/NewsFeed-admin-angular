@@ -121,8 +121,7 @@ export class ArticleCreatePageComponent implements OnInit, OnDestroy {
 
   addTag() {
     this.tagsAutocompleteOptions.push(new AutocompleteOptionsFiler(new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.required]
+      nonNullable: true
     })))
     this.UpdateTagsControls();
   }
@@ -162,7 +161,7 @@ export class ArticleCreatePageComponent implements OnInit, OnDestroy {
         category: category!,
         mainTitle: this.form.value.mainTitle,
         secondTitle: this.form.value.secondTitle,
-        photoUrl: this.form.value.secondTitle,
+        photoUrl: this.form.value.photoUrl,
         photoText: this.form.value.photoText,
         body: this.form.value.body,
         tags: tags
@@ -184,6 +183,7 @@ export class ArticleCreatePageComponent implements OnInit, OnDestroy {
         body: this.form.value.body,
         tags: tags
       }
+      console.log(article)
       this._subs.add = this._articlesService.editArticle(article).subscribe(() => {
         this.form.reset();
       })

@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {User} from "../../interfaces";
-import {map, Observable, switchMap} from "rxjs";
+import {map, Observable} from "rxjs";
 
 const BASE_URL = `http://localhost:3030/users`;
 
@@ -40,14 +40,10 @@ export class UsersService {
   }
 
   editUser(editedUser: User): Observable<User> {
-    return this.deleteUser(editedUser).pipe(
-      switchMap(() => {
-        if (!editedUser.password) {
-          editedUser = {...editedUser, password: '123456'};
-        }
-        return this.createUser(editedUser);
-      })
-    );
+    if (!editedUser.password) {
+      editedUser = {...editedUser, password: '123456'}
+    }
+    return this._http.patch<User>(`${BASE_URL}/${editedUser.id}`, editedUser);
   }
 
   deleteUser(user: number | User): Observable<User> {

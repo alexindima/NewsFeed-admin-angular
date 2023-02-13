@@ -49,19 +49,19 @@ export class UserCreatePageComponent implements OnInit, OnDestroy {
 
   constructor(
     public sharedCategoriesService: SharedCategoriesService,
-    private sharedTagsService: SharedTagsService,
-    private usersService: UsersService,
-    private activatedRoute: ActivatedRoute,
-    private router: Router
+    private _sharedTagsService: SharedTagsService,
+    private _usersService: UsersService,
+    private _activatedRoute: ActivatedRoute,
+    private _router: Router
   ) {
   }
 
   ngOnInit() {
-    this.userFromResolver = this.activatedRoute.snapshot.data['user'];
+    this.userFromResolver = this._activatedRoute.snapshot.data['user'];
     this._subs.add = this.sharedCategoriesService.categories.subscribe((data) => {
       this.categoriesList = data;
     })
-    this._subs.add = this.sharedTagsService.tags.subscribe((data) => {
+    this._subs.add = this._sharedTagsService.tags.subscribe((data) => {
       this.tagsList = data;
     })
 
@@ -193,8 +193,8 @@ export class UserCreatePageComponent implements OnInit, OnDestroy {
         ignoredCategories: ignoredCategories,
         ignoredTags: ignoredTags
       }
-      this._subs.add = this.usersService.createUser(user).subscribe(() => {
-        this.form.reset()
+      this._subs.add = this._usersService.createUser(user).subscribe(() => {
+        this.form.reset();
       })
     }
 
@@ -207,8 +207,8 @@ export class UserCreatePageComponent implements OnInit, OnDestroy {
         ignoredCategories: ignoredCategories,
         ignoredTags: ignoredTags
       }
-      this._subs.add = this.usersService.editUser(user).subscribe(() => {
-        this.form.reset()
+      this._subs.add = this._usersService.editUser(user).subscribe(() => {
+        this.form.reset();
       })
     }
 
@@ -230,7 +230,7 @@ export class UserCreatePageComponent implements OnInit, OnDestroy {
     for (let tag of this.tagsAutocompleteOptions) {
       if (typeof tag.control.value === "string") {
         if (tag.control.value.trim()) {
-          tagsObservables.push(this.sharedTagsService.createTag(tag.control.value))
+          tagsObservables.push(this._sharedTagsService.createTag(tag.control.value))
         }
       } else {
         ignoredTags.add(tag.control.value.id)
@@ -257,11 +257,11 @@ export class UserCreatePageComponent implements OnInit, OnDestroy {
         ignoredTags.add(tagID)
       }
       if (this.userFromResolver) {
-        editUser()
+        editUser();
       } else {
         createUser();
       }
-      this.router.navigate(['/admin', 'users']).then();
+      this._router.navigate(['/admin', 'users']).then();
       this.submitted = false;
     })
   }

@@ -5,72 +5,127 @@
     <h4>Category</h4>
     <app-custom-category-tag-input
       [placeholder]="'Choose category or enter a new one'"
-      [class]="'form-control mb-3'"
+      [class]="form.get('category')?.touched && form.get('category')?.invalid ? 'form-control border-danger' : 'form-control mb-3'"
       [autocompleteOptions]="categoryAutocompleteOptions"
       [options]="categoriesList"
     ></app-custom-category-tag-input>
-
+    <div
+      id="categoryValidation"
+      *ngIf="form.get('category') && form.get('category')?.touched && form.get('category')?.invalid"
+      class="form-text"
+    >
+      <small class="text-danger">Field can not be empty</small>
+    </div>
 
     <h2>Header</h2>
-    <div class="mb-3" [ngClass]="{isInvalid: form.get('mainTitle')?.touched && form.get('mainTitle')?.invalid}">
-      <label for="mainTitle" class="form-label">Main Title</label>
-      <textarea id="mainTitle" class="form-control" rows="2"
-                placeholder="What is the name of the article?"
-                formControlName="mainTitle"></textarea>
-      <div id="mainTitleValidation"
-           *ngIf="form.get('mainTitle') && form.get('mainTitle')?.touched && form.get('mainTitle')?.invalid"
-           class="form-text">
-        <small *ngIf="form.get('mainTitle')?.errors?.['mainTitle']">Field can not be empty</small>
+    <div class="mb-3">
+      <label
+        for="mainTitle"
+        class="form-label"
+      >
+        Main Title
+      </label>
+      <textarea
+        id="mainTitle"
+        class="form-control"
+        [ngClass]="{'border-danger': form.get('mainTitle')?.touched && form.get('mainTitle')?.invalid}"
+        rows="2"
+        placeholder="What is the name of the article?"
+        formControlName="mainTitle"
+      ></textarea>
+      <div
+        id="mainTitleValidation"
+        *ngIf="form.get('mainTitle') && form.get('mainTitle')?.touched && form.get('mainTitle')?.invalid"
+        class="form-text"
+      >
+        <small class="text-danger">Field can not be empty</small>
       </div>
     </div>
 
-    <div class="mb-3" [ngClass]="{isInvalid: form.get('secondTitle')?.touched && form.get('secondTitle')?.invalid}">
-      <label for="secondTitle" class="form-label">Second Title</label>
-      <textarea id="secondTitle" class="form-control" rows="2"
-                placeholder="What is the name of the article?"
-                formControlName="secondTitle"></textarea>
-      <div id="secondTitleValidation"
-           *ngIf="form.get('secondTitle') && form.get('secondTitle')?.touched && form.get('secondTitle')?.invalid"
-           class="form-text">
-        <small *ngIf="form.get('secondTitle')?.errors?.['secondTitle']">Field can not be empty</small>
+    <div class="mb-3">
+      <label
+        for="secondTitle"
+        class="form-label"
+      >
+        Second Title
+      </label>
+      <textarea
+        id="secondTitle"
+        class="form-control"
+        [ngClass]="{'border-danger': form.get('secondTitle')?.touched && form.get('secondTitle')?.invalid}"
+        rows="2"
+        placeholder="What is the second title of the article?"
+        formControlName="secondTitle"
+      ></textarea>
+      <div
+        id="secondTitleValidation"
+        *ngIf="form.get('secondTitle') && form.get('secondTitle')?.touched && form.get('secondTitle')?.invalid"
+        class="form-text"
+      >
+        <small class="text-danger">Field can not be empty</small>
       </div>
     </div>
 
     <h4>Photo</h4>
-    <div class="mb-3" [ngClass]="{isInvalid: form.get('photoUrl')?.touched && form.get('photoUrl')?.invalid}">
-      <label for="photoUrl" class="form-label">Photo URL</label>
+    <div class="mb-3">
+      <label
+        for="photoUrl"
+        class="form-label"
+      >
+        Photo URL
+      </label>
       <!-- <input type="file" class="form-control" id="photoUploader"
               formControlName="photoUploader">-->
-      <input type="text" class="form-control" id="photoUrl"
-             formControlName="photoUrl">
-      <div id="photoUrlValidation"
-           *ngIf="form.get('photoUrl') && form.get('photoUrl')?.touched && form.get('photoUrl')?.invalid"
-           class="form-text">
-        <small *ngIf="form.get('photoUrl')?.errors?.['photoUrl']">Field can not be empty</small>
+      <input
+        type="text"
+        class="form-control"
+        [ngClass]="{'border-danger': form.get('photoUrl')?.touched && form.get('photoUrl')?.invalid}"
+        id="photoUrl"
+        placeholder="What is the main photo of the article?"
+        formControlName="photoUrl">
+      <div
+        id="photoUrlValidation"
+        *ngIf="form.get('photoUrl') && form.get('photoUrl')?.touched && form.get('photoUrl')?.invalid"
+        class="form-text"
+      >
+        <small class="text-danger">Field can not be empty</small>
       </div>
     </div>
 
-    <div class="mb-3" [ngClass]="{isInvalid: form.get('photoText')?.touched && form.get('photoText')?.invalid}">
-      <label for="photoText" class="form-label">Photo Text</label>
-      <textarea id="photoText" class="form-control" rows="2"
-                placeholder="What is the name of the article?"
-                formControlName="photoText"></textarea>
-      <div id="photoTextValidation"
-           *ngIf="form.get('photoText') && form.get('photoText')?.touched && form.get('photoText')?.invalid"
-           class="form-text">
-        <small *ngIf="form.get('photoText')?.errors?.['photoText']">Field can not be empty</small>
+    <div class="mb-3">
+      <label
+        for="photoText"
+        class="form-label"
+      >
+        Photo Text
+      </label>
+      <textarea
+        id="photoText"
+        class="form-control"
+        [ngClass]="{'border-danger': form.get('photoText')?.touched && form.get('photoText')?.invalid}"
+        rows="2"
+        placeholder="What is the description of the photo?"
+        formControlName="photoText"></textarea>
+      <div
+        id="photoTextValidation"
+        *ngIf="form.get('photoText') && form.get('photoText')?.touched && form.get('photoText')?.invalid"
+        class="form-text"
+      >
+        <small class="text-danger">Field can not be empty</small>
       </div>
     </div>
 
     <h2>Body</h2>
-    <div class="mb-3" [ngClass]="{isInvalid: form.get('body')?.touched && form.get('body')?.invalid}">
-      <ckeditor [config]="CKEditorConfig" [editor]="Editor"
-                formControlName="body"></ckeditor>
-
+    <div class="mb-3">
+      <ckeditor
+        [config]="CKEditorConfig"
+        [editor]="Editor"
+        formControlName="body"
+      ></ckeditor>
       <div id="bodyValidation"
            *ngIf="form.get('body') && form.get('body')?.touched && form.get('body')?.invalid"
            class="form-text">
-        <small *ngIf="form.get('body')?.errors?.['body']">Field can not be empty</small>
+        <small class="text-danger">Field can not be empty</small>
       </div>
     </div>
 

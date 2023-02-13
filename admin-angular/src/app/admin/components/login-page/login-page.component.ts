@@ -67,6 +67,8 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       this.form.reset();
       this._router.navigate(['/admin', 'articles']).then();
       this.submitted = false;
+    }, error => {
+      this.submitted = false;
     })
 
   }
