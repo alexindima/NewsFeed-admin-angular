@@ -27,10 +27,10 @@ Known disadvantages:
 - Big design problems
 - HTTP request error tracking has not been implemented yet
 
-At the first run fake server, in "react-main" folder run
+At the first run fake server, in fake-server" folder run
 
 ```
-npm run server-start
+npm run start
 ```
 
 To launch the public part of application, in "react-main" folder run
