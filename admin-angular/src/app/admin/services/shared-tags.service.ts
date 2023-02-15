@@ -9,6 +9,11 @@ const BASE_URL = 'http://localhost:3030/tags';
 @Injectable()
 export class SharedTagsService implements OnDestroy {
   private _subs = new Subs();
+  // для провайдеров, которые хранят данные, есть спец термин - State.
+  // и обычно разделяют State и Service на отдельные файлы.
+  // это делается намеренно, т.к. задачи таких файлов разные
+  // сервис нужен чтобы работать с апи в твоём случае
+  // стейт нужен чтобы эти данные хранить в каком-то общедоступном месте
   private _data = new BehaviorSubject<Tag[]>([]);
   tags: Observable<Tag[]> = this._data.asObservable();
 
@@ -21,12 +26,20 @@ export class SharedTagsService implements OnDestroy {
       tap(data => {
       this._data.next(data);
     }))
+
+    // сравни с моим код-стайлом, у кого чище?
+    // return this._http.get<Tag[]>(BASE_URL).pipe(
+    //   tap(data => this._data.next(data))
+    // )
   }
 
   getTagsList(): Observable<Tag[]> {
     return this._http.get<Tag[]>(BASE_URL);
   }
 
+  // name.toLowerCase() встречается во многих местах, вообще функция предиката у тебя дублируется по проекту,
+  // стало быть её точно надо вынести отдельно или прям чтобы зависимые компоненты всегда возвращали lower case,
+  // тогда не придётся везде эту проверку вставлять
   createTag(name: string): Observable<Tag> {
     return this.getTagsList().pipe(
       switchMap((tags: Tag[]) => {
@@ -35,6 +48,7 @@ export class SharedTagsService implements OnDestroy {
           return of(tagExist);
         }
 
+        // ого, офигенно, сам сделал? :)
         return this._http.post<Tag>(BASE_URL, {name: name}).pipe(
           switchMap((tag: Tag) => {
             return this.updateTagsList().pipe(
@@ -70,11 +84,16 @@ export class SharedTagsService implements OnDestroy {
         if (tagExist) {
           return deleteTagById(tagExist.id);
         }
-        return of({id: '', name: ''} as unknown as Tag);
+        return of({id: '', name: ''} as unknown as Tag); // as unknown as Tag это хак, значит что-то пошло не так
       })
     );
   }
 
+  // в принципе правильно сделал, но есть некоторое непонимание провайдеров.
+  // текущий провайдер существует в единственном экземпляре на всё приложение,
+  // (ну в твоём случае пока нет, надо добавить providerInRoot)
+  // т.к. нам не нужен второй такой сервис с запросами по тегам
+  // получается и разрушать ничего не надо, т.к. приложение пока живёт и провайдер живёт, отписка лишняя
   ngOnDestroy() {
     this._subs.unsubscribe();
   }

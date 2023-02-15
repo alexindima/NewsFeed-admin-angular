@@ -1,15 +1,15 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
-import {Article, Category, Tag} from "../../../interfaces";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Article, Category, Tag } from '../../../interfaces';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import {ArticlesService} from "../../services/articles.service";
-import {concat, map, Observable, toArray} from "rxjs";
-import {UniqueArray} from "../../utils/unique-array.common";
-import {ActivatedRoute, Router} from "@angular/router";
-import {SharedTagsService} from "../../services/shared-tags.service";
-import {SharedCategoriesService} from "../../services/shared-categories.service";
-import {Subs} from "../../utils/subs";
-import {AutocompleteOptionsFiler} from "../../utils/autocomplete-options-filer";
+import { ArticlesService } from '../../services/articles.service';
+import { concat, map, Observable, toArray } from 'rxjs';
+import { UniqueArray } from '../../utils/unique-array.common';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SharedTagsService } from '../../services/shared-tags.service';
+import { SharedCategoriesService } from '../../services/shared-categories.service';
+import { Subs } from '../../utils/subs';
+import { AutocompleteOptionsFiler } from '../../utils/autocomplete-options-filer';
 
 interface ArticleForm {
   mainTitle: FormControl<string>;
@@ -30,6 +30,7 @@ interface ArticleForForm {
   category: string;
 }
 
+// корректнее не Create а всё таки Edit, чисто на слух, даже если фича для создания переиспользуется
 @Component({
   selector: 'app-article-create-page',
   templateUrl: './article-create-page.component.html',
@@ -37,9 +38,12 @@ interface ArticleForForm {
 })
 export class ArticleCreatePageComponent implements OnInit, OnDestroy {
   private _subs = new Subs();
-  articleFromResolver: Article | undefined;
+  articleFromResolver: Article | undefined; // лишнее пространство имён, корректнее будет item или article
   form!: FormGroup;
   submitted = false;
+
+  // вот не надо так, все конфиги редактора стоит вынести в app-editor компонент какой-нибудь,
+  // а то получается что пейджи слишком много знают о том, что низкоуровневое для них
   public Editor = ClassicEditor;
   CKEditorConfig = {
     placeholder: 'Create your article'
@@ -126,6 +130,10 @@ export class ArticleCreatePageComponent implements OnInit, OnDestroy {
     this.UpdateTagsControls();
   }
 
+  // имена методов с маленькой буквы
+  // у тебя сейчас получается маленькая свалка из методов,
+  // которые можно вынести в дочерние компоненты, а то слишком низкоуровневые операции для пейджи,
+  // я делал это на занятиях в answers-edit фиче
   RemoveTag(index: number) {
     this.tagsAutocompleteOptions.splice(index, 1);
     this.UpdateTagsControls();
@@ -140,13 +148,13 @@ export class ArticleCreatePageComponent implements OnInit, OnDestroy {
   getArrayOfNamesFromIDs(arrayOfObj: Tag[] | Category[], arrayOfIDs: number[]): string[] {
     return arrayOfIDs.map((id: number) => {
       const result = arrayOfObj.find(obj => obj.id === id);
-      return result ? result.name : `!wrong ID: ${id}!`;
+      return result ? result.name : `!wrong ID: ${id}!`; // !wrong ID вот так точно нельзя, ты используешь хак, вместо того чтобы выкидывать ошибку по-нормальному
     })
   }
 
   getNameById(array: Tag[] | Category[], id: number): string {
     const result = array.find(obj => obj.id === id);
-    return result ? result.name : `!wrong ID: ${id}!`;
+    return result ? result.name : `!wrong ID: ${id}!`; // ещё и дублируешь этот хак
   }
 
   submit() {
@@ -193,14 +201,14 @@ export class ArticleCreatePageComponent implements OnInit, OnDestroy {
     let tags = new UniqueArray<number>();
     const observables: Observable<Category | Tag>[] = [];
 
-    if (typeof this.form.value.category === "string") {
+    if (typeof this.form.value.category === 'string') {
       observables.push(this.sharedCategoriesService.createCategory(this.form.value.category));
     } else {
       category = this.form.value.category.id;
     }
 
     for (let tag of this.tagsAutocompleteOptions) {
-      if (typeof tag.control.value === "string") {
+      if (typeof tag.control.value === 'string') {
         if (tag.control.value.trim()) {
           observables.push(this._sharedTagsService.createTag(tag.control.value));
         }
@@ -211,23 +219,23 @@ export class ArticleCreatePageComponent implements OnInit, OnDestroy {
 
     this._subs.add = concat(...observables).pipe(
       map(result => result.id),
-      toArray())
-      .subscribe(result => {
-        for (let i = 0; i < observables.length; i++) {
-          if (!category && i === 0) {
-            category = result[0];
-          } else {
-            tags.add(result[i]);
-          }
-        }
-        if (this.articleFromResolver) {
-          editArticle();
+      toArray()
+    ).subscribe(result => {
+      for (let i = 0; i < observables.length; i++) {
+        if (!category && i === 0) {
+          category = result[0];
         } else {
-          createArticle();
+          tags.add(result[i]);
         }
-        this.submitted = false;
-        this._router.navigate(['/admin', 'articles']).then();
-      })
+      }
+      if (this.articleFromResolver) {
+        editArticle();
+      } else {
+        createArticle();
+      }
+      this.submitted = false;
+      this._router.navigate(['/admin', 'articles']).then();
+    })
   }
 
   ngOnDestroy() {

@@ -28,7 +28,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._loaderService.getInterceptCount().subscribe((count) => {
-      setTimeout(() => this.loading = !!count);
+      setTimeout(() => this.loading = !!count); // выглядит как большой хак, значит что-то не так пошло, надо разбираться причем здесь setTimeout
     })
   }
 
@@ -38,7 +38,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
       width: '600px',
       data: {
         title: 'Confirm LogOut',
-        text: `<p class="fw-bold">Are you sure you want to Log out? </p>`,
+        text: `<p class="fw-bold">Are you sure you want to Log out? </p>`, // очень плохо, никакого html не должно быть в ts файлах, всё что имеет разметку выносится в отдельные компоненты и будет декларативно
         button: 'LogOut'
       } as ModalDialogData
     });

@@ -36,6 +36,8 @@ export class UserCreatePageComponent implements OnInit, OnDestroy {
   userFromResolver: User | undefined;
   form!: FormGroup;
   submitted = false;
+
+  // мусор из копипасты, всякий раз когда нажимаешь ctrl-v мысленно подогревается котёл в аду на 5 градусов если копипастишь люто
   public Editor = ClassicEditor;
   CKEditorConfig = {
     placeholder: 'Create your article'

@@ -1,5 +1,6 @@
 import {IArticleElement} from "./IArticleElement";
 
+// точки с запятой в конце строк не бывают лишними, визуальная подсказка окончания выражения
 export interface IArticle {
     readonly id: number
     readonly createdDate: string

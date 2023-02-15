@@ -6,6 +6,10 @@ import {Subs} from "../utils/subs";
 
 const BASE_URL = 'http://localhost:3030/categories';
 
+// ужасно, абсолютно полная копипаста с shared-tags.service.ts
+// здесь решение простое и на выбор
+// 1) есть абсолютный класс, который объединяет всю логику категорий и тегов
+// 2) это будет одна сущность например Features, в которой есть поле kind, которое будет либо category либо tag, а то ты сча дублируешь весь код
 @Injectable()
 export class SharedCategoriesService implements OnDestroy {
   private _subs = new Subs();

@@ -3,6 +3,9 @@ import {HttpClient} from "@angular/common/http";
 import {User} from "../../interfaces";
 import {map, Observable} from "rxjs";
 
+// я сча по проекту нашёл копипасту localhost:3030
+// а на занятиях я говорил про proxy conf файл,
+// погугли и пусть все апи пути будут без хоста и порта, здесь это /users
 const BASE_URL = `http://localhost:3030/users`;
 
 @Injectable()
@@ -24,6 +27,7 @@ export class UsersService {
   getUsers(page: number | null, limit: number | null, search: string | null = null): Observable<User[]> {
     let url = `${BASE_URL}?`;
     if (search) {
+      // полное дублирование с функцией выше, всё что дублируется выносится отдельными функциями
       url += `q=${search.replace(/ /g, "+")}&`;
     }
     url += `_page=${page}&_limit=${limit}`;
@@ -48,6 +52,8 @@ export class UsersService {
 
   deleteUser(user: number | User): Observable<User> {
     let id: number | undefined;
+    // не-не, это плохая затея, эндпоинт удаления работает по userId,
+    // соответственно точно всегда передаём id в этот метод, не надо давать такой простор
     if (typeof user === "number") {
       id = user;
     }

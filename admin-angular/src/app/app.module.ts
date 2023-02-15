@@ -17,8 +17,9 @@ import {MatFormFieldModule} from "@angular/material/form-field";
   ],
   imports: [
     BrowserModule,
+    // почти ни один из этих модулей не придется подключать, если их все перенести в Shared
     FormsModule,
-    AppRoutingModule,
+    AppRoutingModule, // этот модуль точно принадлежит App Module, остальные - Shared модули
     ReactiveFormsModule,
     SharedModule,
     MatAutocompleteModule,

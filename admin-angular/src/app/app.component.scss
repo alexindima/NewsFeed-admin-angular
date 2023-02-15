@@ -1,4 +1,6 @@
 $btn-border-radius: 0;
 $input-placeholder-color: #adadac;
 
+// неверно, это часть src/styles.scss,
+// т.к. является глобальными стилями на проект
 @import "node_modules/bootstrap/scss/bootstrap";

@@ -13,6 +13,7 @@ import {SharedTagsService} from "../../services/shared-tags.service";
 import {SharedCategoriesService} from "../../services/shared-categories.service";
 import {Subs} from "../../utils/subs";
 
+// не должно быть здесь, интерфейсы хранятся отдельно от компонентов
 interface PaginatorSettings {
   length: number,
   pageSize: number,
@@ -77,7 +78,7 @@ export class UserDashboardPageComponent implements OnInit, OnDestroy {
     this._subs.add = this._usersService.getCountOfUsers()
       .pipe(
         switchMap(result => {
-          this.paginatorSettings.length = result;
+          this.paginatorSettings.length = result; // это tap, должен быть выше чем switchMap, здесь это лишнее
           return this._activatedRoute.queryParams;
         })
       )

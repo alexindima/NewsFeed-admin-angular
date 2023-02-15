@@ -37,9 +37,10 @@ import {LoaderInterceptor} from "./interceptors/loader-interceptor";
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
+    FormsModule, // лишнее, т.к. ниже есть ReactiveFormsModule, подключается один из двух
+    ReactiveFormsModule, // должен являться частью Shared Module, который и так уже подключен здесь
     SharedModule,
+    // роутинг принято выносить отдельно, как например у тебя уже сделано с app-routing.module.ts - app.module.ts, здесь идентично
     RouterModule.forChild([
       {
         path: '', component: AdminLayoutComponent, resolve: {
@@ -66,6 +67,7 @@ import {LoaderInterceptor} from "./interceptors/loader-interceptor";
         ]
       }
     ]),
+    // все эти модули являются Shared Module, не относятся к Admin Module
     MatFormFieldModule,
     MatAutocompleteModule,
     MatInputModule,
@@ -73,6 +75,9 @@ import {LoaderInterceptor} from "./interceptors/loader-interceptor";
     MatDialogModule,
     MatButtonModule
   ],
+  // это неверно, у тебя admin.module является фича модулем,
+  // который подгружается через lazy load, соответственно он не может ничего экспортировать
+  // правильно будет RouterModule переместить в SharedModule, который ты как раз импортируешь во все FeatureModule
   exports: [RouterModule],
   declarations: [
     AdminLayoutComponent,
@@ -80,12 +85,15 @@ import {LoaderInterceptor} from "./interceptors/loader-interceptor";
     ArticleCreatePageComponent,
     UserDashboardPageComponent,
     UserCreatePageComponent,
-    ConfirmDialogModalComponent,
-    ArrayToStringPipe,
-    NotFoundPageComponent,
-    CustomCategoryTagInputComponent
+    ConfirmDialogModalComponent, // не относится непосредственно к админ модулю, точно является Shared
+    ArrayToStringPipe, // не относится непосредственно к админ модулю, точно является Shared
+    NotFoundPageComponent, // эта страница должна быть в SharedModule
+    CustomCategoryTagInputComponent  // не относится непосредственно к админ модулю, точно является Shared
   ],
   providers: [
+    // если провайдер является {providedIn: 'root'} то он будет автоматически найден ангуляром,
+    // его нет необходимости регистрировать среди провайдеров
+    // в данном случае у тебя без исключения каждый провайдер должен был быть так помечен, т.к. они создаются в единственном экземпляре на всё приложение
     AuthService,
     AuthGuard,
     SharedTagsService,

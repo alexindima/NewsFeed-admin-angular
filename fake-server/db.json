@@ -1,20 +1,6 @@
 {
   "articles": [
     {
-      "createdDate": "2023-02-13T01:16:35.783Z",
-      "category": 48,
-      "mainTitle": "Edited test Main Title ",
-      "secondTitle": "Edited test Second Title ",
-      "photoUrl": "Edited test Photo URL ",
-      "photoText": "Edited test Photo Text ",
-      "body": "<p>Edited test Body</p>",
-      "tags": [
-        46
-      ],
-      "id": 1,
-      "upgradeDate": "2023-02-13T01:23:16.538Z"
-    },
-    {
       "createdDate": "2023-02-13T01:16:44.869Z",
       "category": 47,
       "mainTitle": "test Main Title ",
@@ -195,19 +181,6 @@
         45
       ],
       "id": 15
-    },
-    {
-      "createdDate": "2023-02-13T01:18:58.971Z",
-      "category": 47,
-      "mainTitle": "test Main Title ",
-      "secondTitle": "test Second Title ",
-      "photoUrl": "test Photo URL ",
-      "photoText": "test Photo Text ",
-      "body": "<p>test Body</p>",
-      "tags": [
-        45
-      ],
-      "id": 16
     },
     {
       "createdDate": "2023-02-13T01:19:05.165Z",
@@ -530,14 +503,6 @@
         2,
         3
       ]
-    },
-    {
-      "id": 10,
-      "name": "111111",
-      "email": "111@1",
-      "password": "bcb15f821479b4d5772bd0ca866c00ad5f926e3580720659cc80d39c9d09802a",
-      "ignoredCategories": [],
-      "ignoredTags": []
     },
     {
       "email": "admin@mail.com",
