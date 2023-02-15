@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 
+// не вникал сильно, работает, не трогай
+// но может разберусь как нибудь есть ли профит, пока влом
 @Injectable({
   providedIn: 'root'
 })

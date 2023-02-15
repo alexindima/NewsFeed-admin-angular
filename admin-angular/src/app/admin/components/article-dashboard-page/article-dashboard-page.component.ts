@@ -11,6 +11,9 @@ import {
 } from "../confirm-dialog-modal/confirm-dialog-modal.component";
 import {Subs} from "../../utils/subs";
 
+// уже видел в user dashboard, так нельзя, два источника одинаковой фичи
+// далее весь фидбек будет в user-dashboard-page, здесь дублирование
+// нельзя так, всё что общее выносится в отдельные классы
 interface PaginatorSettings {
   length: number,
   pageSize: number,

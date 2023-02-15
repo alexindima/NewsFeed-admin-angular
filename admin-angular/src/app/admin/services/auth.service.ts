@@ -5,6 +5,9 @@ import {Observable, tap, catchError, throwError, Subject} from "rxjs";
 
 const BASE_URL = 'http://localhost:3030/login';
 
+// это точно providedInRoot провайдер,
+// т.к. нам нужен только один его экземпляр на всё приложение,
+// с другими провайдерами также
 @Injectable()
 export class AuthService {
   public error$: Subject<string> = new Subject<string>()

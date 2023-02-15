@@ -14,6 +14,10 @@ export class ArticlesService {
   getCountOfArticles(search: string | null = null): Observable<number> {
     let url = BASE_URL;
     if (search) {
+      // мм, что-то такое я видел в users.service, опять дублирование
+      // я даже больше скажу, дублируется почти весь файл, что приводит к мысли, что пошло что-то не так,
+      // значит надо иметь общий Rest Service, который будет объединять все дублируемые куски кода для сервисов апи
+      // от которого эти файлы будут наследоваться
       url += `?q=${search.replace(/ /g, "+")}&`;
     }
     return this._http.get<Article[]>(url).pipe(

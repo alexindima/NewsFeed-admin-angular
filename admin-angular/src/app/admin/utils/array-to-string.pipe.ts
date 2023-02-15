@@ -1,5 +1,6 @@
 import {Pipe, PipeTransform} from '@angular/core';
 
+// это сделал хорошо
 @Pipe({
   name: 'arrayToString'
 })

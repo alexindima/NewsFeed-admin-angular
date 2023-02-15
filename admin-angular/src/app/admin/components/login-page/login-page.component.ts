@@ -31,7 +31,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.route.queryParams.subscribe((params: Params) => {
       if (params['loginAgain']) {
-        this.message = 'Please, login again';
+        this.message = 'Please, login again'; // не надо так, это по сути не задача логин пейджи, корректнее отображать справа снизу этот месседж
       }
     })
 

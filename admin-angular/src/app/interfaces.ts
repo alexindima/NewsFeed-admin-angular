@@ -27,6 +27,8 @@ export interface Tag {
   readonly name: string;
 }
 
+// readonly очень вероятно лишнее, здесь сильно в проект будет упираться,
+// я лично нахожу его избыточным, который не даёт преимуществ
 export interface Article {
   readonly id?: number;
   readonly createdDate?: string;
