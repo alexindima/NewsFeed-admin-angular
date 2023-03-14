@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/article/{id}', [ArticleController::class, 'get']);
+Route::get('/articles', [ArticleController::class, 'getAll']);
+
+/*Route::get('/a/c', function (){
+    return 'fdsfsdfsf';
+});*/

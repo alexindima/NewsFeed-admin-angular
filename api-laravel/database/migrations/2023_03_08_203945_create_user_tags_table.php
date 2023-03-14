@@ -16,6 +16,8 @@ return new class extends Migration
             $table->bigInteger('user');
             $table->bigInteger('tag');
             $table->timestamps();
+
+            $table->softDeletes();
         });
     }
 

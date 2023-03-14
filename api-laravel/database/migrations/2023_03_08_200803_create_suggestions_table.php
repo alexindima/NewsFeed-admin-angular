@@ -15,6 +15,8 @@ return new class extends Migration
             $table->bigIncrements('article_id');
             $table->bigInteger('news');
             $table->timestamps();
+
+            $table->softDeletes();
         });
     }
 

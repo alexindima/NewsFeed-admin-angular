@@ -20,6 +20,8 @@ return new class extends Migration
             $table->text('body');
             $table->bigInteger('category');
             $table->timestamps();
+
+            $table->softDeletes();
         });
     }
 

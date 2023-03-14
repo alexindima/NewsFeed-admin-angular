@@ -15,6 +15,8 @@ return new class extends Migration
             $table->bigIncrements('category_id');
             $table->string('name', length: 50);
             $table->timestamps();
+
+            $table->softDeletes();
         });
     }
 

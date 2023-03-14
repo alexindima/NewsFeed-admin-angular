@@ -119,6 +119,7 @@
       <path value="$PROJECT_DIR$/api-laravel/vendor/theseer/tokenizer" />
       <path value="$PROJECT_DIR$/api-laravel/vendor/psr/http-factory" />
       <path value="$PROJECT_DIR$/api-laravel/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/api-laravel/vendor/laravel/homestead" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
