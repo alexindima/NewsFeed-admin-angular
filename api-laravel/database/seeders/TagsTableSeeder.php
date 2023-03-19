@@ -1,8 +1,10 @@
 <?php
 
 namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use App\Models\Tag;
+
 class TagsTableSeeder extends Seeder
 {
     /**
@@ -10,18 +12,8 @@ class TagsTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
-        $tags = [
-            ['name' => 'Technology'],
-            ['name' => 'Sports'],
-            ['name' => 'Politics'],
-            ['name' => 'Entertainment'],
-            ['name' => 'Food'],
-        ];
-
-        foreach ($tags as $tag) {
-            Tag::create($tag);
-        }
+        Tag::factory(10)->create();
     }
 }

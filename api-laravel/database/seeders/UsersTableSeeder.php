@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 
 class UsersTableSeeder extends Seeder
 {
@@ -13,23 +12,8 @@ class UsersTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
-        $users = [
-            [
-                'name' => 'John Doe',
-                'email' => 'john@example.com',
-                'password' => Hash::make('password'),
-            ],
-            [
-                'name' => 'Jane Smith',
-                'email' => 'jane@example.com',
-                'password' => Hash::make('password'),
-            ],
-        ];
-
-        foreach ($users as $user) {
-            User::create($user);
-        }
+        User::factory(10)->create();
     }
 }

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('tags', function (Blueprint $table) {
             $table->bigIncrements('tag_id');
-            $table->string('name', length: 50);
+            $table->string('name', length: 50)->unique();
             $table->timestamps();
 
             $table->softDeletes();

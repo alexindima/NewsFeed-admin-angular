@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Suggestion;
-use Illuminate\Support\Facades\Hash;
 
 class SuggestionsTableSeeder extends Seeder
 {
@@ -13,34 +12,8 @@ class SuggestionsTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
-        $suggestions = [
-            [
-                'news' => 1,
-            ],
-            [
-                'news' => 2,
-            ],
-            [
-                'news' => 3,
-            ],
-            [
-                'news' => 4,
-            ],
-            [
-                'news' => 5,
-            ],
-            [
-                'news' => 10,
-            ],
-            [
-                'news' => 11,
-            ],
-        ];
-
-        foreach ($suggestions as $suggestion) {
-            Suggestion::create($suggestion);
-        }
+        Suggestion::factory(10)->create();
     }
 }

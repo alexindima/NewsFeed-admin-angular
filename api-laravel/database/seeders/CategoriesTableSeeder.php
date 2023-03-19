@@ -10,18 +10,8 @@ class CategoriesTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
-        $categories = [
-            ['name' => 'Technology'],
-            ['name' => 'Sports'],
-            ['name' => 'Politics'],
-            ['name' => 'Entertainment'],
-            ['name' => 'Food'],
-        ];
-
-        foreach ($categories as $category) {
-            Category::create($category);
-        }
+        Category::factory(10)->create();
     }
 }

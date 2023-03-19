@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('suggestions', function (Blueprint $table) {
             $table->bigIncrements('article_id');
-            $table->bigInteger('news');
+            $table->bigInteger('news')->unique();
             $table->timestamps();
 
             $table->softDeletes();
