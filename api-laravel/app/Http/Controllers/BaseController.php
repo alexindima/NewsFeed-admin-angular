@@ -12,13 +12,13 @@ abstract class BaseController extends Controller{
         $this->modelClass = $modelClass;
     }
 
-    public function get(\Illuminate\Http\Request $request, $id): \Illuminate\Http\JsonResponse{
+    public function show(\Illuminate\Http\Request $request, $id): \Illuminate\Http\JsonResponse{
         dump($this->modelClass);
         $model = $this->modelClass::findOrFail($id);
         return response()->json($model);
     }
 
-    public function getAll(\Illuminate\Http\Request $request): \Illuminate\Http\JsonResponse
+    public function index(\Illuminate\Http\Request $request): \Illuminate\Http\JsonResponse
     {
         $limit = $request->query('limit', 10);
         $offset = $request->query('offset', 0);

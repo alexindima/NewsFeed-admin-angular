@@ -32,4 +32,9 @@ class Article extends Model {
         'category',
     ];
 
+    public function tags(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class, 'article_tag', 'article_id', 'tag_id');
+    }
+
 }

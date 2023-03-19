@@ -29,6 +29,16 @@ class User extends Authenticatable {
         'password',
     ];
 
+    public function tags(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class, 'user_tag', 'user_id', 'tag_id');
+    }
+
+    public function categories(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Category::class, 'user_category', 'user_id', 'category_id');
+    }
+
 // use HasApiTokens, HasFactory, Notifiable;
 //    /**
 //     * The attributes that are mass assignable.
