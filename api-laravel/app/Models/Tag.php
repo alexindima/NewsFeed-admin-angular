@@ -13,7 +13,6 @@ class Tag extends Model {
     protected $primaryKey = 'tag_id';
 
     protected $fillable = [
-        'tag_id',
         'name',
     ];
 

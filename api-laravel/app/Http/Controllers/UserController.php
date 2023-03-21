@@ -2,16 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Article;
+use App\Models\User;
 
-class UserController extends Controller {
-    public function get($index) {
-        $article = Article::find($index);
-        dump($article);
-        return $article;
-    }
-
-    public function create() {
-        Article::create();
+class UserController extends BaseController {
+    public function __construct()
+    {
+        parent::__construct(User::class);
     }
 }

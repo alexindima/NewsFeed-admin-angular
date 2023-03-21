@@ -2,16 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Article;
+use App\Models\Suggestion;
 
-class SuggestionController extends Controller {
-    public function get($index) {
-        $article = Article::find($index);
-        dump($article);
-        return $article;
-    }
-
-    public function create() {
-        Article::create();
+class SuggestionController extends BaseController {
+    public function __construct()
+    {
+        parent::__construct(Suggestion::class);
     }
 }

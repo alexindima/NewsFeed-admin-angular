@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use GuzzleHttp\Psr7\Request;
+use Tests\Fixtures\Model;
 
 
 abstract class BaseController extends Controller{
@@ -38,7 +39,7 @@ abstract class BaseController extends Controller{
         ]);
     }
 
-    public function create(\Illuminate\Http\Request $request): \Illuminate\Http\JsonResponse
+    public function store(\Illuminate\Http\Request $request): \Illuminate\Http\JsonResponse
     {
         $model = $this->modelClass::create($request->all());
         return response()->json($model, 201);
@@ -51,7 +52,7 @@ abstract class BaseController extends Controller{
         return response()->json($model);
     }
 
-    public function delete(\Illuminate\Http\Request $request, $id): \Illuminate\Http\JsonResponse
+    public function destroy(\Illuminate\Http\Request $request, $id): \Illuminate\Http\JsonResponse
     {
         $model = $this->modelClass::findOrFail($id);
         $model->delete();

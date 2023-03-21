@@ -13,7 +13,6 @@ class Article extends Model {
     protected $primaryKey = 'article_id';
 
     protected $fillable = [
-        'article_id',
         'main_title',
         'second_title',
         'photo_pass',
