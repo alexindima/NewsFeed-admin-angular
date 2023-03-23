@@ -33,6 +33,9 @@ abstract class BaseController extends Controller{
             ->offset($offset)
             ->get();
 
+        /*$data = $query
+            ->paginate(5);*/
+
         return response()->json([
             'data' => $data,
             'total' => $total,
