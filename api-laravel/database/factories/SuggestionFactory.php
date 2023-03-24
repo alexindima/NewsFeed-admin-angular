@@ -12,7 +12,7 @@ class SuggestionFactory extends Factory
     public function definition(): array
     {
         return [
-            'news' => $this->faker->unique()->numberBetween(),
+            'news' => mt_rand(1,99999),
         ];
     }
 }

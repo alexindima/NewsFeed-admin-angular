@@ -32,8 +32,6 @@ abstract class BaseRepository
        return $this->model::all();
     }
 
-
-
     function create($data): Model
     {
         return $this->model::query()->create($data);

@@ -12,7 +12,7 @@ class TagFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->unique()->word,
+            'name' => uniqid('tag_').$this->faker->unique()->word,
         ];
     }
 }

@@ -88,7 +88,7 @@ class ArticleController extends Controller {
         return response()->json(null, 204);
     }*/
 
-    private $articleService;
+    private ArticleService $articleService;
 
     public function __construct(ArticleService $articleService)
     {
