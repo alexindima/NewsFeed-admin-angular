@@ -24,7 +24,6 @@ class TagService
     public function getAll(): Collection
     {
         return $this->repository->getAll();
-
     }
 
     public function create($tag): Model

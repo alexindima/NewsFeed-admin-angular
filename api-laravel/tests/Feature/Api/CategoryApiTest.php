@@ -2,34 +2,32 @@
 
 namespace Tests\Feature\Api;
 
-use App\Events\Models\User\UserCreated;
-use App\Models\User;
+use App\Models\Category;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
-class UserApiTest extends TestCase
+class CategoryApiTest extends TestCase
 {
     use RefreshDatabase;
     public function test_index(): void
     {
-        $dummy = User::factory(10)->create();
+        $dummy = Category::factory(10)->create();
         $dummyIds = $dummy->map(fn ($el) => $el->id);
 
-        $response = $this->get('/api/users');
+        $response = $this->get('/api/categories');
 
         $response->assertStatus(200);
-        $data = $response->json('data');
+        $data = $response->json();
 
         collect($data)->each(fn ($el) => $this->assertTrue(in_array($el['id'], $dummyIds->toArray())));
     }
 
     public function test_show(): void
     {
-        $dummy = User::factory()->create();
+        $dummy = Category::factory()->create();
 
-        $response = $this->get('/api/users/'.$dummy->id);
+        $response = $this->get('/api/categories/'.$dummy->id);
 
         $response->assertStatus(200);
         $this->assertEquals(data_get($response, 'id'), $dummy->id, 'Response ID is not the same as model ID');
@@ -37,12 +35,10 @@ class UserApiTest extends TestCase
 
     public function test_create(): void
     {
-        //Event::fake();
-        $dummy = User::factory()->make();
+        $dummy = Category::factory()->make();
 
-        $response = $this->post('/api/users', $dummy->toArray());
+        $response = $this->post('/api/categories', $dummy->toArray());
 
-        //Event::assertDispatched(ArticleCreated::class);
         $response->assertStatus(201);
         $data = collect($response)->only(array_keys($dummy->getAttributes()));
         $data->each(function ($value, $field) use($dummy){
@@ -52,30 +48,30 @@ class UserApiTest extends TestCase
 
     public function test_update(): void
     {
-        $dummy = User::factory()->create();
-        $dummyForUpdate = User::factory()->make();
+        $dummy = Category::factory()->create();
+        $dummyForUpdate = Category::factory()->make();
 
-        $fillable = collect((new User())->getFillable());
+        $fillable = collect((new Category())->getFillable());
 
         $fillable->each(function ($toUpdate) use($dummy, $dummyForUpdate){
-            $response = $this->patch('/api/users/'.$dummy->id, [
+            $response = $this->patch('/api/categories/'.$dummy->id, [
                 $toUpdate => data_get($dummyForUpdate, $toUpdate),
             ]);
             $response->assertStatus(200);
 
-            $this->assertSame(data_get($dummyForUpdate, $toUpdate), data_get($dummy->refresh(), $toUpdate), 'Failed to update model');
+            $this->assertSame(data_get($dummyForUpdate, $toUpdate), data_get($dummy->refresh(), $toUpdate), 'Faqled to update model');
         });
     }
 
     public function test_delete(): void
     {
-        $dummy = User::factory()->create();
+        $dummy = Category::factory()->create();
 
-        $response = $this->delete('/api/users/'.$dummy->id);
+        $response = $this->delete('/api/categories/'.$dummy->id);
 
         $response->assertStatus(204);
 
         $this->expectException(ModelNotFoundException::class);
-        User::query()->findOrFail($dummy->id);
+        Category::query()->findOrFail($dummy->id);
     }
 }

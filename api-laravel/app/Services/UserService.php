@@ -21,25 +21,14 @@ class UserService
         return $this->repository->getById($id);
     }
 
-    public function getAll(): Collection
-    {
-        return $this->repository->getAll();
-    }
-
     public function getTotalCount(): int
     {
         return $this->repository->getTotal();
     }
 
-    public function getPaginated($limit = 10, $offset = 0): array
+    public function getPaginated($limit = 10, $offset = 0): Collection
     {
-        $users = $this->repository->getPaginated($limit, $offset);
-        $total = $this->repository->getTotal();
-
-        return [
-            'data' => $users,
-            'total' => $total,
-        ];
+        return $this->repository->getPaginated($limit, $offset);
     }
 
     public function create($user): Model

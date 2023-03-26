@@ -21,11 +21,6 @@ class ArticleService
         return $this->repository->getById($id);
     }
 
-    public function getAll(): Collection
-    {
-        return $this->repository->getAll();
-    }
-
     public function getPaginated($limit = 10, $offset = 0): Collection
     {
         return $this->repository->getPaginated($limit, $offset);

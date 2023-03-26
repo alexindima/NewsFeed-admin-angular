@@ -34,11 +34,9 @@ class ArticleApiTest extends TestCase
 
     public function test_create(): void
     {
-        //Event::fake();
         $dummy = Article::factory()->make();
 
         $response = $this->post('/api/articles', $dummy->toArray());
-        //Event::assertDispatched(ArticleCreated::class);
 
         $response->assertStatus(201);
         $data = collect($response)->only(array_keys($dummy->getAttributes()));

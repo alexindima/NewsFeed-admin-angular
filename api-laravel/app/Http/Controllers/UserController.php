@@ -8,7 +8,7 @@ use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 
-class UserController {
+class UserController extends Controller{
     private UserService $userService;
 
     public function __construct(UserService $userService)
@@ -31,7 +31,7 @@ class UserController {
         $total = $this->userService->getTotalCount();
 
         return response()->json([
-            'data' => $users,
+            'data' => UserResource::collection($users),
             'total' => $total,
         ]);
     }

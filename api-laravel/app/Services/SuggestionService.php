@@ -24,7 +24,6 @@ class SuggestionService
     public function getAll(): Collection
     {
         return $this->repository->getAll();
-
     }
 
     public function create($suggestion): Model
