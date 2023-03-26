@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\ArticleRepository;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class ArticleService
@@ -20,34 +21,23 @@ class ArticleService
         return $this->repository->getById($id);
     }
 
-    public function getAll(): array
+    public function getAll(): Collection
     {
-        $articles = $this->repository->getAll();
-        $total = $this->repository->getTotal();
-
-        return [
-            'data' => $articles,
-            'total' => $total,
-        ];
+        return $this->repository->getAll();
     }
 
-    public function getPaginated($limit = 10, $offset = 0): array
+    public function getPaginated($limit = 10, $offset = 0): Collection
     {
-        $articles = $this->repository->getPaginated($limit, $offset);
-        $total = $this->repository->getTotal();
+        return $this->repository->getPaginated($limit, $offset);
+    }
 
-        return [
-            'data' => $articles,
-            'total' => $total,
-        ];
+    public function getTotalCount(): int
+    {
+        return $this->repository->getTotal();
     }
 
     public function create($article): Model
     {
-        $createdArticle = $this->repository->create($article);
-        if(!$createdArticle) {
-
-        }
         return $this->repository->create($article);
     }
 

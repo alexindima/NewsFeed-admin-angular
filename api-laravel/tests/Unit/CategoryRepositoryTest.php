@@ -4,11 +4,13 @@ namespace Tests\Unit;
 
 use App\Models\Category;
 use App\Repositories\CategoryRepository;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class CategoryRepositoryTest extends TestCase
 {
-    private int|null $createdCategoryId = null;
+    use RefreshDatabase;
+
 
     public function test_create(): void
     {
@@ -19,7 +21,6 @@ class CategoryRepositoryTest extends TestCase
         ];
 
         $result = $repository->create($payload);
-        $this->createdCategoryId = $result->category_id;
 
         $this->assertSame($payload['name'], $result->name, 'Category created does not have name');
     }
@@ -33,8 +34,7 @@ class CategoryRepositoryTest extends TestCase
             'name' => uniqid('category_', true),
         ];
 
-        $result = $repository->update($dummy->category_id, $payload);
-        $this->createdCategoryId = $result->category_id;
+        $result = $repository->update($dummy->id, $payload);
 
         $this->assertSame($payload['name'], $result->name, 'Category does not have changed name');
     }
@@ -44,19 +44,11 @@ class CategoryRepositoryTest extends TestCase
         $repository = $this->app->make(CategoryRepository::class);
         $dummy = Category::factory(1)->create()->first();
 
-        $repository->delete($dummy->category_id);
+        $repository->delete($dummy->id);
 
-        $found = Category::query()->find($dummy->category_id);
+        $found = Category::query()->find($dummy->id);
 
         $this->assertSame(null, $found, 'Category is not deleted');
     }
 
-    protected function tearDown(): void
-    {
-        if ($this->createdCategoryId) {
-            Category::query()->where('category_id', $this->createdCategoryId)->delete();
-            $this->createdCategoryId = null;
-        }
-        parent::tearDown();
-    }
 }

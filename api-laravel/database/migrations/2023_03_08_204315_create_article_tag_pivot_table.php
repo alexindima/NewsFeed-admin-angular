@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('article_tag', function (Blueprint $table) {
             $table->foreignId('article_id')->index();
-            $table->foreign('article_id')->on('articles')->references('article_id')->cascadeOnDelete();
+            $table->foreign('article_id')->on('articles')->references('id')->cascadeOnDelete();
             $table->foreignId('tag_id')->index();
-            $table->foreign('tag_id')->on('tags')->references('tag_id')->cascadeOnDelete();
+            $table->foreign('tag_id')->on('tags')->references('id')->cascadeOnDelete();
             $table->primary(['article_id', 'tag_id']);
 
             $table->softDeletes();

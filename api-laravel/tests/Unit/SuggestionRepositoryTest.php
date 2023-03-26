@@ -4,11 +4,12 @@ namespace Tests\Unit;
 
 use App\Models\Suggestion;
 use App\Repositories\SuggestionRepository;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class SuggestionRepositoryTest extends TestCase
 {
-    private int|null $createdSuggestionId = null;
+    use RefreshDatabase;
 
     public function test_create(): void
     {
@@ -19,7 +20,6 @@ class SuggestionRepositoryTest extends TestCase
         ];
 
         $result = $repository->create($payload);
-        $this->createdSuggestionId = $result->article_id;
 
         $this->assertSame($payload['news'], $result->news, 'Suggestion created does not have news');
     }
@@ -33,8 +33,7 @@ class SuggestionRepositoryTest extends TestCase
             'news' => mt_rand(99999, 199999),
         ];
 
-        $result = $repository->update($dummy->article_id, $payload);
-        $this->createdSuggestionId = $result->article_id;
+        $result = $repository->update($dummy->id, $payload);
 
         $this->assertSame($payload['news'], $result->news, 'Suggestion does not have changed news');
     }
@@ -44,19 +43,10 @@ class SuggestionRepositoryTest extends TestCase
         $repository = $this->app->make(SuggestionRepository::class);
         $dummy = Suggestion::factory(1)->create()->first();
 
-        $repository->delete($dummy->article_id);
+        $repository->delete($dummy->id);
 
-        $found = Suggestion::query()->find($dummy->article_id);
+        $found = Suggestion::query()->find($dummy->id);
 
         $this->assertSame(null, $found, 'Suggestion is not deleted');
-    }
-
-    protected function tearDown(): void
-    {
-        if ($this->createdSuggestionId) {
-            Suggestion::query()->where('article_id', $this->createdSuggestionId)->delete();
-            $this->createdSuggestionId = null;
-        }
-        parent::tearDown();
     }
 }

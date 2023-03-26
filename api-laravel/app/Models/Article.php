@@ -10,7 +10,7 @@ class Article extends Model {
     use HasFactory ,SoftDeletes;
 
     protected $table = 'articles';
-    protected $primaryKey = 'article_id';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'main_title',
@@ -22,7 +22,7 @@ class Article extends Model {
     ];
 
     protected $visible = [
-        'article_id',
+        'id',
         'main_title',
         'second_title',
         'photo_pass',
@@ -33,7 +33,7 @@ class Article extends Model {
 
     public function tags(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Tag::class, 'article_tag', 'article_id', 'tag_id');
+        return $this->belongsToMany(Tag::class, 'article_tag', 'id', 'tag_id');
     }
 
 }

@@ -14,11 +14,11 @@ class User extends Authenticatable {
     use HasFactory, SoftDeletes;
 
     protected $table = 'users';
-    protected $primaryKey = 'user_id';
+    protected $primaryKey = 'id';
 
-    protected $hidden = [
+    /*protected $hidden = [
         'password'
-    ];
+    ];*/
 
     protected $fillable = [
         'name',
@@ -27,7 +27,7 @@ class User extends Authenticatable {
     ];
 
     protected $visible = [
-        'user_id',
+        'id',
         'name',
         'email',
         'password',
@@ -35,12 +35,12 @@ class User extends Authenticatable {
 
     public function tags(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Tag::class, 'user_tag', 'user_id', 'tag_id');
+        return $this->belongsToMany(Tag::class, 'user_tag', 'user_id', 'id');
     }
 
     public function categories(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Category::class, 'user_category', 'user_id', 'category_id');
+        return $this->belongsToMany(Category::class, 'user_category', 'user_id', 'id');
     }
 
 // use HasApiTokens, HasFactory, Notifiable;

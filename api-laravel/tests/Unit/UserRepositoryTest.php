@@ -4,11 +4,12 @@ namespace Tests\Unit;
 
 use App\Models\User;
 use App\Repositories\UserRepository;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class UserRepositoryTest extends TestCase
 {
-    private int|null $createdUserId = null;
+    use RefreshDatabase;
 
     public function test_create(): void
     {
@@ -21,7 +22,6 @@ class UserRepositoryTest extends TestCase
         ];
 
         $result = $repository->create($payload);
-        $this->createdUserId = $result->user_id;
 
         $this->assertSame($payload['name'], $result->name, 'User created does not have name');
         $this->assertSame($payload['email'], $result->email, 'User created does not have email');
@@ -39,8 +39,7 @@ class UserRepositoryTest extends TestCase
             'password' => 'test_password',
         ];
 
-        $result = $repository->update($dummy->user_id, $payload);
-        $this->createdUserId = $result->user_id;
+        $result = $repository->update($dummy->id, $payload);
 
         $this->assertSame($payload['name'], $result->name, 'User does not have changed name');
         $this->assertSame($payload['email'], $result->email, 'User does not have changed email');
@@ -52,19 +51,10 @@ class UserRepositoryTest extends TestCase
         $repository = $this->app->make(UserRepository::class);
         $dummy = User::factory(1)->create()->first();
 
-        $repository->delete($dummy->user_id);
+        $repository->delete($dummy->id);
 
-        $found = User::query()->find($dummy->user_id);
+        $found = User::query()->find($dummy->id);
 
         $this->assertSame(null, $found, 'User is not deleted');
-    }
-
-    protected function tearDown(): void
-    {
-        if ($this->createdUserId) {
-            User::query()->where('user_id', $this->createdUserId)->delete();
-            $this->createdUserId = null;
-        }
-        parent::tearDown();
     }
 }

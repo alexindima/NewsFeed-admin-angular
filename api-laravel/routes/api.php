@@ -25,26 +25,26 @@ Route::apiResource('tags', \App\Http\Controllers\TagController::class);
 
 /*Route::prefix('/articles')->group(function () {
     Route::get('/', [\App\Http\Controllers\ArticleController::class, 'index']);
-    Route::get('/{article_id}', [\App\Http\Controllers\ArticleController::class, 'show']);
+    Route::get('/{id}', [\App\Http\Controllers\ArticleController::class, 'show']);
     Route::post('/', [\App\Http\Controllers\ArticleController::class, 'store']);
-    Route::patch('/{article_id}', [\App\Http\Controllers\ArticleController::class, 'update']);
-    Route::delete('/{article_id}', [\App\Http\Controllers\ArticleController::class, 'destroy']);
+    Route::patch('/{id}', [\App\Http\Controllers\ArticleController::class, 'update']);
+    Route::delete('/{id}', [\App\Http\Controllers\ArticleController::class, 'destroy']);
 });
 
 Route::prefix('/suggested')->group(function () {
     Route::get('/', [\App\Http\Controllers\SuggestionController::class, 'index']);
-    Route::get('/{article_id}', [\App\Http\Controllers\SuggestionController::class, 'show']);
+    Route::get('/{id}', [\App\Http\Controllers\SuggestionController::class, 'show']);
     Route::post('/', [\App\Http\Controllers\SuggestionController::class, 'store']);
-    Route::patch('/{article_id}', [\App\Http\Controllers\SuggestionController::class, 'update']);
-    Route::delete('/{article_id}', [\App\Http\Controllers\SuggestionController::class, 'destroy']);
+    Route::patch('/{id}', [\App\Http\Controllers\SuggestionController::class, 'update']);
+    Route::delete('/{id}', [\App\Http\Controllers\SuggestionController::class, 'destroy']);
 });
 
 Route::prefix('/users')->group(function () {
     Route::get('/', [\App\Http\Controllers\UserController::class, 'index']);
-    Route::get('/{user_id}', [\App\Http\Controllers\UserController::class, 'show']);
+    Route::get('/{id}', [\App\Http\Controllers\UserController::class, 'show']);
     Route::post('/', [\App\Http\Controllers\UserController::class, 'store']);
-    Route::patch('/{user_id}', [\App\Http\Controllers\UserController::class, 'update']);
-    Route::delete('/{user_id}', [\App\Http\Controllers\UserController::class, 'destroy']);
+    Route::patch('/{id}', [\App\Http\Controllers\UserController::class, 'update']);
+    Route::delete('/{id}', [\App\Http\Controllers\UserController::class, 'destroy']);
 });
 
 Route::prefix('/categories')->group(function () {

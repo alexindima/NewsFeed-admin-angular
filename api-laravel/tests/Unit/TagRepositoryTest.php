@@ -4,11 +4,13 @@ namespace Tests\Unit;
 
 use App\Models\Tag;
 use App\Repositories\TagRepository;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class TagRepositoryTest extends TestCase
 {
-    private int|null $createdTagId = null;
+    use RefreshDatabase;
+
 
     public function test_create(): void
     {
@@ -19,7 +21,6 @@ class TagRepositoryTest extends TestCase
         ];
 
         $result = $repository->create($payload);
-        $this->createdTagId = $result->tag_id;
 
         $this->assertSame($payload['name'], $result->name, 'Tag created does not have name');
     }
@@ -33,8 +34,7 @@ class TagRepositoryTest extends TestCase
             'name' => uniqid('tag_', true),
         ];
 
-        $result = $repository->update($dummy->tag_id, $payload);
-        $this->createdTagId = $result->tag_id;
+        $result = $repository->update($dummy->id, $payload);
 
         $this->assertSame($payload['name'], $result->name, 'Tag does not have changed name');
     }
@@ -44,19 +44,10 @@ class TagRepositoryTest extends TestCase
         $repository = $this->app->make(TagRepository::class);
         $dummy = Tag::factory(1)->create()->first();
 
-        $repository->delete($dummy->tag_id);
+        $repository->delete($dummy->id);
 
-        $found = Tag::query()->find($dummy->tag_id);
+        $found = Tag::query()->find($dummy->id);
 
         $this->assertSame(null, $found, 'Tag is not deleted');
-    }
-
-    protected function tearDown(): void
-    {
-        if ($this->createdTagId) {
-            Tag::query()->where('tag_id', $this->createdTagId)->delete();
-            $this->createdTagId = null;
-        }
-        parent::tearDown();
     }
 }

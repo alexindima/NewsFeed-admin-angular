@@ -10,14 +10,14 @@ class Suggestion extends Model {
     use HasFactory ,SoftDeletes;
 
     protected $table = 'suggestions';
-    protected $primaryKey = 'article_id';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'news',
     ];
 
     protected $visible = [
-        'article_id',
+        'id',
         'news',
     ];
 }

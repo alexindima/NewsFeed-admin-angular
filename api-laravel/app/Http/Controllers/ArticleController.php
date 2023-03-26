@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ArticleResource;
 use App\Models\Article;
 use App\Services\ArticleService;
 use Illuminate\Http\Request;
@@ -98,7 +99,7 @@ class ArticleController extends Controller {
     public function show(Request $request, int $id)
     {
         $article = $this->articleService->getById($id);
-        return response()->json($article);
+        return response()->json(new ArticleResource($article),);
     }
 
     public function index(Request $request)
@@ -107,8 +108,12 @@ class ArticleController extends Controller {
         $offset = $request->query('offset', 0);
 
         $articles = $this->articleService->getPaginated($limit, $offset);
+        $total = $this->articleService->getTotalCount();
 
-        return response()->json($articles);
+        return response()->json([
+            'data' => ArticleResource::collection($articles),
+            'total' => $total,
+        ]);
     }
 
     public function store(Request $request)
@@ -124,23 +129,24 @@ class ArticleController extends Controller {
 
         $newArticle = $this->articleService->create($article);
 
-        return response()->json($newArticle, 201);
+        return response()->json(new ArticleResource($newArticle), 201);
     }
 
     public function update(Request $request, int $id)
     {
+        $original = $this->articleService->getById($id);
         $article = [
-            'main_title' => $request->main_title,
-            'second_title' => $request->second_title,
-            'photo_pass' => $request->photo_pass,
-            'photo_text' => $request->photo_text,
-            'body' => $request->body,
-            'category' => $request->category,
+            'main_title' => $request->main_title ?? $original->main_title,
+            'second_title' => $request->second_title ?? $original->second_title,
+            'photo_pass' => $request->photo_pass ?? $original->photo_pass,
+            'photo_text' => $request->photo_text ?? $original->photo_text,
+            'body' => $request->body ?? $original->body,
+            'category' => $request->category ?? $original->category,
         ];
 
         $updatedArticle = $this->articleService->update($id, $article);
 
-        return response()->json($updatedArticle);
+        return response()->json(new ArticleResource($updatedArticle), 200);
     }
 
     public function destroy(Request $request, int $id)

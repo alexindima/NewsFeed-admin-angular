@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('user_category', function (Blueprint $table) {
             $table->foreignId('user_id')->index();
-            $table->foreign('user_id')->on('users')->references('user_id')->cascadeOnDelete();
+            $table->foreign('user_id')->on('users')->references('id')->cascadeOnDelete();
             $table->foreignId('category_id')->index();
-            $table->foreign('category_id')->on('categories')->references('category_id')->cascadeOnDelete();
+            $table->foreign('category_id')->on('categories')->references('id')->cascadeOnDelete();
             $table->primary(['user_id', 'category_id']);
 
             $table->softDeletes();

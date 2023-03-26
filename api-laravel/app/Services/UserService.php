@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\UserRepository;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class UserService
@@ -20,15 +21,14 @@ class UserService
         return $this->repository->getById($id);
     }
 
-    public function getAll(): array
+    public function getAll(): Collection
     {
-        $users = $this->repository->getAll();
-        $total = $this->repository->getTotal();
+        return $this->repository->getAll();
+    }
 
-        return [
-            'data' => $users,
-            'total' => $total,
-        ];
+    public function getTotalCount(): int
+    {
+        return $this->repository->getTotal();
     }
 
     public function getPaginated($limit = 10, $offset = 0): array

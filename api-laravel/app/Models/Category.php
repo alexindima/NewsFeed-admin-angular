@@ -10,19 +10,19 @@ class Category extends Model {
     use HasFactory ,SoftDeletes;
 
     protected $table = 'categories';
-    protected $primaryKey = 'category_id';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'name',
     ];
 
     protected $visible = [
-        'category_id',
+        'id',
         'name',
     ];
 
     public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'user_category', 'category_id', 'user_id');
+        return $this->belongsToMany(User::class, 'user_category', 'category_id', 'id');
     }
 }

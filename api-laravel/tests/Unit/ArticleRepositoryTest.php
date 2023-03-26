@@ -4,12 +4,12 @@ namespace Tests\Unit;
 
 use App\Models\Article;
 use App\Repositories\ArticleRepository;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ArticleRepositoryTest extends TestCase
 {
-    private int|null $createdArticleId = null;
-
+    use RefreshDatabase;
     public function test_create(): void
     {
         $repository = $this->app->make(ArticleRepository::class);
@@ -24,7 +24,6 @@ class ArticleRepositoryTest extends TestCase
         ];
 
         $result = $repository->create($payload);
-        $this->createdArticleId = $result->article_id;
 
         $this->assertSame($payload['main_title'], $result->main_title, 'Article does not have main_title');
         $this->assertSame($payload['second_title'], $result->second_title, 'Article does not have second_title');
@@ -48,8 +47,7 @@ class ArticleRepositoryTest extends TestCase
             'category' => 1,
         ];
 
-        $result = $repository->update($dummy->article_id, $payload);
-        $this->createdArticleId = $result->article_id;
+        $result = $repository->update($dummy->id, $payload);
 
         $this->assertSame($payload['main_title'], $result->main_title, 'Article created does not have changed main_title');
         $this->assertSame($payload['second_title'], $result->second_title, 'Article created does not have changed second_title');
@@ -64,19 +62,10 @@ class ArticleRepositoryTest extends TestCase
         $repository = $this->app->make(ArticleRepository::class);
         $dummy = Article::factory(1)->create()->first();
 
-        $repository->delete($dummy->article_id);
+        $repository->delete($dummy->id);
 
-        $found = Article::query()->find($dummy->article_id);
+        $found = Article::query()->find($dummy->id);
 
         $this->assertSame(null, $found, 'Article is not deleted');
-    }
-
-    protected function tearDown(): void
-    {
-        if ($this->createdArticleId) {
-            Article::query()->where('article_id', $this->createdArticleId)->delete();
-            $this->createdArticleId = null;
-        }
-        parent::tearDown();
     }
 }

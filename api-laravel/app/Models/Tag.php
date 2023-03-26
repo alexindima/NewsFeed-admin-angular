@@ -10,25 +10,25 @@ class Tag extends Model {
     use HasFactory ,SoftDeletes;
 
     protected $table = 'tags';
-    protected $primaryKey = 'tag_id';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'name',
     ];
 
     protected $visible = [
-        'tag_id',
+        'id',
         'name',
     ];
 
     public function articles(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Article::class, 'article_tag', 'tag_id', 'article_id');
+        return $this->belongsToMany(Article::class, 'article_tag', 'tag_id', 'id');
     }
 
     public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'user_tag', 'tag_id', 'user_id');
+        return $this->belongsToMany(User::class, 'user_tag', 'tag_id', 'id');
     }
 }
 
