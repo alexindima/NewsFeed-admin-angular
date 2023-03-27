@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SuggestionStoreRequest;
+use App\Http\Requests\SuggestionUpdateRequest;
 use App\Http\Resources\SuggestionResource;
 use App\Models\Suggestion;
 use App\Services\ArticleService;
@@ -30,7 +32,7 @@ class SuggestionController extends Controller {
         return response()->json(SuggestionResource::collection($news));
     }
 
-    public function store(Request $request)
+    public function store(SuggestionStoreRequest $request)
     {
         $news = [
             'news' => $request->news,
@@ -41,7 +43,7 @@ class SuggestionController extends Controller {
         return response()->json(new SuggestionResource($newNews), 201);
     }
 
-    public function update(Request $request, int $id)
+    public function update(SuggestionUpdateRequest $request, int $id)
     {
         $news = [
             'news' => $request->news,

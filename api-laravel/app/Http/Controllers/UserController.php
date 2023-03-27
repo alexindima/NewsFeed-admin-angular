@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Events\Models\User\UserCreated;
+use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Services\UserService;
@@ -36,12 +38,14 @@ class UserController extends Controller{
         ]);
     }
 
-    public function store(Request $request)
+    public function store(UserStoreRequest $request)
     {
         $user = [
             'name' => $request->name,
             'email' => $request->email,
             'password' => $request->password,
+            'categories' => $request->categories,
+            'tags' => $request->tags,
         ];
 
         $newUser = $this->userService->create($user);
@@ -49,13 +53,15 @@ class UserController extends Controller{
         return response()->json(new UserResource($newUser), 201);
     }
 
-    public function update(Request $request, int $id)
+    public function update(UserUpdateRequest $request, int $id)
     {
         $original = $this->userService->getById($id);
         $user = [
             'name' => $request->name ?? $original->name,
             'email' => $request->email ?? $original->email,
             'password' => $request->password ?? $original->password,
+            'categories' => $request->categories,
+            'tags' => $request->tags,
         ];
 
         $updatedUser = $this->userService->update($id, $user);

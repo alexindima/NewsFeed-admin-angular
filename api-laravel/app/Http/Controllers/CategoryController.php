@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryStoreRequest;
+use App\Http\Requests\CategoryUpdateRequest;
 use App\Http\Resources\CategoryResource;
 use App\Services\CategoryService;
 use Illuminate\Http\Request;
@@ -28,7 +30,7 @@ class CategoryController extends Controller {
         return response()->json(CategoryResource::collection($categories));
     }
 
-    public function store(Request $request)
+    public function store(CategoryStoreRequest $request)
     {
         $category = [
             'name' => $request->name,
@@ -39,7 +41,7 @@ class CategoryController extends Controller {
         return response()->json(new CategoryResource($newCategory), 201);
     }
 
-    public function update(Request $request, int $id)
+    public function update(CategoryUpdateRequest $request, int $id)
     {
         $category = [
             'name' => $request->name,

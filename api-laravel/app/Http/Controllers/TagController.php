@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TagStoreRequest;
+use App\Http\Requests\TagUpdateRequest;
 use App\Http\Resources\TagResource;
 use App\Models\Article;
 use App\Models\Tag;
@@ -30,7 +32,7 @@ class TagController extends Controller {
         return response()->json(TagResource::collection($tags));
     }
 
-    public function store(Request $request)
+    public function store(TagStoreRequest $request)
     {
         $tag = [
             'name' => $request->name,
@@ -41,7 +43,7 @@ class TagController extends Controller {
         return response()->json(new TagResource($newTag), 201);
     }
 
-    public function update(Request $request, int $id)
+    public function update(TagUpdateRequest $request, int $id)
     {
         $tag = [
             'name' => $request->name,
