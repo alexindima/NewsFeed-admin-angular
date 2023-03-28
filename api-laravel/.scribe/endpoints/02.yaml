@@ -1,0 +1,239 @@
+name: 'Suggestion Management'
+description: |-
+
+  APIs to manage the suggestion resource.
+endpoints:
+  -
+    httpMethods:
+      - GET
+    uri: api/suggested
+    metadata:
+      groupName: 'Suggestion Management'
+      groupDescription: |-
+
+        APIs to manage the suggestion resource.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Display a listing of suggestion news'
+      description: 'Gets list of suggestion news'
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":[{"id":28,"news":89151},{"id":29,"news":61884}]}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: api/suggested
+    metadata:
+      groupName: 'Suggestion Management'
+      groupDescription: |-
+
+        APIs to manage the suggestion resource.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Store a newly created resource in storage'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      news:
+        name: news
+        description: 'ID of suggested news.'
+        required: true
+        example: 2
+        type: integer
+        custom: []
+    cleanBodyParameters:
+      news: 2
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":{"id":30,"news":47168}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/suggested/{id}'
+    metadata:
+      groupName: 'Suggestion Management'
+      groupDescription: |-
+
+        APIs to manage the suggestion resource.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Display  the specific suggestion news'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'Suggestion new ID'
+        required: true
+        example: 19
+        type: integer
+        custom: []
+    cleanUrlParameters:
+      id: 19
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":{"id":31,"news":62161}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+      - PATCH
+    uri: 'api/suggested/{id}'
+    metadata:
+      groupName: 'Suggestion Management'
+      groupDescription: |-
+
+        APIs to manage the suggestion resource.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update a resource in storage'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'Suggestion new ID'
+        required: true
+        example: 14
+        type: integer
+        custom: []
+    cleanUrlParameters:
+      id: 14
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      news:
+        name: news
+        description: 'ID of suggested news.'
+        required: true
+        example: 2
+        type: integer
+        custom: []
+    cleanBodyParameters:
+      news: 2
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":{"id":32,"news":62105}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - DELETE
+    uri: 'api/suggested/{id}'
+    metadata:
+      groupName: 'Suggestion Management'
+      groupDescription: |-
+
+        APIs to manage the suggestion resource.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Remove the specific suggestion news'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'Suggestion news ID'
+        required: true
+        example: 10
+        type: integer
+        custom: []
+    cleanUrlParameters:
+      id: 10
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 204
+        content: |-
+          {
+          "data": "true"
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []

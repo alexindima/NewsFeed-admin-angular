@@ -8,8 +8,14 @@ use App\Http\Resources\TagResource;
 use App\Models\Article;
 use App\Models\Tag;
 use App\Services\TagService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
+/**
+ * @group Tag Management
+ *
+ * APIs to manage the tag resource.
+ */
 class TagController extends Controller {
     private TagService $tagService;
 
@@ -18,21 +24,43 @@ class TagController extends Controller {
         $this->tagService = $tagService;
     }
 
-    public function show(Request $request, int $id)
-    {
-        $tag = $this->tagService->getById($id);
-
-        return response()->json(new TagResource($tag));
-    }
-
-    public function index(Request $request)
+    /**
+     * Display a listing of tags
+     *
+     * Gets list of tags
+     *
+     * @apiResourceCollection App\Http\Resources\TagResource
+     * @apiResourceModel App\Models\Tag
+     */
+    public function index(Request $request): JsonResponse
     {
         $tags = $this->tagService->getAll();
 
         return response()->json(TagResource::collection($tags));
     }
 
-    public function store(TagStoreRequest $request)
+    /**
+     * Display the specific tag
+     *
+     * @urlParam id int required Tag ID
+     * @apiResource App\Http\Resources\TagResource
+     * @apiResourceModel App\Models\Tag
+     */
+    public function show(Request $request, int $id): JsonResponse
+    {
+        $tag = $this->tagService->getById($id);
+
+        return response()->json(new TagResource($tag));
+    }
+
+    /**
+     * Store a newly created resource in storage
+     *
+     * @bodyParam name string required Name of the tag. Example: "tag1"
+     * @apiResource App\Http\Resources\TagResource
+     * @apiResourceModel App\Models\Tag
+     */
+    public function store(TagStoreRequest $request): JsonResponse
     {
         $tag = [
             'name' => $request->name,
@@ -43,7 +71,15 @@ class TagController extends Controller {
         return response()->json(new TagResource($newTag), 201);
     }
 
-    public function update(TagUpdateRequest $request, int $id)
+    /**
+     * Update a resource in storage
+     *
+     * @urlParam id int required Tag ID
+     * @bodyParam name string required Name of the tag. Example: "tag1"
+     * @apiResource App\Http\Resources\TagResource
+     * @apiResourceModel App\Models\Tag
+     */
+    public function update(TagUpdateRequest $request, int $id): JsonResponse
     {
         $tag = [
             'name' => $request->name,
@@ -54,11 +90,19 @@ class TagController extends Controller {
         return response()->json(new TagResource($updatedTag), 200);
     }
 
-    public function destroy(Request $request, int $id)
+    /**
+     * Remove the specific tag
+     *
+     * @urlParam id int required Tag ID
+     * @response 204 {
+        "data": "true"
+     * }
+     */
+    public function destroy(Request $request, int $id): JsonResponse
     {
         $this->tagService->delete($id);
 
-        return response()->json(null, 204);
+        return response()->json(["data"=> "true"], 204);
     }
 
 }

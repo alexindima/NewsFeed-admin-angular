@@ -37,12 +37,12 @@ class UserApiTest extends TestCase
 
     public function test_create(): void
     {
-        //Event::fake();
+        Event::fake();
         $dummy = User::factory()->make();
 
         $response = $this->post('/api/users', $dummy->toArray());
 
-        //Event::assertDispatched(ArticleCreated::class);
+        Event::assertDispatched(UserCreated::class);
         $response->assertStatus(201);
         $data = collect($response)->only(array_keys($dummy->getAttributes()));
         $data->each(function ($value, $field) use($dummy){

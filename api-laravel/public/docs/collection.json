@@ -1,0 +1,1103 @@
+{
+    "variable": [
+        {
+            "id": "baseUrl",
+            "key": "baseUrl",
+            "type": "string",
+            "name": "string",
+            "value": "http:\/\/localhost"
+        }
+    ],
+    "info": {
+        "name": "NewsFeed",
+        "_postman_id": "936ff03c-cdcc-4d83-8e15-195f043029a9",
+        "description": "",
+        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
+    },
+    "item": [
+        {
+            "name": "Article Management",
+            "description": "\nAPIs to manage the article resource.",
+            "item": [
+                {
+                    "name": "Display a listing of articles",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/articles",
+                            "query": [
+                                {
+                                    "key": "limit",
+                                    "value": "5",
+                                    "description": "Size per page. Default to 10.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "offset",
+                                    "value": "1",
+                                    "description": "Page to view.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/articles?limit=5&offset=1"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Gets list of articles",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"data\":{\"id\":25,\"main_title\":\"Exercitationem ducimus molestiae quia veritatis ut corporis. Repudiandae sit consectetur magnam nemo modi. Eum et doloribus nesciunt ut quas fugiat rerum. Autem repellendus eligendi nihil adipisci.\",\"second_title\":\"Perferendis qui voluptates et quo. Quos laboriosam non labore quaerat. Repellat sint quis est praesentium. Consequatur sunt asperiores cum dolorem cum dolor totam.\",\"photo_pass\":\"Atque sed qui dolores maxime animi in. Eveniet earum magnam recusandae odit veritatis.\",\"photo_text\":\"Est unde rerum inventore quo qui et aut laborum.\",\"body\":\"Velit totam esse eum saepe et. Quia omnis distinctio nihil sint. Ipsum cupiditate quia qui.\",\"category\":1909318888,\"created_at\":\"2023-03-28 20:24:11\",\"updated_at\":\"2023-03-28 20:24:11\"}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Store a newly created resource in storage",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/articles",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/articles"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"main_title\":\"Most important news\",\"second_title\":\"Additional information\",\"photo_pass\":\"https:\\\/\\\/www.test.te\\\/img.jpg\",\"photo_text\":\"Photo\",\"body\":\"Very long text\",\"category\":\"Ecology\",\"tags\":[\"in\"]}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"data\":{\"id\":26,\"main_title\":\"Odio esse sed debitis mollitia voluptas sit id. Error nemo iste beatae ipsum. Deserunt corporis quod possimus explicabo aut recusandae excepturi. Maxime dolor similique vitae sint.\",\"second_title\":\"Sed ut illo iste tempora vero enim nostrum. Accusamus est et esse sit qui adipisci. Id necessitatibus qui esse autem quos. Ad ex et eveniet cupiditate qui reprehenderit porro.\",\"photo_pass\":\"Provident facilis voluptas voluptates. Impedit et officia provident quo quis sunt eaque quasi.\",\"photo_text\":\"Hic quod minima consequatur nihil temporibus.\",\"body\":\"Enim sunt reprehenderit possimus ut. Quia nulla quibusdam non aut iure id vitae. Eos illo ea doloribus ut qui perferendis.\",\"category\":2130686385,\"created_at\":\"2023-03-28 20:24:11\",\"updated_at\":\"2023-03-28 20:24:11\"}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Display the specific article",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/articles\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/articles\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "12",
+                                    "description": "Article ID"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"data\":{\"id\":27,\"main_title\":\"Magnam nostrum saepe voluptatem suscipit. Itaque in praesentium ut nihil molestias. Voluptatem vel assumenda id est suscipit alias. Maxime esse qui eaque possimus omnis inventore placeat.\",\"second_title\":\"Quisquam molestias sed animi natus facilis illo. Voluptate quod maiores sunt natus perspiciatis. Rem adipisci quisquam molestiae sunt ut modi.\",\"photo_pass\":\"Minima suscipit esse fuga fuga repellat in. Optio quo illo delectus sed.\",\"photo_text\":\"Aliquam doloribus autem ad ea repellendus id.\",\"body\":\"Totam iste id harum perferendis at molestiae. Explicabo saepe ullam laudantium voluptatem nihil ratione. Nam debitis qui magni facilis ullam.\",\"category\":1834379205,\"created_at\":\"2023-03-28 20:24:11\",\"updated_at\":\"2023-03-28 20:24:11\"}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Update a resource in storage",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/articles\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/articles\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "6",
+                                    "description": "Article ID"
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"main_title\":\"Most important news\",\"second_title\":\"Additional information\",\"photo_pass\":\"https:\\\/\\\/www.test.te\\\/img.jpg\",\"photo_text\":\"Photo\",\"body\":\"Very long text\",\"category\":\"Ecology\",\"tags\":[\"perferendis\"]}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"data\":{\"id\":28,\"main_title\":\"Saepe similique reprehenderit et provident ipsum illo a. Quam at explicabo quaerat non eligendi magni. Est illo velit sint eligendi possimus.\",\"second_title\":\"Ducimus repellat iure dolor consectetur. Aut sed voluptatem et tempora. Eos ab enim quas tempore. Necessitatibus officiis eveniet quisquam vel consequatur numquam.\",\"photo_pass\":\"Qui magnam et sed adipisci omnis facere natus. Sint qui quos harum. Iste quasi omnis voluptatem.\",\"photo_text\":\"Voluptas in cupiditate accusantium consequatur.\",\"body\":\"Corrupti amet repudiandae necessitatibus. Reiciendis voluptas reiciendis perspiciatis non quo ea possimus. Quas fugiat earum quam eaque.\",\"category\":916980555,\"created_at\":\"2023-03-28 20:24:11\",\"updated_at\":\"2023-03-28 20:24:11\"}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Remove the specific article",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/articles\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/articles\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "18",
+                                    "description": "Article ID"
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 204,
+                            "body": "{\n\"data\": \"true\"\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Category Management",
+            "description": "\nAPIs to manage the category resource.",
+            "item": [
+                {
+                    "name": "Display a listing of categories",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/categories",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/categories"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Gets list of categories",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"data\":[{\"id\":25,\"name\":\"category_64234cec531b5quibusdam\"},{\"id\":26,\"name\":\"category_64234cec5388bquasi\"}]}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Store a newly created resource in storage",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/categories",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/categories"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"\\\"tag1\\\"\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"data\":{\"id\":27,\"name\":\"category_64234cec55c8fut\"}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Display the specific category",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/categories\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/categories\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "15",
+                                    "description": "Category ID"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"data\":{\"id\":28,\"name\":\"category_64234cec57a07molestiae\"}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Update a resource in storage",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/categories\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/categories\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "17",
+                                    "description": "Category ID"
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"\\\"tag1\\\"\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"data\":{\"id\":29,\"name\":\"category_64234cec5c2b8consequuntur\"}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Remove the specific category",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/categories\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/categories\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "10",
+                                    "description": "Category ID"
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 204,
+                            "body": "{\n\"data\": \"true\"\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Suggestion Management",
+            "description": "\nAPIs to manage the suggestion resource.",
+            "item": [
+                {
+                    "name": "Display a listing of suggestion news",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/suggested",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/suggested"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Gets list of suggestion news",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"data\":[{\"id\":28,\"news\":89151},{\"id\":29,\"news\":61884}]}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Store a newly created resource in storage",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/suggested",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/suggested"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"news\":2}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"data\":{\"id\":30,\"news\":47168}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Display  the specific suggestion news",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/suggested\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/suggested\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "19",
+                                    "description": "Suggestion new ID"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"data\":{\"id\":31,\"news\":62161}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Update a resource in storage",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/suggested\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/suggested\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "14",
+                                    "description": "Suggestion new ID"
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"news\":2}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"data\":{\"id\":32,\"news\":62105}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Remove the specific suggestion news",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/suggested\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/suggested\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "10",
+                                    "description": "Suggestion news ID"
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 204,
+                            "body": "{\n\"data\": \"true\"\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Tag Management",
+            "description": "\nAPIs to manage the tag resource.",
+            "item": [
+                {
+                    "name": "Display a listing of tags",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/tags",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/tags"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Gets list of tags",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"data\":[{\"id\":26,\"name\":\"tag_64234cec60331sed\"},{\"id\":27,\"name\":\"tag_64234cec60b8cest\"}]}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Store a newly created resource in storage",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/tags",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/tags"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"\\\"tag1\\\"\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"data\":{\"id\":28,\"name\":\"tag_64234cec62f3cexercitationem\"}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Display the specific tag",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/tags\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/tags\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "7",
+                                    "description": "Tag ID"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"data\":{\"id\":29,\"name\":\"tag_64234cec64ddequia\"}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Update a resource in storage",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/tags\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/tags\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "9",
+                                    "description": "Tag ID"
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"\\\"tag1\\\"\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"data\":{\"id\":30,\"name\":\"tag_64234cec6789celigendi\"}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Remove the specific tag",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/tags\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/tags\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "4",
+                                    "description": "Tag ID"
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 204,
+                            "body": "{\n\"data\": \"true\"\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "User Management",
+            "description": "\nAPIs to manage the user resource.",
+            "item": [
+                {
+                    "name": "Display a listing of users",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/users",
+                            "query": [
+                                {
+                                    "key": "limit",
+                                    "value": "5",
+                                    "description": "Size per page. Default to 10.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "offset",
+                                    "value": "1",
+                                    "description": "Page to view.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/users?limit=5&offset=1"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Gets list of users",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"data\":[{\"id\":25,\"name\":\"Bulah Schimmel I\",\"email\":\"email_64234cebbc8f3orn.xavier@example.com\",\"password\":\"$2y$10$x691OsDS9teyeeRyXnmgF.pwYtMNc1TYPTY4bHeGjcGwu\\\/vkWAqSO\",\"created_at\":\"2023-03-28 20:24:11\",\"updated_at\":\"2023-03-28 20:24:11\"},{\"id\":26,\"name\":\"Dr. Deion Thiel DVM\",\"email\":\"email_64234cebd509ejarred.keeling@example.com\",\"password\":\"$2y$10$ka5SGBAJIsPMoFWfOV\\\/2WO3nxhjqMmsqU\\\/EyOVrMyAls9g851NmEi\",\"created_at\":\"2023-03-28 20:24:11\",\"updated_at\":\"2023-03-28 20:24:11\"}]}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Store a newly created resource in storage",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/users",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/users"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"John Doe\",\"email\":\"john@doe.com\",\"password\":\"dsg65g15dsf1g65dsf4g651dsf65gh498ds4fgb5\",\"categories\":[\"libero\"],\"tags\":[\"perspiciatis\"]}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"data\":{\"id\":27,\"name\":\"Sophie Reynolds\",\"email\":\"email_64234cebecf09marilyne10@example.net\",\"password\":\"$2y$10$ACWmeTiuQzSup917gt1lc.zDiaYeHLp4LKoXDH4X4l.1SRyW4lo56\",\"created_at\":\"2023-03-28 20:24:12\",\"updated_at\":\"2023-03-28 20:24:12\"}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Display the specific user",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/users\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/users\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "17",
+                                    "description": "User ID"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"data\":{\"id\":28,\"name\":\"Mrs. Kaia Roberts\",\"email\":\"email_64234cec1379cbbeer@example.net\",\"password\":\"$2y$10$bc0iyO.X2d\\\/GyffYsq2afOQLMkLnNsk0.FbxDGfwVyPailcK7Jq32\",\"created_at\":\"2023-03-28 20:24:12\",\"updated_at\":\"2023-03-28 20:24:12\"}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Update a resource in storage",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/users\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/users\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "17",
+                                    "description": "User ID"
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"John Doe\",\"email\":\"john@doe.com\",\"password\":\"dsg65g15dsf1g65dsf4g651dsf65gh498ds4fgb5\",\"categories\":[\"et\"],\"tags\":[\"aut\"]}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"data\":{\"id\":29,\"name\":\"Prof. Jeffry Schmidt IV\",\"email\":\"email_64234cec31a38augustus52@example.net\",\"password\":\"$2y$10$DNeGM7RLv6h3ehlV9.t3e.rAyatwp6ztAyksg34S6OVFiK6FM6.Lq\",\"created_at\":\"2023-03-28 20:24:12\",\"updated_at\":\"2023-03-28 20:24:12\"}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Remove the specific user",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/users\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/users\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "7",
+                                    "description": "User ID"
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 204,
+                            "body": "{\n\"data\": \"true\"\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "auth": {
+        "type": "noauth"
+    }
+}

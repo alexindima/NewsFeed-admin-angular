@@ -1,0 +1,1580 @@
+openapi: 3.0.3
+info:
+  title: NewsFeed
+  description: ''
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost'
+paths:
+  /api/articles:
+    get:
+      summary: 'Display a listing of articles'
+      operationId: displayAListingOfArticles
+      description: 'Gets list of articles'
+      parameters:
+        -
+          in: query
+          name: limit
+          description: 'Size per page. Default to 10.'
+          example: 5
+          required: false
+          schema:
+            type: integer
+            description: 'Size per page. Default to 10.'
+            example: 5
+        -
+          in: query
+          name: offset
+          description: 'Page to view.'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: 'Page to view.'
+            example: 1
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 25
+                    main_title: 'Exercitationem ducimus molestiae quia veritatis ut corporis. Repudiandae sit consectetur magnam nemo modi. Eum et doloribus nesciunt ut quas fugiat rerum. Autem repellendus eligendi nihil adipisci.'
+                    second_title: 'Perferendis qui voluptates et quo. Quos laboriosam non labore quaerat. Repellat sint quis est praesentium. Consequatur sunt asperiores cum dolorem cum dolor totam.'
+                    photo_pass: 'Atque sed qui dolores maxime animi in. Eveniet earum magnam recusandae odit veritatis.'
+                    photo_text: 'Est unde rerum inventore quo qui et aut laborum.'
+                    body: 'Velit totam esse eum saepe et. Quia omnis distinctio nihil sint. Ipsum cupiditate quia qui.'
+                    category: 1909318888
+                    created_at: '2023-03-28 20:24:11'
+                    updated_at: '2023-03-28 20:24:11'
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 25
+                      main_title:
+                        type: string
+                        example: 'Exercitationem ducimus molestiae quia veritatis ut corporis. Repudiandae sit consectetur magnam nemo modi. Eum et doloribus nesciunt ut quas fugiat rerum. Autem repellendus eligendi nihil adipisci.'
+                      second_title:
+                        type: string
+                        example: 'Perferendis qui voluptates et quo. Quos laboriosam non labore quaerat. Repellat sint quis est praesentium. Consequatur sunt asperiores cum dolorem cum dolor totam.'
+                      photo_pass:
+                        type: string
+                        example: 'Atque sed qui dolores maxime animi in. Eveniet earum magnam recusandae odit veritatis.'
+                      photo_text:
+                        type: string
+                        example: 'Est unde rerum inventore quo qui et aut laborum.'
+                      body:
+                        type: string
+                        example: 'Velit totam esse eum saepe et. Quia omnis distinctio nihil sint. Ipsum cupiditate quia qui.'
+                      category:
+                        type: integer
+                        example: 1909318888
+                      created_at:
+                        type: string
+                        example: '2023-03-28 20:24:11'
+                      updated_at:
+                        type: string
+                        example: '2023-03-28 20:24:11'
+      tags:
+        - 'Article Management'
+      security: []
+    post:
+      summary: 'Store a newly created resource in storage'
+      operationId: storeANewlyCreatedResourceInStorage
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 26
+                    main_title: 'Odio esse sed debitis mollitia voluptas sit id. Error nemo iste beatae ipsum. Deserunt corporis quod possimus explicabo aut recusandae excepturi. Maxime dolor similique vitae sint.'
+                    second_title: 'Sed ut illo iste tempora vero enim nostrum. Accusamus est et esse sit qui adipisci. Id necessitatibus qui esse autem quos. Ad ex et eveniet cupiditate qui reprehenderit porro.'
+                    photo_pass: 'Provident facilis voluptas voluptates. Impedit et officia provident quo quis sunt eaque quasi.'
+                    photo_text: 'Hic quod minima consequatur nihil temporibus.'
+                    body: 'Enim sunt reprehenderit possimus ut. Quia nulla quibusdam non aut iure id vitae. Eos illo ea doloribus ut qui perferendis.'
+                    category: 2130686385
+                    created_at: '2023-03-28 20:24:11'
+                    updated_at: '2023-03-28 20:24:11'
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 26
+                      main_title:
+                        type: string
+                        example: 'Odio esse sed debitis mollitia voluptas sit id. Error nemo iste beatae ipsum. Deserunt corporis quod possimus explicabo aut recusandae excepturi. Maxime dolor similique vitae sint.'
+                      second_title:
+                        type: string
+                        example: 'Sed ut illo iste tempora vero enim nostrum. Accusamus est et esse sit qui adipisci. Id necessitatibus qui esse autem quos. Ad ex et eveniet cupiditate qui reprehenderit porro.'
+                      photo_pass:
+                        type: string
+                        example: 'Provident facilis voluptas voluptates. Impedit et officia provident quo quis sunt eaque quasi.'
+                      photo_text:
+                        type: string
+                        example: 'Hic quod minima consequatur nihil temporibus.'
+                      body:
+                        type: string
+                        example: 'Enim sunt reprehenderit possimus ut. Quia nulla quibusdam non aut iure id vitae. Eos illo ea doloribus ut qui perferendis.'
+                      category:
+                        type: integer
+                        example: 2130686385
+                      created_at:
+                        type: string
+                        example: '2023-03-28 20:24:11'
+                      updated_at:
+                        type: string
+                        example: '2023-03-28 20:24:11'
+      tags:
+        - 'Article Management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                main_title:
+                  type: string
+                  description: 'Main title of the article.'
+                  example: 'Most important news'
+                second_title:
+                  type: string
+                  description: 'Second title of the article.'
+                  example: 'Additional information'
+                photo_pass:
+                  type: string
+                  description: 'URL of the main photo of the article.'
+                  example: 'https://www.test.te/img.jpg'
+                photo_text:
+                  type: string
+                  description: 'Description of the main photo of the article.'
+                  example: Photo
+                body:
+                  type: string
+                  description: 'Body of the article.'
+                  example: 'Very long text'
+                category:
+                  type: string
+                  description: 'Category of the article.'
+                  example: Ecology
+                tags:
+                  type: array
+                  description: 'Tags of the article.'
+                  example:
+                    - in
+                  items:
+                    type: string
+              required:
+                - main_title
+                - second_title
+                - photo_pass
+                - photo_text
+                - body
+                - category
+      security: []
+  '/api/articles/{id}':
+    get:
+      summary: 'Display the specific article'
+      operationId: displayTheSpecificArticle
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 27
+                    main_title: 'Magnam nostrum saepe voluptatem suscipit. Itaque in praesentium ut nihil molestias. Voluptatem vel assumenda id est suscipit alias. Maxime esse qui eaque possimus omnis inventore placeat.'
+                    second_title: 'Quisquam molestias sed animi natus facilis illo. Voluptate quod maiores sunt natus perspiciatis. Rem adipisci quisquam molestiae sunt ut modi.'
+                    photo_pass: 'Minima suscipit esse fuga fuga repellat in. Optio quo illo delectus sed.'
+                    photo_text: 'Aliquam doloribus autem ad ea repellendus id.'
+                    body: 'Totam iste id harum perferendis at molestiae. Explicabo saepe ullam laudantium voluptatem nihil ratione. Nam debitis qui magni facilis ullam.'
+                    category: 1834379205
+                    created_at: '2023-03-28 20:24:11'
+                    updated_at: '2023-03-28 20:24:11'
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 27
+                      main_title:
+                        type: string
+                        example: 'Magnam nostrum saepe voluptatem suscipit. Itaque in praesentium ut nihil molestias. Voluptatem vel assumenda id est suscipit alias. Maxime esse qui eaque possimus omnis inventore placeat.'
+                      second_title:
+                        type: string
+                        example: 'Quisquam molestias sed animi natus facilis illo. Voluptate quod maiores sunt natus perspiciatis. Rem adipisci quisquam molestiae sunt ut modi.'
+                      photo_pass:
+                        type: string
+                        example: 'Minima suscipit esse fuga fuga repellat in. Optio quo illo delectus sed.'
+                      photo_text:
+                        type: string
+                        example: 'Aliquam doloribus autem ad ea repellendus id.'
+                      body:
+                        type: string
+                        example: 'Totam iste id harum perferendis at molestiae. Explicabo saepe ullam laudantium voluptatem nihil ratione. Nam debitis qui magni facilis ullam.'
+                      category:
+                        type: integer
+                        example: 1834379205
+                      created_at:
+                        type: string
+                        example: '2023-03-28 20:24:11'
+                      updated_at:
+                        type: string
+                        example: '2023-03-28 20:24:11'
+      tags:
+        - 'Article Management'
+      security: []
+    put:
+      summary: 'Update a resource in storage'
+      operationId: updateAResourceInStorage
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 28
+                    main_title: 'Saepe similique reprehenderit et provident ipsum illo a. Quam at explicabo quaerat non eligendi magni. Est illo velit sint eligendi possimus.'
+                    second_title: 'Ducimus repellat iure dolor consectetur. Aut sed voluptatem et tempora. Eos ab enim quas tempore. Necessitatibus officiis eveniet quisquam vel consequatur numquam.'
+                    photo_pass: 'Qui magnam et sed adipisci omnis facere natus. Sint qui quos harum. Iste quasi omnis voluptatem.'
+                    photo_text: 'Voluptas in cupiditate accusantium consequatur.'
+                    body: 'Corrupti amet repudiandae necessitatibus. Reiciendis voluptas reiciendis perspiciatis non quo ea possimus. Quas fugiat earum quam eaque.'
+                    category: 916980555
+                    created_at: '2023-03-28 20:24:11'
+                    updated_at: '2023-03-28 20:24:11'
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 28
+                      main_title:
+                        type: string
+                        example: 'Saepe similique reprehenderit et provident ipsum illo a. Quam at explicabo quaerat non eligendi magni. Est illo velit sint eligendi possimus.'
+                      second_title:
+                        type: string
+                        example: 'Ducimus repellat iure dolor consectetur. Aut sed voluptatem et tempora. Eos ab enim quas tempore. Necessitatibus officiis eveniet quisquam vel consequatur numquam.'
+                      photo_pass:
+                        type: string
+                        example: 'Qui magnam et sed adipisci omnis facere natus. Sint qui quos harum. Iste quasi omnis voluptatem.'
+                      photo_text:
+                        type: string
+                        example: 'Voluptas in cupiditate accusantium consequatur.'
+                      body:
+                        type: string
+                        example: 'Corrupti amet repudiandae necessitatibus. Reiciendis voluptas reiciendis perspiciatis non quo ea possimus. Quas fugiat earum quam eaque.'
+                      category:
+                        type: integer
+                        example: 916980555
+                      created_at:
+                        type: string
+                        example: '2023-03-28 20:24:11'
+                      updated_at:
+                        type: string
+                        example: '2023-03-28 20:24:11'
+      tags:
+        - 'Article Management'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                main_title:
+                  type: string
+                  description: 'Main title of the article.'
+                  example: 'Most important news'
+                second_title:
+                  type: string
+                  description: 'Second title of the article.'
+                  example: 'Additional information'
+                photo_pass:
+                  type: string
+                  description: 'URL of the main photo of the article.'
+                  example: 'https://www.test.te/img.jpg'
+                photo_text:
+                  type: string
+                  description: 'Description of the main photo of the article.'
+                  example: Photo
+                body:
+                  type: string
+                  description: 'Body of the article.'
+                  example: 'Very long text'
+                category:
+                  type: string
+                  description: 'Category of the article.'
+                  example: Ecology
+                tags:
+                  type: array
+                  description: 'Tags of the article.'
+                  example:
+                    - perferendis
+                  items:
+                    type: string
+      security: []
+    delete:
+      summary: 'Remove the specific article'
+      operationId: removeTheSpecificArticle
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        204:
+          description: ''
+      tags:
+        - 'Article Management'
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'Article ID'
+        example: 12
+        required: true
+        schema:
+          type: integer
+  /api/categories:
+    get:
+      summary: 'Display a listing of categories'
+      operationId: displayAListingOfCategories
+      description: 'Gets list of categories'
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    -
+                      id: 25
+                      name: category_64234cec531b5quibusdam
+                    -
+                      id: 26
+                      name: category_64234cec5388bquasi
+                properties:
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 25
+                        name: category_64234cec531b5quibusdam
+                      -
+                        id: 26
+                        name: category_64234cec5388bquasi
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 25
+                        name:
+                          type: string
+                          example: category_64234cec531b5quibusdam
+      tags:
+        - 'Category Management'
+      security: []
+    post:
+      summary: 'Store a newly created resource in storage'
+      operationId: storeANewlyCreatedResourceInStorage
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 27
+                    name: category_64234cec55c8fut
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 27
+                      name:
+                        type: string
+                        example: category_64234cec55c8fut
+      tags:
+        - 'Category Management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Name of the category.'
+                  example: '"tag1"'
+              required:
+                - name
+      security: []
+  '/api/categories/{id}':
+    get:
+      summary: 'Display the specific category'
+      operationId: displayTheSpecificCategory
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 28
+                    name: category_64234cec57a07molestiae
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 28
+                      name:
+                        type: string
+                        example: category_64234cec57a07molestiae
+      tags:
+        - 'Category Management'
+      security: []
+    put:
+      summary: 'Update a resource in storage'
+      operationId: updateAResourceInStorage
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 29
+                    name: category_64234cec5c2b8consequuntur
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 29
+                      name:
+                        type: string
+                        example: category_64234cec5c2b8consequuntur
+      tags:
+        - 'Category Management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Name of the category.'
+                  example: '"tag1"'
+              required:
+                - name
+      security: []
+    delete:
+      summary: 'Remove the specific category'
+      operationId: removeTheSpecificCategory
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        204:
+          description: ''
+      tags:
+        - 'Category Management'
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'Category ID'
+        example: 15
+        required: true
+        schema:
+          type: integer
+  /api/suggested:
+    get:
+      summary: 'Display a listing of suggestion news'
+      operationId: displayAListingOfSuggestionNews
+      description: 'Gets list of suggestion news'
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    -
+                      id: 28
+                      news: 89151
+                    -
+                      id: 29
+                      news: 61884
+                properties:
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 28
+                        news: 89151
+                      -
+                        id: 29
+                        news: 61884
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 28
+                        news:
+                          type: integer
+                          example: 89151
+      tags:
+        - 'Suggestion Management'
+      security: []
+    post:
+      summary: 'Store a newly created resource in storage'
+      operationId: storeANewlyCreatedResourceInStorage
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 30
+                    news: 47168
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 30
+                      news:
+                        type: integer
+                        example: 47168
+      tags:
+        - 'Suggestion Management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                news:
+                  type: integer
+                  description: 'ID of suggested news.'
+                  example: 2
+              required:
+                - news
+      security: []
+  '/api/suggested/{id}':
+    get:
+      summary: 'Display  the specific suggestion news'
+      operationId: displayTheSpecificSuggestionNews
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 31
+                    news: 62161
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 31
+                      news:
+                        type: integer
+                        example: 62161
+      tags:
+        - 'Suggestion Management'
+      security: []
+    put:
+      summary: 'Update a resource in storage'
+      operationId: updateAResourceInStorage
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 32
+                    news: 62105
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 32
+                      news:
+                        type: integer
+                        example: 62105
+      tags:
+        - 'Suggestion Management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                news:
+                  type: integer
+                  description: 'ID of suggested news.'
+                  example: 2
+              required:
+                - news
+      security: []
+    delete:
+      summary: 'Remove the specific suggestion news'
+      operationId: removeTheSpecificSuggestionNews
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        204:
+          description: ''
+      tags:
+        - 'Suggestion Management'
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'Suggestion new ID'
+        example: 19
+        required: true
+        schema:
+          type: integer
+  /api/tags:
+    get:
+      summary: 'Display a listing of tags'
+      operationId: displayAListingOfTags
+      description: 'Gets list of tags'
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    -
+                      id: 26
+                      name: tag_64234cec60331sed
+                    -
+                      id: 27
+                      name: tag_64234cec60b8cest
+                properties:
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 26
+                        name: tag_64234cec60331sed
+                      -
+                        id: 27
+                        name: tag_64234cec60b8cest
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 26
+                        name:
+                          type: string
+                          example: tag_64234cec60331sed
+      tags:
+        - 'Tag Management'
+      security: []
+    post:
+      summary: 'Store a newly created resource in storage'
+      operationId: storeANewlyCreatedResourceInStorage
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 28
+                    name: tag_64234cec62f3cexercitationem
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 28
+                      name:
+                        type: string
+                        example: tag_64234cec62f3cexercitationem
+      tags:
+        - 'Tag Management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Name of the tag.'
+                  example: '"tag1"'
+              required:
+                - name
+      security: []
+  '/api/tags/{id}':
+    get:
+      summary: 'Display the specific tag'
+      operationId: displayTheSpecificTag
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 29
+                    name: tag_64234cec64ddequia
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 29
+                      name:
+                        type: string
+                        example: tag_64234cec64ddequia
+      tags:
+        - 'Tag Management'
+      security: []
+    put:
+      summary: 'Update a resource in storage'
+      operationId: updateAResourceInStorage
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 30
+                    name: tag_64234cec6789celigendi
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 30
+                      name:
+                        type: string
+                        example: tag_64234cec6789celigendi
+      tags:
+        - 'Tag Management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Name of the tag.'
+                  example: '"tag1"'
+              required:
+                - name
+      security: []
+    delete:
+      summary: 'Remove the specific tag'
+      operationId: removeTheSpecificTag
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        204:
+          description: ''
+      tags:
+        - 'Tag Management'
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'Tag ID'
+        example: 7
+        required: true
+        schema:
+          type: integer
+  /api/users:
+    get:
+      summary: 'Display a listing of users'
+      operationId: displayAListingOfUsers
+      description: 'Gets list of users'
+      parameters:
+        -
+          in: query
+          name: limit
+          description: 'Size per page. Default to 10.'
+          example: 5
+          required: false
+          schema:
+            type: integer
+            description: 'Size per page. Default to 10.'
+            example: 5
+        -
+          in: query
+          name: offset
+          description: 'Page to view.'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: 'Page to view.'
+            example: 1
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    -
+                      id: 25
+                      name: 'Bulah Schimmel I'
+                      email: email_64234cebbc8f3orn.xavier@example.com
+                      password: $2y$10$x691OsDS9teyeeRyXnmgF.pwYtMNc1TYPTY4bHeGjcGwu/vkWAqSO
+                      created_at: '2023-03-28 20:24:11'
+                      updated_at: '2023-03-28 20:24:11'
+                    -
+                      id: 26
+                      name: 'Dr. Deion Thiel DVM'
+                      email: email_64234cebd509ejarred.keeling@example.com
+                      password: $2y$10$ka5SGBAJIsPMoFWfOV/2WO3nxhjqMmsqU/EyOVrMyAls9g851NmEi
+                      created_at: '2023-03-28 20:24:11'
+                      updated_at: '2023-03-28 20:24:11'
+                properties:
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 25
+                        name: 'Bulah Schimmel I'
+                        email: email_64234cebbc8f3orn.xavier@example.com
+                        password: $2y$10$x691OsDS9teyeeRyXnmgF.pwYtMNc1TYPTY4bHeGjcGwu/vkWAqSO
+                        created_at: '2023-03-28 20:24:11'
+                        updated_at: '2023-03-28 20:24:11'
+                      -
+                        id: 26
+                        name: 'Dr. Deion Thiel DVM'
+                        email: email_64234cebd509ejarred.keeling@example.com
+                        password: $2y$10$ka5SGBAJIsPMoFWfOV/2WO3nxhjqMmsqU/EyOVrMyAls9g851NmEi
+                        created_at: '2023-03-28 20:24:11'
+                        updated_at: '2023-03-28 20:24:11'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 25
+                        name:
+                          type: string
+                          example: 'Bulah Schimmel I'
+                        email:
+                          type: string
+                          example: email_64234cebbc8f3orn.xavier@example.com
+                        password:
+                          type: string
+                          example: $2y$10$x691OsDS9teyeeRyXnmgF.pwYtMNc1TYPTY4bHeGjcGwu/vkWAqSO
+                        created_at:
+                          type: string
+                          example: '2023-03-28 20:24:11'
+                        updated_at:
+                          type: string
+                          example: '2023-03-28 20:24:11'
+      tags:
+        - 'User Management'
+      security: []
+    post:
+      summary: 'Store a newly created resource in storage'
+      operationId: storeANewlyCreatedResourceInStorage
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 27
+                    name: 'Sophie Reynolds'
+                    email: email_64234cebecf09marilyne10@example.net
+                    password: $2y$10$ACWmeTiuQzSup917gt1lc.zDiaYeHLp4LKoXDH4X4l.1SRyW4lo56
+                    created_at: '2023-03-28 20:24:12'
+                    updated_at: '2023-03-28 20:24:12'
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 27
+                      name:
+                        type: string
+                        example: 'Sophie Reynolds'
+                      email:
+                        type: string
+                        example: email_64234cebecf09marilyne10@example.net
+                      password:
+                        type: string
+                        example: $2y$10$ACWmeTiuQzSup917gt1lc.zDiaYeHLp4LKoXDH4X4l.1SRyW4lo56
+                      created_at:
+                        type: string
+                        example: '2023-03-28 20:24:12'
+                      updated_at:
+                        type: string
+                        example: '2023-03-28 20:24:12'
+      tags:
+        - 'User Management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Name of the user.'
+                  example: 'John Doe'
+                email:
+                  type: string
+                  description: 'Email of the user.'
+                  example: john@doe.com
+                password:
+                  type: string
+                  description: 'Password of the user.'
+                  example: dsg65g15dsf1g65dsf4g651dsf65gh498ds4fgb5
+                categories:
+                  type: array
+                  description: 'Ignored categories for user.'
+                  example:
+                    - libero
+                  items:
+                    type: string
+                tags:
+                  type: array
+                  description: 'Ignored tags for user.'
+                  example:
+                    - perspiciatis
+                  items:
+                    type: string
+              required:
+                - name
+                - email
+                - password
+      security: []
+  '/api/users/{id}':
+    get:
+      summary: 'Display the specific user'
+      operationId: displayTheSpecificUser
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 28
+                    name: 'Mrs. Kaia Roberts'
+                    email: email_64234cec1379cbbeer@example.net
+                    password: $2y$10$bc0iyO.X2d/GyffYsq2afOQLMkLnNsk0.FbxDGfwVyPailcK7Jq32
+                    created_at: '2023-03-28 20:24:12'
+                    updated_at: '2023-03-28 20:24:12'
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 28
+                      name:
+                        type: string
+                        example: 'Mrs. Kaia Roberts'
+                      email:
+                        type: string
+                        example: email_64234cec1379cbbeer@example.net
+                      password:
+                        type: string
+                        example: $2y$10$bc0iyO.X2d/GyffYsq2afOQLMkLnNsk0.FbxDGfwVyPailcK7Jq32
+                      created_at:
+                        type: string
+                        example: '2023-03-28 20:24:12'
+                      updated_at:
+                        type: string
+                        example: '2023-03-28 20:24:12'
+      tags:
+        - 'User Management'
+      security: []
+    put:
+      summary: 'Update a resource in storage'
+      operationId: updateAResourceInStorage
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 29
+                    name: 'Prof. Jeffry Schmidt IV'
+                    email: email_64234cec31a38augustus52@example.net
+                    password: $2y$10$DNeGM7RLv6h3ehlV9.t3e.rAyatwp6ztAyksg34S6OVFiK6FM6.Lq
+                    created_at: '2023-03-28 20:24:12'
+                    updated_at: '2023-03-28 20:24:12'
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 29
+                      name:
+                        type: string
+                        example: 'Prof. Jeffry Schmidt IV'
+                      email:
+                        type: string
+                        example: email_64234cec31a38augustus52@example.net
+                      password:
+                        type: string
+                        example: $2y$10$DNeGM7RLv6h3ehlV9.t3e.rAyatwp6ztAyksg34S6OVFiK6FM6.Lq
+                      created_at:
+                        type: string
+                        example: '2023-03-28 20:24:12'
+                      updated_at:
+                        type: string
+                        example: '2023-03-28 20:24:12'
+      tags:
+        - 'User Management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Name of the user.'
+                  example: 'John Doe'
+                email:
+                  type: string
+                  description: 'Email of the user.'
+                  example: john@doe.com
+                password:
+                  type: string
+                  description: 'Password of the user.'
+                  example: dsg65g15dsf1g65dsf4g651dsf65gh498ds4fgb5
+                categories:
+                  type: array
+                  description: 'Ignored categories for user.'
+                  example:
+                    - et
+                  items:
+                    type: string
+                tags:
+                  type: array
+                  description: 'Ignored tags for user.'
+                  example:
+                    - aut
+                  items:
+                    type: string
+              required:
+                - name
+                - email
+                - password
+      security: []
+    delete:
+      summary: 'Remove the specific user'
+      operationId: removeTheSpecificUser
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        204:
+          description: ''
+      tags:
+        - 'User Management'
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'User ID'
+        example: 17
+        required: true
+        schema:
+          type: integer
+tags:
+  -
+    name: 'Article Management'
+    description: "\nAPIs to manage the article resource."
+  -
+    name: 'Category Management'
+    description: "\nAPIs to manage the category resource."
+  -
+    name: 'Suggestion Management'
+    description: "\nAPIs to manage the suggestion resource."
+  -
+    name: 'Tag Management'
+    description: "\nAPIs to manage the tag resource."
+  -
+    name: 'User Management'
+    description: "\nAPIs to manage the user resource."

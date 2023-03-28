@@ -8,8 +8,15 @@ use App\Http\Requests\UserUpdateRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Services\UserService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Event;
 
+/**
+ * @group User Management
+ *
+ * APIs to manage the user resource.
+ */
 class UserController extends Controller{
     private UserService $userService;
 
@@ -18,13 +25,18 @@ class UserController extends Controller{
         $this->userService = $userService;
     }
 
-    public function show(Request $request, int $id)
-    {
-        $user = $this->userService->getById($id);
-        return response()->json(new UserResource($user));
-    }
-
-    public function index(Request $request)
+    /**
+     * Display a listing of users
+     *
+     * Gets list of users
+     *
+     * @queryParam limit int Size per page. Default to 10. Example: 5
+     * @queryParam offset int Page to view. Example: 1
+     *
+     * @apiResourceCollection App\Http\Resources\UserResource
+     * @apiResourceModel App\Models\User
+     */
+    public function index(Request $request): JsonResponse
     {
         $limit = $request->query('limit', 10);
         $offset = $request->query('offset', 0);
@@ -38,7 +50,31 @@ class UserController extends Controller{
         ]);
     }
 
-    public function store(UserStoreRequest $request)
+    /**
+     * Display the specific user
+     *
+     * @urlParam id int required User ID
+     * @apiResource App\Http\Resources\UserResource
+     * @apiResourceModel App\Models\User
+     */
+    public function show(Request $request, int $id): JsonResponse
+    {
+        $user = $this->userService->getById($id);
+        return response()->json(new UserResource($user));
+    }
+
+    /**
+     * Store a newly created resource in storage
+     *
+     * @bodyParam name string required Name of the user. Example: John Doe
+     * @bodyParam email string required Email of the user. Example: john@doe.com
+     * @bodyParam password string required Password of the user. Example: dsg65g15dsf1g65dsf4g651dsf65gh498ds4fgb5
+     * @bodyParam categories array Ignored categories for user. Example: Ecology
+     * @bodyParam tags array Ignored tags for user.
+     * @apiResource App\Http\Resources\UserResource
+     * @apiResourceModel App\Models\User
+     */
+    public function store(UserStoreRequest $request): JsonResponse
     {
         $user = [
             'name' => $request->name,
@@ -49,11 +85,24 @@ class UserController extends Controller{
         ];
 
         $newUser = $this->userService->create($user);
-
+        /** @var User $newUser */
+        event(new UserCreated($newUser));
         return response()->json(new UserResource($newUser), 201);
     }
 
-    public function update(UserUpdateRequest $request, int $id)
+    /**
+     * Update a resource in storage
+     *
+     * @urlParam id int required User ID
+     * @bodyParam name string required Name of the user. Example: John Doe
+     * @bodyParam email string required Email of the user. Example: john@doe.com
+     * @bodyParam password string required Password of the user. Example: dsg65g15dsf1g65dsf4g651dsf65gh498ds4fgb5
+     * @bodyParam categories array Ignored categories for user. Example: Ecology
+     * @bodyParam tags array Ignored tags for user.
+     * @apiResource App\Http\Resources\UserResource
+     * @apiResourceModel App\Models\User
+     */
+    public function update(UserUpdateRequest $request, int $id): JsonResponse
     {
         $original = $this->userService->getById($id);
         $user = [
@@ -69,10 +118,18 @@ class UserController extends Controller{
         return response()->json(new UserResource($updatedUser), 200);
     }
 
-    public function destroy(Request $request, int $id)
+    /**
+     * Remove the specific user
+     *
+     * @urlParam id int required User ID
+     * @response 204 {
+        "data": "true"
+     * }
+     */
+    public function destroy(Request $request, int $id): JsonResponse
     {
         $this->userService->delete($id);
 
-        return response()->json(null, 204);
+        return response()->json(["data"=> "true"], 204);
     }
 }

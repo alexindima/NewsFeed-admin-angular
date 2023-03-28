@@ -18,4 +18,6 @@ yarn-error.log
 /.idea
 /.vscode
 /.vagrant/machines/api-laravel/virtualbox/vagrant_cwd
-/.vagrant/
+/.vagrant
+_ide_helper.php
+/.phpstorm.meta.php
