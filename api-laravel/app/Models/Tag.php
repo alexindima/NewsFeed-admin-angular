@@ -23,12 +23,12 @@ class Tag extends Model {
 
     public function articles(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Article::class, 'article_tag', 'tag_id', 'id');
+        return $this->belongsToMany(Article::class, 'article_tag', 'tag_id', 'article_id');
     }
 
     public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'user_tag', 'tag_id', 'id');
+        return $this->belongsToMany(User::class, 'user_tag', 'tag_id', 'user_id');
     }
 }
 

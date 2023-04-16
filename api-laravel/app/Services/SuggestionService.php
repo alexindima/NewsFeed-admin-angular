@@ -2,42 +2,34 @@
 
 namespace App\Services;
 
+use App\Models\Article;
 use App\Repositories\SuggestionRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class SuggestionService
 {
+    private const total = 5;
 
-    protected SuggestionRepository $repository;
-
-    public function __construct(SuggestionRepository $repository)
+    public function getAll(): array
     {
-        $this->repository = $repository;
+        $rows = Article::select('id')
+            ->selectRaw('(likes - dislikes) AS difference')
+            ->orderByRaw('(likes - dislikes) DESC')
+            ->limit(self::total)
+            ->get();
+
+        $array = json_decode($rows, true);
+
+        return array_map(function($item) {
+            return $item['id'];
+        }, $array);
+
     }
 
-    public function getById($id): Model
+    public function getTotal(): int
     {
-        return $this->repository->getById($id);
-    }
-
-    public function getAll(): Collection
-    {
-        return $this->repository->getAll();
-    }
-
-    public function create($suggestion): Model
-    {
-        return $this->repository->create($suggestion);
-    }
-
-    public function update($id, $suggestion): Model
-    {
-        return $this->repository->update($id, $suggestion);
-    }
-
-    public function delete($id): bool
-    {
-        return $this->repository->delete($id);
+        return self::total;
     }
 }

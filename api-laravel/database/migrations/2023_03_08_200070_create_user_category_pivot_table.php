@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('category_id')->index();
             $table->foreign('category_id')->on('categories')->references('id')->cascadeOnDelete();
             $table->primary(['user_id', 'category_id']);
+            $table->timestamps();
 
             $table->softDeletes();
         });

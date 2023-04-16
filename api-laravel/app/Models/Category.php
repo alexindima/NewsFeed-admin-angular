@@ -23,6 +23,6 @@ class Category extends Model {
 
     public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'user_category', 'category_id', 'id');
+        return $this->belongsToMany(User::class, 'user_category', 'category_id', 'user_id');
     }
 }

@@ -52,12 +52,12 @@ class User extends Authenticatable {
 
     public function tags(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Tag::class, 'user_tag', 'user_id', 'id');
+        return $this->belongsToMany(Tag::class, 'user_tag', 'user_id', 'tag_id');
     }
 
     public function categories(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Category::class, 'user_category', 'user_id', 'id');
+        return $this->belongsToMany(Category::class, 'user_category', 'user_id', 'category_id');
     }
 
 // use HasApiTokens, HasFactory, Notifiable;

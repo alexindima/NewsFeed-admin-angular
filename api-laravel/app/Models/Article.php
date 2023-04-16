@@ -18,7 +18,7 @@ class Article extends Model {
         'photo_pass',
         'photo_text',
         'body',
-        'category',
+        'category_id',
     ];
 
     protected $visible = [
@@ -28,12 +28,14 @@ class Article extends Model {
         'photo_pass',
         'photo_text',
         'body',
-        'category',
+        'category_id',
+        'likes',
+        'dislikes',
     ];
 
     public function tags(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Tag::class, 'article_tag', 'id', 'tag_id');
+        return $this->belongsToMany(Tag::class, 'article_tag', 'article_id', 'tag_id');
     }
 
 }

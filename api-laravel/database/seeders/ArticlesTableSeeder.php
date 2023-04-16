@@ -3,7 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\Article;
+use App\Models\Category;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Arr;
 
 class ArticlesTableSeeder extends Seeder
 {
@@ -14,6 +16,12 @@ class ArticlesTableSeeder extends Seeder
      */
     public function run(): void
     {
-        Article::factory(10)->create();
+        $categoryIds = Category::pluck('id')->all();
+
+        Article::factory(10)->create([
+            'category_id' => function () use ($categoryIds) {
+                return Arr::random($categoryIds);
+            },
+        ]);
     }
 }

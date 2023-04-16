@@ -18,7 +18,9 @@ return new class extends Migration
             $table->string('photo_pass', length: 100);
             $table->string('photo_text', length: 50);
             $table->text('body');
-            $table->bigInteger('category');
+            $table->bigInteger('category_id');
+            $table->bigInteger('likes');
+            $table->bigInteger('dislikes');
             $table->timestamps();
 
             $table->softDeletes();

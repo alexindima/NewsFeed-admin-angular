@@ -15,7 +15,7 @@ class RegisteredMiddleware extends Middleware
         if ($request->user() && $request->user()->hasRole('admin') && in_array($request->user()->id, $id)) {
             return $next($request);
         } else {
-            return response()->json(['error' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
+            return response()->json(['error' => 'Forbidden'], Response::HTTP_FORBIDDEN);
         }
     }
 }

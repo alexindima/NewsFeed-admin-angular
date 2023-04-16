@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('tag_id')->index();
             $table->foreign('tag_id')->on('tags')->references('id')->cascadeOnDelete();
             $table->primary(['user_id', 'tag_id']);
+            $table->timestamps();
 
             $table->softDeletes();
         });
