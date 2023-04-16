@@ -1,38 +1,42 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {JSAuthResponse, LoginUser} from "../../interfaces";
-import {Observable, tap, catchError, throwError, Subject} from "rxjs";
+import {Observable, tap, catchError, throwError, Subject, switchMap} from "rxjs";
 
-const BASE_URL = 'http://localhost:3030/login';
+const LOGIN_URL = 'http://localhost:8000/login';
+const LOGOUT_URL = 'http://localhost:8000/logout';
+const CSRF_TOKEN_URL = 'http://localhost:8000/sanctum/csrf-cookie';
 
 // это точно providedInRoot провайдер,
 // т.к. нам нужен только один его экземпляр на всё приложение,
 // с другими провайдерами также
 @Injectable()
 export class AuthService {
-  public error$: Subject<string> = new Subject<string>()
+  private authenticated: boolean = false;
+  public error$: Subject<string> = new Subject<string>();
 
   constructor(private _http: HttpClient) {
   }
 
-  get token() {
-    return localStorage.getItem('js-token');
-  }
-
   login(user: LoginUser): Observable<JSAuthResponse | null> {
-    return this._http.post<JSAuthResponse>(BASE_URL, user)
-      .pipe(
-        tap(this.setToken),
-        catchError(this.handleError.bind(this))
-      );
+    return this._http.get(CSRF_TOKEN_URL).pipe(
+      switchMap(() => {
+        return this._http.post<JSAuthResponse>(LOGIN_URL, user)
+          .pipe(
+            tap(() => sessionStorage.setItem('isAuthenticated', 'true')),
+            catchError(this.handleError.bind(this))
+          );
+      })
+    );
   }
 
   logout() {
-    this.setToken(null);
+    this._http.post(LOGOUT_URL, {}).subscribe()
+    sessionStorage.removeItem('isAuthenticated');
   }
 
   isAuthenticated(): boolean {
-    return !!this.token;
+    return sessionStorage.getItem('isAuthenticated') === 'true';
   }
 
   private handleError(error: HttpErrorResponse) {
@@ -41,11 +45,10 @@ export class AuthService {
     return throwError(error);
   }
 
-  private setToken(response: JSAuthResponse | null) {
-    if (response) {
-      localStorage.setItem('js-token', response.accessToken);
-    } else {
-      localStorage.clear();
-    }
+  tes(){
+    this._http.post("http://localhost:8000/user/confirm-password", {"password": "password"}).subscribe()
+  }
+  test(){
+    this._http.get("http://localhost:8000/api/user").subscribe()
   }
 }

@@ -17,7 +17,7 @@ class ArticleFactory extends Factory
             'photo_pass' => $this->faker->text(100),
             'photo_text' => $this->faker->text(50),
             'body' => $this->faker->text,
-            'category' => $this->faker->text(50),
+            'category' => $this->faker->numberBetween(1, 9999),
         ];
     }
 }

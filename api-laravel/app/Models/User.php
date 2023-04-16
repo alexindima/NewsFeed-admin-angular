@@ -11,7 +11,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, HasApiTokens;
 
     protected $table = 'users';
     protected $primaryKey = 'id';
@@ -24,6 +24,7 @@ class User extends Authenticatable {
         'name',
         'email',
         'password',
+        'role',
     ];
 
     protected $visible = [
@@ -31,7 +32,23 @@ class User extends Authenticatable {
         'name',
         'email',
         'password',
+        'role'
     ];
+
+    public function hasRole($role)
+    {
+        // Check if user has the given role
+        return $this->role === $role;
+    }
+
+    public function getRoleAttribute()
+    {
+        // Logic to determine user's role, e.g. fetching from a database column
+        // Replace this with your own logic to get the user's role
+        // For example, if your role information is stored in a 'role' column in the users table
+        // you can return $this->attributes['role'] assuming that your user model has a 'role' column
+        return $this->attributes['role'] ?? null;
+    }
 
     public function tags(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {

@@ -6,7 +6,7 @@ import {map, Observable} from "rxjs";
 // я сча по проекту нашёл копипасту localhost:3030
 // а на занятиях я говорил про proxy conf файл,
 // погугли и пусть все апи пути будут без хоста и порта, здесь это /users
-const BASE_URL = `http://localhost:3030/users`;
+const BASE_URL = `http://localhost:8000/api/users`;
 
 @Injectable()
 export class UsersService {

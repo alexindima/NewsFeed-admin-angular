@@ -1,15 +1,16 @@
 import {NgModule} from "@angular/core";
-import {HttpClientModule} from "@angular/common/http";
+import {HttpClientModule, HttpClientXsrfModule} from "@angular/common/http";
 import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 
 // а также сюда попадают формы, роутинг модули, всякие визуальные компоненты, которые мы подключаем в feature модули
 @NgModule({
   imports: [
+    CKEditorModule,
     HttpClientModule,
-    CKEditorModule], // когда добавляется новая запись эту скобку придётся переносить ниже, ей идеально располагаться на отдельной строке
+  ], // когда добавляется новая запись эту скобку придётся переносить ниже, ей идеально располагаться на отдельной строке
   exports: [
+    CKEditorModule,
     HttpClientModule,
-    CKEditorModule
   ]
 })
 export class SharedModule {

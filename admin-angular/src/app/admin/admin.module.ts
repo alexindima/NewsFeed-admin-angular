@@ -22,17 +22,17 @@ import {MatButtonModule} from "@angular/material/button";
 import {ConfirmDialogModalComponent} from './components/confirm-dialog-modal/confirm-dialog-modal.component';
 import {ArrayToStringPipe} from "./utils/array-to-string.pipe";
 import {NotFoundPageComponent} from './components/not-found-page/not-found-page.component';
-import {UserResolver} from "./resorvers/user.resolver";
-import {ArticleResolver} from "./resorvers/article.resolver";
+import {UserResolver} from "./resolvers/user.resolver";
+import {ArticleResolver} from "./resolvers/article.resolver";
 import {SharedTagsService} from "./services/shared-tags.service";
 import {SharedCategoriesService} from "./services/shared-categories.service";
 import {
   CustomCategoryTagInputComponent
 } from './components/custom-category-tag-input/custom-category-tag-input.component';
-import {SharedCategoriesResolver} from "./resorvers/shared-categories.resolver";
-import {SharedTagsResolver} from "./resorvers/shared-tags.resolver";
+import {SharedCategoriesResolver} from "./resolvers/shared-categories.resolver";
+import {SharedTagsResolver} from "./resolvers/shared-tags.resolver";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
-import {LoaderInterceptor} from "./interceptors/loader-interceptor";
+import {AddXsrfInterceptor} from "./interceptors/add-xsrf.interceptor";
 
 @NgModule({
   imports: [
@@ -44,8 +44,8 @@ import {LoaderInterceptor} from "./interceptors/loader-interceptor";
     RouterModule.forChild([
       {
         path: '', component: AdminLayoutComponent, resolve: {
-          categories: SharedCategoriesResolver,
-          tags: SharedTagsResolver
+          /*categories: SharedCategoriesResolver,
+          tags: SharedTagsResolver*/
         }, children: [
           {path: '', redirectTo: '/admin/login', pathMatch: "full"},
           {path: 'login', component: LoginPageComponent},
@@ -94,7 +94,6 @@ import {LoaderInterceptor} from "./interceptors/loader-interceptor";
     // если провайдер является {providedIn: 'root'} то он будет автоматически найден ангуляром,
     // его нет необходимости регистрировать среди провайдеров
     // в данном случае у тебя без исключения каждый провайдер должен был быть так помечен, т.к. они создаются в единственном экземпляре на всё приложение
-    AuthService,
     AuthGuard,
     SharedTagsService,
     SharedTagsResolver,
@@ -104,11 +103,7 @@ import {LoaderInterceptor} from "./interceptors/loader-interceptor";
     UserResolver,
     ArticlesService,
     ArticleResolver,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: LoaderInterceptor,
-      multi: true
-    }]
+    ]
 })
 export class AdminModule {
 

@@ -22,6 +22,7 @@ export class AuthGuard implements CanActivate {
     if (this._auth.isAuthenticated()) {
       return true;
     } else {
+      console.log('guard kicked me :(')
       this._auth.logout();
       this._router.navigate(['/admin', 'login'], {
         queryParams: {

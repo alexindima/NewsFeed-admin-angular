@@ -52,6 +52,14 @@ export class LoginPageComponent implements OnInit, OnDestroy {
 
   }
 
+  test(){
+    this.auth.test()
+  }
+
+  tes(){
+    this.auth.tes()
+  }
+
   submit() {
     if (this.form.invalid) {
       return;
