@@ -12,7 +12,8 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => uniqid('category_').$this->faker->unique()->word,
+            // лучше стоит генерить более уникальные значения для БД, используя флажок more_entropy
+            'name' => uniqid('category_', true).$this->faker->unique()->word,
         ];
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Repositories;
+
 use App\Exceptions\GeneralJsonException;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
@@ -32,7 +33,8 @@ abstract class BaseRepository
        return $this->model::all();
     }
 
-    function create($data): Model
+    // не забывай про public
+    public function create($data): Model
     {
         return $this->model::query()->create($data);
     }
@@ -47,6 +49,8 @@ abstract class BaseRepository
 
     public function delete($id): bool
     {
+        // там где может вернуться null лучше использовать null-safe оператор (?->), чтобы не было лишней проверки на null
+        // и чтобы не падал по null pointer exception
         return $this->model::query()->findOrFail($id)->delete();
     }
 }

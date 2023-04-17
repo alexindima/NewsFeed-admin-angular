@@ -18,6 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// а это всё еще нужно?
 Route::post('/tokens/create', function (Request $request) {
     $token = $request->user()->createToken($request->token_name);
 

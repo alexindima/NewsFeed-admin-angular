@@ -11,10 +11,10 @@ class RegisteredMiddleware extends Middleware
 {
     public function handle($request, Closure $next, ...$id)
     {
-        // Middleware logic here
+        // для функции in_array всегда используй strict сравнение, чтобы не было неявных приведений
         if ($request->user() && $request->user()->hasRole('admin') && in_array($request->user()->id, $id)) {
             return $next($request);
-        } else {
+        } else { // else тут лишний
             return response()->json(['error' => 'Forbidden'], Response::HTTP_FORBIDDEN);
         }
     }
