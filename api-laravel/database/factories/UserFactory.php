@@ -12,6 +12,7 @@ class UserFactory extends Factory
 
     public function definition(): array
     {
+        // довольно часто используешь эти роли в разных местах, создай для них енамку
         $roles = ['admin', 'user'];
         return [
             'name' => $this->faker->name,

@@ -5,6 +5,9 @@ namespace App\Exceptions;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
+// стоит добавить какую то обработку случаев когда всё падает, чтобы юзеру просто приходило норм сообщение, а не страшные логи
+// вроде как можно заюзать метод render($request, $exception) и даже отталкиваться от типа исключения который тебе пришел
+// и отправить юзеру соответствующий запрос
 class Handler extends ExceptionHandler
 {
     /**

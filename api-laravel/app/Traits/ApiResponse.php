@@ -12,6 +12,7 @@ trait ApiResponse
      * @param $code
      * @return mixed
      */
+    // добавь типизацию и также соблюдай везде единый формат кода, фигурная скобка должна начинаться с новой строки
     public function sendResponse($result, $message, $code) {
 
         return Response::json(self::makeResponse($message, $result), $code);

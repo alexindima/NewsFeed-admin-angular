@@ -7,6 +7,10 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ArticleStoreRequest extends FormRequest
 {
+    // неплохо бы сделать для всех реквестов общий абстрактный класс
+    // где можно вынести этот метод, чтобы не писать его каждый раз
+    // также добавить что то вроде метода body(), который бы ты мог юзать в контроллере и получать сразу готовую модельку
+    // то есть делать маппинг именно здесь, а не в контроллерах, как у тебя это сейчас происходит
     public function authorize(): bool
     {
         return true;
@@ -15,6 +19,7 @@ class ArticleStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
+            // стоит добавить еще валидацию по кол-ву допустимых символов, который соответствует колонкам в БД, юзай max
             'main_title' => ['string', 'required'],
             'second_title' => ['string', 'required'],
             'photo_pass' => ['string', 'required'],
@@ -31,6 +36,10 @@ class ArticleStoreRequest extends FormRequest
     public function messages()
     {
         return [
+            // все такие сообщения желательно выводить в файл ресурсов
+            // может пригодиться если подобные сообщения будут юзаться где то еще
+            // https://laravel.com/docs/10.x/localization
+
             'main_title.required' => 'Please enter a value for the main title',
             'main_title.string' => 'You must use string for the main title',
             'second_title.required' => 'Please enter a value for the second title',

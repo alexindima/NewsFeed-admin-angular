@@ -1,5 +1,7 @@
 <?php
 
+// этот файл почему то оказался в этом неймспейсе, поэтому нижние юзинги не нужны
+// но по хорошему этот неймспейс я бы убрал, и оставил те юзинги
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Route;
@@ -59,6 +61,8 @@ Route::middleware(RegisteredMiddleware::class)->group(function () {
 });
 
 Route::prefix('/articles')->group(function () {
+    // как я понял тут будут 2 квери параметра, с помощью where() можешь указать что
+    // это за параметры а с помощью регулярок их валидировать
     Route::get('/', [ArticleController::class, 'index']);
     Route::get('/{id}', [ArticleController::class, 'show']);
 });
