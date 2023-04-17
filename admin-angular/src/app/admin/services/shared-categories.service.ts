@@ -1,34 +1,36 @@
 import {Injectable, OnDestroy} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {Category} from "../../interfaces";
+import {Category, OperationResponse} from "../../interfaces";
 import {BehaviorSubject, map, Observable, of, switchMap, tap} from "rxjs";
-import {Subs} from "../utils/subs";
 
-const BASE_URL = 'http://localhost:3030/categories';
+const BASE_URL = 'http://localhost:8000/api/categories';
 
 // ужасно, абсолютно полная копипаста с shared-tags.service.ts
 // здесь решение простое и на выбор
 // 1) есть абсолютный класс, который объединяет всю логику категорий и тегов
 // 2) это будет одна сущность например Features, в которой есть поле kind, которое будет либо category либо tag, а то ты сча дублируешь весь код
-@Injectable()
-export class SharedCategoriesService implements OnDestroy {
-  private _subs = new Subs();
+@Injectable({
+  providedIn: 'root'
+})
+export class SharedCategoriesService{
   private _data = new BehaviorSubject<Category[]>([]);
   categories: Observable<Category[]> = this._data.asObservable();
 
   constructor(
-    private _http: HttpClient) {
+    private _http: HttpClient
+  ) {
   }
 
-  updateCategoryList(): Observable<Category[]> {
-    return this._http.get<Category[]>(BASE_URL).pipe(
-      tap(data => {
-      this._data.next(data);
-    }))
+  updateCategoryList(): Observable<OperationResponse<Category[]>> {
+    return this._http.get<OperationResponse<Category[]>>(BASE_URL).pipe(
+      tap(response => this._data.next(response.data))
+    )
   }
 
   getCategoriesList(): Observable<Category[]> {
-    return this._http.get<Category[]>(BASE_URL);
+    return this._http.get<OperationResponse<Category[]>>(BASE_URL).pipe(
+      map((response) => response.data)
+    );
   }
 
   createCategory(name: string): Observable<Category> {
@@ -39,10 +41,10 @@ export class SharedCategoriesService implements OnDestroy {
           return of(categoryExist);
         }
 
-        return this._http.post<Category>(BASE_URL, {name: name}).pipe(
-          switchMap((category: Category) => {
+        return this._http.post<OperationResponse<Category>>(BASE_URL, {name: name}).pipe(
+          switchMap(response => {
             return this.updateCategoryList().pipe(
-              map(() => category)
+              map(() => response.data)
             )
           })
         );
@@ -50,38 +52,18 @@ export class SharedCategoriesService implements OnDestroy {
     );
   }
 
-  deleteCategory(category: number | string | Category): Observable<Category> {
-    const deleteCategoryById = (id: number): Observable<Category> => {
-      return this._http.delete<Category>(`${BASE_URL}/${id}`).pipe(
-        switchMap((category: Category) => {
+  deleteCategory(category: number): Observable<boolean> {
+    const deleteCategoryById = (id: number): Observable<boolean> => {
+      return this._http.delete<OperationResponse<null>>(`${BASE_URL}/${id}`).pipe(
+        switchMap(response => {
           return this.updateCategoryList().pipe(
-            map(() => category)
+            map(() => response.success)
           )
         })
       );
     }
 
-    if (typeof category === "number") {
-      return deleteCategoryById(category);
-    }
-
-    if (typeof category === "object") {
-      return deleteCategoryById(category.id);
-    }
-
-    return this.getCategoriesList().pipe(
-      switchMap((categories: Category[]) => {
-        const categoryExist = categories.find((singleCategory: Category) => singleCategory.name.toLowerCase() === category.toLowerCase());
-        if (categoryExist) {
-          return deleteCategoryById(categoryExist.id);
-        }
-        return of({id: '', name: ''} as unknown as Category);
-      })
-    );
-  }
-
-  ngOnDestroy() {
-    this._subs.unsubscribe();
+    return deleteCategoryById(category);
   }
 }
 

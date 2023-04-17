@@ -1,11 +1,12 @@
 export interface User {
-  createdDate?: string;
+  created_at?: string;
+  updated_at?: string;
   id?: number,
   email: string,
   password?: string,
   name: string
-  ignoredCategories: number[];
-  ignoredTags: number[];
+  categories: string[];
+  tags: string[];
 }
 
 export interface LoginUser {
@@ -17,29 +18,42 @@ export interface JSAuthResponse {
   accessToken: string
 }
 
+export interface OperationResponse<T> {
+  data: T,
+  success: boolean,
+  message: string,
+}
 export interface Category {
-  readonly id: number,
-  readonly name: string
+  id: number,
+  name: string
 }
 
 export interface Tag {
-  readonly id: number;
-  readonly name: string;
+  id: number;
+  name: string;
 }
 
-// readonly очень вероятно лишнее, здесь сильно в проект будет упираться,
-// я лично нахожу его избыточным, который не даёт преимуществ
 export interface Article {
-  readonly id?: number;
-  readonly createdDate?: string;
-  readonly upgradeDate?: string;
-  readonly mainTitle: string;
-  readonly secondTitle: string;
-  readonly photoUrl: string;
-  readonly photoText: string;
-  readonly body: string;
-  readonly category: number;
-  readonly tags: number[];
+  id?: number;
+  created_at?: string;
+  updated_at?: string;
+  main_title: string;
+  second_title: string;
+  photo_pass: string;
+  photo_text: string;
+  body: string;
+  category_id: number;
+  tags: number[];
+}
+
+export interface PaginatedArticle {
+  data: Article[],
+  total: number,
+}
+
+export interface PaginatedUser{
+  data: User[],
+  total: number,
 }
 
 

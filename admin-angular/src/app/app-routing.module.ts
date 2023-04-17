@@ -5,11 +5,11 @@ const routes: Routes = [
   // эта строка должна идти последней, в начале идут фича модули, иначе с ростом проекта можно будет поломать роутинг
   // т.к. порядок поиска роутинга идёт сверху вниз
   {
-    path: '', redirectTo: 'admin', pathMatch: "full"
+    path: 'admin', loadChildren: () => import('./admin/admin.module').then(x => x.AdminModule)
   },
   {
-    path: 'admin', loadChildren: () => import('./admin/admin.module').then(x => x.AdminModule)
-  }
+    path: '', redirectTo: 'admin', pathMatch: "full"
+  },
 ];
 
 @NgModule({

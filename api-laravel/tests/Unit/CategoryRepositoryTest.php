@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Models\Category;
+use App\DbModels\Category;
 use App\Repositories\CategoryRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

@@ -27,7 +27,7 @@ class SuggestionController extends Controller {
      * @apiResourceCollection App\Http\Resources\SuggestionResource
      * @apiResourceModel App\Models\Suggestion
      */
-    public function index(Request $request): JsonResponse
+    public function index(): JsonResponse
     {
         $articles = $this->suggestionService->getAll();
         $total = $this->suggestionService->getTotal();

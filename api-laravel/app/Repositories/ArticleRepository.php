@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\Article;
+use App\DbModels\Article;
 use Illuminate\Database\Eloquent\Collection;
 
 class ArticleRepository extends BaseRepository

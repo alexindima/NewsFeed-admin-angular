@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\Article;
+use App\DbModels\Article;
 
 class SuggestionService
 {

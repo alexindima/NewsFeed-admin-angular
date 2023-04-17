@@ -29,7 +29,7 @@ if(\Illuminate\Support\Facades\App::environment('local'))
 {
 
     Route::get('/playground', function (){
-        $user = \App\Models\User::factory()->make();
+        $user = \App\DbModels\User::factory()->make();
         \Illuminate\Support\Facades\Mail::to($user)
             ->send(new \App\Mail\WelcomeMail($user));
 

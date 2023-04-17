@@ -37,15 +37,13 @@ import {AddXsrfInterceptor} from "./interceptors/add-xsrf.interceptor";
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule, // лишнее, т.к. ниже есть ReactiveFormsModule, подключается один из двух
-    ReactiveFormsModule, // должен являться частью Shared Module, который и так уже подключен здесь
     SharedModule,
     // роутинг принято выносить отдельно, как например у тебя уже сделано с app-routing.module.ts - app.module.ts, здесь идентично
     RouterModule.forChild([
       {
         path: '', component: AdminLayoutComponent, resolve: {
-          /*categories: SharedCategoriesResolver,
-          tags: SharedTagsResolver*/
+          categories: SharedCategoriesResolver,
+          tags: SharedTagsResolver,
         }, children: [
           {path: '', redirectTo: '/admin/login', pathMatch: "full"},
           {path: 'login', component: LoginPageComponent},
@@ -67,13 +65,6 @@ import {AddXsrfInterceptor} from "./interceptors/add-xsrf.interceptor";
         ]
       }
     ]),
-    // все эти модули являются Shared Module, не относятся к Admin Module
-    MatFormFieldModule,
-    MatAutocompleteModule,
-    MatInputModule,
-    MatPaginatorModule,
-    MatDialogModule,
-    MatButtonModule
   ],
   // это неверно, у тебя admin.module является фича модулем,
   // который подгружается через lazy load, соответственно он не может ничего экспортировать
@@ -90,20 +81,6 @@ import {AddXsrfInterceptor} from "./interceptors/add-xsrf.interceptor";
     NotFoundPageComponent, // эта страница должна быть в SharedModule
     CustomCategoryTagInputComponent  // не относится непосредственно к админ модулю, точно является Shared
   ],
-  providers: [
-    // если провайдер является {providedIn: 'root'} то он будет автоматически найден ангуляром,
-    // его нет необходимости регистрировать среди провайдеров
-    // в данном случае у тебя без исключения каждый провайдер должен был быть так помечен, т.к. они создаются в единственном экземпляре на всё приложение
-    AuthGuard,
-    SharedTagsService,
-    SharedTagsResolver,
-    SharedCategoriesService,
-    SharedCategoriesResolver,
-    UsersService,
-    UserResolver,
-    ArticlesService,
-    ArticleResolver,
-    ]
 })
 export class AdminModule {
 

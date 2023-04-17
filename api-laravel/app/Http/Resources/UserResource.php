@@ -19,8 +19,8 @@ class UserResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'password' => $this->password,
-            'tag_ids' => collect($this->tags)->pluck('id')->toArray(),
-            'category_ids' => collect($this->categories)->pluck('id')->toArray(),
+            'tags' => collect($this->tags)->pluck('name')->toArray(),
+            'categories' => collect($this->categories)->pluck('name')->toArray(),
             'created_at' => $this->created_at->toDateTimeString(),
             'updated_at' => $this->updated_at->toDateTimeString(),
         ];

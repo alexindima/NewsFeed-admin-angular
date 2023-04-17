@@ -105,8 +105,8 @@ export class UserCreatePageComponent implements OnInit, OnDestroy {
     });
 
     if (this.userFromResolver) {
-      const categoriesNames = this.getArrayOfNamesFromIDs(this.categoriesList, this.userFromResolver.ignoredCategories!)
-      const tagsNames = this.getArrayOfNamesFromIDs(this.tagsList, this.userFromResolver.ignoredTags!)
+      const categoriesNames = this.getArrayOfNamesFromIDs(this.categoriesList, this.userFromResolver.categories!)
+      const tagsNames = this.getArrayOfNamesFromIDs(this.tagsList, this.userFromResolver.tags!)
 
       if (categoriesNames.length > 1) {
         for (let i = 1; i < categoriesNames.length; i++) {
@@ -168,9 +168,9 @@ export class UserCreatePageComponent implements OnInit, OnDestroy {
     newControls.forEach(control => this.tagsControls.push(control));
   }
 
-  getArrayOfNamesFromIDs(arrayOfObj: Tag[] | Category[], arrayOfIDs: number[]): string[] {
-    return arrayOfIDs.map((id: number) => {
-      const result = arrayOfObj.find(obj => obj.id === id);
+  getArrayOfNamesFromIDs(arrayOfObj: Tag[] | Category[], arrayOfIDs: string[]): string[] {
+    return arrayOfIDs.map((id: string) => {
+      const result = arrayOfObj.find(obj => obj.name === id);
       return result ? result.name : `!wrong ID: ${id}!`;
     })
   }
@@ -188,12 +188,12 @@ export class UserCreatePageComponent implements OnInit, OnDestroy {
 
     const createUser = () => {
       const user: User = {
-        createdDate: new Date().toISOString(),
+        created_at: new Date().toISOString(),
         name: this.form.value.name,
         email: this.form.value.email,
         password: this.form.value.password,
-        ignoredCategories: ignoredCategories,
-        ignoredTags: ignoredTags
+        categories: ignoredCategories,
+        tags: ignoredTags
       }
       this._subs.add = this._usersService.createUser(user).subscribe(() => {
         this.form.reset();
@@ -203,19 +203,20 @@ export class UserCreatePageComponent implements OnInit, OnDestroy {
     const editUser = () => {
       const user: User = {
         id: this.userFromResolver!.id,
+        updated_at: new Date().toISOString(),
         name: this.form.value.name,
         email: this.form.value.email,
         password: this.form.value.password,
-        ignoredCategories: ignoredCategories,
-        ignoredTags: ignoredTags
+        categories: ignoredCategories,
+        tags: ignoredTags
       }
       this._subs.add = this._usersService.editUser(user).subscribe(() => {
         this.form.reset();
       })
     }
 
-    let ignoredCategories = new UniqueArray<number>()
-    let ignoredTags = new UniqueArray<number>()
+    let ignoredCategories = new UniqueArray<string>()
+    let ignoredTags = new UniqueArray<string>()
     const categoriesObservables: Observable<Category>[] = []
     const tagsObservables: Observable<Tag>[] = []
 
@@ -251,7 +252,7 @@ export class UserCreatePageComponent implements OnInit, OnDestroy {
       : of([]);
 
 
-    this._subs.add = forkJoin([categoriesObservable, tagsObservable]).subscribe(([categoriesID, tagsID]) => {
+    /*this._subs.add = forkJoin([categoriesObservable, tagsObservable]).subscribe(([categoriesID, tagsID]) => {
       for (let categoryID of categoriesID) {
         ignoredCategories.add(categoryID)
       }
@@ -265,7 +266,7 @@ export class UserCreatePageComponent implements OnInit, OnDestroy {
       }
       this._router.navigate(['/admin', 'users']).then();
       this.submitted = false;
-    })
+    })*/
   }
 
   ngOnDestroy() {

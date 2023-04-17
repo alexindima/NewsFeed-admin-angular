@@ -25,8 +25,8 @@ class ArticleStoreRequest extends FormRequest
             'photo_pass' => ['string', 'required'],
             'photo_text' => ['string', 'required'],
             'body' => ['string', 'required'],
-            'category' => ['string', 'required'],
-            'tags' => [
+            'category_id' => ['int', 'required'],
+            'tag_ids' => [
                 'array',
                 new StringArray(),
             ],
@@ -50,8 +50,8 @@ class ArticleStoreRequest extends FormRequest
             'photo_text.string' => 'You must use string for the photo text',
             'body.required' => 'Please enter a value for the body',
             'body.string' => 'You must use string for the body',
-            'category.required' => 'Please enter a value for the category',
-            'category.string' => 'You must use string for the category',
+            'category_id.required' => 'Please enter a value for the category',
+            'category_id.string' => 'You must use string for the category',
         ];
     }
 }

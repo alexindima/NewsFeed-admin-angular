@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Tag;
-use App\Models\User;
+use App\DbModels\Tag;
+use App\DbModels\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 

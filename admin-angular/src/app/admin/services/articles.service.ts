@@ -1,28 +1,20 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {Article} from "../../interfaces";
-import {map, Observable} from "rxjs";
+import {Article, Category, OperationResponse, PaginatedArticle} from "../../interfaces";
+import {BehaviorSubject, map, Observable, tap} from "rxjs";
 
-const BASE_URL = 'http://localhost:3030/articles';
+const BASE_URL = 'http://localhost:8000/api/articles';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ArticlesService {
-
-  constructor(private _http: HttpClient) {
-  }
-
-  getCountOfArticles(search: string | null = null): Observable<number> {
-    let url = BASE_URL;
-    if (search) {
-      // мм, что-то такое я видел в users.service, опять дублирование
-      // я даже больше скажу, дублируется почти весь файл, что приводит к мысли, что пошло что-то не так,
-      // значит надо иметь общий Rest Service, который будет объединять все дублируемые куски кода для сервисов апи
-      // от которого эти файлы будут наследоваться
-      url += `?q=${search.replace(/ /g, "+")}&`;
-    }
-    return this._http.get<Article[]>(url).pipe(
-      map((articles: Article[]) => articles.length)
-    );
+  private _data = new BehaviorSubject<number>(0);
+  countOfArticles: Observable<number> = this._data.asObservable();
+  constructor(
+    private _http: HttpClient
+  )
+  {
   }
 
   getArticles(page: number, limit: number, search: string | null = null): Observable<Article[]> {
@@ -31,30 +23,36 @@ export class ArticlesService {
       url += `q=${search.replace(/ /g, "+")}&`;
     }
     url += `_page=${page}&_limit=${limit}`;
-    return this._http.get<Article[]>(url);
+    return this._http.get<OperationResponse<PaginatedArticle>>(url).pipe(
+      tap(response => {
+        this._data.next(response.data.total);
+      }),
+      map(response => response.data.data)
+    )
   }
 
   getSingleArticle(article: number): Observable<Article> {
-    return this._http.get<Article>(`${BASE_URL}/${article}`);
+    return this._http.get<OperationResponse<Article>>(`${BASE_URL}/${article}`).pipe(
+      map(response => response.data)
+    );
   }
 
   createArticle(article: Article): Observable<Article> {
-    return this._http.post<Article>(BASE_URL, article);
+    return this._http.post<OperationResponse<Article>>(BASE_URL, article).pipe(
+      map(response => response.data)
+    );
   }
 
   editArticle(article: Article): Observable<Article> {
-    return this._http.patch<Article>(`${BASE_URL}/${article.id}`, article);
+    return this._http.patch<OperationResponse<Article>>(`${BASE_URL}/${article.id}`, article).pipe(
+      map(response => response.data)
+    );
   }
 
-  deleteArticle(article: number | Article): Observable<Article> {
-    let id: number | undefined;
-    if (typeof article === "number") {
-      id = article;
-    }
-    if (typeof article === "object") {
-      id = article.id;
-    }
-    return this._http.delete<Article>(`${BASE_URL}/${id}`);
+  deleteArticle(id: number ): Observable<null> {
+    return this._http.delete<OperationResponse<null>>(`${BASE_URL}/${id}`).pipe(
+      map(response => response.data)
+    );
   }
 }
 

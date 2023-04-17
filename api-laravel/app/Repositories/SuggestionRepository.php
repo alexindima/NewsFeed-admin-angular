@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\Suggestion;
+use App\DbModels\Suggestion;
 
 // надо удалить
 class SuggestionRepository extends BaseRepository

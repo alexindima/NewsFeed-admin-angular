@@ -1,17 +1,12 @@
 <?php
 
-// этот файл почему то оказался в этом неймспейсе, поэтому нижние юзинги не нужны
-// но по хорошему этот неймспейс я бы убрал, и оставил те юзинги
-namespace App\Http\Controllers;
-
 use Illuminate\Support\Facades\Route;
 
-// WTF????????????????????????????
 use App\Http\Controllers\ArticleController;
-use App\Http\Controllers\SuggestionController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\SuggestionController;
+use App\Http\Controllers\UserController;
 
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\RegisteredMiddleware;
@@ -35,7 +30,7 @@ Route::middleware(AdminMiddleware::class)->group(function () {
     });
 
     Route::prefix('/users')->group(function () {
-        //Route::get('/', [UserController::class, 'index']);
+        Route::get('/', [UserController::class, 'index']);
         Route::post('/', [UserController::class, 'store']);
         Route::patch('/{id}', [UserController::class, 'update']);
         Route::delete('/{id}', [UserController::class, 'destroy']);
@@ -67,9 +62,10 @@ Route::prefix('/articles')->group(function () {
     Route::get('/{id}', [ArticleController::class, 'show']);
 });
 
-Route::prefix('/users')->group(function () {
+/*Route::prefix('/users')->group(function () {
     Route::get('/', [UserController::class, 'index']);
-});
+
+});*/
 
 Route::prefix('/suggested')->group(function () {
     Route::get('/', [SuggestionController::class, 'index']);
@@ -77,10 +73,8 @@ Route::prefix('/suggested')->group(function () {
 
 Route::prefix('/categories')->group(function () {
     Route::get('/', [CategoryController::class, 'index']);
-    Route::get('/{category_id}', [CategoryController::class, 'show']);
 });
 
 Route::prefix('/tags')->group(function () {
     Route::get('/', [TagController::class, 'index']);
-    Route::get('/{tag_id}', [TagController::class, 'show']);
 });

@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Events\Models\User\UserCreated;
-use App\Models\User;
+use App\DbModels\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 

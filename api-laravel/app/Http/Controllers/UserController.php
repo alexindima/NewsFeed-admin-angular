@@ -6,7 +6,9 @@ use App\Events\Models\User\UserCreated;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Http\Resources\UserResource;
-use App\Models\User;
+use App\DbModels\User;
+use App\Models\OperationResult;
+use App\Models\PagingModel;
 use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -44,10 +46,10 @@ class UserController extends Controller{
         $users = $this->userService->getPaginated($limit, $offset);
         $total = $this->userService->getTotalCount();
 
-        return response()->json([
-            'data' => UserResource::collection($users),
-            'total' => $total,
-        ]);
+        $data = new PagingModel(UserResource::collection($users), $total);
+        $result = OperationResult::success($data);
+
+        return response()->json($result);
     }
 
     /**
@@ -57,10 +59,12 @@ class UserController extends Controller{
      * @apiResource App\Http\Resources\UserResource
      * @apiResourceModel App\Models\User
      */
-    public function show(Request $request, int $id): JsonResponse
+    public function show(int $id): JsonResponse
     {
         $user = $this->userService->getById($id);
-        return response()->json(new UserResource($user));
+        $result = OperationResult::success(new UserResource($user));
+
+        return response()->json($result);
     }
 
     /**
@@ -87,7 +91,9 @@ class UserController extends Controller{
         $newUser = $this->userService->create($user);
         /** @var User $newUser */
         event(new UserCreated($newUser));
-        return response()->json(new UserResource($newUser), 201);
+        $result = OperationResult::success(new UserResource($newUser), "User '{$request->email}' created");
+
+        return response()->json($result, 201);
     }
 
     /**
@@ -113,23 +119,26 @@ class UserController extends Controller{
             'tags' => $request->tags,
         ];
 
+        $originalName = $this->userService->getById($id)->email;
         $updatedUser = $this->userService->update($id, $user);
+        $result = OperationResult::success(new UserResource($updatedUser), "User '{$originalName}' changed");
 
-        return response()->json(new UserResource($updatedUser), 200);
+        return response()->json($result);
     }
 
     /**
      * Remove the specific user
      *
      * @urlParam id int required User ID
-     * @response 204 {
-        "data": "true"
-     * }
+     * @apiResource App\Http\Resources\UserResource
+     * @apiResourceModel App\Models\User
      */
-    public function destroy(Request $request, int $id): JsonResponse
+    public function destroy(int $id): JsonResponse
     {
+        $email = $this->userService->getById($id)->email;
         $this->userService->delete($id);
+        $result = OperationResult::success(null, "User '{$email}' deleted");
 
-        return response()->json(["data"=> "true"], 204);
+        return response()->json($result);
     }
 }

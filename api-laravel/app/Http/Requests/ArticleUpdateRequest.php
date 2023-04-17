@@ -20,8 +20,8 @@ class ArticleUpdateRequest extends FormRequest
             'photo_pass' => ['string'],
             'photo_text' => ['string'],
             'body' => ['string'],
-            'category' => ['string'],
-            'tags' => [
+            'category_id' => ['int'],
+            'tag_ids' => [
                 'array',
                 new StringArray(),
             ],
@@ -36,7 +36,7 @@ class ArticleUpdateRequest extends FormRequest
             'photo_pass.string' => 'You must use string for the photo URL',
             'photo_text.string' => 'You must use string for the photo text',
             'body.string' => 'You must use string for the body',
-            'category.string' => 'You must use string for the category',
+            'category_id.string' => 'You must use string for the category',
         ];
     }
 }

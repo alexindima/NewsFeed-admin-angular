@@ -26,12 +26,12 @@ interface PaginatorSettings {
 }
 
 interface UserToShow {
-  createdDate: Date;
+  created_at: Date;
   id: number,
   email: string,
   name: string
-  ignoredCategories: string[];
-  ignoredTags: string[];
+  categories: string[];
+  tags: string[];
 }
 
 @Component({
@@ -115,12 +115,8 @@ export class UserDashboardPageComponent implements OnInit, OnDestroy {
         this.userListToShow = result.map((user: User) => {
           return {
             ...user,
-            ignoredCategories: user.ignoredCategories?.map((category: number) => {
-              return this.getNameById(this.categoriesList, category);
-            }),
-            ignoredTags: user.ignoredTags?.map((tag: number) => {
-              return this.getNameById(this.tagsList, tag);
-            })
+            ignoredCategories: user.categories,
+            ignoredTags: user.tags
           } as unknown as UserToShow
         })
       })

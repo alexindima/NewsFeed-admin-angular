@@ -12,6 +12,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ArticleStoreRequest;
 use App\Http\Requests\ArticleUpdateRequest;
 use App\Http\Resources\ArticleResource;
+use App\Models\OperationResult;
+use App\Models\PagingModel;
 use App\Services\ArticleService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -51,13 +53,10 @@ class ArticleController extends Controller {
         $articles = $this->articleService->getPaginated($limit, $offset);
         $total = $this->articleService->getTotalCount();
 
-        // было бы неплохо если бы все апишки, вегда возвращали более менее унифицированный ответ
-        // что то типа такого объекта { data: object, success: true, message: string }
-        // где в поле data какраз уже будут сами данные, но смотри по желанию
-        return response()->json([
-            'data' => ArticleResource::collection($articles),
-            'total' => $total,
-        ]);
+        $data = new PagingModel(ArticleResource::collection($articles), $total);
+        $result = OperationResult::success($data);
+
+        return response()->json($result);
     }
 
     /**
@@ -67,11 +66,12 @@ class ArticleController extends Controller {
      * @apiResource App\Http\Resources\ArticleResource
      * @apiResourceModel App\Models\Article
      */
-    // если $request не используется стоит его удалить
-    public function show(Request $request, int $id): JsonResponse
+    public function show(int $id): JsonResponse
     {
         $article = $this->articleService->getById($id);
-        return response()->json(new ArticleResource($article),);
+        $result = OperationResult::success(new ArticleResource($article));
+
+        return response()->json($result);
     }
 
     /**
@@ -97,13 +97,16 @@ class ArticleController extends Controller {
             'photo_pass' => $request->photo_pass,
             'photo_text' => $request->photo_text,
             'body' => $request->body,
-            'category' => $request->category,
-            'tags' => $request->tags,
+            'category_id' => $request->category_id,
+            'tag_ids' => $request->tag_ids,
+            'likes' => 0,
+            'dislikes' => 0,
         ];
 
         $newArticle = $this->articleService->create($article);
+        $result = OperationResult::success(new ArticleResource($newArticle), "Article '{$request->main_title}' created");
 
-        return response()->json(new ArticleResource($newArticle), 201);
+        return response()->json($result, 201);
     }
 
     /**
@@ -135,29 +138,33 @@ class ArticleController extends Controller {
             'photo_pass' => $request->photo_pass ?? $original->photo_pass,
             'photo_text' => $request->photo_text ?? $original->photo_text,
             'body' => $request->body ?? $original->body,
-            'category' => $request->category ?? $original->category,
-            'tags' => $request->tags,
+            'category_id' => $request->category_id ?? $original->category_id,
+            'tag_ids' => $request->tag_ids,
+            'likes' => 0,
+            'dislikes' => 0,
         ];
 
         // тут тоже стоит создать свой тип и смаппить его с реквеста, для большей типизации
+        $originalName = $this->articleService->getById($id)->main_title;
         $updatedArticle = $this->articleService->update($id, $article);
+        $result = OperationResult::success(new ArticleResource($updatedArticle), "Article '{$originalName}' changed");
 
-        return response()->json(new ArticleResource($updatedArticle), 200);
+        return response()->json($result);
     }
 
     /**
      * Remove the specific article
      *
      * @urlParam id int required Article ID
-     * @response 204 {
-        "data": "true"
-     * }
+     * @apiResource App\Http\Resources\ArticleResource
+     * @apiResourceModel App\Models\Article
      */
-    public function destroy(Request $request, int $id): JsonResponse
+    public function destroy(int $id): JsonResponse
     {
+        $name = $this->articleService->getById($id)->main_title;
         $this->articleService->delete($id);
+        $result = OperationResult::success(null, "Article '{$name}' deleted");
 
-        // странно почему true десь как строка представлена
-        return response()->json(["data"=> "true"], 204);
+        return response()->json($result);
     }
 }

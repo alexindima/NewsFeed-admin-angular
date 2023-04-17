@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\DbModels;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,6 +19,8 @@ class Article extends Model {
         'photo_text',
         'body',
         'category_id',
+        'likes',
+        'dislikes',
     ];
 
     protected $visible = [

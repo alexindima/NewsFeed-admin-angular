@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TagStoreRequest;
 use App\Http\Requests\TagUpdateRequest;
 use App\Http\Resources\TagResource;
-use App\Models\Article;
-use App\Models\Tag;
+use App\DbModels\Article;
+use App\DbModels\Tag;
+use App\Models\OperationResult;
 use App\Services\TagService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -32,25 +33,12 @@ class TagController extends Controller {
      * @apiResourceCollection App\Http\Resources\TagResource
      * @apiResourceModel App\Models\Tag
      */
-    public function index(Request $request): JsonResponse
+    public function index(): JsonResponse
     {
         $tags = $this->tagService->getAll();
+        $result = OperationResult::success(TagResource::collection($tags));
 
-        return response()->json(TagResource::collection($tags));
-    }
-
-    /**
-     * Display the specific tag
-     *
-     * @urlParam id int required Tag ID
-     * @apiResource App\Http\Resources\TagResource
-     * @apiResourceModel App\Models\Tag
-     */
-    public function show(Request $request, int $id): JsonResponse
-    {
-        $tag = $this->tagService->getById($id);
-
-        return response()->json(new TagResource($tag));
+        return response()->json($result);
     }
 
     /**
@@ -67,8 +55,9 @@ class TagController extends Controller {
         ];
 
         $newTag = $this->tagService->create($tag);
+        $result = OperationResult::success(new TagResource($newTag), "Tag '{$request->name}' created");
 
-        return response()->json(new TagResource($newTag), 201);
+        return response()->json($result, 201);
     }
 
     /**
@@ -85,24 +74,27 @@ class TagController extends Controller {
             'name' => $request->name,
         ];
 
+        $originalName = $this->tagService->getById($id)->name;
         $updatedTag = $this->tagService->update($id, $tag);
+        $result = OperationResult::success(new TagResource($updatedTag), "Tag '{$originalName}' changed to '{$request->name}'");
 
-        return response()->json(new TagResource($updatedTag), 200);
+        return response()->json($result);
     }
 
     /**
      * Remove the specific tag
      *
      * @urlParam id int required Tag ID
-     * @response 204 {
-        "data": "true"
-     * }
+     * @apiResource App\Http\Resources\TagResource
+     * @apiResourceModel App\Models\Tag
      */
-    public function destroy(Request $request, int $id): JsonResponse
+    public function destroy(int $id): JsonResponse
     {
+        $name = $this->tagService->getById($id)->name;
         $this->tagService->delete($id);
+        $result = OperationResult::success(null, "Tag '{$name}' deleted");
 
-        return response()->json(["data"=> "true"], 204);
+        return response()->json($result);
     }
 
 }

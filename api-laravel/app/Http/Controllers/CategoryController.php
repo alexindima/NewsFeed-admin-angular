@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryStoreRequest;
 use App\Http\Requests\CategoryUpdateRequest;
+use App\Http\Resources\ArticleResource;
 use App\Http\Resources\CategoryResource;
+use App\Models\OperationResult;
+use App\Models\PagingModel;
 use App\Services\CategoryService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -30,25 +33,12 @@ class CategoryController extends Controller {
      * @apiResourceCollection App\Http\Resources\CategoryResource
      * @apiResourceModel App\Models\Category
      */
-    public function index(Request $request): JsonResponse
+    public function index(): JsonResponse
     {
         $categories = $this->categoryService->getAll();
+        $result = OperationResult::success(CategoryResource::collection($categories));
 
-        return response()->json(CategoryResource::collection($categories));
-    }
-
-    /**
-     * Display the specific category
-     *
-     * @urlParam id int required Category ID
-     * @apiResource App\Http\Resources\CategoryResource
-     * @apiResourceModel App\Models\Category
-     */
-    public function show(Request $request, int $id): JsonResponse
-    {
-        $category = $this->categoryService->getById($id);
-
-        return response()->json(new CategoryResource($category));
+        return response()->json($result);
     }
 
     /**
@@ -65,8 +55,9 @@ class CategoryController extends Controller {
         ];
 
         $newCategory = $this->categoryService->create($category);
+        $result = OperationResult::success(new CategoryResource($newCategory), "Category '{$request->name}' created");
 
-        return response()->json(new CategoryResource($newCategory), 201);
+        return response()->json($result, 201);
     }
 
     /**
@@ -83,23 +74,27 @@ class CategoryController extends Controller {
             'name' => $request->name,
         ];
 
+        $originalName = $this->categoryService->getById($id)->name;
         $updatedCategory = $this->categoryService->update($id, $category);
+        $result = OperationResult::success(new CategoryResource($updatedCategory), "Category '{$originalName}' changed to '{$request->name}'");
 
-        return response()->json(new CategoryResource($updatedCategory), 200);
+        return response()->json($result);
     }
 
     /**
      * Remove the specific category
      *
      * @urlParam id int required Category ID
-     * @response 204 {
-        "data": "true"
+     * @apiResource App\Http\Resources\CategoryResource
+     * @apiResourceModel App\Models\Category
      * }
      */
-    public function destroy(Request $request, int $id): JsonResponse
+    public function destroy(int $id): JsonResponse
     {
+        $name = $this->categoryService->getById($id)->name;
         $this->categoryService->delete($id);
+        $result = OperationResult::success(null, "Category '{$name}' deleted");
 
-        return response()->json(["data"=> "true"], 204);
+        return response()->json($result);
     }
 }

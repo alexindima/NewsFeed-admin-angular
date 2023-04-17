@@ -30,11 +30,11 @@
 
       <tr *ngFor="let user of userListToShow">
         <td>{{user.id}}</td>
-        <td>{{user.createdDate | date: 'short'}}</td>
+        <td>{{user.created_at | date: 'short'}}</td>
         <td>{{user.name}}</td>
         <td>{{user.email}}</td>
-        <td>{{user.ignoredCategories | arrayToString}}</td>
-        <td>{{user.ignoredTags | arrayToString}}</td>
+        <td>{{user.categories | arrayToString}}</td>
+        <td>{{user.tags | arrayToString}}</td>
         <td class="text-nowrap">
           <a
             class="btn btn-outline-primary me-3"

@@ -52,14 +52,10 @@ export class ArticleDashboardPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this._subs.add = this._articlesService.getCountOfArticles()
-      .pipe(
-        switchMap(result => {
-          this.paginatorSettings.length = result;
-          return this._activatedRoute.queryParams;
-        })
-      )
-      .subscribe(params => {
+    this._subs.add = this._articlesService.countOfArticles.subscribe((count) => {
+      this.paginatorSettings.length = count;
+    })
+    this._subs.add = this._activatedRoute.queryParams.subscribe(params => {
         const pageIndex = +params['page'] - 1;
         const pageSize = +params['limit'];
         if (pageSize) {
@@ -99,7 +95,7 @@ export class ArticleDashboardPageComponent implements OnInit, OnDestroy {
       data: {
         title: 'Confirm Delete',
         text: `<p class="fw-bold">Are you sure you want to delete article: </p>
-        "${article.mainTitle}"?`,
+        "${article.main_title}"?`,
         button: 'Delete'
       } as ModalDialogData
     });
@@ -107,12 +103,8 @@ export class ArticleDashboardPageComponent implements OnInit, OnDestroy {
     this._subs.add = dialogRef.afterClosed().pipe(
       switchMap(result => {
         if (result) {
-          return this._articlesService.deleteArticle(article).pipe(
-            switchMap(() => this._articlesService.getCountOfArticles()),
-            tap(count => {
-              this.paginatorSettings.length = count;
-              this.getArticles();
-            })
+          return this._articlesService.deleteArticle(article.id!).pipe(
+            tap(()=> {this.getArticles();})
           );
         }
         return of(null);

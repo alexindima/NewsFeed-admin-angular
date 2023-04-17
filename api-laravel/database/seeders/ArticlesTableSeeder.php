@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Article;
-use App\Models\Category;
+use App\DbModels\Article;
+use App\DbModels\Category;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
 

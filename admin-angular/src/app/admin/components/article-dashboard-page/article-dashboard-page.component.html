@@ -20,8 +20,8 @@
       <thead>
       <tr>
         <th>ID</th>
-        <th>Date</th>
-        <th>Time</th>
+        <th>Created</th>
+        <th>Updated</th>
         <th>Title</th>
         <th>Actions</th>
       </tr>
@@ -30,9 +30,9 @@
 
       <tr *ngFor="let article of articlesList">
         <td>{{article.id}}</td>
-        <td>{{article.createdDate | date: 'short'}}</td>
-        <td>{{article.createdDate | date: 'short'}}</td>
-        <td>{{article.mainTitle}}</td>
+        <td>{{article.created_at | date: 'short'}}</td>
+        <td>{{article.updated_at | date: 'short'}}</td>
+        <td>{{article.main_title}}</td>
         <td class="text-nowrap">
           <a
             class="btn btn-outline-primary me-3"

@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\Category;
+use App\DbModels\Category;
 
 class CategoryRepository extends BaseRepository
 {

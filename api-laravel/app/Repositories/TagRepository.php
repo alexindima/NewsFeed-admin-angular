@@ -3,8 +3,8 @@
 namespace App\Repositories;
 
 // следи за неиспользуемыми юзингами и удаляй их
-use App\Models\Article;
-use App\Models\Tag;
+use App\DbModels\Article;
+use App\DbModels\Tag;
 
 class TagRepository extends BaseRepository
 {

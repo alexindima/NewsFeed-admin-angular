@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Models\Tag;
+use App\DbModels\Tag;
 use App\Repositories\TagRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

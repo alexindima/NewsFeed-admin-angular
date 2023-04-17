@@ -21,3 +21,5 @@ yarn-error.log
 /.vagrant
 _ide_helper.php
 /.phpstorm.meta.php
+/.scribe/
+/.vagrant/

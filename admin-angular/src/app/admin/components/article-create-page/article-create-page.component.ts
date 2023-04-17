@@ -22,12 +22,12 @@ interface ArticleForm {
 }
 
 interface ArticleForForm {
-  mainTitle: string;
-  secondTitle: string;
-  photoUrl: string;
-  photoText: string;
+  main_title: string;
+  second_title: string;
+  photo_pass: string;
+  photo_text: string;
   body: string;
-  category: string;
+  category_id: string;
 }
 
 // корректнее не Create а всё таки Edit, чисто на слух, даже если фича для создания переиспользуется
@@ -103,7 +103,7 @@ export class ArticleCreatePageComponent implements OnInit, OnDestroy {
     this.addTag();
 
     if (this.articleFromResolver) {
-      const categoryName = this.getNameById(this.categoriesList, this.articleFromResolver.category)
+      const categoryName = this.getNameById(this.categoriesList, this.articleFromResolver.category_id)
       const tagsNames = this.getArrayOfNamesFromIDs(this.tagsList, this.articleFromResolver.tags)
 
       if (tagsNames.length > 1) {
@@ -114,7 +114,7 @@ export class ArticleCreatePageComponent implements OnInit, OnDestroy {
 
       const articleForForm: ArticleForForm = {
         ...this.articleFromResolver,
-        category: categoryName
+        category_id: categoryName
       }
       this.form.patchValue(articleForForm)
       this.form.patchValue({
@@ -165,12 +165,12 @@ export class ArticleCreatePageComponent implements OnInit, OnDestroy {
     this.submitted = true;
     const createArticle = () => {
       const article: Article = {
-        createdDate: new Date().toISOString(),
-        category: category!,
-        mainTitle: this.form.value.mainTitle,
-        secondTitle: this.form.value.secondTitle,
-        photoUrl: this.form.value.photoUrl,
-        photoText: this.form.value.photoText,
+        created_at: new Date().toISOString(),
+        category_id: category!,
+        main_title: this.form.value.mainTitle,
+        second_title: this.form.value.secondTitle,
+        photo_pass: this.form.value.photoUrl,
+        photo_text: this.form.value.photoText,
         body: this.form.value.body,
         tags: tags
       };
@@ -182,12 +182,12 @@ export class ArticleCreatePageComponent implements OnInit, OnDestroy {
     const editArticle = () => {
       const article: Article = {
         id: this.articleFromResolver!.id,
-        upgradeDate: new Date().toISOString(),
-        category: category!,
-        mainTitle: this.form.value.mainTitle,
-        secondTitle: this.form.value.secondTitle,
-        photoUrl: this.form.value.photoUrl,
-        photoText: this.form.value.photoText,
+        updated_at: new Date().toISOString(),
+        category_id: category!,
+        main_title: this.form.value.mainTitle,
+        second_title: this.form.value.secondTitle,
+        photo_pass: this.form.value.photoUrl,
+        photo_text: this.form.value.photoText,
         body: this.form.value.body,
         tags: tags
       }
