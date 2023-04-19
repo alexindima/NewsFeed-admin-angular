@@ -27,11 +27,11 @@ interface UserFromResolverForForm {
 }
 
 @Component({
-  selector: 'app-user-create-page',
-  templateUrl: './user-create-page.component.html',
-  styleUrls: ['./user-create-page.component.scss']
+  selector: 'app-user-edit-page',
+  templateUrl: './user-edit-page.component.html',
+  styleUrls: ['./user-edit-page.component.scss']
 })
-export class UserCreatePageComponent implements OnInit, OnDestroy {
+export class UserEditPageComponent implements OnInit, OnDestroy {
   private _subs = new Subs();
   userFromResolver: User | undefined;
   form!: FormGroup;

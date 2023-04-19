@@ -17,6 +17,22 @@ export class ArticlesService {
   {
   }
 
+  convertSnakeCaseToCamelCase<T>(data: T): T {
+    if (data === null || typeof data !== 'object') {
+      return data;
+    }
+
+    if (Array.isArray(data)) {
+      return data.map(item => this.convertSnakeCaseToCamelCase(item)) as any;
+    }
+
+    return Object.keys(data).reduce((camelCaseData, key) => {
+      const camelCaseKey = key.replace(/_./g, match => match.charAt(1).toUpperCase());
+      camelCaseData[camelCaseKey as keyof T] = this.convertSnakeCaseToCamelCase(data[key as keyof T]);
+      return camelCaseData;
+    }, {} as T);
+  }
+
   getArticles(page: number, limit: number, search: string | null = null): Observable<Article[]> {
     let url = `${BASE_URL}?`;
     if (search) {
@@ -26,9 +42,12 @@ export class ArticlesService {
     return this._http.get<OperationResponse<PaginatedArticle>>(url).pipe(
       tap(response => {
         this._data.next(response.data.total);
+        console.log(response.data.data)
+        console.log(this.convertSnakeCaseToCamelCase(response.data.data))
       }),
       map(response => response.data.data)
     )
+
   }
 
   getSingleArticle(article: number): Observable<Article> {
@@ -43,8 +62,8 @@ export class ArticlesService {
     );
   }
 
-  editArticle(article: Article): Observable<Article> {
-    return this._http.patch<OperationResponse<Article>>(`${BASE_URL}/${article.id}`, article).pipe(
+  editArticle(id: number, article: Article): Observable<Article> {
+    return this._http.patch<OperationResponse<Article>>(`${BASE_URL}/${id}`, article).pipe(
       map(response => response.data)
     );
   }

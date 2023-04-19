@@ -35,15 +35,15 @@ export interface Tag {
 
 export interface Article {
   id?: number;
-  created_at?: string;
-  updated_at?: string;
-  main_title: string;
-  second_title: string;
-  photo_pass: string;
-  photo_text: string;
+  createdAt?: string;
+  updatedAt?: string;
+  mainTitle: string;
+  secondTitle: string;
+  photoPass: string;
+  photoText: string;
   body: string;
-  category_id: number;
-  tags: number[];
+  category: string;
+  tags: string[];
 }
 
 export interface PaginatedArticle {

@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\DbModels\Article;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 class ArticleRepository extends BaseRepository
 {
@@ -25,6 +26,23 @@ class ArticleRepository extends BaseRepository
             ->limit($limit)
             ->offset($offset)
             ->get();
+    }
+
+    public function create($data): Model
+    {
+        return $this->model::query()->create($data);
+    }
+
+    public function addTags($articleId, $tagIds): bool
+    {
+        $article = $this->model::find($articleId);
+        if (!$article) {
+            return false;
+        }
+
+        $article->tags()->sync([...$tagIds]  , ['detach' => true]);
+
+        return true;
     }
 
 

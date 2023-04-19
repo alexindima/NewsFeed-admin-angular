@@ -2,19 +2,30 @@
 
 namespace App\Services;
 
+use App\DbModels\Article;
 use App\Repositories\ArticleRepository;
+use App\Repositories\CategoryRepository;
+use App\Repositories\TagRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class ArticleService
 {
-    // надо бы переименовать в $articleRepository т.к. сервис может принимать и другие репозитории при необходимости
-    // и непонятно почему он protected, по идее должен быть private readonly
-    protected ArticleRepository $repository;
 
-    public function __construct(ArticleRepository $repository)
+    private ArticleRepository $articleRepository;
+    private CategoryService $categoryService;
+    private TagService $tagService;
+
+    public function __construct(
+        ArticleRepository $articleRepository,
+        CategoryService $categoryService,
+        TagService $tagService,
+    )
     {
-        $this->repository = $repository;
+        $this->articleRepository = $articleRepository;
+        $this->categoryService = $categoryService;
+        $this->tagService = $tagService;
     }
 
     // смотрю во всех сервисах возвращается Model, так быть не должно
@@ -25,33 +36,47 @@ class ArticleService
     // в целом почитай про DTO модели
     public function getById($id): Model
     {
-        return $this->repository->getById($id);
+        return $this->articleRepository->getById($id);
     }
 
     // надо добавить везде типизацию
     // а возвращать лучше именно свой тип со нужными тебе полям, типа Collection<ArticleModel>
     public function getPaginated($limit = 10, $offset = 0): Collection
     {
-        return $this->repository->getPaginated($limit, $offset);
+        return $this->articleRepository->getPaginated($limit, $offset);
     }
 
     public function getTotalCount(): int
     {
-        return $this->repository->getTotal();
+        return $this->articleRepository->getTotal();
     }
 
     public function create($article): Model
     {
-        return $this->repository->create($article);
+        $categoryId = $this->categoryService->createByName($article['category']);
+        $article['category_id'] = $categoryId;
+        $newArticle = $this->articleRepository->create($article);
+
+        $tagIds = $this->tagService->createManyByName($article['tags']);
+
+        $this->articleRepository->addTags($newArticle->id, $tagIds);
+
+        return $newArticle;
     }
 
     public function update($id, $article): Model
     {
-        return $this->repository->update($id, $article);
+        $categoryId = $this->categoryService->createByName($article['category']);
+        $tagIds = $this->tagService->createManyByName($article['tags']);
+
+        $article['category_id'] = $categoryId;
+        $this->articleRepository->addTags($id, $tagIds);
+
+        return $this->articleRepository->update($id, $article);
     }
 
     public function delete($id): bool
     {
-        return $this->repository->delete($id);
+        return $this->articleRepository->delete($id);
     }
 }

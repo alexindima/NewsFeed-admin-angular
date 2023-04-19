@@ -31,6 +31,16 @@ class TagService
         return $this->repository->create($tag);
     }
 
+    public function createByName($tagName): int
+    {
+        return $this->repository->createBy('name', $tagName);
+    }
+
+    public function createManyByName($tagNames): Collection
+    {
+        return $this->repository->createManyBy('name', $tagNames);
+    }
+
     public function update($id, $tag): Model
     {
         return $this->repository->update($id, $tag);

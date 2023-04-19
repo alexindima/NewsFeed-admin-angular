@@ -17,6 +17,7 @@ use App\Models\PagingModel;
 use App\Services\ArticleService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 /**
  * @group Article Management
@@ -89,22 +90,23 @@ class ArticleController extends Controller {
      */
     public function store(ArticleStoreRequest $request): JsonResponse
     {
+
         // создавай для такого отдельную модель по типу CreateArticleModel
         // а сам маппинг делай либо в отдельном маппере, либо еще лучше сразу в ArticleStoreRequest
         $article = [
-            'main_title' => $request->main_title,
-            'second_title' => $request->second_title,
-            'photo_pass' => $request->photo_pass,
-            'photo_text' => $request->photo_text,
+            'main_title' => $request->mainTitle,
+            'second_title' => $request->secondTitle,
+            'photo_pass' => $request->photoPass,
+            'photo_text' => $request->photoText,
             'body' => $request->body,
-            'category_id' => $request->category_id,
-            'tag_ids' => $request->tag_ids,
+            'category' => $request->category,
+            'tags' => $request->tags,
             'likes' => 0,
             'dislikes' => 0,
         ];
 
         $newArticle = $this->articleService->create($article);
-        $result = OperationResult::success(new ArticleResource($newArticle), "Article '{$request->main_title}' created");
+        $result = OperationResult::success(new ArticleResource($newArticle), "Article '{$request->mainTitle}' created");
 
         return response()->json($result, 201);
     }
@@ -133,13 +135,13 @@ class ArticleController extends Controller {
         // https://github.com/barryvdh/laravel-ide-helper
         // php artisan ide-helper:models
         $article = [
-            'main_title' => $request->main_title ?? $original->main_title,
-            'second_title' => $request->second_title ?? $original->second_title,
-            'photo_pass' => $request->photo_pass ?? $original->photo_pass,
-            'photo_text' => $request->photo_text ?? $original->photo_text,
+            'main_title' => $request->mainTitle ?? $original->main_title,
+            'second_title' => $request->secondTitle ?? $original->second_title,
+            'photo_pass' => $request->photoPass ?? $original->photo_pass,
+            'photo_text' => $request->photoText ?? $original->photo_text,
             'body' => $request->body ?? $original->body,
-            'category_id' => $request->category_id ?? $original->category_id,
-            'tag_ids' => $request->tag_ids,
+            'category' => $request->category ?? $original->category->name,
+            'tags' => $request->tags,
             'likes' => 0,
             'dislikes' => 0,
         ];

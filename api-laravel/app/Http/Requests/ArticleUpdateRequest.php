@@ -15,13 +15,13 @@ class ArticleUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'main_title' => ['string'],
-            'second_title' => ['string'],
-            'photo_pass' => ['string'],
-            'photo_text' => ['string'],
+            'mainTitle' => ['string'],
+            'secondTitle' => ['string'],
+            'photoPass' => ['string'],
+            'photoText' => ['string'],
             'body' => ['string'],
-            'category_id' => ['int'],
-            'tag_ids' => [
+            'category' => ['string'],
+            'tags' => [
                 'array',
                 new StringArray(),
             ],
@@ -36,7 +36,7 @@ class ArticleUpdateRequest extends FormRequest
             'photo_pass.string' => 'You must use string for the photo URL',
             'photo_text.string' => 'You must use string for the photo text',
             'body.string' => 'You must use string for the body',
-            'category_id.string' => 'You must use string for the category',
+            'category.string' => 'You must use string for the category',
         ];
     }
 }

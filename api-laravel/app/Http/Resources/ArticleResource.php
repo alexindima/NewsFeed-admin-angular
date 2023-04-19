@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\DbModels\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -16,15 +17,15 @@ class ArticleResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'main_title' => $this->main_title,
-            'second_title' => $this->second_title,
-            'photo_pass' => $this->photo_pass,
-            'photo_text' => $this->photo_text,
+            'mainTitle' => $this->main_title,
+            'secondTitle' => $this->second_title,
+            'photoPass' => $this->photo_pass,
+            'photoText' => $this->photo_text,
             'body' => $this->body,
-            'category_id' => $this->category_id,
-            'tag_ids' => collect($this->tags)->pluck('id')->toArray(),
-            'created_at' => $this->created_at->toDateTimeString(),
-            'updated_at' => $this->updated_at->toDateTimeString(),
+            'category' => $this->category->name,
+            'tags' => collect($this->tags)->pluck('name')->toArray(),
+            'createdAt' => $this->created_at->toDateTimeString(),
+            'updatedAt' => $this->updated_at->toDateTimeString(),
         ];
     }
 }

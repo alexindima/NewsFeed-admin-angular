@@ -36,7 +36,22 @@ abstract class BaseRepository
     // не забывай про public
     public function create($data): Model
     {
-        return $this->model::query()->create($data);
+        return $this->model::query()->firstOrCreate($data);
+    }
+
+    public function createBy($by, $value): int
+    {
+        return $this->create([$by => $value])->id;
+
+    }
+
+    public function createManyBy($by, $values): Collection
+    {
+        $ids = new Collection();
+        foreach ($values as $value) {
+            $ids->add($this->createBy($by, $value));
+        }
+        return $ids;
     }
 
     public function update($id, $data): Model

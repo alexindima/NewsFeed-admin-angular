@@ -20,13 +20,13 @@ class ArticleStoreRequest extends FormRequest
     {
         return [
             // стоит добавить еще валидацию по кол-ву допустимых символов, который соответствует колонкам в БД, юзай max
-            'main_title' => ['string', 'required'],
-            'second_title' => ['string', 'required'],
-            'photo_pass' => ['string', 'required'],
-            'photo_text' => ['string', 'required'],
+            'mainTitle' => ['string', 'required'],
+            'secondTitle' => ['string', 'required'],
+            'photoPass' => ['string', 'required'],
+            'photoText' => ['string', 'required'],
             'body' => ['string', 'required'],
-            'category_id' => ['int', 'required'],
-            'tag_ids' => [
+            'category' => ['string', 'required'],
+            'tags' => [
                 'array',
                 new StringArray(),
             ],
@@ -50,8 +50,8 @@ class ArticleStoreRequest extends FormRequest
             'photo_text.string' => 'You must use string for the photo text',
             'body.required' => 'Please enter a value for the body',
             'body.string' => 'You must use string for the body',
-            'category_id.required' => 'Please enter a value for the category',
-            'category_id.string' => 'You must use string for the category',
+            'category.required' => 'Please enter a value for the category',
+            'category.string' => 'You must use string for the category',
         ];
     }
 }

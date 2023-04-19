@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Repositories\CategoryRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class CategoryService
 {
@@ -29,6 +30,16 @@ class CategoryService
     public function create($category): Model
     {
         return $this->repository->create($category);
+    }
+
+    public function createByName($categoryName): int
+    {
+        return $this->repository->createBy('name', $categoryName);
+    }
+
+    public function createManyByName($categoryNames): Collection
+    {
+        return $this->repository->createManyBy('name', $categoryNames);
     }
 
     public function update($id, $category): Model

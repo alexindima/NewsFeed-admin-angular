@@ -69,7 +69,7 @@
     <h4>Photo</h4>
     <div class="mb-3">
       <label
-        for="photoUrl"
+        for="photoPass"
         class="form-label"
       >
         Photo URL
@@ -79,13 +79,13 @@
       <input
         type="text"
         class="form-control"
-        [ngClass]="{'border-danger': form.get('photoUrl')?.touched && form.get('photoUrl')?.invalid}"
-        id="photoUrl"
+        [ngClass]="{'border-danger': form.get('photoPass')?.touched && form.get('photoPass')?.invalid}"
+        id="photoPass"
         placeholder="What is the main photo of the article?"
-        formControlName="photoUrl">
+        formControlName="photoPass">
       <div
         id="photoUrlValidation"
-        *ngIf="form.get('photoUrl') && form.get('photoUrl')?.touched && form.get('photoUrl')?.invalid"
+        *ngIf="form.get('photoPass') && form.get('photoPass')?.touched && form.get('photoPass')?.invalid"
         class="form-text"
       >
         <small class="text-danger">Field can not be empty</small>
@@ -152,7 +152,7 @@
             type="button"
             class="btn btn-danger ml-3"
             [disabled]="i === 0"
-            (click)="RemoveTag(i)"
+            (click)="removeTag(i)"
           >
             Remove tag
           </button>

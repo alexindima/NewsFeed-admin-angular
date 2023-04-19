@@ -95,7 +95,7 @@ export class ArticleDashboardPageComponent implements OnInit, OnDestroy {
       data: {
         title: 'Confirm Delete',
         text: `<p class="fw-bold">Are you sure you want to delete article: </p>
-        "${article.main_title}"?`,
+        "${article.mainTitle}"?`,
         button: 'Delete'
       } as ModalDialogData
     });
