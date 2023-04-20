@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Repositories\TagRepository;
@@ -8,12 +10,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class TagService
 {
-
-    protected TagRepository $repository;
-
-    public function __construct(TagRepository $repository)
-    {
-        $this->repository = $repository;
+    public function __construct(
+        private readonly TagRepository $repository
+    ){
     }
 
     public function getById($id): Model
@@ -36,7 +35,10 @@ class TagService
         return $this->repository->createBy('name', $tagName);
     }
 
-    public function createManyByName($tagNames): Collection
+    /**
+     * @return array<int>
+     */
+    public function createManyByName($tagNames): array
     {
         return $this->repository->createManyBy('name', $tagNames);
     }

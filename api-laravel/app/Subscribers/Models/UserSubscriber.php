@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Subscribers\Models;
 
 use App\Events\Models\User\UserCreated;
@@ -8,8 +10,7 @@ use Illuminate\Events\Dispatcher;
 
 class UserSubscriber
 {
-    // не забывай добавлять возвращаемый тип, тут вернется void
-    public function subscribe(Dispatcher $events)
+    public function subscribe(Dispatcher $events): void
     {
         $events->listen(UserCreated::class, SendWelcomeEmail::class);
     }

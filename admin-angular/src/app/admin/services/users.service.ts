@@ -14,17 +14,8 @@ const BASE_URL = `http://localhost:8000/api/users`;
 export class UsersService {
   private _data = new BehaviorSubject<number>(0);
   countOfUsers: Observable<number> = this._data.asObservable();
-  constructor(private _http: HttpClient) {
-  }
-
-  getCountOfUsers(search: string | null = null): Observable<number> {
-    let url = BASE_URL;
-    if (search) {
-      url += `?q=${search.replace(/ /g, "+")}&`;
-    }
-    return this._http.get<User[]>(url).pipe(
-      map((users: User[]) => users.length)
-    );
+  constructor(private _http: HttpClient
+  ) {
   }
 
   getUsers(page: number | null, limit: number | null, search: string | null = null): Observable<User[]> {
@@ -53,11 +44,8 @@ export class UsersService {
     );
   }
 
-  editUser(editedUser: User): Observable<User> {
-    if (!editedUser.password) {
-      editedUser = {...editedUser, password: '123456'}
-    }
-    return this._http.patch<OperationResponse<User>>(`${BASE_URL}/${editedUser.id}`, editedUser).pipe(
+  editUser(id: number, editedUser: User): Observable<User> {
+    return this._http.patch<OperationResponse<User>>(`${BASE_URL}/${id}`, editedUser).pipe(
       map(response => response.data)
     );
   }

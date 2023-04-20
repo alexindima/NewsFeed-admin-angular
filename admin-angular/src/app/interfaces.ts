@@ -1,7 +1,8 @@
 export interface User {
-  created_at?: string;
-  updated_at?: string;
+  createdAt?: string;
+  updatedAt?: string;
   id?: number,
+  role: string;
   email: string,
   password?: string,
   name: string
@@ -56,5 +57,15 @@ export interface PaginatedUser{
   total: number,
 }
 
+export interface PaginatorSettings {
+  length: number,
+  pageSize: number,
+  pageIndex: number,
+  pageSizeOptions: number[],
+  hidePageSize: boolean,
+  showPageSizeOptions: boolean,
+  showFirstLastButtons: boolean,
+  disabled: boolean,
+}
 
 

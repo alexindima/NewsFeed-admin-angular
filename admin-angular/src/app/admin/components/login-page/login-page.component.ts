@@ -49,15 +49,6 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     if (this.auth.isAuthenticated()) {
       this._router.navigate(['/admin', 'articles']).then();
     }
-
-  }
-
-  test(){
-    this.auth.test()
-  }
-
-  tes(){
-    this.auth.tes()
   }
 
   submit() {

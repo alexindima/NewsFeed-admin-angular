@@ -1,11 +1,6 @@
 <?php
 
-// все что здесь написано  справедливо и для остальных контроллеров
-
-// напишу сюда, тебе нужно добавить во все php файлы строгую проверку типов
-// это заставит PHP вместо того чтобы неявно приводить аргументы в нужный тип, просто выкидывать TypeError
-// и заставит тебя больше следить за типами переменных в целом, явно их приводить к нужному типа итд.
-declare(strict_types=1); // добавляй это в самое начала пхп файла
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
@@ -24,14 +19,11 @@ use Illuminate\Support\Facades\Log;
  *
  * APIs to manage the article resource.
  */
-// фигурную скобку с новой строки
-class ArticleController extends Controller {
-
-    // как правило сервисы и репы не изменяемые, юзай readonly для них
-    // а также здесь и для всех остальных классов можно юзать фичу php 8
-    // https://stitcher.io/blog/constructor-promotion-in-php-8
-    public function __construct(private readonly ArticleService $articleService)
-    {
+class ArticleController extends Controller
+{
+    public function __construct(
+        private readonly ArticleService $articleService
+    ){
     }
 
     /**
@@ -47,6 +39,7 @@ class ArticleController extends Controller {
      */
     public function index(Request $request): JsonResponse
     {
+        Log::info('$request'. json_encode($request));
         // добавь типизации, лучше явно кастовать эти значения в int
         $limit = $request->query('limit', 10);
         $offset = $request->query('offset', 0);

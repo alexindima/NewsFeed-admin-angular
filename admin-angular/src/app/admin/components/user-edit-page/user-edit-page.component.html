@@ -9,6 +9,7 @@
     [formGroup]="form"
     (ngSubmit)="submit()">
 
+
     <h2>Personal data</h2>
     <div class="mb-3">
       <label
@@ -120,6 +121,19 @@
       >
         <small class="text-danger">Passwords mismatch</small>
       </div>
+    </div>
+
+    <h2>Role</h2>
+    <div class="mb-3">
+      <label for="role-select">Select role:</label>
+      <select
+        name="role"
+        id="role-select"
+        formControlName="role"
+      >
+        <option value="user" selected>User</option>
+        <option value="admin">Admin</option>
+      </select>
     </div>
 
     <h2>Ignore settings</h2>

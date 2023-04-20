@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 class OperationResult
@@ -8,8 +10,7 @@ class OperationResult
         public mixed $data,
         public bool $success,
         public ?string $message = null,
-    )
-    {
+    ){
     }
 
     public static function success(mixed $data, string $message = null): self

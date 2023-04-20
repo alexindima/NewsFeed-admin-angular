@@ -2,8 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Category, Tag, User} from "../../../interfaces";
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import * as bcrypt from 'bcryptjs';
 import {concat, forkJoin, map, Observable, of, toArray} from "rxjs";
-import {UniqueArray} from "../../utils/unique-array.common";
 import {UsersService} from "../../services/users.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {appValidEqualFactory} from '../../utils/valid-equal'
@@ -19,9 +19,11 @@ interface UserForm {
   confirmPassword: FormControl<string>;
   categories: FormArray<FormControl<string | Category>>;
   tags: FormArray<FormControl<string | Tag>>;
+  role: FormControl<string>;
 }
 
 interface UserFromResolverForForm {
+  role: string;
   name: string;
   email: string;
 }
@@ -68,6 +70,9 @@ export class UserEditPageComponent implements OnInit, OnDestroy {
     })
 
     this.form = new FormGroup<UserForm>({
+      role: new FormControl('user', {
+        nonNullable: true
+      }),
       name: new FormControl('', {
         nonNullable: true,
         validators: [Validators.required]
@@ -105,25 +110,26 @@ export class UserEditPageComponent implements OnInit, OnDestroy {
     });
 
     if (this.userFromResolver) {
-      const categoriesNames = this.getArrayOfNamesFromIDs(this.categoriesList, this.userFromResolver.categories!)
-      const tagsNames = this.getArrayOfNamesFromIDs(this.tagsList, this.userFromResolver.tags!)
+      const categoriesNames = this.userFromResolver.categories;
+      const tagsNames = this.userFromResolver.tags;
 
       if (categoriesNames.length > 1) {
         for (let i = 1; i < categoriesNames.length; i++) {
-          this.addCategory()
+          this.addCategory();
         }
       }
       if (tagsNames.length > 1) {
         for (let i = 1; i < tagsNames.length; i++) {
-          this.addTag()
+          this.addTag();
         }
       }
 
       const userForForm: UserFromResolverForForm = {
+        role: this.userFromResolver.role!,
         name: this.userFromResolver.name!,
         email: this.userFromResolver.email!
       };
-      this.form.patchValue(userForForm)
+      this.form.patchValue(userForForm);
       this.form.patchValue({
         categories: categoriesNames,
         tags: tagsNames
@@ -175,10 +181,6 @@ export class UserEditPageComponent implements OnInit, OnDestroy {
     })
   }
 
-  getNameById(array: Tag[] | Category[], id: number): string {
-    const result = array.find(obj => obj.id === id);
-    return result ? result.name : `!wrong ID: ${id}!`;
-  }
 
   submit() {
     if (this.form.invalid) {
@@ -186,87 +188,60 @@ export class UserEditPageComponent implements OnInit, OnDestroy {
     }
     this.submitted = true;
 
-    const createUser = () => {
-      const user: User = {
-        created_at: new Date().toISOString(),
-        name: this.form.value.name,
-        email: this.form.value.email,
-        password: this.form.value.password,
-        categories: ignoredCategories,
-        tags: ignoredTags
-      }
-      this._subs.add = this._usersService.createUser(user).subscribe(() => {
-        this.form.reset();
-      })
-    }
-
-    const editUser = () => {
-      const user: User = {
-        id: this.userFromResolver!.id,
-        updated_at: new Date().toISOString(),
-        name: this.form.value.name,
-        email: this.form.value.email,
-        password: this.form.value.password,
-        categories: ignoredCategories,
-        tags: ignoredTags
-      }
-      this._subs.add = this._usersService.editUser(user).subscribe(() => {
-        this.form.reset();
-      })
-    }
-
-    let ignoredCategories = new UniqueArray<string>()
-    let ignoredTags = new UniqueArray<string>()
-    const categoriesObservables: Observable<Category>[] = []
-    const tagsObservables: Observable<Tag>[] = []
-
+    let ignoredCategories = new Set<string>()
     for (let category of this.categoriesAutocompleteOptions) {
       if (typeof category.control.value === "string") {
         if (category.control.value.trim()) {
-          categoriesObservables.push(this.sharedCategoriesService.createCategory(category.control.value))
+          ignoredCategories.add(category.control.value);
         }
       } else {
-        ignoredCategories.add(category.control.value.id)
+        ignoredCategories.add(category.control.value.name);
       }
     }
 
+    let ignoredTags = new Set<string>()
     for (let tag of this.tagsAutocompleteOptions) {
       if (typeof tag.control.value === "string") {
         if (tag.control.value.trim()) {
-          tagsObservables.push(this._sharedTagsService.createTag(tag.control.value))
+          ignoredTags.add(tag.control.value);
         }
       } else {
-        ignoredTags.add(tag.control.value.id)
+        ignoredTags.add(tag.control.value.name);
       }
     }
 
-    const categoriesObservable = categoriesObservables.length
-      ? concat(...categoriesObservables).pipe(
-        map(category => category.id),
-        toArray())
-      : of([]);
-    const tagsObservable = tagsObservables.length
-      ? concat(...tagsObservables).pipe(
-        map(tag => tag.id),
-        toArray())
-      : of([]);
+    let password = this.form.value.password;
+    if(password){
+      const salt = bcrypt.genSaltSync(10);
+      password = bcrypt.hashSync(password, salt);
+    }
 
+    const user: User = {
+      role: this.form.value.role,
+      name: this.form.value.name,
+      email: this.form.value.email,
+      password: password,
+      categories: [...ignoredCategories],
+      tags: [...ignoredTags],
+    }
 
-    /*this._subs.add = forkJoin([categoriesObservable, tagsObservable]).subscribe(([categoriesID, tagsID]) => {
-      for (let categoryID of categoriesID) {
-        ignoredCategories.add(categoryID)
-      }
-      for (let tagID of tagsID) {
-        ignoredTags.add(tagID)
-      }
-      if (this.userFromResolver) {
-        editUser();
-      } else {
-        createUser();
-      }
-      this._router.navigate(['/admin', 'users']).then();
-      this.submitted = false;
-    })*/
+    const createUser = () => {
+      this._subs.add = this._usersService.createUser(user).subscribe(() =>
+        this._router.navigate(['/admin', 'users'])
+      )
+    }
+
+    const editUser = () => {
+      this._subs.add = this._usersService.editUser(this.userFromResolver!.id!, user).subscribe(() =>
+        this._router.navigate(['/admin', 'users'])
+      )
+    }
+
+    if (this.userFromResolver) {
+      editUser();
+    } else {
+      createUser();
+    }
   }
 
   ngOnDestroy() {

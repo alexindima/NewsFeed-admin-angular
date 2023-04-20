@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TagStoreRequest;
@@ -18,11 +20,9 @@ use Illuminate\Http\Request;
  * APIs to manage the tag resource.
  */
 class TagController extends Controller {
-    private TagService $tagService;
-
-    public function __construct(TagService $tagService)
-    {
-        $this->tagService = $tagService;
+    public function __construct(
+        private readonly TagService $tagService
+    ){
     }
 
     /**

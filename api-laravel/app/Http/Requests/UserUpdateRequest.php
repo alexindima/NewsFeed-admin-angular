@@ -1,23 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use App\Rules\StringArray;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserUpdateRequest extends FormRequest
+class UserUpdateRequest extends BaseRequest
 {
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     public function rules(): array
     {
         return [
+            'role' => ['string'],
             'name' => ['string'],
             'email' => ['string'],
-            'password' => ['string'],
+            'password' => ['nullable', 'string'],
             'categories' => [
                 'array',
                 new StringArray(),
@@ -32,6 +30,7 @@ class UserUpdateRequest extends FormRequest
     public function messages()
     {
         return [
+            'role.string' => 'You must use string for the role',
             'name.string' => 'You must use string for the name',
             'email.string' => 'You must use string for the email',
             'password.string' => 'You must use string for the password',

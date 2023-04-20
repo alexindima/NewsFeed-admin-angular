@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Middleware;
 
 use Closure;
@@ -11,11 +13,9 @@ class AdminMiddleware extends Middleware
 {
     public function handle($request, Closure $next)
     {
-        // Middleware logic here - эти комментарии стоит удалять
         if ($request->user() && $request->user()->hasRole('admin')) {
             return $next($request);
-        } else { // else тут лишний
-            return response()->json(['error' => 'Forbidden'], Response::HTTP_FORBIDDEN);
         }
+        return response()->json(['error' => 'Forbidden'], Response::HTTP_FORBIDDEN);
     }
 }

@@ -39,7 +39,6 @@ import {LoaderInterceptor} from "./admin/interceptors/loader.interceptor";
     //HttpClientXsrfModule, //not working
   ],
   providers: [
-    AuthService,
     { provide: HTTP_INTERCEPTORS, useClass: AddXsrfInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AddWithCredentialsInterceptor, multi: true},
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

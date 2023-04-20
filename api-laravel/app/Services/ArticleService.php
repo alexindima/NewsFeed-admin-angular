@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\DbModels\Article;
@@ -12,20 +14,11 @@ use Illuminate\Support\Facades\Log;
 
 class ArticleService
 {
-
-    private ArticleRepository $articleRepository;
-    private CategoryService $categoryService;
-    private TagService $tagService;
-
     public function __construct(
-        ArticleRepository $articleRepository,
-        CategoryService $categoryService,
-        TagService $tagService,
-    )
-    {
-        $this->articleRepository = $articleRepository;
-        $this->categoryService = $categoryService;
-        $this->tagService = $tagService;
+        private readonly ArticleRepository $articleRepository,
+        private readonly CategoryService $categoryService,
+        private readonly TagService $tagService,
+    ){
     }
 
     // смотрю во всех сервисах возвращается Model, так быть не должно

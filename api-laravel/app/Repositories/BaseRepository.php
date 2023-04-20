@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repositories;
 
 use App\Exceptions\GeneralJsonException;
@@ -33,7 +35,6 @@ abstract class BaseRepository
        return $this->model::all();
     }
 
-    // не забывай про public
     public function create($data): Model
     {
         return $this->model::query()->firstOrCreate($data);
@@ -42,14 +43,16 @@ abstract class BaseRepository
     public function createBy($by, $value): int
     {
         return $this->create([$by => $value])->id;
-
     }
 
-    public function createManyBy($by, $values): Collection
+    /**
+     * @return array<int>
+     */
+    public function createManyBy($by, $values): array
     {
-        $ids = new Collection();
+        $ids = [];
         foreach ($values as $value) {
-            $ids->add($this->createBy($by, $value));
+            $ids[] = $this->createBy($by, $value);
         }
         return $ids;
     }
@@ -57,15 +60,13 @@ abstract class BaseRepository
     public function update($id, $data): Model
     {
         $model = $this->model::query()->findOrFail($id);
-        $model->update($data);
+        $model?->update($data);
 
         return $model;
     }
 
     public function delete($id): bool
     {
-        // там где может вернуться null лучше использовать null-safe оператор (?->), чтобы не было лишней проверки на null
-        // и чтобы не падал по null pointer exception
-        return $this->model::query()->findOrFail($id)->delete();
+        return $this->model::query()->findOrFail($id)?->delete();
     }
 }

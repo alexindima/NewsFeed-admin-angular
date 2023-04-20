@@ -16,13 +16,14 @@ class UserResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'role' => $this->role,
             'name' => $this->name,
             'email' => $this->email,
             'password' => $this->password,
             'tags' => collect($this->tags)->pluck('name')->toArray(),
             'categories' => collect($this->categories)->pluck('name')->toArray(),
-            'created_at' => $this->created_at->toDateTimeString(),
-            'updated_at' => $this->updated_at->toDateTimeString(),
+            'createdAt' => $this->created_at->toDateTimeString(),
+            'updatedAt' => $this->updated_at->toDateTimeString(),
         ];
     }
 }

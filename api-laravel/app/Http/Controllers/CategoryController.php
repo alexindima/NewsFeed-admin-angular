@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryStoreRequest;
@@ -18,11 +20,9 @@ use Illuminate\Http\Request;
  * APIs to manage the category resource.
  */
 class CategoryController extends Controller {
-    private CategoryService $categoryService;
-
-    public function __construct(CategoryService $categoryService)
-    {
-        $this->categoryService = $categoryService;
+    public function __construct(
+        private readonly CategoryService $categoryService
+    ){
     }
 
     /**

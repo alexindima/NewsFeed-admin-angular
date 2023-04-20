@@ -7,32 +7,18 @@ import {ArticleEditPageComponent} from './components/article-edit-page/article-e
 import {UserEditPageComponent} from './components/user-edit-page/user-edit-page.component';
 import {ArticleDashboardPageComponent} from './components/article-dashboard-page/article-dashboard-page.component';
 import {UserDashboardPageComponent} from './components/user-dashboard-page/user-dashboard-page.component';
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {AuthService} from "./services/auth.service";
 import {SharedModule} from "../shared.module";
 import {AuthGuard} from "./guards/auth.guard";
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatAutocompleteModule} from "@angular/material/autocomplete";
-import {MatInputModule} from "@angular/material/input";
-import {MatPaginatorModule} from "@angular/material/paginator";
-import {UsersService} from "./services/users.service";
-import {ArticlesService} from "./services/articles.service";
-import {MatDialogModule} from "@angular/material/dialog";
-import {MatButtonModule} from "@angular/material/button";
 import {ConfirmDialogModalComponent} from './components/confirm-dialog-modal/confirm-dialog-modal.component';
 import {ArrayToStringPipe} from "./utils/array-to-string.pipe";
 import {NotFoundPageComponent} from './components/not-found-page/not-found-page.component';
 import {UserResolver} from "./resolvers/user.resolver";
 import {ArticleResolver} from "./resolvers/article.resolver";
-import {SharedTagsService} from "./services/shared-tags.service";
-import {SharedCategoriesService} from "./services/shared-categories.service";
 import {
   CustomCategoryTagInputComponent
 } from './components/custom-category-tag-input/custom-category-tag-input.component';
 import {SharedCategoriesResolver} from "./resolvers/shared-categories.resolver";
 import {SharedTagsResolver} from "./resolvers/shared-tags.resolver";
-import {HTTP_INTERCEPTORS} from "@angular/common/http";
-import {AddXsrfInterceptor} from "./interceptors/add-xsrf.interceptor";
 
 @NgModule({
   imports: [

@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {PageEvent} from "@angular/material/paginator";
 import {ArticlesService} from "../../services/articles.service";
-import {Article} from "../../../interfaces";
+import {Article, PaginatorSettings} from "../../../interfaces";
 import {ActivatedRoute, Router} from "@angular/router";
 import {EMPTY, of, switchMap, tap} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
@@ -14,16 +14,6 @@ import {Subs} from "../../utils/subs";
 // уже видел в user dashboard, так нельзя, два источника одинаковой фичи
 // далее весь фидбек будет в user-dashboard-page, здесь дублирование
 // нельзя так, всё что общее выносится в отдельные классы
-interface PaginatorSettings {
-  length: number,
-  pageSize: number,
-  pageIndex: number,
-  pageSizeOptions: number[],
-  hidePageSize: boolean,
-  showPageSizeOptions: boolean,
-  showFirstLastButtons: boolean,
-  disabled: boolean,
-}
 
 @Component({
   selector: 'app-article-dashboard-page',

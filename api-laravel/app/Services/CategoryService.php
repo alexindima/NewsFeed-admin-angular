@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Repositories\CategoryRepository;
@@ -9,46 +11,46 @@ use Illuminate\Support\Facades\Log;
 
 class CategoryService
 {
-
-    protected CategoryRepository $repository;
-
-    public function __construct(CategoryRepository $repository)
-    {
-        $this->repository = $repository;
+    public function __construct(
+        private readonly CategoryRepository $categoryRepository
+    ){
     }
 
     public function getById($id): Model
     {
-        return $this->repository->getById($id);
+        return $this->categoryRepository->getById($id);
     }
 
     public function getAll(): Collection
     {
-        return $this->repository->getAll();
+        return $this->categoryRepository->getAll();
     }
 
     public function create($category): Model
     {
-        return $this->repository->create($category);
+        return $this->categoryRepository->create($category);
     }
 
     public function createByName($categoryName): int
     {
-        return $this->repository->createBy('name', $categoryName);
+        return $this->categoryRepository->createBy('name', $categoryName);
     }
 
-    public function createManyByName($categoryNames): Collection
+    /**
+     * @return array<int>
+     */
+    public function createManyByName($categoryNames): array
     {
-        return $this->repository->createManyBy('name', $categoryNames);
+        return $this->categoryRepository->createManyBy('name', $categoryNames);
     }
 
     public function update($id, $category): Model
     {
-        return $this->repository->update($id, $category);
+        return $this->categoryRepository->update($id, $category);
     }
 
     public function delete($id): bool
     {
-        return $this->repository->delete($id);
+        return $this->categoryRepository->delete($id);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Services\SuggestionService;
@@ -12,11 +14,9 @@ use Illuminate\Http\Request;
  * APIs to manage the suggestion resource.
  */
 class SuggestionController extends Controller {
-    private SuggestionService $suggestionService;
-
-    public function __construct(SuggestionService $suggestionService)
-    {
-        $this->suggestionService = $suggestionService;
+    public function __construct(
+        private readonly SuggestionService $suggestionService
+    ){
     }
 
     /**

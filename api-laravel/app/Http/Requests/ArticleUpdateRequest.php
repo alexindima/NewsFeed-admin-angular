@@ -1,17 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use App\Rules\StringArray;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ArticleUpdateRequest extends FormRequest
+class ArticleUpdateRequest extends BaseRequest
 {
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     public function rules(): array
     {
         return [

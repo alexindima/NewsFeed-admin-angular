@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Events\Models\User\UserCreated;
@@ -13,6 +15,7 @@ use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Log;
 
 /**
  * @group User Management
@@ -20,11 +23,9 @@ use Illuminate\Support\Facades\Event;
  * APIs to manage the user resource.
  */
 class UserController extends Controller{
-    private UserService $userService;
-
-    public function __construct(UserService $userService)
-    {
-        $this->userService = $userService;
+    public function __construct(
+        private readonly UserService $userService
+    ){
     }
 
     /**
@@ -81,6 +82,7 @@ class UserController extends Controller{
     public function store(UserStoreRequest $request): JsonResponse
     {
         $user = [
+            'role' => $request->role,
             'name' => $request->name,
             'email' => $request->email,
             'password' => $request->password,
@@ -112,6 +114,7 @@ class UserController extends Controller{
     {
         $original = $this->userService->getById($id);
         $user = [
+            'role' => $request->role,
             'name' => $request->name ?? $original->name,
             'email' => $request->email ?? $original->email,
             'password' => $request->password ?? $original->password,

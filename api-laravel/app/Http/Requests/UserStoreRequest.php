@@ -1,20 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use App\Rules\StringArray;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserStoreRequest extends FormRequest
+class UserStoreRequest extends BaseRequest
 {
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     public function rules(): array
     {
         return [
+            'role' => ['string', 'required'],
             'name' => ['string', 'required'],
             'email' => ['string', 'required'],
             'password' => ['string', 'required'],
@@ -32,6 +30,8 @@ class UserStoreRequest extends FormRequest
     public function messages()
     {
         return [
+            'role.required' => 'Please enter a value for the role',
+            'role.string' => 'You must use string for the role',
             'name.required' => 'Please enter a value for the name',
             'name.string' => 'You must use string for the name',
             'email.required' => 'Please enter a value for the email',

@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {PageEvent} from "@angular/material/paginator";
-import {Article, Category, Tag, User} from "../../../interfaces";
+import {Article, Category, PaginatorSettings, Tag, User} from "../../../interfaces";
 import {ActivatedRoute, Router} from "@angular/router";
 import {of, switchMap, tap} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
@@ -13,27 +13,6 @@ import {SharedTagsService} from "../../services/shared-tags.service";
 import {SharedCategoriesService} from "../../services/shared-categories.service";
 import {Subs} from "../../utils/subs";
 
-// не должно быть здесь, интерфейсы хранятся отдельно от компонентов
-interface PaginatorSettings {
-  length: number,
-  pageSize: number,
-  pageIndex: number,
-  pageSizeOptions: number[],
-  hidePageSize: boolean,
-  showPageSizeOptions: boolean,
-  showFirstLastButtons: boolean,
-  disabled: boolean,
-}
-
-interface UserToShow {
-  created_at: Date;
-  id: number,
-  email: string,
-  name: string
-  categories: string[];
-  tags: string[];
-}
-
 @Component({
   selector: 'app-user-dashboard-page',
   templateUrl: './user-dashboard-page.component.html',
@@ -41,10 +20,9 @@ interface UserToShow {
 })
 export class UserDashboardPageComponent implements OnInit, OnDestroy {
   private _subs = new Subs();
-  userListToShow: UserToShow[] = [];
+  userListToShow: User[] = [];
   categoriesList: Category[] = []
   tagsList: Tag[] = []
-  articlesList: Article[] = []
   paginatorSettings: PaginatorSettings = {
     length,
     pageSize: 25,
@@ -75,14 +53,11 @@ export class UserDashboardPageComponent implements OnInit, OnDestroy {
       this.tagsList = data;
     })
 
-    this._subs.add = this._usersService.getCountOfUsers()
-      .pipe(
-        switchMap(result => {
-          this.paginatorSettings.length = result; // это tap, должен быть выше чем switchMap, здесь это лишнее
-          return this._activatedRoute.queryParams;
-        })
-      )
-      .subscribe(params => {
+    this._subs.add = this._usersService.countOfUsers.subscribe((count) => {
+      this.paginatorSettings.length = count;
+    })
+
+    this._subs.add = this._activatedRoute.queryParams.subscribe(params => {
         const pageIndex = +params['page'] - 1;
         const pageSize = +params['limit'];
         if (pageSize) {
@@ -112,22 +87,11 @@ export class UserDashboardPageComponent implements OnInit, OnDestroy {
 
     this._subs.add = this._usersService.getUsers((this.paginatorSettings.pageIndex + 1), this.paginatorSettings.pageSize)
       .subscribe((result: User[]) => {
-        this.userListToShow = result.map((user: User) => {
-          return {
-            ...user,
-            ignoredCategories: user.categories,
-            ignoredTags: user.tags
-          } as unknown as UserToShow
-        })
+        this.userListToShow = result;
       })
   }
 
-  getNameById(array: Tag[] | Category[], id: number): string {
-    const result = array.find(obj => obj.id === id);
-    return result ? result.name : `!wrong ID: ${id}!`;
-  }
-
-  openDeleteModal(user: UserToShow): void {
+  openDeleteModal(user: User): void {
     const dialogRef = this._matDialog.open(ConfirmDialogModalComponent, {
       width: '600px',
       data: {
@@ -141,12 +105,8 @@ export class UserDashboardPageComponent implements OnInit, OnDestroy {
     this._subs.add = dialogRef.afterClosed().pipe(
       switchMap(result => {
         if (result) {
-          return this._usersService.deleteUser(user.id).pipe(
-            switchMap(() => this._usersService.getCountOfUsers()),
-            tap(count => {
-              this.paginatorSettings.length = count;
-              this.getUsers();
-            })
+          return this._usersService.deleteUser(user.id!).pipe(
+            tap(() => this.getUsers())
           );
         }
         return of(null);

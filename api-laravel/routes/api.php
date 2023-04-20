@@ -62,11 +62,6 @@ Route::prefix('/articles')->group(function () {
     Route::get('/{id}', [ArticleController::class, 'show']);
 });
 
-/*Route::prefix('/users')->group(function () {
-    Route::get('/', [UserController::class, 'index']);
-
-});*/
-
 Route::prefix('/suggested')->group(function () {
     Route::get('/', [SuggestionController::class, 'index']);
 });

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repositories;
 
 use App\DbModels\Article;
@@ -8,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ArticleRepository extends BaseRepository
 {
+    private const TOTAL_SUGGESTED = 5;
     public function __construct()
     {
         parent::__construct(Article::class);
@@ -40,10 +43,31 @@ class ArticleRepository extends BaseRepository
             return false;
         }
 
-        $article->tags()->sync([...$tagIds]  , ['detach' => true]);
+        $article->tags()->sync($tagIds  , ['detach' => true]);
 
         return true;
     }
 
+    public function getSuggested(): array
+    {
+        // вместо связки select('id'), get(), можно использовать в конце pluck('id')->toArray()
+        // также нет смысла делать json_decode и маппинг, т.к. тебе уже возвращается массив айдишников
+        $rows = Article::select('id')
+            ->selectRaw('(likes - dislikes) AS difference')
+            ->orderByRaw('(likes - dislikes) DESC')
+            ->limit(self::TOTAL_SUGGESTED)
+            ->get();
 
+        $array = json_decode($rows, true);
+
+        return array_map(function($item) {
+            return $item['id'];
+        }, $array);
+
+    }
+
+    public function geSuggestedTotal(): int
+    {
+        return self::TOTAL_SUGGESTED;
+    }
 }

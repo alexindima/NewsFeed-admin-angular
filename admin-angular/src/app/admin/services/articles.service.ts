@@ -13,24 +13,7 @@ export class ArticlesService {
   countOfArticles: Observable<number> = this._data.asObservable();
   constructor(
     private _http: HttpClient
-  )
-  {
-  }
-
-  convertSnakeCaseToCamelCase<T>(data: T): T {
-    if (data === null || typeof data !== 'object') {
-      return data;
-    }
-
-    if (Array.isArray(data)) {
-      return data.map(item => this.convertSnakeCaseToCamelCase(item)) as any;
-    }
-
-    return Object.keys(data).reduce((camelCaseData, key) => {
-      const camelCaseKey = key.replace(/_./g, match => match.charAt(1).toUpperCase());
-      camelCaseData[camelCaseKey as keyof T] = this.convertSnakeCaseToCamelCase(data[key as keyof T]);
-      return camelCaseData;
-    }, {} as T);
+  ) {
   }
 
   getArticles(page: number, limit: number, search: string | null = null): Observable<Article[]> {
@@ -42,8 +25,6 @@ export class ArticlesService {
     return this._http.get<OperationResponse<PaginatedArticle>>(url).pipe(
       tap(response => {
         this._data.next(response.data.total);
-        console.log(response.data.data)
-        console.log(this.convertSnakeCaseToCamelCase(response.data.data))
       }),
       map(response => response.data.data)
     )

@@ -175,12 +175,14 @@ export class ArticleEditPageComponent implements OnInit, OnDestroy {
     }
     const createArticle = () => {
       this._subs.add = this._articlesService.createArticle(article).subscribe(
-        () => finishing())
+        () => this._router.navigate(['/admin', 'articles'])
+      )
     }
 
     const editArticle = () => {
       this._subs.add = this._articlesService.editArticle(this.articleFromResolver!.id!, article).subscribe(
-        () => finishing())
+        () => this._router.navigate(['/admin', 'articles'])
+      )
     }
 
     if (this.articleFromResolver) {
