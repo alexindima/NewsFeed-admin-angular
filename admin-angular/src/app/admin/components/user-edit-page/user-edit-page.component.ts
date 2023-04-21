@@ -226,13 +226,13 @@ export class UserEditPageComponent implements OnInit, OnDestroy {
     }
 
     const createUser = () => {
-      this._subs.add = this._usersService.createUser(user).subscribe(() =>
+      this._subs.add = this._usersService.createItem(user).subscribe(() =>
         this._router.navigate(['/admin', 'users'])
       )
     }
 
     const editUser = () => {
-      this._subs.add = this._usersService.editUser(this.userFromResolver!.id!, user).subscribe(() =>
+      this._subs.add = this._usersService.editItem(this.userFromResolver!.id!, user).subscribe(() =>
         this._router.navigate(['/admin', 'users'])
       )
     }

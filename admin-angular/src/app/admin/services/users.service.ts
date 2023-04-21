@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {Article, OperationResponse, PaginatedArticle, PaginatedUser, User} from "../../interfaces";
+import {OperationResponse, Paginated, User} from "../../interfaces";
 import {BehaviorSubject, map, Observable, tap} from "rxjs";
 
 // я сча по проекту нашёл копипасту localhost:3030
@@ -13,18 +13,18 @@ const BASE_URL = `http://localhost:8000/api/users`;
 })
 export class UsersService {
   private _data = new BehaviorSubject<number>(0);
-  countOfUsers: Observable<number> = this._data.asObservable();
+  countOfItems: Observable<number> = this._data.asObservable();
   constructor(private _http: HttpClient
   ) {
   }
 
-  getUsers(page: number | null, limit: number | null, search: string | null = null): Observable<User[]> {
+  getItems(page: number | null, limit: number | null, search: string | null = null): Observable<User[]> {
     let url = `${BASE_URL}?`;
     if (search) {
       url += `q=${search.replace(/ /g, "+")}&`;
     }
     url += `page=${page}&pageSize=${limit}`;
-    return this._http.get<OperationResponse<PaginatedUser>>(url).pipe(
+    return this._http.get<OperationResponse<Paginated<User>>>(url).pipe(
       tap(response => {
         this._data.next(response.data.total);
       }),
@@ -32,25 +32,25 @@ export class UsersService {
     )
   }
 
-  getSingleUser(user: number): Observable<User> {
+  getSingleItem(user: number): Observable<User> {
     return this._http.get<OperationResponse<User>>(`${BASE_URL}/${user}`).pipe(
       map(response => response.data)
     );
   }
 
-  createUser(newUser: User): Observable<User> {
+  createItem(newUser: User): Observable<User> {
     return this._http.post<OperationResponse<User>>(BASE_URL, newUser).pipe(
       map(response => response.data)
     );
   }
 
-  editUser(id: number, editedUser: User): Observable<User> {
+  editItem(id: number, editedUser: User): Observable<User> {
     return this._http.patch<OperationResponse<User>>(`${BASE_URL}/${id}`, editedUser).pipe(
       map(response => response.data)
     );
   }
 
-  deleteUser(id: number): Observable<User> {
+  deleteItem(id: number): Observable<User> {
     return this._http.delete<OperationResponse<User>>(`${BASE_URL}/${id}`).pipe(
       map(response => response.data)
     );

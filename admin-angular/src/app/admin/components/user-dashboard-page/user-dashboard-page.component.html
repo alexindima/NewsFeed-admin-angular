@@ -29,7 +29,7 @@
       </thead>
       <tbody>
 
-      <tr *ngFor="let user of userListToShow">
+      <tr *ngFor="let user of itemsList">
         <td>{{user.id}}</td>
         <td>{{user.role}}</td>
         <td>{{user.createdAt | date: 'short'}}</td>
@@ -48,7 +48,7 @@
           <button
             type="button"
             class="btn btn-danger"
-            (click)="openDeleteModal(user)"
+            (click)="openDeleteModal(user, 'user', user.email)"
           >
             Delete
           </button>

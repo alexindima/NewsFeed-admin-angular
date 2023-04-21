@@ -49,13 +49,8 @@ export interface Article {
   tags: string[];
 }
 
-export interface PaginatedArticle {
-  data: Article[],
-  total: number,
-}
-
-export interface PaginatedUser{
-  data: User[],
+export interface Paginated<T> {
+  data: T[],
   total: number,
 }
 

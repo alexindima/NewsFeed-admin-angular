@@ -20,6 +20,7 @@ import {
 import {SharedCategoriesResolver} from "./resolvers/shared-categories.resolver";
 import {SharedTagsResolver} from "./resolvers/shared-tags.resolver";
 import { DashboardPaginatorComponent } from './components/dashboard-paginator/dashboard-paginator.component';
+import { DashboardPageComponent } from './components/dashboard-page/dashboard-page.component';
 
 @NgModule({
   imports: [
@@ -70,5 +71,9 @@ import { DashboardPaginatorComponent } from './components/dashboard-paginator/da
   ],
 })
 export class AdminModule {
+
+}
+
+export class Das {
 
 }

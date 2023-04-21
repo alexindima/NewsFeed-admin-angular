@@ -15,7 +15,7 @@ export class ArticleResolver implements Resolve<Article> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Article> {
     const id: number = Number(route.paramMap.get('id'));
-    return this._articlesService.getSingleArticle(id).pipe(
+    return this._articlesService.getSingleItem(id).pipe(
       catchError((err) => {
         this._router.navigate(['/admin', 'articles']);
         return throwError(err);

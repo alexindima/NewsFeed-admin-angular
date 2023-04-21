@@ -1,123 +1,40 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {PageEvent} from "@angular/material/paginator";
-import {Category, PaginatorSettings, Tag, User} from "../../../interfaces";
+import {Component, OnInit} from '@angular/core';
+import {Category, Tag, User} from "../../../interfaces";
 import {ActivatedRoute, Router} from "@angular/router";
-import {of, switchMap, take, tap} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
-import {
-  ConfirmDialogModalComponent,
-  ModalDialogData
-} from "../confirm-dialog-modal/confirm-dialog-modal.component";
-import {UsersService} from "../../services/users.service";
 import {SharedTagsService} from "../../services/shared-tags.service";
 import {SharedCategoriesService} from "../../services/shared-categories.service";
-import {Subs} from "../../utils/subs";
+import {DashboardPageComponent} from "../dashboard-page/dashboard-page.component";
+import {ArticlesService} from "../../services/articles.service";
 
 @Component({
   selector: 'app-user-dashboard-page',
   templateUrl: './user-dashboard-page.component.html',
   styleUrls: ['./user-dashboard-page.component.scss']
 })
-export class UserDashboardPageComponent implements OnInit, OnDestroy {
-  private _subs = new Subs();
-  userListToShow: User[] = [];
+export class UserDashboardPageComponent extends DashboardPageComponent<User> implements OnInit {
   categoriesList: Category[] = []
   tagsList: Tag[] = []
-  paginatorSettings: PaginatorSettings = {
-    length,
-    pageSize: 25,
-    pageIndex: 0,
-  };
-  pageEvent!: PageEvent;
-
   constructor(
-    private _usersService: UsersService,
+    protected override _activatedRoute: ActivatedRoute,
+    protected override _router: Router,
+    protected override _matDialog: MatDialog,
+    protected override _service: ArticlesService,
     private _sharedCategoriesService: SharedCategoriesService,
     private _sharedTagsService: SharedTagsService,
-    private _activatedRoute: ActivatedRoute,
-    private _router: Router,
-    private _matDialog: MatDialog
   ) {
+  super(_activatedRoute, _router, _matDialog, _service);
   }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
     this._subs.add = this._sharedCategoriesService.categories.subscribe((data) => {
       this.categoriesList = data;
     })
     this._subs.add = this._sharedTagsService.tags.subscribe((data) => {
       this.tagsList = data;
     })
-
-    this._subs.add = this._usersService.countOfUsers.subscribe((count) => {
-      this.paginatorSettings.length = count;
-    })
-
-    this._subs.add = this._activatedRoute.queryParams.pipe(
-      take(1)
-    ).subscribe(params => {
-        const pageIndex = +params['page'] - 1;
-        const pageSize = +params['pageSize'];
-        if (pageSize) {
-          this.paginatorSettings.pageSize = pageSize;
-        }
-        if (pageIndex) {
-          this.paginatorSettings.pageIndex = pageIndex;
-        }
-        this.getUsers();
-      });
+    super.ngOnInit();
   }
 
-  getUsers(): void {
-    if (this.paginatorSettings.length) {
-      while ((this.paginatorSettings.pageIndex + 1) > Math.ceil(this.paginatorSettings.length / this.paginatorSettings.pageSize)) {
-        this.paginatorSettings.pageIndex--;
-      }
-    }
-
-    this._router.navigate([], {
-      queryParams: {
-        page: this.paginatorSettings.pageIndex + 1,
-        limit: this.paginatorSettings.pageSize
-      },
-      queryParamsHandling: 'merge'
-    }).then();
-
-    this._subs.add = this._usersService.getUsers((this.paginatorSettings.pageIndex + 1), this.paginatorSettings.pageSize)
-      .subscribe((result: User[]) => {
-        this.userListToShow = result;
-      })
-  }
-
-  openDeleteModal(user: User): void {
-    const dialogRef = this._matDialog.open(ConfirmDialogModalComponent, {
-      width: '600px',
-      data: {
-        title: 'Confirm Delete',
-        text: `Are you sure you want to delete user: "${user.email}"?`,
-        button: 'Delete'
-      } as ModalDialogData
-    });
-
-    this._subs.add = dialogRef.afterClosed().pipe(
-      switchMap(result => {
-        if (result) {
-          return this._usersService.deleteUser(user.id!).pipe(
-            tap(() => this.getUsers())
-          );
-        }
-        return of(null);
-      })
-    ).subscribe();
-  }
-
-  pageChanged($event: PageEvent) {
-    this.paginatorSettings.length = $event.length;
-    this.paginatorSettings.pageSize = $event.pageSize;
-    this.paginatorSettings.pageIndex = $event.pageIndex;
-    this.getUsers();
-  }
-
-  ngOnDestroy() {
-    this._subs.unsubscribe();
-  }
 }
+

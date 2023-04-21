@@ -28,7 +28,7 @@
       </thead>
       <tbody>
 
-      <tr *ngFor="let article of articlesList">
+      <tr *ngFor="let article of itemsList">
         <td>{{article.id}}</td>
         <td>{{article.createdAt | date: 'short'}}</td>
         <td>{{article.updatedAt | date: 'short'}}</td>
@@ -44,7 +44,7 @@
           <button
             type="button"
             class="btn btn-danger"
-            (click)="openDeleteModal(article)"
+            (click)="openDeleteModal(article, 'article', article.mainTitle)"
           >
             Delete
           </button>
