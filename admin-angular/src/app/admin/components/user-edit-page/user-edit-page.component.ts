@@ -1,14 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Category, Tag, User} from "../../../interfaces";
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import * as bcrypt from 'bcryptjs';
-import {concat, forkJoin, map, Observable, of, toArray} from "rxjs";
 import {UserService} from "../../../services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {appValidEqualFactory} from '../../../utils/valid-equal'
-import {SharedTagService} from "../../../services/shared-tag.service";
-import {SharedCategoryService} from "../../../services/shared-category.service";
 import {Subs} from "../../../utils/subs";
 import {AutocompleteOptionsFiler} from "../../../utils/autocomplete-options-filer";
 import {CategoryState} from "../../../states/category.state";

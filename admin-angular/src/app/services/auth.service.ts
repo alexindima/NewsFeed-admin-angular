@@ -1,8 +1,9 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {LoginUser} from "../interfaces";
-import {Observable, tap, catchError, throwError, Subject, switchMap} from "rxjs";
+import {Observable, tap, catchError, throwError, switchMap} from "rxjs";
 import {AuthState} from "../states/auth.state";
+import {Router} from "@angular/router";
 
 const LOGIN_URL = 'http://localhost:8000/login';
 const LOGOUT_URL = 'http://localhost:8000/logout';
@@ -15,6 +16,7 @@ export class AuthService {
   constructor(
     private _http: HttpClient,
     private _authState: AuthState,
+    private _router: Router,
   ) {
   }
 
@@ -33,6 +35,7 @@ export class AuthService {
   logout() {
     this._http.post(LOGOUT_URL, {}).subscribe()
     sessionStorage.removeItem('isAuthenticated');
+    this._router.navigate(['/admin', 'login'])
   }
 
   isAuthenticated(): boolean {

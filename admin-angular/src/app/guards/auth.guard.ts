@@ -24,16 +24,7 @@ export class AuthGuard implements CanActivate {
     if (this._auth.isAuthenticated()) {
       return true;
     } else {
-      console.log('guard kicked me :(')
       this._auth.logout();
-      this._router.navigate(['/admin', 'login'], {
-        queryParams: {
-          // идея понятная, однако можно лучше
-          // кроме редиректа на логин есть смысл отдельно вывести ошибку где-то справа снизу мол что именно пошло не так
-          // т.е. сейчас ты используешь обходной путь через роутинг чтобы сделать такую же фичу
-          loginAgain: true
-        }
-      }).then();
       return false;
     }
   }

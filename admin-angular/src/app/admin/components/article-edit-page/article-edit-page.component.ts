@@ -4,8 +4,6 @@ import {Article, Category, Tag} from '../../../interfaces';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ArticleService } from '../../../services/article.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SharedTagService } from '../../../services/shared-tag.service';
-import { SharedCategoryService } from '../../../services/shared-category.service';
 import { Subs } from '../../../utils/subs';
 import { AutocompleteOptionsFiler } from '../../../utils/autocomplete-options-filer';
 import {CategoryState} from "../../../states/category.state";

@@ -6,7 +6,6 @@ import {LoaderState} from "../states/loader.state";
 
 @Injectable()
 export class LoaderInterceptor implements HttpInterceptor {
-
   constructor(
     private _loaderState: LoaderState,
   ) {

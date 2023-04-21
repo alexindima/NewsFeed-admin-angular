@@ -6,14 +6,14 @@ import {
 } from '@angular/router';
 import {Observable} from 'rxjs';
 import {OperationResponse, Tag} from "../interfaces";
-import {SharedTagService} from "../services/shared-tag.service";
+import {TagService} from "../services/tag.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SharedTagResolver implements Resolve<OperationResponse<Tag[]>> {
   constructor(
-    private _sharedTagsService: SharedTagService,
+    private _sharedTagsService: TagService,
     private _router: Router
   ) {
   }
