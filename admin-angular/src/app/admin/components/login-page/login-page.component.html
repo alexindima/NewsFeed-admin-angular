@@ -75,7 +75,7 @@
         </div>
         <div
           class="text-danger"
-          *ngIf="auth.error$ | async as error"
+          *ngIf="authState.error$ | async as error"
         >
           {{error}}
         </div>

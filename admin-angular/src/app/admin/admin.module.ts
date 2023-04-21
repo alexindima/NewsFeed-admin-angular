@@ -8,17 +8,17 @@ import {UserEditPageComponent} from './components/user-edit-page/user-edit-page.
 import {ArticleDashboardPageComponent} from './components/article-dashboard-page/article-dashboard-page.component';
 import {UserDashboardPageComponent} from './components/user-dashboard-page/user-dashboard-page.component';
 import {SharedModule} from "../shared.module";
-import {AuthGuard} from "./guards/auth.guard";
+import {AuthGuard} from "../guards/auth.guard";
 import {ConfirmDialogModalComponent} from './components/confirm-dialog-modal/confirm-dialog-modal.component';
-import {ArrayToStringPipe} from "./utils/array-to-string.pipe";
+import {ArrayToStringPipe} from "../utils/array-to-string.pipe";
 import {NotFoundPageComponent} from './components/not-found-page/not-found-page.component';
-import {UserResolver} from "./resolvers/user.resolver";
-import {ArticleResolver} from "./resolvers/article.resolver";
+import {UserResolver} from "../resolvers/user.resolver";
+import {ArticleResolver} from "../resolvers/article.resolver";
 import {
   CustomCategoryTagInputComponent
 } from './components/custom-category-tag-input/custom-category-tag-input.component';
-import {SharedCategoriesResolver} from "./resolvers/shared-categories.resolver";
-import {SharedTagsResolver} from "./resolvers/shared-tags.resolver";
+import {SharedCategoryResolver} from "../resolvers/shared-category.resolver";
+import {SharedTagResolver} from "../resolvers/shared-tag.resolver";
 import { DashboardPaginatorComponent } from './components/dashboard-paginator/dashboard-paginator.component';
 import { DashboardPageComponent } from './components/dashboard-page/dashboard-page.component';
 
@@ -30,8 +30,8 @@ import { DashboardPageComponent } from './components/dashboard-page/dashboard-pa
     RouterModule.forChild([
       {
         path: '', component: AdminLayoutComponent, resolve: {
-          categories: SharedCategoriesResolver,
-          tags: SharedTagsResolver,
+          categories: SharedCategoryResolver,
+          tags: SharedTagResolver,
         }, children: [
           {path: '', redirectTo: '/admin/login', pathMatch: "full"},
           {path: 'login', component: LoginPageComponent},

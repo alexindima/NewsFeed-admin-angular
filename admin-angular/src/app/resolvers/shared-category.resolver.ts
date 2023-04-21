@@ -5,20 +5,20 @@ import {
   ActivatedRouteSnapshot
 } from '@angular/router';
 import {catchError, map, Observable, of} from 'rxjs';
-import {Category, OperationResponse} from "../../interfaces";
-import {SharedCategoriesService} from "../services/shared-categories.service";
+import {Category, OperationResponse} from "../interfaces";
+import {SharedCategoryService} from "../services/shared-category.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class SharedCategoriesResolver implements Resolve<OperationResponse<Category[]>> {
+export class SharedCategoryResolver implements Resolve<OperationResponse<Category[]>> {
   constructor(
-    private _sharedCategoriesService: SharedCategoriesService,
+    private _sharedCategoryService: SharedCategoryService,
     private _router: Router
   ) {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<OperationResponse<Category[]>> {
-    return this._sharedCategoriesService.updateCategoryList();
+    return this._sharedCategoryService.updateItemsList();
   }
 }

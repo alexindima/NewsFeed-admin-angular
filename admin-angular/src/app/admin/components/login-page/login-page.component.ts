@@ -1,9 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {LoginUser} from "../../../interfaces";
-import {AuthService} from "../../services/auth.service";
+import {AuthService} from "../../../services/auth.service";
 import {ActivatedRoute, Params, Router} from "@angular/router";
-import {Subs} from "../../utils/subs";
+import {Subs} from "../../../utils/subs";
+import {AuthState} from "../../../states/auth.state";
 
 interface LoginForm {
   email: FormControl<string>;
@@ -22,7 +23,8 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   message: string = '';
 
   constructor(
-    public auth: AuthService,
+    private _authService: AuthService,
+    public authState: AuthState,
     public route: ActivatedRoute,
     private _router: Router,
   ) {
@@ -46,7 +48,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       })
     });
 
-    if (this.auth.isAuthenticated()) {
+    if (this._authService.isAuthenticated()) {
       this._router.navigate(['/admin', 'articles']).then();
     }
   }
@@ -62,7 +64,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       password: this.form.value.password
     };
 
-    this._subs.add = this.auth.login(user).subscribe(() => {
+    this._subs.add = this._authService.login(user).subscribe(() => {
       this.form.reset();
       this._router.navigate(['/admin', 'articles']).then();
       this.submitted = false;

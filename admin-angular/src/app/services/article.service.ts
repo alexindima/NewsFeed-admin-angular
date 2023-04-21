@@ -1,18 +1,18 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {Article, OperationResponse, Paginated} from "../../interfaces";
-import {BehaviorSubject, map, Observable, tap} from "rxjs";
+import {Article, OperationResponse, Paginated} from "../interfaces";
+import {map, Observable, tap} from "rxjs";
+import {ArticleState} from "../states/article.state";
 
 const BASE_URL = 'http://localhost:8000/api/articles';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ArticlesService {
-  private _data = new BehaviorSubject<number>(0);
-  countOfItems: Observable<number> = this._data.asObservable();
+export class ArticleService {
   constructor(
-    private _http: HttpClient
+    private _http: HttpClient,
+    private _articleState: ArticleState,
   ) {
   }
 
@@ -24,7 +24,7 @@ export class ArticlesService {
     url += `page=${page}&pageSize=${limit}`;
     return this._http.get<OperationResponse<Paginated<Article>>>(url).pipe(
       tap(response => {
-        this._data.next(response.data.total);
+        this._articleState.setCount(response.data.total);
       }),
       map(response => response.data.data)
     )
@@ -49,9 +49,9 @@ export class ArticlesService {
     );
   }
 
-  deleteItem(id: number ): Observable<null> {
+  deleteItem(id: number ): Observable<boolean> {
     return this._http.delete<OperationResponse<null>>(`${BASE_URL}/${id}`).pipe(
-      map(response => response.data)
+      map(response => response.success)
     );
   }
 }

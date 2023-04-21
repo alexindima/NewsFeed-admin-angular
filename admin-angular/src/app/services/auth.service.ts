@@ -1,7 +1,8 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {JSAuthResponse, LoginUser} from "../../interfaces";
+import {LoginUser} from "../interfaces";
 import {Observable, tap, catchError, throwError, Subject, switchMap} from "rxjs";
+import {AuthState} from "../states/auth.state";
 
 const LOGIN_URL = 'http://localhost:8000/login';
 const LOGOUT_URL = 'http://localhost:8000/logout';
@@ -11,9 +12,11 @@ const CSRF_TOKEN_URL = 'http://localhost:8000/sanctum/csrf-cookie';
   providedIn: 'root'
 })
 export class AuthService {
-  public error$: Subject<string> = new Subject<string>();
 
-  constructor(private _http: HttpClient) {
+  constructor(
+    private _http: HttpClient,
+    private _authState: AuthState,
+  ) {
   }
 
   login(user: LoginUser): Observable<null> {
@@ -39,7 +42,7 @@ export class AuthService {
 
   private handleError(error: HttpErrorResponse) {
     const message = error.error;
-    this.error$.next(message);
+    this._authState.setError(message);
     return throwError(error);
   }
 }

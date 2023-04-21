@@ -1,13 +1,10 @@
 import {Component} from '@angular/core';
-import {ArticlesService} from "../../services/articles.service";
+import {ArticleService} from "../../../services/article.service";
 import {Article} from "../../../interfaces";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {DashboardPageComponent} from "../dashboard-page/dashboard-page.component";
-
-// уже видел в user dashboard, так нельзя, два источника одинаковой фичи
-// далее весь фидбек будет в user-dashboard-page, здесь дублирование
-// нельзя так, всё что общее выносится в отдельные классы
+import {ArticleState} from "../../../states/article.state";
 
 @Component({
   selector: 'app-article-dashboard-page',
@@ -19,9 +16,10 @@ export class ArticleDashboardPageComponent extends DashboardPageComponent<Articl
     protected override _activatedRoute: ActivatedRoute,
     protected override _router: Router,
     protected override _matDialog: MatDialog,
-    protected override _service: ArticlesService
+    protected override _service: ArticleService,
+    protected override _state: ArticleState,
   ) {
-    super(_activatedRoute, _router, _matDialog, _service);
+    super(_activatedRoute, _router, _matDialog, _service, _state);
   }
 
 }

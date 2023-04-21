@@ -1,13 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {AuthService} from "../../services/auth.service";
+import {AuthService} from "../../../services/auth.service";
 import {MatDialog} from "@angular/material/dialog";
 import {
   ConfirmDialogModalComponent,
   ModalDialogData
 } from "../confirm-dialog-modal/confirm-dialog-modal.component";
-import {Subs} from "../../utils/subs";
-import {LoaderService} from "../../services/loader.service";
+import {Subs} from "../../../utils/subs";
+import {LoaderState} from "../../../states/loader.state";
 
 @Component({
   selector: 'app-admin-layout',
@@ -22,12 +22,12 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
     public auth: AuthService,
     private _router: Router,
     private _matDialog: MatDialog,
-    private _loaderService: LoaderService
+    private _loaderState: LoaderState,
   ) {
   }
 
   ngOnInit() {
-    this._loaderService.getInterceptCount().subscribe((count) => {
+    this._loaderState.intercepts$.subscribe((count) => {
       setTimeout(() => this.loading = !!count); // выглядит как большой хак, значит что-то не так пошло, надо разбираться причем здесь setTimeout
     })
   }

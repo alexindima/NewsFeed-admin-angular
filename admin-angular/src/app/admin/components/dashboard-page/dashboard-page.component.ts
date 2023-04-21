@@ -3,7 +3,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of, switchMap, take, tap } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { Subs } from '../../utils/subs';
+import { Subs } from '../../../utils/subs';
 import {ConfirmDialogModalComponent, ModalDialogData} from '../confirm-dialog-modal/confirm-dialog-modal.component';
 import {PaginatorSettings} from '../../../interfaces';
 
@@ -21,10 +21,11 @@ export abstract class DashboardPageComponent<T extends { id?: number }> implemen
     protected _router: Router,
     protected _matDialog: MatDialog,
     protected _service: any,
+    protected _state: any,
   ) {}
 
   ngOnInit() {
-    this._subs.add = this._service.countOfItems.subscribe((count: number) => {
+    this._subs.add = this._state.count$.subscribe((count: number) => {
       this.paginatorSettings.length = count;
     })
 

@@ -1,7 +1,7 @@
 import {Component, forwardRef, Input} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {Category, Tag} from "../../../interfaces";
-import {AutocompleteOptionsFiler} from "../../utils/autocomplete-options-filer";
+import {AutocompleteOptionsFiler} from "../../../utils/autocomplete-options-filer";
 
 @Component({
   selector: 'app-custom-category-tag-input',

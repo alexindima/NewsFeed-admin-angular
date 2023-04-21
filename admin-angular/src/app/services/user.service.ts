@@ -1,7 +1,8 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {OperationResponse, Paginated, User} from "../../interfaces";
+import {OperationResponse, Paginated, User} from "../interfaces";
 import {BehaviorSubject, map, Observable, tap} from "rxjs";
+import {UserState} from "../states/user.state";
 
 // я сча по проекту нашёл копипасту localhost:3030
 // а на занятиях я говорил про proxy conf файл,
@@ -11,10 +12,12 @@ const BASE_URL = `http://localhost:8000/api/users`;
 @Injectable({
   providedIn: 'root'
 })
-export class UsersService {
+export class UserService {
   private _data = new BehaviorSubject<number>(0);
   countOfItems: Observable<number> = this._data.asObservable();
-  constructor(private _http: HttpClient
+  constructor(
+    private _http: HttpClient,
+    private _userState: UserState,
   ) {
   }
 
@@ -26,7 +29,7 @@ export class UsersService {
     url += `page=${page}&pageSize=${limit}`;
     return this._http.get<OperationResponse<Paginated<User>>>(url).pipe(
       tap(response => {
-        this._data.next(response.data.total);
+        this._userState.setCount(response.data.total);
       }),
       map(response => response.data.data)
     )
@@ -50,9 +53,9 @@ export class UsersService {
     );
   }
 
-  deleteItem(id: number): Observable<User> {
+  deleteItem(id: number): Observable<boolean> {
     return this._http.delete<OperationResponse<User>>(`${BASE_URL}/${id}`).pipe(
-      map(response => response.data)
+      map(response => response.success)
     );
   }
 }

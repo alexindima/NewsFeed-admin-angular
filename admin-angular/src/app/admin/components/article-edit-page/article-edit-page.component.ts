@@ -2,12 +2,14 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import {Article, Category, Tag} from '../../../interfaces';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { ArticlesService } from '../../services/articles.service';
+import { ArticleService } from '../../../services/article.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SharedTagsService } from '../../services/shared-tags.service';
-import { SharedCategoriesService } from '../../services/shared-categories.service';
-import { Subs } from '../../utils/subs';
-import { AutocompleteOptionsFiler } from '../../utils/autocomplete-options-filer';
+import { SharedTagService } from '../../../services/shared-tag.service';
+import { SharedCategoryService } from '../../../services/shared-category.service';
+import { Subs } from '../../../utils/subs';
+import { AutocompleteOptionsFiler } from '../../../utils/autocomplete-options-filer';
+import {CategoryState} from "../../../states/category.state";
+import {TagState} from "../../../states/tag.state";
 
 interface ArticleForm {
   mainTitle: FormControl<string>;
@@ -55,9 +57,9 @@ export class ArticleEditPageComponent implements OnInit, OnDestroy {
   tagsControls: FormArray<FormControl<Tag | string>> = new FormArray<FormControl<Tag | string>>([]);
 
   constructor(
-    public sharedCategoriesService: SharedCategoriesService,
-    private _sharedTagsService: SharedTagsService,
-    private _articlesService: ArticlesService,
+    private _categoryState: CategoryState,
+    private _tagState: TagState,
+    private _articlesService: ArticleService,
     private _activatedRoute: ActivatedRoute,
     private _router: Router
   ) {
@@ -65,10 +67,10 @@ export class ArticleEditPageComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.articleFromResolver = this._activatedRoute.snapshot.data['article'];
-    this._subs.add = this.sharedCategoriesService.categories.subscribe((data) => {
+    this._subs.add = this._categoryState.items$.subscribe((data) => {
       this.categoriesList = data;
     })
-    this._subs.add = this._sharedTagsService.tags.subscribe((data) => {
+    this._subs.add = this._tagState.items$.subscribe((data) => {
       this.tagsList = data;
     })
 

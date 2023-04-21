@@ -4,13 +4,15 @@ import {Category, Tag, User} from "../../../interfaces";
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import * as bcrypt from 'bcryptjs';
 import {concat, forkJoin, map, Observable, of, toArray} from "rxjs";
-import {UsersService} from "../../services/users.service";
+import {UserService} from "../../../services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {appValidEqualFactory} from '../../utils/valid-equal'
-import {SharedTagsService} from "../../services/shared-tags.service";
-import {SharedCategoriesService} from "../../services/shared-categories.service";
-import {Subs} from "../../utils/subs";
-import {AutocompleteOptionsFiler} from "../../utils/autocomplete-options-filer";
+import {appValidEqualFactory} from '../../../utils/valid-equal'
+import {SharedTagService} from "../../../services/shared-tag.service";
+import {SharedCategoryService} from "../../../services/shared-category.service";
+import {Subs} from "../../../utils/subs";
+import {AutocompleteOptionsFiler} from "../../../utils/autocomplete-options-filer";
+import {CategoryState} from "../../../states/category.state";
+import {TagState} from "../../../states/tag.state";
 
 interface UserForm {
   name: FormControl<string>;
@@ -40,10 +42,7 @@ export class UserEditPageComponent implements OnInit, OnDestroy {
   submitted = false;
 
   // мусор из копипасты, всякий раз когда нажимаешь ctrl-v мысленно подогревается котёл в аду на 5 градусов если копипастишь люто
-  public Editor = ClassicEditor;
-  CKEditorConfig = {
-    placeholder: 'Create your article'
-  };
+
   categoriesList: Category[] = [];
   tagsList: Tag[] = [];
   categoriesAutocompleteOptions: AutocompleteOptionsFiler[] = [];
@@ -52,9 +51,9 @@ export class UserEditPageComponent implements OnInit, OnDestroy {
   tagsControls: FormArray<FormControl<Tag | string>> = new FormArray<FormControl<Tag | string>>([]);
 
   constructor(
-    public sharedCategoriesService: SharedCategoriesService,
-    private _sharedTagsService: SharedTagsService,
-    private _usersService: UsersService,
+    private _categoryState: CategoryState,
+    private _tagState: TagState,
+    private _usersService: UserService,
     private _activatedRoute: ActivatedRoute,
     private _router: Router
   ) {
@@ -62,10 +61,10 @@ export class UserEditPageComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.userFromResolver = this._activatedRoute.snapshot.data['user'];
-    this._subs.add = this.sharedCategoriesService.categories.subscribe((data) => {
+    this._subs.add = this._categoryState.items$.subscribe((data) => {
       this.categoriesList = data;
     })
-    this._subs.add = this._sharedTagsService.tags.subscribe((data) => {
+    this._subs.add = this._tagState.items$.subscribe((data) => {
       this.tagsList = data;
     })
 
@@ -173,14 +172,6 @@ export class UserEditPageComponent implements OnInit, OnDestroy {
     this.tagsControls.clear();
     newControls.forEach(control => this.tagsControls.push(control));
   }
-
-  getArrayOfNamesFromIDs(arrayOfObj: Tag[] | Category[], arrayOfIDs: string[]): string[] {
-    return arrayOfIDs.map((id: string) => {
-      const result = arrayOfObj.find(obj => obj.name === id);
-      return result ? result.name : `!wrong ID: ${id}!`;
-    })
-  }
-
 
   submit() {
     if (this.form.invalid) {

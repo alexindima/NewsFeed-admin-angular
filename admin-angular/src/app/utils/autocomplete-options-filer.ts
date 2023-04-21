@@ -1,4 +1,4 @@
-import {Category, Tag} from "../../interfaces";
+import {Category, Tag} from "../interfaces";
 import {FormControl} from "@angular/forms";
 
 export class AutocompleteOptionsFiler {

@@ -10,12 +10,12 @@ import {LoginPageComponent} from './admin/components/login-page/login-page.compo
 import {SharedModule} from "./shared.module";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
-import {AddXsrfInterceptor} from "./admin/interceptors/add-xsrf.interceptor";
+import {AddXsrfInterceptor} from "./interceptors/add-xsrf.interceptor";
 import {
   AddWithCredentialsInterceptor
-} from "./admin/interceptors/add-with-credentials.interceptor";
-import {AuthInterceptor} from "./admin/interceptors/auth.interceptor";
-import {LoaderInterceptor} from "./admin/interceptors/loader.interceptor";
+} from "./interceptors/add-with-credentials.interceptor";
+import {AuthInterceptor} from "./interceptors/auth.interceptor";
+import {LoaderInterceptor} from "./interceptors/loader.interceptor";
 
 @NgModule({
   declarations: [

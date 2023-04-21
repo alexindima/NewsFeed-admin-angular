@@ -5,21 +5,21 @@ import {
   ActivatedRouteSnapshot
 } from '@angular/router';
 import {catchError, Observable, throwError} from 'rxjs';
-import {UsersService} from "../services/users.service";
-import {User} from "../../interfaces";
+import {UserService} from "../services/user.service";
+import {User} from "../interfaces";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserResolver implements Resolve<User> {
   constructor(
-    private _usersService: UsersService,
+    private _userService: UserService,
     private _router: Router) {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<User> {
     const id: number = Number(route.paramMap.get('id'));
-    return this._usersService.getSingleItem(id).pipe(
+    return this._userService.getSingleItem(id).pipe(
       catchError((err) => {
         this._router.navigate(['/admin', 'users']);
         return throwError(err);
