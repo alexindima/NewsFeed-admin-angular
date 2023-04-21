@@ -12,7 +12,6 @@ const CSRF_TOKEN_URL = 'http://localhost:8000/sanctum/csrf-cookie';
   providedIn: 'root'
 })
 export class AuthService {
-
   constructor(
     private _http: HttpClient,
     private _authState: AuthState,
