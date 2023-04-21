@@ -3,7 +3,7 @@
 namespace Tests\Feature\Api;
 
 use App\Events\Models\User\UserCreated;
-use App\DbModels\User;
+use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;

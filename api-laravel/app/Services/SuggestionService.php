@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\DbModels\Article;
+use App\Models\Article;
 use App\Repositories\ArticleRepository;
 
 class SuggestionService

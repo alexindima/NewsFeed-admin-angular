@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
-use App\DbModels\Article;
+use App\Models\Article;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,13 +21,13 @@ class ArticleRepository extends BaseRepository
         return $this->model::query()->count();
     }
 
-    public function getPaginated(int $limit = 10, int $offset = 0): Collection
+    public function getPaginated(int $pageSize = 10, int $page = 1): Collection
     {
         $query = $this->model::query();
 
         return $query
-            ->limit($limit)
-            ->offset($offset)
+            ->limit($pageSize)
+            ->offset(($page - 1) * $pageSize)
             ->get();
     }
 

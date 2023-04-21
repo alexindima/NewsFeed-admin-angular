@@ -1,3 +1,5 @@
+import { PageEvent } from '@angular/material/paginator';
+
 export interface User {
   createdAt?: string;
   updatedAt?: string;
@@ -61,11 +63,7 @@ export interface PaginatorSettings {
   length: number,
   pageSize: number,
   pageIndex: number,
-  pageSizeOptions: number[],
-  hidePageSize: boolean,
-  showPageSizeOptions: boolean,
-  showFirstLastButtons: boolean,
-  disabled: boolean,
 }
+
 
 

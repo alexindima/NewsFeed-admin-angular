@@ -7,8 +7,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ArticleStoreRequest;
 use App\Http\Requests\ArticleUpdateRequest;
 use App\Http\Resources\ArticleResource;
-use App\Models\OperationResult;
-use App\Models\PagingModel;
+use App\AdditionalModels\OperationResult;
+use App\AdditionalModels\PagingModel;
 use App\Services\ArticleService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -41,10 +41,10 @@ class ArticleController extends Controller
     {
         Log::info('$request'. json_encode($request));
         // добавь типизации, лучше явно кастовать эти значения в int
-        $limit = $request->query('limit', 10);
-        $offset = $request->query('offset', 0);
+        $pageSize = (int)$request->query('pageSize', 10);
+        $page = (int)$request->query('page', 1);
 
-        $articles = $this->articleService->getPaginated($limit, $offset);
+        $articles = $this->articleService->getPaginated($pageSize, $page);
         $total = $this->articleService->getTotalCount();
 
         $data = new PagingModel(ArticleResource::collection($articles), $total);

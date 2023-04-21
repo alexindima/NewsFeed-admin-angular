@@ -60,21 +60,14 @@
 
   </div>
   <div class="mt-3">
-<!--    по хорошему это стоит вынести из пейджи в дочерний компонент, -->
-<!--    т.к. пейджа это лишь лейаут плюс стейт, она не должна быть свалкой для всех настроек дочерних компонентов-->
-    <mat-paginator
+    <app-dashboard-paginator
       class="bg-light demo-paginator"
-      (page)="handlePageEvent($event)"
       [length]="paginatorSettings.length"
       [pageSize]="paginatorSettings.pageSize"
-      [disabled]="paginatorSettings.disabled"
-      [showFirstLastButtons]="paginatorSettings.showFirstLastButtons"
-      [pageSizeOptions]="paginatorSettings.pageSizeOptions"
-      [hidePageSize]="paginatorSettings.hidePageSize"
       [pageIndex]="paginatorSettings.pageIndex"
-      aria-label="Select page"
+      (pageChanged)="pageChanged($event)"
     >
-    </mat-paginator>
+    </app-dashboard-paginator>
   </div>
 </div>
 

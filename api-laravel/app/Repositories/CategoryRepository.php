@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
-use App\DbModels\Category;
+use App\Models\Category;
 
 class CategoryRepository extends BaseRepository
 {

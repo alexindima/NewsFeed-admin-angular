@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\DbModels\Article;
-use App\DbModels\Tag;
+use App\Models\Article;
+use App\Models\Tag;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Log;

@@ -32,13 +32,12 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
     })
   }
 
-
   openLogoutModal() {
     const dialogRef = this._matDialog.open(ConfirmDialogModalComponent, {
       width: '600px',
       data: {
         title: 'Confirm LogOut',
-        text: `<p class="fw-bold">Are you sure you want to Log out? </p>`, // очень плохо, никакого html не должно быть в ts файлах, всё что имеет разметку выносится в отдельные компоненты и будет декларативно
+        text: `Are you sure you want to Log out?`,
         button: 'LogOut'
       } as ModalDialogData
     });

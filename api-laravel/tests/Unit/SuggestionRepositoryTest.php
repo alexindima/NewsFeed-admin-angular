@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\DbModels\Suggestion;
+use App\Models\Suggestion;
 use App\Repositories\SuggestionRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

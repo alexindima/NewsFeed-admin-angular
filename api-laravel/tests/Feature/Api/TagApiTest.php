@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Api;
 
-use App\DbModels\Tag;
+use App\Models\Tag;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

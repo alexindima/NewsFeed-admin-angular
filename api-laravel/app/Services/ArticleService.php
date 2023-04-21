@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\DbModels\Article;
+use App\Models\Article;
 use App\Repositories\ArticleRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\TagRepository;
@@ -34,9 +34,9 @@ class ArticleService
 
     // надо добавить везде типизацию
     // а возвращать лучше именно свой тип со нужными тебе полям, типа Collection<ArticleModel>
-    public function getPaginated($limit = 10, $offset = 0): Collection
+    public function getPaginated($pageSize = 10, $page = 1): Collection
     {
-        return $this->articleRepository->getPaginated($limit, $offset);
+        return $this->articleRepository->getPaginated($pageSize, $page);
     }
 
     public function getTotalCount(): int

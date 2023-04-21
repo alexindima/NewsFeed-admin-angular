@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {PageEvent} from "@angular/material/paginator";
-import {Article, Category, PaginatorSettings, Tag, User} from "../../../interfaces";
+import {Category, PaginatorSettings, Tag, User} from "../../../interfaces";
 import {ActivatedRoute, Router} from "@angular/router";
-import {of, switchMap, tap} from "rxjs";
+import {of, switchMap, take, tap} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
 import {
   ConfirmDialogModalComponent,
@@ -27,11 +27,6 @@ export class UserDashboardPageComponent implements OnInit, OnDestroy {
     length,
     pageSize: 25,
     pageIndex: 0,
-    pageSizeOptions: [10, 25, 50],
-    hidePageSize: false,
-    showPageSizeOptions: true,
-    showFirstLastButtons: true,
-    disabled: false
   };
   pageEvent!: PageEvent;
 
@@ -57,9 +52,11 @@ export class UserDashboardPageComponent implements OnInit, OnDestroy {
       this.paginatorSettings.length = count;
     })
 
-    this._subs.add = this._activatedRoute.queryParams.subscribe(params => {
+    this._subs.add = this._activatedRoute.queryParams.pipe(
+      take(1)
+    ).subscribe(params => {
         const pageIndex = +params['page'] - 1;
-        const pageSize = +params['limit'];
+        const pageSize = +params['pageSize'];
         if (pageSize) {
           this.paginatorSettings.pageSize = pageSize;
         }
@@ -96,8 +93,7 @@ export class UserDashboardPageComponent implements OnInit, OnDestroy {
       width: '600px',
       data: {
         title: 'Confirm Delete',
-        text: `<p class="fw-bold">Are you sure you want to delete user: </p>
-        "${user.email}"?`,
+        text: `Are you sure you want to delete user: "${user.email}"?`,
         button: 'Delete'
       } as ModalDialogData
     });
@@ -114,12 +110,11 @@ export class UserDashboardPageComponent implements OnInit, OnDestroy {
     ).subscribe();
   }
 
-  handlePageEvent(e: PageEvent) {
-    this.pageEvent = e;
-    this.paginatorSettings.length = e.length;
-    this.paginatorSettings.pageSize = e.pageSize;
-    this.paginatorSettings.pageIndex = e.pageIndex;
-    this.getUsers()
+  pageChanged($event: PageEvent) {
+    this.paginatorSettings.length = $event.length;
+    this.paginatorSettings.pageSize = $event.pageSize;
+    this.paginatorSettings.pageIndex = $event.pageIndex;
+    this.getUsers();
   }
 
   ngOnDestroy() {

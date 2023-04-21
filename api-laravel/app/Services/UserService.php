@@ -28,9 +28,9 @@ class UserService
         return $this->userRepository->getTotal();
     }
 
-    public function getPaginated($limit = 10, $offset = 0): Collection
+    public function getPaginated($pageSize = 10, $page = 1): Collection
     {
-        return $this->userRepository->getPaginated($limit, $offset);
+        return $this->userRepository->getPaginated($pageSize, $page);
     }
 
     public function create($user): Model

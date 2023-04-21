@@ -3,7 +3,7 @@ import {PageEvent} from "@angular/material/paginator";
 import {ArticlesService} from "../../services/articles.service";
 import {Article, PaginatorSettings} from "../../../interfaces";
 import {ActivatedRoute, Router} from "@angular/router";
-import {EMPTY, of, switchMap, tap} from "rxjs";
+import {EMPTY, of, switchMap, take, tap} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
 import {
   ConfirmDialogModalComponent,
@@ -27,11 +27,6 @@ export class ArticleDashboardPageComponent implements OnInit, OnDestroy {
     length,
     pageSize: 25,
     pageIndex: 0,
-    pageSizeOptions: [10, 25, 50],
-    hidePageSize: false,
-    showPageSizeOptions: true,
-    showFirstLastButtons: true,
-    disabled: false
   }
   pageEvent: PageEvent | undefined;
 
@@ -42,12 +37,16 @@ export class ArticleDashboardPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    console.log('ngOnInit')
+
     this._subs.add = this._articlesService.countOfArticles.subscribe((count) => {
       this.paginatorSettings.length = count;
     })
-    this._subs.add = this._activatedRoute.queryParams.subscribe(params => {
+    this._subs.add = this._activatedRoute.queryParams.pipe(
+      take(1)
+    ).subscribe(params => {
         const pageIndex = +params['page'] - 1;
-        const pageSize = +params['limit'];
+        const pageSize = +params['pageSize'];
         if (pageSize) {
           this.paginatorSettings.pageSize = pageSize;
         }
@@ -55,6 +54,7 @@ export class ArticleDashboardPageComponent implements OnInit, OnDestroy {
           this.paginatorSettings.pageIndex = pageIndex;
         }
         this.getArticles();
+
       });
   }
 
@@ -84,8 +84,7 @@ export class ArticleDashboardPageComponent implements OnInit, OnDestroy {
       width: '600px',
       data: {
         title: 'Confirm Delete',
-        text: `<p class="fw-bold">Are you sure you want to delete article: </p>
-        "${article.mainTitle}"?`,
+        text: `Are you sure you want to delete article: "${article.mainTitle}"?`,
         button: 'Delete'
       } as ModalDialogData
     });
@@ -102,11 +101,10 @@ export class ArticleDashboardPageComponent implements OnInit, OnDestroy {
     ).subscribe();
   }
 
-  handlePageEvent(e: PageEvent) {
-    this.pageEvent = e;
-    this.paginatorSettings.length = e.length;
-    this.paginatorSettings.pageSize = e.pageSize;
-    this.paginatorSettings.pageIndex = e.pageIndex;
+  pageChanged($event: PageEvent) {
+    this.paginatorSettings.length = $event.length;
+    this.paginatorSettings.pageSize = $event.pageSize;
+    this.paginatorSettings.pageIndex = $event.pageIndex;
     this.getArticles();
   }
 

@@ -8,9 +8,9 @@ use App\Events\Models\User\UserCreated;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Http\Resources\UserResource;
-use App\DbModels\User;
-use App\Models\OperationResult;
-use App\Models\PagingModel;
+use App\Models\User;
+use App\AdditionalModels\OperationResult;
+use App\AdditionalModels\PagingModel;
 use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -41,10 +41,10 @@ class UserController extends Controller{
      */
     public function index(Request $request): JsonResponse
     {
-        $limit = $request->query('limit', 10);
-        $offset = $request->query('offset', 0);
+        $pageSize = (int)$request->query('pageSize', 10);
+        $page = (int)$request->query('page', 1);
 
-        $users = $this->userService->getPaginated($limit, $offset);
+        $users = $this->userService->getPaginated($pageSize, $page);
         $total = $this->userService->getTotalCount();
 
         $data = new PagingModel(UserResource::collection($users), $total);

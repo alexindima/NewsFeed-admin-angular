@@ -17,11 +17,12 @@ export class ArticlesService {
   }
 
   getArticles(page: number, limit: number, search: string | null = null): Observable<Article[]> {
+    console.log('getArticles')
     let url = `${BASE_URL}?`;
     if (search) {
       url += `q=${search.replace(/ /g, "+")}&`;
     }
-    url += `_page=${page}&_limit=${limit}`;
+    url += `page=${page}&pageSize=${limit}`;
     return this._http.get<OperationResponse<PaginatedArticle>>(url).pipe(
       tap(response => {
         this._data.next(response.data.total);

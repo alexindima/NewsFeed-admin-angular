@@ -19,6 +19,7 @@ import {
 } from './components/custom-category-tag-input/custom-category-tag-input.component';
 import {SharedCategoriesResolver} from "./resolvers/shared-categories.resolver";
 import {SharedTagsResolver} from "./resolvers/shared-tags.resolver";
+import { DashboardPaginatorComponent } from './components/dashboard-paginator/dashboard-paginator.component';
 
 @NgModule({
   imports: [
@@ -65,7 +66,7 @@ import {SharedTagsResolver} from "./resolvers/shared-tags.resolver";
     ConfirmDialogModalComponent, // не относится непосредственно к админ модулю, точно является Shared
     ArrayToStringPipe, // не относится непосредственно к админ модулю, точно является Shared
     NotFoundPageComponent, // эта страница должна быть в SharedModule
-    CustomCategoryTagInputComponent  // не относится непосредственно к админ модулю, точно является Shared
+    CustomCategoryTagInputComponent, DashboardPaginatorComponent  // не относится непосредственно к админ модулю, точно является Shared
   ],
 })
 export class AdminModule {
