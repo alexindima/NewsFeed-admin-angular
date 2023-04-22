@@ -1,5 +1,3 @@
-import { PageEvent } from '@angular/material/paginator';
-
 export interface User {
   createdAt?: string;
   updatedAt?: string;
@@ -60,5 +58,7 @@ export interface PaginatorSettings {
   pageIndex: number,
 }
 
-
-
+export interface NameableWithId {
+  name: string;
+  id?: number
+}

@@ -1,6 +1,6 @@
 import {Component, forwardRef, Input} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {Category, Tag} from "../../../interfaces";
+import {NameableWithId} from "../../../interfaces";
 import {AutocompleteOptionsFiler} from "../../../utils/autocomplete-options-filer";
 
 @Component({
@@ -11,18 +11,17 @@ import {AutocompleteOptionsFiler} from "../../../utils/autocomplete-options-file
            class="{{class}}"
            [formControl]="autocompleteOptions.control"
            [matAutocomplete]="auto"
-           (focusin)="autocompleteOptions.createFilteredOptions(options)"
-           (input)="autocompleteOptions.createFilteredOptions(options)"
+           (focusin)="autocompleteOptions.createFilteredOptions()"
+           (input)="autocompleteOptions.createFilteredOptions()"
     >
     <mat-autocomplete
       #auto="matAutocomplete"
-      [displayWith]="displayFn"
     >
       <mat-option
         *ngFor="let option of autocompleteOptions.options"
         [value]="option"
       >
-        {{option.name}}
+        {{option}}
       </mat-option>
     </mat-autocomplete>
   `,
@@ -34,11 +33,10 @@ import {AutocompleteOptionsFiler} from "../../../utils/autocomplete-options-file
     }
   ]
 })
-export class CustomCategoryTagInputComponent implements ControlValueAccessor {
+export class CustomCategoryTagInputComponent<T extends NameableWithId> implements ControlValueAccessor {
   @Input() placeholder?: string;
   @Input() class?: string;
-  @Input() autocompleteOptions!: AutocompleteOptionsFiler;
-  @Input() options!: Category[] | Tag[];
+  @Input() autocompleteOptions!: AutocompleteOptionsFiler<T>;
 
 
   writeValue(obj: any): void {
@@ -53,10 +51,4 @@ export class CustomCategoryTagInputComponent implements ControlValueAccessor {
   setDisabledState?(isDisabled: boolean): void {
   }
 
-  displayFn(data: Tag | Category | string): string {
-    if (typeof data === 'string') {
-      return data;
-    }
-    return data && data.name ? data.name : '';
-  }
 }

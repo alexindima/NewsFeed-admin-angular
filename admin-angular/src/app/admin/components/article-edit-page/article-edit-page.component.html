@@ -1,5 +1,5 @@
 <div class="mt-3 container">
-  <h1 class="mb-3">Create an Article</h1>
+  <h1 class="mb-3">{{articleFromResolver ? 'Edit an Article' : 'Create an Article'}}</h1>
 
   <form class="pb-3 example-form" [formGroup]="form" (ngSubmit)="submit()">
     <h4>Category</h4>
@@ -7,7 +7,6 @@
       [placeholder]="'Choose category or enter a new one'"
       [class]="form.get('category')?.touched && form.get('category')?.invalid ? 'form-control border-danger' : 'form-control mb-3'"
       [autocompleteOptions]="categoryAutocompleteOptions"
-      [options]="categoriesList"
     ></app-custom-category-tag-input>
     <div
       id="categoryValidation"
@@ -137,14 +136,13 @@
             [placeholder]="'Choose tag or enter a new one'"
             [class]="'form-control w-100'"
             [autocompleteOptions]="tagsAutocompleteOptions[i]"
-            [options]="tagsList"
           ></app-custom-category-tag-input>
         </div>
         <div class="input-group-append">
           <button
             type="button"
             class="btn btn-info ml-3"
-            (click)="addTag()"
+            (click)="formTagService.addItem()"
           >
             Add another tag
           </button>
@@ -152,7 +150,7 @@
             type="button"
             class="btn btn-danger ml-3"
             [disabled]="i === 0"
-            (click)="removeTag(i)"
+            (click)="formTagService.removeItem(i)"
           >
             Remove tag
           </button>

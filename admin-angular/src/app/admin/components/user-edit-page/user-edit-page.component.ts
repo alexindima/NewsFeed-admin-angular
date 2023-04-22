@@ -9,14 +9,16 @@ import {Subs} from "../../../utils/subs";
 import {AutocompleteOptionsFiler} from "../../../utils/autocomplete-options-filer";
 import {CategoryState} from "../../../states/category.state";
 import {TagState} from "../../../states/tag.state";
+import {FormTagService} from "../../../services/form-tag.service";
+import {FormCategoryService} from "../../../services/form-category.service";
 
 interface UserForm {
   name: FormControl<string>;
   email: FormControl<string>;
   password: FormControl<string>;
   confirmPassword: FormControl<string>;
-  categories: FormArray<FormControl<string | Category>>;
-  tags: FormArray<FormControl<string | Tag>>;
+  categories: FormArray<FormControl<string>>;
+  tags: FormArray<FormControl<string>>;
   role: FormControl<string>;
 }
 
@@ -29,7 +31,11 @@ interface UserFromResolverForForm {
 @Component({
   selector: 'app-user-edit-page',
   templateUrl: './user-edit-page.component.html',
-  styleUrls: ['./user-edit-page.component.scss']
+  styleUrls: ['./user-edit-page.component.scss'],
+  providers: [
+    FormCategoryService,
+    FormTagService,
+  ],
 })
 export class UserEditPageComponent implements OnInit, OnDestroy {
   private _subs = new Subs();
@@ -39,30 +45,37 @@ export class UserEditPageComponent implements OnInit, OnDestroy {
 
   // мусор из копипасты, всякий раз когда нажимаешь ctrl-v мысленно подогревается котёл в аду на 5 градусов если копипастишь люто
 
-  categoriesList: Category[] = [];
-  tagsList: Tag[] = [];
-  categoriesAutocompleteOptions: AutocompleteOptionsFiler[] = [];
-  categoriesControls: FormArray<FormControl<Category | string>> = new FormArray<FormControl<Category | string>>([]);
-  tagsAutocompleteOptions: AutocompleteOptionsFiler[] = [];
-  tagsControls: FormArray<FormControl<Tag | string>> = new FormArray<FormControl<Tag | string>>([]);
+  categoriesAutocompleteOptions!: AutocompleteOptionsFiler<Category>[];
+  categoriesControls!: FormArray<FormControl<string>>;
+  tagsAutocompleteOptions!: AutocompleteOptionsFiler<Tag>[];
+  tagsControls!: FormArray<FormControl<string>>;
 
   constructor(
     private _categoryState: CategoryState,
     private _tagState: TagState,
     private _usersService: UserService,
     private _activatedRoute: ActivatedRoute,
-    private _router: Router
+    private _router: Router,
+    public formTagService: FormTagService,
+    public formCategoryService: FormCategoryService,
   ) {
   }
 
   ngOnInit() {
     this.userFromResolver = this._activatedRoute.snapshot.data['user'];
-    this._subs.add = this._categoryState.items$.subscribe((data) => {
-      this.categoriesList = data;
-    })
-    this._subs.add = this._tagState.items$.subscribe((data) => {
-      this.tagsList = data;
-    })
+
+    this._subs.add = this.formTagService.autocompleteOptions$.subscribe((data) => {
+      this.tagsAutocompleteOptions = data;
+    });
+    this._subs.add = this.formTagService.controls$.subscribe((data) => {
+      this.tagsControls = data;
+    });
+    this._subs.add = this.formCategoryService.autocompleteOptions$.subscribe((data) => {
+      this.categoriesAutocompleteOptions = data;
+    });
+    this._subs.add = this.formCategoryService.controls$.subscribe((data) => {
+      this.categoriesControls = data;
+    });
 
     this.form = new FormGroup<UserForm>({
       role: new FormControl('user', {
@@ -87,8 +100,8 @@ export class UserEditPageComponent implements OnInit, OnDestroy {
       tags: this.tagsControls
     });
 
-    this.addCategory();
-    this.addTag();
+    this.formCategoryService.addItem();
+    this.formTagService.addItem()
 
     this.form.setValidators(appValidEqualFactory(['password', 'confirmPassword'], 'VALIDATION.PASSWORD_MISMATCH'))
 
@@ -110,14 +123,15 @@ export class UserEditPageComponent implements OnInit, OnDestroy {
 
       if (categoriesNames.length > 1) {
         for (let i = 1; i < categoriesNames.length; i++) {
-          this.addCategory();
+          this.formCategoryService.addItem();
         }
       }
       if (tagsNames.length > 1) {
         for (let i = 1; i < tagsNames.length; i++) {
-          this.addTag();
+          this.formTagService.addItem()
         }
       }
+
 
       const userForForm: UserFromResolverForForm = {
         role: this.userFromResolver.role!,
@@ -133,42 +147,6 @@ export class UserEditPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  addCategory() {
-    this.categoriesAutocompleteOptions.push(new AutocompleteOptionsFiler(new FormControl('', {
-      nonNullable: true
-    })));
-    this.UpdateCategoriesControls();
-  }
-
-  addTag() {
-    this.tagsAutocompleteOptions.push(new AutocompleteOptionsFiler(new FormControl('', {
-      nonNullable: true
-    })));
-    this.UpdateTagsControls();
-  }
-
-  RemoveCategory(index: number) {
-    this.categoriesAutocompleteOptions.splice(index, 1);
-    this.UpdateCategoriesControls();
-  }
-
-  RemoveTag(index: number) {
-    this.tagsAutocompleteOptions.splice(index, 1);
-    this.UpdateTagsControls();
-  }
-
-  UpdateCategoriesControls() {
-    const newControls = this.categoriesAutocompleteOptions.map(o => o.control);
-    this.categoriesControls.clear();
-    newControls.forEach(control => this.categoriesControls.push(control));
-  }
-
-  UpdateTagsControls() {
-    const newControls = this.tagsAutocompleteOptions.map(o => o.control);
-    this.tagsControls.clear();
-    newControls.forEach(control => this.tagsControls.push(control));
-  }
-
   submit() {
     if (this.form.invalid) {
       return
@@ -177,24 +155,12 @@ export class UserEditPageComponent implements OnInit, OnDestroy {
 
     let ignoredCategories = new Set<string>()
     for (let category of this.categoriesAutocompleteOptions) {
-      if (typeof category.control.value === "string") {
-        if (category.control.value.trim()) {
-          ignoredCategories.add(category.control.value);
-        }
-      } else {
-        ignoredCategories.add(category.control.value.name);
-      }
+      ignoredCategories.add(category.control.value);
     }
 
     let ignoredTags = new Set<string>()
     for (let tag of this.tagsAutocompleteOptions) {
-      if (typeof tag.control.value === "string") {
-        if (tag.control.value.trim()) {
-          ignoredTags.add(tag.control.value);
-        }
-      } else {
-        ignoredTags.add(tag.control.value.name);
-      }
+      ignoredTags.add(tag.control.value);
     }
 
     let password = this.form.value.password;

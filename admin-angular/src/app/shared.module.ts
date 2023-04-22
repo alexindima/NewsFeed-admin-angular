@@ -20,7 +20,7 @@ import {MatButtonModule} from "@angular/material/button";
     MatInputModule,
     MatPaginatorModule,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
   ], // когда добавляется новая запись эту скобку придётся переносить ниже, ей идеально располагаться на отдельной строке
   exports: [
     CKEditorModule,
@@ -31,7 +31,7 @@ import {MatButtonModule} from "@angular/material/button";
     MatInputModule,
     MatPaginatorModule,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
   ]
 })
 export class SharedModule {

@@ -8,6 +8,8 @@ import { Subs } from '../../../utils/subs';
 import { AutocompleteOptionsFiler } from '../../../utils/autocomplete-options-filer';
 import {CategoryState} from "../../../states/category.state";
 import {TagState} from "../../../states/tag.state";
+import {FormTagService} from "../../../services/form-tag.service";
+import {FormCategoryService} from "../../../services/form-category.service";
 
 interface ArticleForm {
   mainTitle: FormControl<string>;
@@ -15,8 +17,8 @@ interface ArticleForm {
   photoPass: FormControl<string>;
   photoText: FormControl<string>;
   body: FormControl<string>;
-  category: FormControl<string | Category>;
-  tags: FormArray<FormControl<string | Tag>>;
+  category: FormControl<string>;
+  tags: FormArray<FormControl<string>>;
 }
 
 interface ArticleForForm {
@@ -31,7 +33,10 @@ interface ArticleForForm {
 @Component({
   selector: 'app-article-edit-page',
   templateUrl: './article-edit-page.component.html',
-  styleUrls: ['./article-edit-page.component.scss']
+  styleUrls: ['./article-edit-page.component.scss'],
+  providers: [
+    FormTagService
+  ],
 })
 export class ArticleEditPageComponent implements OnInit, OnDestroy {
   private _subs = new Subs();
@@ -46,20 +51,17 @@ export class ArticleEditPageComponent implements OnInit, OnDestroy {
     placeholder: 'Create your article'
   };
   categoriesList: Category[] = [];
-  tagsList: Tag[] = [];
-  categoryAutocompleteOptions: AutocompleteOptionsFiler = new AutocompleteOptionsFiler(new FormControl('', {
-    nonNullable: true,
-    validators: [Validators.required]
-  }));
-  tagsAutocompleteOptions: AutocompleteOptionsFiler[] = [];
-  tagsControls: FormArray<FormControl<Tag | string>> = new FormArray<FormControl<Tag | string>>([]);
+  categoryAutocompleteOptions!: AutocompleteOptionsFiler<Category>;
+  tagsAutocompleteOptions!: AutocompleteOptionsFiler<Tag>[];
+  tagsControls!: FormArray<FormControl<string>>;
 
   constructor(
     private _categoryState: CategoryState,
     private _tagState: TagState,
     private _articlesService: ArticleService,
     private _activatedRoute: ActivatedRoute,
-    private _router: Router
+    private _router: Router,
+    public formTagService: FormTagService,
   ) {
   }
 
@@ -67,9 +69,17 @@ export class ArticleEditPageComponent implements OnInit, OnDestroy {
     this.articleFromResolver = this._activatedRoute.snapshot.data['article'];
     this._subs.add = this._categoryState.items$.subscribe((data) => {
       this.categoriesList = data;
+      this.categoryAutocompleteOptions = new AutocompleteOptionsFiler(new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required]
+      }), this.categoriesList)
+    });
+
+    this._subs.add = this.formTagService.autocompleteOptions$.subscribe((data) => {
+      this.tagsAutocompleteOptions = data;
     })
-    this._subs.add = this._tagState.items$.subscribe((data) => {
-      this.tagsList = data;
+    this._subs.add = this.formTagService.controls$.subscribe((data) => {
+      this.tagsControls = data;
     })
 
     this.form = new FormGroup<ArticleForm>({
@@ -97,14 +107,14 @@ export class ArticleEditPageComponent implements OnInit, OnDestroy {
       tags: this.tagsControls
     });
 
-    this.addTag();
+    this.formTagService.addItem()
 
     if (this.articleFromResolver) {
       const tagsNames = this.articleFromResolver.tags;
 
       if (tagsNames.length > 1) {
         for (let i = 1; i < tagsNames.length; i++) {
-          this.addTag();
+          this.formTagService.addItem()
         }
       }
 
@@ -117,21 +127,20 @@ export class ArticleEditPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  addTag() {
+  /*addTag() {
     this.tagsAutocompleteOptions.push(new AutocompleteOptionsFiler(new FormControl('', {
       nonNullable: true
-    })))
+    }), this.tagsList))
     this.updateTagsControls();
-  }
+  }*/
 
-  // имена методов с маленькой буквы
   // у тебя сейчас получается маленькая свалка из методов,
   // которые можно вынести в дочерние компоненты, а то слишком низкоуровневые операции для пейджи,
   // я делал это на занятиях в answers-edit фиче
-  removeTag(index: number) {
+  /*removeTag(index: number) {
     this.tagsAutocompleteOptions.splice(index, 1);
     this.updateTagsControls();
-  }
+  }*/
 
   updateTagsControls() {
     const newControls = this.tagsAutocompleteOptions.map(o => o.control);
@@ -146,22 +155,11 @@ export class ArticleEditPageComponent implements OnInit, OnDestroy {
 
     this.submitted = true;
 
-    let category: string = this.form.value.category.name;
-    if (typeof this.form.value.category === 'string') {
-      if (this.form.value.category) {
-        category = this.form.value.category;
-      }
-    }
+    let category: string = this.form.value.category;
 
     let tags = new Set<string>();
     for (let tag of this.tagsAutocompleteOptions) {
-      if (typeof tag.control.value === 'string') {
-        if (tag.control.value.trim()) {
-          tags.add(tag.control.value);
-        }
-      } else {
-        tags.add(tag.control.value.name);
-      }
+      tags.add(tag.control.value.trim());
     }
 
     const article: Article = {

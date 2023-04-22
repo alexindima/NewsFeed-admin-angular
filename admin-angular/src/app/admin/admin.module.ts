@@ -20,6 +20,8 @@ import {
 import {SharedCategoryResolver} from "../resolvers/shared-category.resolver";
 import {SharedTagResolver} from "../resolvers/shared-tag.resolver";
 import { DashboardPaginatorComponent } from './components/dashboard-paginator/dashboard-paginator.component';
+import {FormTagService} from "../services/form-tag.service";
+import {FormCategoryService} from "../services/form-category.service";
 
 @NgModule({
   imports: [
@@ -57,6 +59,10 @@ import { DashboardPaginatorComponent } from './components/dashboard-paginator/da
   // который подгружается через lazy load, соответственно он не может ничего экспортировать
   // правильно будет RouterModule переместить в SharedModule, который ты как раз импортируешь во все FeatureModule
   exports: [RouterModule],
+  providers:[
+    FormTagService,
+    FormCategoryService
+  ],
   declarations: [
     AdminLayoutComponent,
     ArticleDashboardPageComponent,

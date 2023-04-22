@@ -10,7 +10,8 @@ import {Article} from "../interfaces";
 export class ArticleResolver implements Resolve<Article> {
   constructor(
     private _articleService: ArticleService,
-    private _router: Router) {
+    private _router: Router
+  ) {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Article> {
