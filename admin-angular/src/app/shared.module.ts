@@ -8,6 +8,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
+import {MatTableModule} from "@angular/material/table";
 
 // а также сюда попадают формы, роутинг модули, всякие визуальные компоненты, которые мы подключаем в feature модули
 @NgModule({
@@ -19,6 +20,7 @@ import {MatButtonModule} from "@angular/material/button";
     MatAutocompleteModule,
     MatInputModule,
     MatPaginatorModule,
+    MatTableModule,
     MatDialogModule,
     MatButtonModule,
   ], // когда добавляется новая запись эту скобку придётся переносить ниже, ей идеально располагаться на отдельной строке

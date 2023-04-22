@@ -22,6 +22,7 @@ import {TagResolver} from "../resolvers/tag.resolver";
 import { DashboardPaginatorComponent } from './components/dashboard-paginator/dashboard-paginator.component';
 import {FormTagService} from "../services/form-tag.service";
 import {FormCategoryService} from "../services/form-category.service";
+import {MatTableModule} from "@angular/material/table";
 
 @NgModule({
   imports: [
@@ -54,6 +55,7 @@ import {FormCategoryService} from "../services/form-category.service";
         ]
       }
     ]),
+    MatTableModule,
   ],
   // это неверно, у тебя admin.module является фича модулем,
   // который подгружается через lazy load, соответственно он не может ничего экспортировать

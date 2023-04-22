@@ -1,0 +1,16 @@
+@use "src/app/mixins" as mixins ;
+
+@include mixins.mat-table-columns((
+
+  id: (width: 3rem, color: gray),
+  createdAt: (width: 6rem),
+  updatedAt: (width: 6rem),
+  category: (width: 12rem),
+  mainTitle: (width: 20rem),
+  tags: (width: 12rem),
+
+));
+
+mat-header-cell {
+  font-weight: bold;
+}

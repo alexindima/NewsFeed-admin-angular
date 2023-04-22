@@ -14,6 +14,7 @@ import {TagState} from "../../../states/tag.state";
   styleUrls: ['./user-dashboard-page.component.scss']
 })
 export class UserDashboardPageComponent extends BaseDashboardPageComponent<User> implements OnInit {
+  displayedColumns: string[] = ['id', 'role', 'createdAt', 'name', 'email', 'categories', 'tags', 'actions'];
   categoriesList: Category[] = []
   tagsList: Tag[] = []
   constructor(
