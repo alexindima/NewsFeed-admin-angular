@@ -12,9 +12,9 @@ const BASE_URL = 'http://localhost:8000/api/tags';
 export class TagService extends BaseCategoryTagService<Tag>{
   constructor(
     protected override _http: HttpClient,
-    protected override _state: TagState,
+    protected _tagState: TagState,
   ) {
-    super(_http, _state, BASE_URL);
+    super(_http, _tagState, BASE_URL);
   }
 
 }

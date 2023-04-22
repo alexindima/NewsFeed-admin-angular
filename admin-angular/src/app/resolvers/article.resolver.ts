@@ -3,24 +3,18 @@ import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@ang
 import {catchError, Observable, throwError} from 'rxjs';
 import {ArticleService} from "../services/article.service";
 import {Article} from "../interfaces";
+import {BaseArticleUserResolver} from "./base-article-user.resolver";
+
+const ROUTE_TO_REDIRECT = ['/admin', 'articles'];
 
 @Injectable({
   providedIn: 'root'
 })
-export class ArticleResolver implements Resolve<Article> {
+export class ArticleResolver extends BaseArticleUserResolver<Article>{
   constructor(
-    private _articleService: ArticleService,
-    private _router: Router
+    protected _articleService: ArticleService,
+    protected override _router: Router
   ) {
-  }
-
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Article> {
-    const id: number = Number(route.paramMap.get('id'));
-    return this._articleService.getSingleItem(id).pipe(
-      catchError((err) => {
-        this._router.navigate(['/admin', 'articles']);
-        return throwError(err);
-      })
-    );
+    super(_articleService, _router, ROUTE_TO_REDIRECT)
   }
 }

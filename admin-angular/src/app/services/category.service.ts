@@ -12,9 +12,9 @@ const BASE_URL = 'http://localhost:8000/api/categories';
 export class CategoryService extends BaseCategoryTagService<Category>{
   constructor(
     protected override _http: HttpClient,
-    protected override _state: CategoryState,
+    protected _categoryState: CategoryState,
   ) {
-    super(_http, _state, BASE_URL);
+    super(_http, _categoryState, BASE_URL);
   }
 
 }

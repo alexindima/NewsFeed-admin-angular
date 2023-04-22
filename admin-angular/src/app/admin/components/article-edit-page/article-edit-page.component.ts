@@ -4,12 +4,14 @@ import {Article, Category, Tag} from '../../../interfaces';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ArticleService } from '../../../services/article.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subs } from '../../../utils/subs';
 import { AutocompleteOptionsFiler } from '../../../utils/autocomplete-options-filer';
 import {CategoryState} from "../../../states/category.state";
 import {TagState} from "../../../states/tag.state";
 import {FormTagService} from "../../../services/form-tag.service";
-import {FormCategoryService} from "../../../services/form-category.service";
+import {ckeditorConfig} from "../../../configs/ckeditor-config";
+import {BaseEditPageComponent} from "../base-edit-page/base-edit-page.component";
+
+const ROUTE_TO_REDIRECT: string[] = ['/admin', 'articles'];
 
 interface ArticleForm {
   mainTitle: FormControl<string>;
@@ -21,15 +23,6 @@ interface ArticleForm {
   tags: FormArray<FormControl<string>>;
 }
 
-interface ArticleForForm {
-  mainTitle: string;
-  secondTitle: string;
-  photoPass: string;
-  photoText: string;
-  body: string;
-  category: string;
-}
-
 @Component({
   selector: 'app-article-edit-page',
   templateUrl: './article-edit-page.component.html',
@@ -38,35 +31,31 @@ interface ArticleForForm {
     FormTagService
   ],
 })
-export class ArticleEditPageComponent implements OnInit, OnDestroy {
-  private _subs = new Subs();
-  articleFromResolver: Article | undefined; // лишнее пространство имён, корректнее будет item или article
+export class ArticleEditPageComponent extends BaseEditPageComponent<Article> implements OnInit {
+  item: Article | undefined;
   form!: FormGroup;
   submitted = false;
-
-  // вот не надо так, все конфиги редактора стоит вынести в app-editor компонент какой-нибудь,
-  // а то получается что пейджи слишком много знают о том, что низкоуровневое для них
   public Editor = ClassicEditor;
-  CKEditorConfig = {
-    placeholder: 'Create your article'
-  };
+  CKEditorConfig = ckeditorConfig;
   categoriesList: Category[] = [];
   categoryAutocompleteOptions!: AutocompleteOptionsFiler<Category>;
   tagsAutocompleteOptions!: AutocompleteOptionsFiler<Tag>[];
   tagsControls!: FormArray<FormControl<string>>;
 
   constructor(
-    private _categoryState: CategoryState,
-    private _tagState: TagState,
-    private _articlesService: ArticleService,
-    private _activatedRoute: ActivatedRoute,
-    private _router: Router,
-    public formTagService: FormTagService,
+    protected _categoryState: CategoryState,
+    protected _tagState: TagState,
+    protected _articleService: ArticleService,
+    protected _activatedRoute: ActivatedRoute,
+    protected override _router: Router,
+    protected formTagService: FormTagService,
   ) {
+    super(_articleService, _router, ROUTE_TO_REDIRECT);
   }
 
-  ngOnInit() {
-    this.articleFromResolver = this._activatedRoute.snapshot.data['article'];
+  override ngOnInit() {
+    this.item = this._activatedRoute.snapshot.data['article'];
+
     this._subs.add = this._categoryState.items$.subscribe((data) => {
       this.categoriesList = data;
       this.categoryAutocompleteOptions = new AutocompleteOptionsFiler(new FormControl('', {
@@ -82,6 +71,10 @@ export class ArticleEditPageComponent implements OnInit, OnDestroy {
       this.tagsControls = data;
     })
 
+    super.ngOnInit();
+  }
+
+  createForm(){
     this.form = new FormGroup<ArticleForm>({
       mainTitle: new FormControl('', {
         nonNullable: true,
@@ -108,53 +101,19 @@ export class ArticleEditPageComponent implements OnInit, OnDestroy {
     });
 
     this.formTagService.addItem()
-
-    if (this.articleFromResolver) {
-      const tagsNames = this.articleFromResolver.tags;
-
-      if (tagsNames.length > 1) {
-        for (let i = 1; i < tagsNames.length; i++) {
-          this.formTagService.addItem()
-        }
-      }
-
-      const articleForForm: ArticleForForm = this.articleFromResolver;
-      console.log(articleForForm)
-      this.form.patchValue(articleForForm)
-      this.form.patchValue({
-        tags: tagsNames
-      })
-    }
   }
 
-  /*addTag() {
-    this.tagsAutocompleteOptions.push(new AutocompleteOptionsFiler(new FormControl('', {
-      nonNullable: true
-    }), this.tagsList))
-    this.updateTagsControls();
-  }*/
+  fillForm(){
+    const tagsNames = this.item!.tags;
+    this.createAutocompleteInputs(tagsNames, this.formTagService)
 
-  // у тебя сейчас получается маленькая свалка из методов,
-  // которые можно вынести в дочерние компоненты, а то слишком низкоуровневые операции для пейджи,
-  // я делал это на занятиях в answers-edit фиче
-  /*removeTag(index: number) {
-    this.tagsAutocompleteOptions.splice(index, 1);
-    this.updateTagsControls();
-  }*/
-
-  updateTagsControls() {
-    const newControls = this.tagsAutocompleteOptions.map(o => o.control);
-    this.tagsControls.clear();
-    newControls.forEach(control => this.tagsControls.push(control));
+    this.form.patchValue(this.item!);
+    this.form.patchValue({
+      tags: tagsNames
+    });
   }
 
-  submit() {
-    if (this.form.invalid) {
-      return;
-    }
-
-    this.submitted = true;
-
+  createItemInstance(){
     let category: string = this.form.value.category;
 
     let tags = new Set<string>();
@@ -162,7 +121,7 @@ export class ArticleEditPageComponent implements OnInit, OnDestroy {
       tags.add(tag.control.value.trim());
     }
 
-    const article: Article = {
+    const itemInstance: Article = {
       category: category,
       mainTitle: this.form.value.mainTitle,
       secondTitle: this.form.value.secondTitle,
@@ -171,33 +130,7 @@ export class ArticleEditPageComponent implements OnInit, OnDestroy {
       body: this.form.value.body,
       tags: [...tags]
     }
-    const createArticle = () => {
-      this._subs.add = this._articlesService.createItem(article).subscribe(
-        () => this._router.navigate(['/admin', 'articles'])
-      )
-    }
 
-    const editArticle = () => {
-      this._subs.add = this._articlesService.editItem(this.articleFromResolver!.id!, article).subscribe(
-        () => this._router.navigate(['/admin', 'articles'])
-      )
-    }
-
-    if (this.articleFromResolver) {
-      editArticle();
-    } else {
-      createArticle();
-    }
-
-    const finishing = () => {
-      this.form.reset()
-      this.submitted = false;
-      this._router.navigate(['/admin', 'articles']).then();
-    }
-
-  }
-
-  ngOnDestroy() {
-    this._subs.unsubscribe();
+    return itemInstance;
   }
 }

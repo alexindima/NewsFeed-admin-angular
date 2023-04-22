@@ -16,9 +16,9 @@ export class UserService extends BaseArticleUserService<User>{
 
   constructor(
     protected override _http: HttpClient,
-    protected override _state: UserState,
+    protected _userState: UserState,
   ) {
-    super(_http, _state, BASE_URL);
+    super(_http, _userState, BASE_URL);
   }
 }
 

@@ -2,18 +2,18 @@ import {Component, OnInit} from '@angular/core';
 import {Category, Tag, User} from "../../../interfaces";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
-import {DashboardPageComponent} from "../dashboard-page/dashboard-page.component";
+import {BaseDashboardPageComponent} from "../base-dashboard-page/base-dashboard-page.component";
 import {UserService} from "../../../services/user.service";
 import {UserState} from "../../../states/user.state";
 import {CategoryState} from "../../../states/category.state";
 import {TagState} from "../../../states/tag.state";
 
 @Component({
-  selector: 'app-user-dashboard-page',
+  selector: 'app-user-base-dashboard-page',
   templateUrl: './user-dashboard-page.component.html',
   styleUrls: ['./user-dashboard-page.component.scss']
 })
-export class UserDashboardPageComponent extends DashboardPageComponent<User> implements OnInit {
+export class UserDashboardPageComponent extends BaseDashboardPageComponent<User> implements OnInit {
   categoriesList: Category[] = []
   tagsList: Tag[] = []
   constructor(
@@ -22,8 +22,8 @@ export class UserDashboardPageComponent extends DashboardPageComponent<User> imp
     protected override _matDialog: MatDialog,
     protected override _service: UserService,
     protected override _state: UserState,
-    private _categoryState: CategoryState,
-    private _tagState: TagState,
+    protected _categoryState: CategoryState,
+    protected _tagState: TagState,
   ) {
   super(_activatedRoute, _router, _matDialog, _service, _state);
   }

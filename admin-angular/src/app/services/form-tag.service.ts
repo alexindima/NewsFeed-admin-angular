@@ -6,9 +6,9 @@ import {BaseFormAutocompleteService} from "./base-form-autocomplete.service";
 @Injectable()
 export class FormTagService extends BaseFormAutocompleteService<Tag> {
   constructor(
-    protected override _itemsState: TagState
+    protected _tagState: TagState
   ) {
-    super(_itemsState,);
+    super(_tagState,);
   }
 
 }

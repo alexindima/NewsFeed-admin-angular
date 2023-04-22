@@ -6,9 +6,9 @@ import {BaseFormAutocompleteService} from "./base-form-autocomplete.service";
 @Injectable()
 export class FormCategoryService extends BaseFormAutocompleteService<Category>{
   constructor(
-    protected override _itemsState: CategoryState
+    protected _categoryState: CategoryState
   ) {
-    super(_itemsState,);
+    super(_categoryState,);
   }
 
 }

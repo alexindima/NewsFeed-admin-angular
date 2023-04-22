@@ -15,10 +15,6 @@ export interface LoginUser {
   password: string,
 }
 
-export interface JSAuthResponse {
-  accessToken: string
-}
-
 export interface OperationResponse<T> {
   data: T,
   success: boolean,

@@ -1,16 +1,19 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Category, Tag, User} from "../../../interfaces";
 import * as bcrypt from 'bcryptjs';
 import {UserService} from "../../../services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {appValidEqualFactory} from '../../../utils/valid-equal'
-import {Subs} from "../../../utils/subs";
 import {AutocompleteOptionsFiler} from "../../../utils/autocomplete-options-filer";
 import {CategoryState} from "../../../states/category.state";
 import {TagState} from "../../../states/tag.state";
 import {FormTagService} from "../../../services/form-tag.service";
 import {FormCategoryService} from "../../../services/form-category.service";
+import { omit } from 'lodash';
+import {BaseEditPageComponent} from "../base-edit-page/base-edit-page.component";
+
+const ROUTE_TO_REDIRECT: string[] = ['/admin', 'users'];
 
 interface UserForm {
   name: FormControl<string>;
@@ -22,12 +25,6 @@ interface UserForm {
   role: FormControl<string>;
 }
 
-interface UserFromResolverForForm {
-  role: string;
-  name: string;
-  email: string;
-}
-
 @Component({
   selector: 'app-user-edit-page',
   templateUrl: './user-edit-page.component.html',
@@ -37,32 +34,29 @@ interface UserFromResolverForForm {
     FormTagService,
   ],
 })
-export class UserEditPageComponent implements OnInit, OnDestroy {
-  private _subs = new Subs();
-  userFromResolver: User | undefined;
+export class UserEditPageComponent extends BaseEditPageComponent<User> implements OnInit {
+  item: User | undefined;
   form!: FormGroup;
   submitted = false;
-
-  // мусор из копипасты, всякий раз когда нажимаешь ctrl-v мысленно подогревается котёл в аду на 5 градусов если копипастишь люто
-
   categoriesAutocompleteOptions!: AutocompleteOptionsFiler<Category>[];
   categoriesControls!: FormArray<FormControl<string>>;
   tagsAutocompleteOptions!: AutocompleteOptionsFiler<Tag>[];
   tagsControls!: FormArray<FormControl<string>>;
 
   constructor(
-    private _categoryState: CategoryState,
-    private _tagState: TagState,
-    private _usersService: UserService,
-    private _activatedRoute: ActivatedRoute,
-    private _router: Router,
-    public formTagService: FormTagService,
-    public formCategoryService: FormCategoryService,
+    protected _categoryState: CategoryState,
+    protected _tagState: TagState,
+    protected _usersService: UserService,
+    protected _activatedRoute: ActivatedRoute,
+    protected override _router: Router,
+    protected formTagService: FormTagService,
+    protected formCategoryService: FormCategoryService,
   ) {
+    super(_usersService, _router, ROUTE_TO_REDIRECT);
   }
 
-  ngOnInit() {
-    this.userFromResolver = this._activatedRoute.snapshot.data['user'];
+  override ngOnInit() {
+    this.item = this._activatedRoute.snapshot.data['user'];
 
     this._subs.add = this.formTagService.autocompleteOptions$.subscribe((data) => {
       this.tagsAutocompleteOptions = data;
@@ -77,6 +71,10 @@ export class UserEditPageComponent implements OnInit, OnDestroy {
       this.categoriesControls = data;
     });
 
+    super.ngOnInit();
+  }
+
+  createForm(){
     this.form = new FormGroup<UserForm>({
       role: new FormControl('user', {
         nonNullable: true
@@ -100,9 +98,6 @@ export class UserEditPageComponent implements OnInit, OnDestroy {
       tags: this.tagsControls
     });
 
-    this.formCategoryService.addItem();
-    this.formTagService.addItem()
-
     this.form.setValidators(appValidEqualFactory(['password', 'confirmPassword'], 'VALIDATION.PASSWORD_MISMATCH'))
 
     this._subs.add = this.form.get('password')!.valueChanges.subscribe(() => {
@@ -117,42 +112,26 @@ export class UserEditPageComponent implements OnInit, OnDestroy {
       })
     });
 
-    if (this.userFromResolver) {
-      const categoriesNames = this.userFromResolver.categories;
-      const tagsNames = this.userFromResolver.tags;
-
-      if (categoriesNames.length > 1) {
-        for (let i = 1; i < categoriesNames.length; i++) {
-          this.formCategoryService.addItem();
-        }
-      }
-      if (tagsNames.length > 1) {
-        for (let i = 1; i < tagsNames.length; i++) {
-          this.formTagService.addItem()
-        }
-      }
-
-
-      const userForForm: UserFromResolverForForm = {
-        role: this.userFromResolver.role!,
-        name: this.userFromResolver.name!,
-        email: this.userFromResolver.email!
-      };
-      this.form.patchValue(userForForm);
-      this.form.patchValue({
-        categories: categoriesNames,
-        tags: tagsNames
-      })
-      this.form.get('password')!.removeValidators([Validators.required]);
-    }
+    this.formCategoryService.addItem();
+    this.formTagService.addItem()
   }
 
-  submit() {
-    if (this.form.invalid) {
-      return
-    }
-    this.submitted = true;
+  fillForm(){
+    const categoriesNames = this.item!.categories;
+    const tagsNames = this.item!.tags;
 
+    const itemWithoutPassword = omit(this.item, ['password']);
+    this.createAutocompleteInputs(categoriesNames, this.formCategoryService);
+    this.createAutocompleteInputs(tagsNames, this.formTagService);
+    this.form.patchValue(itemWithoutPassword);
+    this.form.patchValue({
+      categories: categoriesNames,
+      tags: tagsNames
+    })
+    this.form.get('password')!.removeValidators([Validators.required]);
+  }
+
+  createItemInstance(){
     let ignoredCategories = new Set<string>()
     for (let category of this.categoriesAutocompleteOptions) {
       ignoredCategories.add(category.control.value);
@@ -169,7 +148,7 @@ export class UserEditPageComponent implements OnInit, OnDestroy {
       password = bcrypt.hashSync(password, salt);
     }
 
-    const user: User = {
+    const itemInstance: User = {
       role: this.form.value.role,
       name: this.form.value.name,
       email: this.form.value.email,
@@ -178,28 +157,9 @@ export class UserEditPageComponent implements OnInit, OnDestroy {
       tags: [...ignoredTags],
     }
 
-    const createUser = () => {
-      this._subs.add = this._usersService.createItem(user).subscribe(() =>
-        this._router.navigate(['/admin', 'users'])
-      )
-    }
-
-    const editUser = () => {
-      this._subs.add = this._usersService.editItem(this.userFromResolver!.id!, user).subscribe(() =>
-        this._router.navigate(['/admin', 'users'])
-      )
-    }
-
-    if (this.userFromResolver) {
-      editUser();
-    } else {
-      createUser();
-    }
+    return itemInstance;
   }
 
-  ngOnDestroy() {
-    this._subs.unsubscribe();
-  }
 }
 
 

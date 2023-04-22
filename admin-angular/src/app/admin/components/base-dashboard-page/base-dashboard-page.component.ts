@@ -8,7 +8,7 @@ import {ConfirmDialogModalComponent, ModalDialogData} from '../confirm-dialog-mo
 import {PaginatorSettings} from '../../../interfaces';
 
 @Injectable()
-export abstract class DashboardPageComponent<T extends { id?: number }> implements OnInit, OnDestroy {
+export abstract class BaseDashboardPageComponent<T extends { id?: number }> implements OnInit, OnDestroy {
   protected _subs = new Subs();
   itemsList: T[] = [];
   paginatorSettings: PaginatorSettings = {

@@ -17,8 +17,8 @@ import {ArticleResolver} from "../resolvers/article.resolver";
 import {
   CustomCategoryTagInputComponent
 } from './components/custom-category-tag-input/custom-category-tag-input.component';
-import {SharedCategoryResolver} from "../resolvers/shared-category.resolver";
-import {SharedTagResolver} from "../resolvers/shared-tag.resolver";
+import {CategoryResolver} from "../resolvers/category.resolver";
+import {TagResolver} from "../resolvers/tag.resolver";
 import { DashboardPaginatorComponent } from './components/dashboard-paginator/dashboard-paginator.component';
 import {FormTagService} from "../services/form-tag.service";
 import {FormCategoryService} from "../services/form-category.service";
@@ -31,8 +31,8 @@ import {FormCategoryService} from "../services/form-category.service";
     RouterModule.forChild([
       {
         path: '', component: AdminLayoutComponent, resolve: {
-          categories: SharedCategoryResolver,
-          tags: SharedTagResolver,
+          categories: CategoryResolver,
+          tags: TagResolver,
         }, children: [
           {path: '', redirectTo: '/admin/login', pathMatch: "full"},
           {path: 'login', component: LoginPageComponent},
