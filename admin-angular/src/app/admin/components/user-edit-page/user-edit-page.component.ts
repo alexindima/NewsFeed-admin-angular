@@ -132,15 +132,15 @@ export class UserEditPageComponent extends BaseEditPageComponent<User> implement
   }
 
   createItemInstance(){
-    let ignoredCategories = new Set<string>()
-    for (let category of this.categoriesAutocompleteOptions) {
-      ignoredCategories.add(category.control.value);
-    }
+    const ignoredCategories = new Set<string>(
+      this.categoriesAutocompleteOptions.map(category => category.control.value.trim())
+        .filter(trimmedCategory => trimmedCategory != '')
+    );
 
-    let ignoredTags = new Set<string>()
-    for (let tag of this.tagsAutocompleteOptions) {
-      ignoredTags.add(tag.control.value);
-    }
+    const ignoredTags = new Set<string>(
+      this.tagsAutocompleteOptions.map(tag => tag.control.value.trim())
+        .filter(trimmedTag => trimmedTag != '')
+    );
 
     let password = this.form.value.password;
     if(password){

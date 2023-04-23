@@ -13,6 +13,7 @@ import {MatTableModule} from "@angular/material/table";
 // а также сюда попадают формы, роутинг модули, всякие визуальные компоненты, которые мы подключаем в feature модули
 @NgModule({
   imports: [
+    //MatSnackBar,
     CKEditorModule,
     HttpClientModule,
     ReactiveFormsModule,

@@ -12,7 +12,7 @@ import {ArticleState} from "../../../states/article.state";
   styleUrls: ['./article-dashboard-page.component.scss']
 })
 export class ArticleDashboardPageComponent extends BaseDashboardPageComponent<Article>{
-  displayedColumns: string[] = ['id', 'createdAt', 'updatedAt', 'category', 'mainTitle', 'tags'];
+  displayedColumns: string[] = ['id', 'createdAt', 'updatedAt', 'category', 'mainTitle', 'tags', 'actions'];
   constructor(
     protected override _activatedRoute: ActivatedRoute,
     protected override _router: Router,

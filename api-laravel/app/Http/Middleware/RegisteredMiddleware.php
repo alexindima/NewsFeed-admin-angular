@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
+use App\AdditionalModels\OperationResult;
 use Closure;
 use Illuminate\Cookie\Middleware\EncryptCookies as Middleware;
 use Illuminate\Http\Request;
@@ -17,6 +18,6 @@ class RegisteredMiddleware extends Middleware
         if ($request->user() && $request->user()->hasRole('admin') || in_array($request->user()->id, $id)) {
             return $next($request);
         }
-        return response()->json(['error' => 'Forbidden'], Response::HTTP_FORBIDDEN);
+        return response()->json(OperationResult::fail('Forbidden'));
     }
 }

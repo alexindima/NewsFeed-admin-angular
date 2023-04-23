@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
-import {catchError, Observable, throwError} from 'rxjs';
+import {Router} from '@angular/router';
 import {ArticleService} from "../services/article.service";
 import {Article} from "../interfaces";
 import {BaseArticleUserResolver} from "./base-article-user.resolver";

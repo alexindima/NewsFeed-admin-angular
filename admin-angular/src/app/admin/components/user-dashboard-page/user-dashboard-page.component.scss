@@ -10,9 +10,13 @@
   categories: (width: 12rem),
   tags: (width: 12rem),
   actions: (width: 10rem),
-
 ));
 
 mat-header-cell {
   font-weight: bold;
+}
+
+mat-cell {
+  padding-bottom: 3px;
+  padding-top: 3px;
 }

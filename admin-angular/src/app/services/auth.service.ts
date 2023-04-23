@@ -25,7 +25,7 @@ export class AuthService {
       switchMap(() => {
         return this._http.post<null>(LOGIN_URL, user)
           .pipe(
-            tap(() => sessionStorage.setItem('isAuthenticated', 'true')),
+            tap(() => localStorage.setItem('isAuthenticated', 'true')),
             catchError(this.handleError.bind(this))
           );
       })
@@ -34,17 +34,21 @@ export class AuthService {
 
   logout() {
     this._http.post(LOGOUT_URL, {}).subscribe()
-    sessionStorage.removeItem('isAuthenticated');
+    localStorage.removeItem('isAuthenticated');
     this._router.navigate(['/admin', 'login'])
   }
 
   isAuthenticated(): boolean {
-    return sessionStorage.getItem('isAuthenticated') === 'true';
+    return localStorage.getItem('isAuthenticated') === 'true';
   }
 
   private handleError(error: HttpErrorResponse) {
-    const message = error.error;
-    this._authState.setError(message);
+    if(error.status === 422){
+      this._authState.setError('Wrong email or password');
+    }
+    else{
+      this._authState.setError('Server error. Please try again');
+    }
     return throwError(error);
   }
 }

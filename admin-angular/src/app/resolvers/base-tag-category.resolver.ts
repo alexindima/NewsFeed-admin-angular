@@ -4,7 +4,6 @@ import {
   ActivatedRouteSnapshot, Resolve
 } from '@angular/router';
 import {Observable} from 'rxjs';
-import {Category, OperationResponse} from "../interfaces";
 
 export abstract class BaseTagCategoryResolver<T> implements Resolve<T> {
   protected constructor(

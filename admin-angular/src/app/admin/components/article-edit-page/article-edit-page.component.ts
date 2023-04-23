@@ -114,12 +114,12 @@ export class ArticleEditPageComponent extends BaseEditPageComponent<Article> imp
   }
 
   createItemInstance(){
-    let category: string = this.form.value.category;
+    const category: string = this.form.value.category;
 
-    let tags = new Set<string>();
-    for (let tag of this.tagsAutocompleteOptions) {
-      tags.add(tag.control.value.trim());
-    }
+    const tags = new Set<string>(
+      this.tagsAutocompleteOptions.map(tag => tag.control.value.trim())
+        .filter(trimmedTag => trimmedTag != '')
+    );
 
     const itemInstance: Article = {
       category: category,

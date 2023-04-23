@@ -14,13 +14,14 @@ import {AddXsrfInterceptor} from "./interceptors/add-xsrf.interceptor";
 import {
   AddWithCredentialsInterceptor
 } from "./interceptors/add-with-credentials.interceptor";
-import {AuthInterceptor} from "./interceptors/auth.interceptor";
 import {LoaderInterceptor} from "./interceptors/loader.interceptor";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {ResponseNotificationInterceptor} from "./interceptors/response-notification.interceptor";
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginPageComponent
+    LoginPageComponent,
   ],
   imports: [
     AppRoutingModule, // этот модуль точно принадлежит App Module, остальные - Shared модули
@@ -37,9 +38,10 @@ import {LoaderInterceptor} from "./interceptors/loader.interceptor";
     MatNativeDateModule,
   ],
   providers: [
+    MatSnackBar,
     { provide: HTTP_INTERCEPTORS, useClass: AddXsrfInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AddWithCredentialsInterceptor, multi: true},
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: ResponseNotificationInterceptor, multi: true},
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true},
 
   ],
