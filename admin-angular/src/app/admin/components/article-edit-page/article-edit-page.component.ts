@@ -99,8 +99,6 @@ export class ArticleEditPageComponent extends BaseEditPageComponent<Article> imp
       category: this.categoryAutocompleteOptions.control,
       tags: this.tagsControls
     });
-
-    this.formTagService.addItem()
   }
 
   fillForm(){

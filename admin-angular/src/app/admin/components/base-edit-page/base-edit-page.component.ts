@@ -29,8 +29,8 @@ export abstract class BaseEditPageComponent<T extends { id?: number }> implement
   abstract createItemInstance(): T;
 
   createAutocompleteInputs(values: string[], service: any){
-    if (values.length > 1) {
-      for (let i = 1; i < values.length; i++) {
+      if (values.length >= 1) {
+      for (let i = 0; i < values.length; i++) {
         service.addItem();
       }
     }

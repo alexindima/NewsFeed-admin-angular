@@ -4,7 +4,7 @@ import {Article} from "../interfaces";
 import {ArticleState} from "../states/article.state";
 import {BaseArticleUserService} from "./base-article-user.service";
 
-const BASE_URL = 'http://localhost:8000/api/articles';
+const ARTICLE_URL = 'http://localhost:8000/api/articles';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class ArticleService extends BaseArticleUserService<Article>{
     protected override _http: HttpClient,
     protected _articleState: ArticleState,
   ) {
-    super(_http, _articleState, BASE_URL);
+    super(_http, _articleState, ARTICLE_URL);
   }
 
 }

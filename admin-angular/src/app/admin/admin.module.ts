@@ -22,45 +22,40 @@ import {TagResolver} from "../resolvers/tag.resolver";
 import { DashboardPaginatorComponent } from './components/dashboard-paginator/dashboard-paginator.component';
 import {FormTagService} from "../services/form-tag.service";
 import {FormCategoryService} from "../services/form-category.service";
-import {MatTableModule} from "@angular/material/table";
+import {CustomCategoryTagAddComponent} from "./components/custom-category-tag-add/custom-category-tag-add.component";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    SharedModule,
-    // роутинг принято выносить отдельно, как например у тебя уже сделано с app-routing.module.ts - app.module.ts, здесь идентично
-    RouterModule.forChild([
-      {
-        path: '', component: AdminLayoutComponent, resolve: {
-          categories: CategoryResolver,
-          tags: TagResolver,
-        }, children: [
-          {path: '', redirectTo: '/admin/login', pathMatch: "full"},
-          {path: 'login', component: LoginPageComponent},
-          {path: 'articles', component: ArticleDashboardPageComponent, canActivate: [AuthGuard]},
-          {path: 'new-article', component: ArticleEditPageComponent, canActivate: [AuthGuard]},
-          {
-            path: 'article/:id', component: ArticleEditPageComponent, canActivate: [AuthGuard], resolve: {
-              article: ArticleResolver
+    imports: [
+        CommonModule,
+        SharedModule,
+        // роутинг принято выносить отдельно, как например у тебя уже сделано с app-routing.module.ts - app.module.ts, здесь идентично
+        RouterModule.forChild([
+            {
+                path: '', component: AdminLayoutComponent, resolve: {
+                    categories: CategoryResolver,
+                    tags: TagResolver,
+                }, children: [
+                    {path: '', redirectTo: '/admin/login', pathMatch: "full"},
+                    {path: 'login', component: LoginPageComponent},
+                    {path: 'articles', component: ArticleDashboardPageComponent, canActivate: [AuthGuard]},
+                    {path: 'new-article', component: ArticleEditPageComponent, canActivate: [AuthGuard]},
+                    {
+                        path: 'article/:id', component: ArticleEditPageComponent, canActivate: [AuthGuard], resolve: {
+                            article: ArticleResolver
+                        }
+                    },
+                    {path: 'users', component: UserDashboardPageComponent, canActivate: [AuthGuard]},
+                    {path: 'new-user', component: UserEditPageComponent, canActivate: [AuthGuard]},
+                    {
+                        path: 'user/:id', component: UserEditPageComponent, canActivate: [AuthGuard], resolve: {
+                            user: UserResolver
+                        }
+                    },
+                    {path: '**', component: NotFoundPageComponent}
+                ]
             }
-          },
-          {path: 'users', component: UserDashboardPageComponent, canActivate: [AuthGuard]},
-          {path: 'new-user', component: UserEditPageComponent, canActivate: [AuthGuard]},
-          {
-            path: 'user/:id', component: UserEditPageComponent, canActivate: [AuthGuard], resolve: {
-              user: UserResolver
-            }
-          },
-          {path: '**', component: NotFoundPageComponent}
-        ]
-      }
-    ]),
-    MatTableModule,
-  ],
-  // это неверно, у тебя admin.module является фича модулем,
-  // который подгружается через lazy load, соответственно он не может ничего экспортировать
-  // правильно будет RouterModule переместить в SharedModule, который ты как раз импортируешь во все FeatureModule
-  exports: [RouterModule],
+        ]),
+    ],
   providers:[
     FormTagService,
     FormCategoryService
@@ -74,7 +69,7 @@ import {MatTableModule} from "@angular/material/table";
     ConfirmDialogModalComponent, // не относится непосредственно к админ модулю, точно является Shared
     ArrayToStringPipe, // не относится непосредственно к админ модулю, точно является Shared
     NotFoundPageComponent, // эта страница должна быть в SharedModule
-    CustomCategoryTagInputComponent, DashboardPaginatorComponent  // не относится непосредственно к админ модулю, точно является Shared
+    CustomCategoryTagInputComponent, CustomCategoryTagAddComponent, DashboardPaginatorComponent  // не относится непосредственно к админ модулю, точно является Shared
   ],
 })
 export class AdminModule {

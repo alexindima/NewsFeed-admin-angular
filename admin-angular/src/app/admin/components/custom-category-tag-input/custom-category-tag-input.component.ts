@@ -1,4 +1,4 @@
-import {Component, forwardRef, Input} from '@angular/core';
+import {Component, EventEmitter, forwardRef, Input, Output} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {NameableWithId} from "../../../interfaces";
 import {AutocompleteOptionsFiler} from "../../../utils/autocomplete-options-filer";
@@ -6,25 +6,46 @@ import {AutocompleteOptionsFiler} from "../../../utils/autocomplete-options-file
 @Component({
   selector: 'app-custom-category-tag-input',
   template: `
-    <input type="text"
-           placeholder="{{placeholder}}"
-           class="{{class}}"
-           [formControl]="autocompleteOptions.control"
-           [matAutocomplete]="auto"
-           (focusin)="autocompleteOptions.createFilteredOptions()"
-           (input)="autocompleteOptions.createFilteredOptions()"
+    <div
+      class="mb-3"
+      [ngClass]="{ 'input-group': withRemove }"
     >
-    <mat-autocomplete
-      #auto="matAutocomplete"
-    >
-      <mat-option
-        *ngFor="let option of autocompleteOptions.options"
-        [value]="option"
+      <input type="text"
+             placeholder="{{placeholder}}"
+             class="{{class}}"
+             [formControl]="autocompleteOptions.control"
+             [matAutocomplete]="auto"
+             (focusin)="autocompleteOptions.createFilteredOptions()"
+             (input)="autocompleteOptions.createFilteredOptions()"
       >
-        {{option}}
-      </mat-option>
-    </mat-autocomplete>
+      <mat-autocomplete
+        #auto="matAutocomplete"
+      >
+        <mat-option
+          *ngFor="let option of autocompleteOptions.options"
+          [value]="option"
+        >
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+      <div *ngIf="withRemove" class="input-group-append rou">
+        <button
+          type="button"
+          class="btn btn-danger fixed-width-150 ml-3"
+          [ngClass]="{ 'start-straight': withRemove }"
+          (click)="clickHandler()"
+        >
+          Remove
+        </button>
+      </div>
+    </div>
   `,
+  styles: [`
+    .start-straight {
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+    }
+  `],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -37,7 +58,12 @@ export class CustomCategoryTagInputComponent<T extends NameableWithId> implement
   @Input() placeholder?: string;
   @Input() class?: string;
   @Input() autocompleteOptions!: AutocompleteOptionsFiler<T>;
+  @Input() withRemove: boolean = false;
+  @Output() removeClick: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
 
+  clickHandler(){
+    this.removeClick.emit();
+  }
 
   writeValue(obj: any): void {
   }

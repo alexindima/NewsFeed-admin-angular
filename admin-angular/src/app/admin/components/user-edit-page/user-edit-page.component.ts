@@ -111,9 +111,6 @@ export class UserEditPageComponent extends BaseEditPageComponent<User> implement
         emitEvent: false
       })
     });
-
-    this.formCategoryService.addItem();
-    this.formTagService.addItem()
   }
 
   fillForm(){

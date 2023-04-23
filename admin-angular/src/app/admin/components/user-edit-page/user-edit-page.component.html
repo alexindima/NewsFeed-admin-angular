@@ -1,5 +1,4 @@
 <div class="mt-3 container">
-
   <h1 class="mb-3">{{item ? 'Edit the User' : 'Create a User'}}</h1>
 
   <form
@@ -122,7 +121,7 @@
     </div>
 
     <h2>Role</h2>
-    <div class="mb-3">
+    <!--<div class="mb-3">
       <label for="role-select">Select role:</label>
       <select
         name="role"
@@ -132,74 +131,64 @@
         <option value="user" selected>User</option>
         <option value="admin">Admin</option>
       </select>
-    </div>
+    </div>-->
+
+    <mat-radio-group
+      aria-label="Select role"
+      class="mb-3"
+      formControlName="role"
+    >
+      <mat-radio-button value="user">User</mat-radio-button>
+      <mat-radio-button value="admin">Admin</mat-radio-button>
+    </mat-radio-group>
 
     <h2>Ignore settings</h2>
-    <h4>Categories</h4>
-    <div formArrayName="tags" *ngFor="let category of categoriesAutocompleteOptions; let i = index">
-      <div class="mb-3 d-flex">
-        <div style="flex: 1">
-          <app-custom-category-tag-input
-            [placeholder]="'Choose category or enter a new one'"
-            [class]="'form-control w-100'"
-            [autocompleteOptions]="categoriesAutocompleteOptions[i]"
-          ></app-custom-category-tag-input>
-        </div>
-        <div class="input-group-append">
-          <button
-            type="button"
-            class="btn btn-info ml-3"
-            (click)="formCategoryService.addItem()"
-          >
-            Add another category
-          </button>
-          <button
-            type="button"
-            class="btn btn-danger ml-3"
-            [disabled]="i === 0"
-            (click)="formCategoryService.removeItem(i)"
-          >
-            Remove category
-          </button>
-        </div>
-      </div>
+
+    <app-custom-category-tag-add
+      [name]="'Add category'"
+      (addClick)="formCategoryService.addItem()"
+    ></app-custom-category-tag-add>
+
+    <div
+      formArrayName="tags"
+      *ngFor="let category of categoriesAutocompleteOptions; let i = index"
+    >
+      <app-custom-category-tag-input
+        [placeholder]="'Choose category or enter a new one'"
+        [class]="'form-control'"
+        [autocompleteOptions]="categoriesAutocompleteOptions[i]"
+        [withRemove]="true"
+        (removeClick)="formCategoryService.removeItem(i)"
+      ></app-custom-category-tag-input>
     </div>
 
-    <h4>Tags</h4>
-    <div formArrayName="tags" *ngFor="let tag of tagsAutocompleteOptions; let i = index">
-      <div class="mb-3 d-flex">
-        <div style="flex: 1">
-          <app-custom-category-tag-input
-            [placeholder]="'Choose tag or enter a new one'"
-            [class]="'form-control w-100'"
-            [autocompleteOptions]="tagsAutocompleteOptions[i]"
-          ></app-custom-category-tag-input>
-        </div>
-        <div class="input-group-append">
-          <button
-            type="button"
-            class="btn btn-info ml-3"
-            (click)="formTagService.addItem()"
-          >
-            Add another tag
-          </button>
-          <button
-            type="button"
-            class="btn btn-danger ml-3"
-            [disabled]="i === 0"
-            (click)="formTagService.removeItem(i)"
-          >
-            Remove tag
-          </button>
-        </div>
-      </div>
-    </div>
-    <button
-      type="submit"
-      class="btn btn-primary"
-      [disabled]="form.invalid || submitted"
+    <app-custom-category-tag-add
+      [name]="'Add tag'"
+      (addClick)="formTagService.addItem()"
+    ></app-custom-category-tag-add>
+
+    <div
+      formArrayName="tags"
+      *ngFor="let tag of tagsAutocompleteOptions; let i = index"
     >
-      {{item ? 'Save changes' : 'Create User'}}
-    </button>
+      <app-custom-category-tag-input
+        [placeholder]="'Choose tag or enter a new one'"
+        [class]="'form-control'"
+        [autocompleteOptions]="tagsAutocompleteOptions[i]"
+        [withRemove]="true"
+        (removeClick)="formTagService.removeItem(i)"
+      ></app-custom-category-tag-input>
+    </div>
+
+    <div class="mt-5 d-flex justify-content-center">
+      <button
+        type="submit"
+        class="btn btn-primary fixed-width-150"
+        [disabled]="form.invalid || submitted"
+      >
+        {{item ? 'Save changes' : 'Create User'}}
+      </button>
+    </div>
+
   </form>
 </div>

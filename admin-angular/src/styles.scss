@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "node_modules/bootstrap/scss/bootstrap";
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
 
 .mat-mdc-snack-bar-container {
   &.blue-snackbar {
@@ -12,4 +14,8 @@
     --mat-mdc-snack-bar-button-color: #fff;
     --mdc-snackbar-supporting-text-color: #fff;
   }
+}
+
+.fixed-width-150 {
+  width: 150px;
 }
