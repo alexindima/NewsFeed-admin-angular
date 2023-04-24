@@ -1,15 +1,8 @@
 import {Injectable} from "@angular/core";
-import {BehaviorSubject, Observable} from "rxjs";
+import {BaseArticleUserState} from "./base-article-user.state";
 
 @Injectable({
   providedIn: 'root'
 })
-export class ArticleState {
-  private _data = new BehaviorSubject<number>(0);
-  count$: Observable<number> = this._data.asObservable();
-
-  setCount(count: number) {
-    this._data.next(count);
-  }
-
+export class ArticleState extends BaseArticleUserState{
 }

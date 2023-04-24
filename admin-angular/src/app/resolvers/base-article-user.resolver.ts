@@ -1,9 +1,10 @@
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
 import {catchError, Observable, throwError} from 'rxjs';
+import {ArticleUserService} from "../interfaces";
 
 export class BaseArticleUserResolver<T> implements Resolve<T> {
   constructor(
-    private _service: any,
+    private _service: ArticleUserService<T>,
     protected _router: Router,
     private _routeToRedirect: string[],
   ) {

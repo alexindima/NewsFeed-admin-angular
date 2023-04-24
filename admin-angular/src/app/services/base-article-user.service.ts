@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import {map, Observable, tap} from 'rxjs';
-import {OperationResponse, Paginated} from "../interfaces";
+import {ArticleUserService, ArticleUserState, OperationResponse, Paginated} from "../interfaces";
 
-export abstract class BaseArticleUserService<T> {
+export abstract class BaseArticleUserService<T> implements ArticleUserService<T>{
   protected readonly BASE_URL: string;
 
   protected constructor(
     protected _http: HttpClient,
-    protected _state: any,
+    protected _state: ArticleUserState,
     baseUrl: string,
   ) {
     this.BASE_URL = baseUrl;

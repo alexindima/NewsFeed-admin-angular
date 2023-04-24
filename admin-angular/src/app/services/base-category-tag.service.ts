@@ -1,22 +1,25 @@
 import { HttpClient } from "@angular/common/http";
 import {Observable } from "rxjs";
-import { map, switchMap, tap } from "rxjs/operators";
-import {OperationResponse} from "../interfaces";
+import { map, switchMap} from "rxjs/operators";
+import {CategoryTagService, CategoryTagState, OperationResponse} from "../interfaces";
 
-export abstract class BaseCategoryTagService<T> {
+export abstract class BaseCategoryTagService<T> implements CategoryTagService<T>{
   protected readonly BASE_URL: string;
 
   protected constructor(
     protected readonly _http: HttpClient,
-    protected _state: any,
+    protected _state: CategoryTagState<T>,
     baseUrl: string,
   ) {
     this.BASE_URL = baseUrl;
   }
 
-  updateItemsList(): Observable<OperationResponse<T[]>> {
+  updateItemsList(): Observable<T[]> {
     return this._http.get<OperationResponse<T[]>>(this.BASE_URL).pipe(
-      tap(response => this._state.setItems(response.data))
+      map(response => {
+        this._state.setItems(response.data)
+        return response.data
+      })
     )
   }
 

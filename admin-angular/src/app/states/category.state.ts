@@ -1,16 +1,9 @@
 import {Injectable} from "@angular/core";
-import {BehaviorSubject, Observable} from "rxjs";
 import {Category} from "../interfaces";
+import {BaseCategoryTagState} from "./base-category-tag.state";
 
 @Injectable({
   providedIn: 'root'
 })
-export class CategoryState {
-  private _data = new BehaviorSubject<Category[]>([]);
-  items$: Observable<Category[]> = this._data.asObservable();
-
-  setItems(items: Category[]) {
-    this._data.next(items);
-  }
-
+export class CategoryState extends BaseCategoryTagState<Category>{
 }

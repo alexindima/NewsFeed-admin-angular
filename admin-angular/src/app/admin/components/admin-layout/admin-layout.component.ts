@@ -8,7 +8,6 @@ import {
 } from "../confirm-dialog-modal/confirm-dialog-modal.component";
 import {Subs} from "../../../utils/subs";
 import {LoaderState} from "../../../states/loader.state";
-import {NotificationService} from "../../../services/notification.service";
 
 @Component({
   selector: 'app-admin-layout',
@@ -24,7 +23,6 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
     private _router: Router,
     private _matDialog: MatDialog,
     private _loaderState: LoaderState,
-    public notificationService: NotificationService
   ) {
   }
 

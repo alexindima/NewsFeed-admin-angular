@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {LoginUser} from "../../../interfaces";
 import {AuthService} from "../../../services/auth.service";
-import {ActivatedRoute, Params, Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Subs} from "../../../utils/subs";
 import {AuthState} from "../../../states/auth.state";
 
@@ -31,12 +31,6 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((params: Params) => {
-      if (params['loginAgain']) {
-        this.message = 'Please, login again'; // не надо так, это по сути не задача логин пейджи, корректнее отображать справа снизу этот месседж
-      }
-    })
-
     this.form = new FormGroup<LoginForm>({
       email: new FormControl('', {
         nonNullable: true,
@@ -68,7 +62,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       this.form.reset();
       this._router.navigate(['/admin', 'articles']).then();
       this.submitted = false;
-    }, error => {
+    }, () => {
       this.submitted = false;
     })
 

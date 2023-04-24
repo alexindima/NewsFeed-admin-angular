@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import {Article, Category, Tag} from '../../../interfaces';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -6,7 +6,6 @@ import { ArticleService } from '../../../services/article.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AutocompleteOptionsFiler } from '../../../utils/autocomplete-options-filer';
 import {CategoryState} from "../../../states/category.state";
-import {TagState} from "../../../states/tag.state";
 import {FormTagService} from "../../../services/form-tag.service";
 import {ckeditorConfig} from "../../../configs/ckeditor-config";
 import {BaseEditPageComponent} from "../base-edit-page/base-edit-page.component";
@@ -44,7 +43,6 @@ export class ArticleEditPageComponent extends BaseEditPageComponent<Article> imp
 
   constructor(
     protected _categoryState: CategoryState,
-    protected _tagState: TagState,
     protected _articleService: ArticleService,
     protected _activatedRoute: ActivatedRoute,
     protected override _router: Router,

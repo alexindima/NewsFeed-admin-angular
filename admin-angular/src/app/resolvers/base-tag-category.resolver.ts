@@ -4,15 +4,16 @@ import {
   ActivatedRouteSnapshot, Resolve
 } from '@angular/router';
 import {Observable} from 'rxjs';
+import {CategoryTagService} from "../interfaces";
 
-export abstract class BaseTagCategoryResolver<T> implements Resolve<T> {
+export abstract class BaseTagCategoryResolver<T> implements Resolve<T[]> {
   protected constructor(
-    protected _sharedService: any,
+    protected _service: CategoryTagService<T>,
     protected _router: Router
   ) {
   }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<T> {
-    return this._sharedService.updateItemsList();
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<T[]> {
+    return this._service.updateItemsList();
   }
 }

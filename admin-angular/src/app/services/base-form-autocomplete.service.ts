@@ -2,7 +2,7 @@ import {Injectable, OnDestroy} from '@angular/core';
 import { FormControl, FormArray } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { AutocompleteOptionsFiler } from '../utils/autocomplete-options-filer';
-import {NameableWithId} from "../interfaces";
+import {CategoryTagState, NameableWithId} from "../interfaces";
 import {Subs} from "../utils/subs";
 
 @Injectable()
@@ -17,7 +17,7 @@ export abstract class BaseFormAutocompleteService<T extends NameableWithId> impl
   controls$ = this._controlsSubject.asObservable();
 
   protected constructor(
-    protected _itemsState: any
+    protected _itemsState: CategoryTagState<T>
   ) {
     this._subs.add = this._itemsState.items$.subscribe((data: T[]) => {
       this._itemsList = data;

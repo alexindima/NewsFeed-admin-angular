@@ -6,8 +6,6 @@ import {UserService} from "../../../services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {appValidEqualFactory} from '../../../utils/valid-equal'
 import {AutocompleteOptionsFiler} from "../../../utils/autocomplete-options-filer";
-import {CategoryState} from "../../../states/category.state";
-import {TagState} from "../../../states/tag.state";
 import {FormTagService} from "../../../services/form-tag.service";
 import {FormCategoryService} from "../../../services/form-category.service";
 import { omit } from 'lodash';
@@ -44,8 +42,6 @@ export class UserEditPageComponent extends BaseEditPageComponent<User> implement
   tagsControls!: FormArray<FormControl<string>>;
 
   constructor(
-    protected _categoryState: CategoryState,
-    protected _tagState: TagState,
     protected _usersService: UserService,
     protected _activatedRoute: ActivatedRoute,
     protected override _router: Router,

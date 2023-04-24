@@ -1,3 +1,5 @@
+import {Observable} from "rxjs";
+
 export interface User {
   createdAt?: string;
   updatedAt?: string;
@@ -57,4 +59,28 @@ export interface PaginatorSettings {
 export interface NameableWithId {
   name: string;
   id?: number
+}
+
+export interface ArticleUserService<T> {
+  getItems(pageIndex: number, pageSize: number): Observable<T[]>;
+  getSingleItem(id: number): Observable<T>;
+  createItem(item: T): Observable<T>;
+  editItem(id: number, item: T): Observable<T>;
+  deleteItem(id: number): Observable<boolean>;
+}
+
+export interface ArticleUserState {
+  count$: Observable<number>;
+  setCount(count: number): void;
+}
+
+export interface CategoryTagService<T> {
+  updateItemsList(): Observable<T[]>;
+  createItem(name: string): Observable<T>;
+  deleteItem(id: number): Observable<boolean>;
+}
+
+export interface CategoryTagState<T> {
+  items$: Observable<T[]>;
+  setItems(items: T[]): void;
 }

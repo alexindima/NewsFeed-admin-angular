@@ -5,7 +5,7 @@ import { of, switchMap, take, tap } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { Subs } from '../../../utils/subs';
 import {ConfirmDialogModalComponent, ModalDialogData} from '../confirm-dialog-modal/confirm-dialog-modal.component';
-import {PaginatorSettings} from '../../../interfaces';
+import {ArticleUserService, ArticleUserState, PaginatorSettings} from '../../../interfaces';
 
 @Injectable()
 export abstract class BaseDashboardPageComponent<T extends { id?: number }> implements OnInit, OnDestroy {
@@ -20,8 +20,8 @@ export abstract class BaseDashboardPageComponent<T extends { id?: number }> impl
     protected _activatedRoute: ActivatedRoute,
     protected _router: Router,
     protected _matDialog: MatDialog,
-    protected _service: any,
-    protected _state: any,
+    protected _service: ArticleUserService<T>,
+    protected _state: ArticleUserState,
   ) {}
 
   ngOnInit() {

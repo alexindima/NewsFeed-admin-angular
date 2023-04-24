@@ -1,5 +1,5 @@
 import {NgModule} from "@angular/core";
-import {HttpClientModule, HttpClientXsrfModule} from "@angular/common/http";
+import {HttpClientModule} from "@angular/common/http";
 import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
@@ -12,10 +12,29 @@ import {MatTableModule} from "@angular/material/table";
 import {MatIconModule} from "@angular/material/icon";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatNativeDateModule} from "@angular/material/core";
+import {ConfirmDialogModalComponent} from "./admin/components/confirm-dialog-modal/confirm-dialog-modal.component";
+import {ArrayToStringPipe} from "./utils/array-to-string.pipe";
+import {NotFoundPageComponent} from "./admin/components/not-found-page/not-found-page.component";
+import {
+  CustomCategoryTagInputComponent
+} from "./admin/components/custom-category-tag-input/custom-category-tag-input.component";
+import {
+  CustomCategoryTagAddComponent
+} from "./admin/components/custom-category-tag-add/custom-category-tag-add.component";
+import {DashboardPaginatorComponent} from "./admin/components/dashboard-paginator/dashboard-paginator.component";
+import {CommonModule} from "@angular/common";
 
-// а также сюда попадают формы, роутинг модули, всякие визуальные компоненты, которые мы подключаем в feature модули
 @NgModule({
+  declarations: [
+    ConfirmDialogModalComponent,
+    ArrayToStringPipe,
+    NotFoundPageComponent,
+    CustomCategoryTagInputComponent,
+    CustomCategoryTagAddComponent,
+    DashboardPaginatorComponent,
+  ],
   imports: [
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     MatAutocompleteModule,
@@ -36,8 +55,9 @@ import {MatNativeDateModule} from "@angular/material/core";
     MatIconModule,
     MatTableModule,
     MatRadioModule,
-  ], // когда добавляется новая запись эту скобку придётся переносить ниже, ей идеально располагаться на отдельной строке
+  ],
   exports: [
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     MatAutocompleteModule,
@@ -57,8 +77,13 @@ import {MatNativeDateModule} from "@angular/material/core";
     MatIconModule,
     MatTableModule,
     MatRadioModule,
+    ConfirmDialogModalComponent,
+    ArrayToStringPipe,
+    NotFoundPageComponent,
+    CustomCategoryTagInputComponent,
+    CustomCategoryTagAddComponent,
+    DashboardPaginatorComponent,
   ]
 })
 export class SharedModule {
-
 }

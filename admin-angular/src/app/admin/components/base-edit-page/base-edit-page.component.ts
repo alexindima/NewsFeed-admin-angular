@@ -2,6 +2,8 @@ import {Injectable, OnDestroy, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { Subs } from '../../../utils/subs';
 import {FormGroup} from "@angular/forms";
+import {ArticleUserService, NameableWithId} from "../../../interfaces";
+import {BaseFormAutocompleteService} from "../../../services/base-form-autocomplete.service";
 
 @Injectable()
 export abstract class BaseEditPageComponent<T extends { id?: number }> implements OnInit, OnDestroy {
@@ -11,7 +13,7 @@ export abstract class BaseEditPageComponent<T extends { id?: number }> implement
   abstract submitted: boolean;
 
   protected constructor(
-    protected _service: any,
+    protected _service: ArticleUserService<T>,
     protected _router: Router,
     protected _routeToRedirect: string[],
   ) {
@@ -28,7 +30,7 @@ export abstract class BaseEditPageComponent<T extends { id?: number }> implement
   abstract fillForm(): void;
   abstract createItemInstance(): T;
 
-  createAutocompleteInputs(values: string[], service: any){
+  createAutocompleteInputs(values: string[], service: BaseFormAutocompleteService<NameableWithId>){
       if (values.length >= 1) {
       for (let i = 0; i < values.length; i++) {
         service.addItem();
