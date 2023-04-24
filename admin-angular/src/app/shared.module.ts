@@ -23,6 +23,7 @@ import {
 } from "./admin/components/custom-category-tag-add/custom-category-tag-add.component";
 import {DashboardPaginatorComponent} from "./admin/components/dashboard-paginator/dashboard-paginator.component";
 import {CommonModule} from "@angular/common";
+import {LoaderComponent} from "./shared-components/loader/loader.component";
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import {CommonModule} from "@angular/common";
     CustomCategoryTagInputComponent,
     CustomCategoryTagAddComponent,
     DashboardPaginatorComponent,
+    LoaderComponent,
   ],
   imports: [
     CommonModule,
@@ -83,6 +85,7 @@ import {CommonModule} from "@angular/common";
     CustomCategoryTagInputComponent,
     CustomCategoryTagAddComponent,
     DashboardPaginatorComponent,
+    LoaderComponent,
   ]
 })
 export class SharedModule {

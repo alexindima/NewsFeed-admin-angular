@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "../../../services/auth.service";
 import {MatDialog} from "@angular/material/dialog";
@@ -7,29 +7,20 @@ import {
   ModalDialogData
 } from "../confirm-dialog-modal/confirm-dialog-modal.component";
 import {Subs} from "../../../utils/subs";
-import {LoaderState} from "../../../states/loader.state";
 
 @Component({
   selector: 'app-admin-layout',
   templateUrl: './admin-layout.component.html',
   styleUrls: ['./admin-layout.component.scss']
 })
-export class AdminLayoutComponent implements OnInit, OnDestroy {
+export class AdminLayoutComponent implements OnDestroy {
   private _subs = new Subs();
-  loading: boolean = false;
 
   constructor(
     public auth: AuthService,
     private _router: Router,
     private _matDialog: MatDialog,
-    private _loaderState: LoaderState,
   ) {
-  }
-
-  ngOnInit() {
-    this._loaderState.intercepts$.subscribe((count) => {
-      setTimeout(() => this.loading = !!count); // выглядит как большой хак, значит что-то не так пошло, надо разбираться причем здесь setTimeout
-    })
   }
 
   openLogoutModal() {

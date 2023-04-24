@@ -1,21 +1,19 @@
 import {Injectable} from "@angular/core";
-import {Observable, Subject} from "rxjs";
+import {BehaviorSubject} from "rxjs";
+import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoaderState {
-  private interceptCount = 0;
-  private _data = new Subject<number>();
-  intercepts$: Observable<number> = this._data.asObservable();
+  private _count = new BehaviorSubject<number>(0);
+  public showLoader$ = this._count.asObservable().pipe(map((count: number) => count > 0));
 
   increaseCount() {
-    this.interceptCount++;
-    this._data.next(this.interceptCount);
+    this._count.next(this._count.value + 1);
   }
 
   decreaseCount() {
-    this.interceptCount--;
-    this._data.next(this.interceptCount);
+    this._count.next(this._count.value - 1);
   }
 }
