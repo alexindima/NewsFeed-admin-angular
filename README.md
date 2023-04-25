@@ -93,10 +93,10 @@ Generate a new application key
 php artisan key:generate
 ```
 
-Run the database migrations
+Run the database migrations and seeding
 
 ```bash
-php artisan migrate
+php artisan migrate:fresh --seed
 ```
 
 **Running the application**

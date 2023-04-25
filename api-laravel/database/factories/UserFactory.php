@@ -16,9 +16,10 @@ class UserFactory extends Factory
         $roles = ['admin', 'user'];
         return [
             'name' => $this->faker->name,
-            'email' => uniqid('email_').$this->faker->unique()->safeEmail,
+            'email' => $this->faker->unique()->safeEmail,
             'password' => Hash::make('password'),
-            'role' => $roles[array_rand($roles)],
+            //'role' => $roles[array_rand($roles)],
+            'role' => 'admin',
         ];
     }
 }
