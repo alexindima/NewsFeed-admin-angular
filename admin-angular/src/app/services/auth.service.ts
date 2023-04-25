@@ -5,9 +5,9 @@ import {Observable, tap, catchError, throwError, switchMap} from "rxjs";
 import {AuthState} from "../states/auth.state";
 import {Router} from "@angular/router";
 
-const LOGIN_URL = 'http://localhost:8000/login';
-const LOGOUT_URL = 'http://localhost:8000/logout';
-const CSRF_TOKEN_URL = 'http://localhost:8000/sanctum/csrf-cookie';
+const LOGIN_URL = '/login';
+const LOGOUT_URL = '/logout';
+const CSRF_TOKEN_URL = '/sanctum/csrf-cookie';
 
 @Injectable({
   providedIn: 'root'

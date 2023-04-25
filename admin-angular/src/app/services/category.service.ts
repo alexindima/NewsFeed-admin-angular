@@ -4,7 +4,7 @@ import {Category} from "../interfaces";
 import {CategoryState} from "../states/category.state";
 import {BaseCategoryTagService} from "./base-category-tag.service";
 
- const CATEGORY_URL = 'http://localhost:8000/api/categories';
+ const CATEGORY_URL = '/api/categories';
 
 @Injectable({
   providedIn: 'root'

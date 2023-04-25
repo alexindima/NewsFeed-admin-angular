@@ -8,7 +8,7 @@ import {appValidEqualFactory} from '../../../utils/valid-equal'
 import {AutocompleteOptionsFiler} from "../../../utils/autocomplete-options-filer";
 import {FormTagService} from "../../../services/form-tag.service";
 import {FormCategoryService} from "../../../services/form-category.service";
-import { omit } from 'lodash';
+import { omit } from 'lodash-es';
 import {BaseEditPageComponent} from "../base-edit-page/base-edit-page.component";
 
 const ROUTE_TO_REDIRECT: string[] = ['/admin', 'users'];

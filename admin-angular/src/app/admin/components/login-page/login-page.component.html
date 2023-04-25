@@ -52,7 +52,9 @@
             class="form-control"
             [ngClass]="{'border-danger': form.get('password')?.touched && form.get('password')?.invalid}"
             id="exampleInputPassword1"
-            formControlName="password">
+            formControlName="password"
+            autocomplete="on"
+          >
           <div
             id="passwordValidation"
             class="form-text"

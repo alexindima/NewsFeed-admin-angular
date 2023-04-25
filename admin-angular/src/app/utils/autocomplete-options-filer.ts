@@ -15,7 +15,6 @@ export class AutocompleteOptionsFiler<T extends NameableWithId> {
   createFilteredOptions() {
     const allOptionsNames = this.allOptions.map(option => option.name)
     this.options = allOptionsNames.filter(name => {
-      console.log(name.toLowerCase().includes(this.control.value.toLowerCase()))
       return name.toLowerCase().includes(this.control.value.toLowerCase())
     });
   }

@@ -4,7 +4,7 @@ import {Tag} from "../interfaces";
 import {TagState} from "../states/tag.state";
 import {BaseCategoryTagService} from "./base-category-tag.service";
 
- const TAG_URL = 'http://localhost:8000/api/tags';
+ const TAG_URL = '/api/tags';
 
 @Injectable({
   providedIn: 'root'
