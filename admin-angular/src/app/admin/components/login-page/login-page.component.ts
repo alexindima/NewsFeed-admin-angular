@@ -20,17 +20,18 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   private _subs = new Subs();
   submitted = false;
   form!: FormGroup;
-  message: string = '';
+  message: string = ''; // мусор
 
   constructor(
     private _authService: AuthService,
     public authState: AuthState,
-    public route: ActivatedRoute,
+    public route: ActivatedRoute, // мусор
     private _router: Router,
   ) {
   }
 
   ngOnInit(): void {
+    // не, используй FormBuilder для форм, много текста иначе
     this.form = new FormGroup<LoginForm>({
       email: new FormControl('', {
         nonNullable: true,
@@ -42,6 +43,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       })
     });
 
+    // это задача резолвера, не компонента
     if (this._authService.isAuthenticated()) {
       this._router.navigate(['/admin', 'articles']).then();
     }
@@ -53,6 +55,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     }
 
     this.submitted = true;
+    // можно проще body = this.form.value
     const user: LoginUser = {
       email: this.form.value.email,
       password: this.form.value.password
@@ -63,7 +66,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       this._router.navigate(['/admin', 'articles']).then();
       this.submitted = false;
     }, () => {
-      this.submitted = false;
+      this.submitted = false; // дублируешь строку, делают через pipe(finalize(() => this.submitted = false) в апи запросе
     })
 
   }
