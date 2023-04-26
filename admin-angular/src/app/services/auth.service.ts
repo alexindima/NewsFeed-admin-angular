@@ -42,6 +42,7 @@ export class AuthService {
     return localStorage.getItem('isAuthenticated') === 'true';
   }
 
+  // не-не, это совсем плохо, бекенд должен ошибку присылать, а не фронт приложение
   private handleError(error: HttpErrorResponse) {
     if(error.status === 422){
       this._authState.setError('Wrong email or password');
