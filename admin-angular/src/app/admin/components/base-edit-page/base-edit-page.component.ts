@@ -4,6 +4,7 @@ import { Subs } from '../../../utils/subs';
 import {FormGroup} from "@angular/forms";
 import {ArticleUserService, NameableWithId} from "../../../interfaces";
 import {BaseFormAutocompleteService} from "../../../services/base-form-autocomplete.service";
+import {finalize} from "rxjs/operators";
 
 @Injectable()
 export abstract class BaseEditPageComponent<T extends { id?: number }> implements OnInit, OnDestroy {
@@ -39,15 +40,15 @@ export abstract class BaseEditPageComponent<T extends { id?: number }> implement
   }
 
   createItem(item: T) {
-    this._subs.add = this._service.createItem(item).subscribe(
-      () => this.finish()
-    )
+    this._subs.add = this._service.createItem(item).pipe(
+      finalize(() => this.finish())
+    ).subscribe();
   }
 
   editItem(item: T) {
-    this._subs.add = this._service.editItem(this.item!.id!, item).subscribe(
-      () => this.finish()
-    );
+    this._subs.add = this._service.editItem(this.item!.id!, item).pipe(
+      finalize(() => this.finish())
+    ).subscribe();
   }
 
   finish(){

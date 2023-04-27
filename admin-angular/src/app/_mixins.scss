@@ -9,11 +9,15 @@
       &#{$colName}
       {
         flex: $width;
-        min-width: $width;
+        width: $width;
 
         @if map-has-key($props, 'color')
         {
           color: map-get($props, 'color');
+        }
+        @if map-has-key($props, 'min-width')
+        {
+          min-width: map-get($props, 'min-width');
         }
       }
     }

@@ -3,6 +3,11 @@
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
 
+body {
+  min-width: 360px;
+}
+
+
 .mat-mdc-snack-bar-container {
   &.blue-snackbar {
     --mdc-snackbar-container-color: #2196f3;
@@ -18,4 +23,22 @@
 
 .fixed-width-150 {
   width: 150px;
+}
+
+@media screen and (max-width: 992px) {
+  .hide-column-992 {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .hide-column-768 {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .hide-column-576 {
+    display: none;
+  }
 }

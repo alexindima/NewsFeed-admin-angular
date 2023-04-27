@@ -1,12 +1,13 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {LoginUser} from "../interfaces";
-import {Observable, tap, catchError, throwError, switchMap} from "rxjs";
+import {Observable, tap, catchError, switchMap, of} from "rxjs";
 import {AuthState} from "../states/auth.state";
 import {Router} from "@angular/router";
+import {joinErrorMessages} from "../utils/error-utils";
 
-const LOGIN_URL = '/login';
-const LOGOUT_URL = '/logout';
+const LOGIN_URL = '/auth/login';
+const LOGOUT_URL = '/auth/logout';
 const CSRF_TOKEN_URL = '/sanctum/csrf-cookie';
 
 @Injectable({
@@ -26,7 +27,11 @@ export class AuthService {
         return this._http.post<null>(LOGIN_URL, user)
           .pipe(
             tap(() => localStorage.setItem('isAuthenticated', 'true')),
-            catchError(this.handleError.bind(this))
+            catchError((response: HttpErrorResponse) => {
+              const joinedErrors = joinErrorMessages(response.error)
+              this._authState.setError(joinedErrors);
+              return of(null);
+            })
           );
       })
     );
@@ -42,14 +47,4 @@ export class AuthService {
     return localStorage.getItem('isAuthenticated') === 'true';
   }
 
-  // не-не, это совсем плохо, бекенд должен ошибку присылать, а не фронт приложение
-  private handleError(error: HttpErrorResponse) {
-    if(error.status === 422){
-      this._authState.setError('Wrong email or password');
-    }
-    else{
-      this._authState.setError('Server error. Please try again');
-    }
-    return throwError(error);
-  }
 }

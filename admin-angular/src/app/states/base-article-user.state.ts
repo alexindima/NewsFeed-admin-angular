@@ -1,12 +1,11 @@
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject} from "rxjs";
 import {ArticleUserState} from "../interfaces";
 
 export class BaseArticleUserState implements ArticleUserState{
-  protected _data = new BehaviorSubject<number>(0);
-  count$: Observable<number> = this._data.asObservable();
+  count$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
   setCount(count: number): void {
-    this._data.next(count);
+    this.count$.next(count);
   }
 
 }

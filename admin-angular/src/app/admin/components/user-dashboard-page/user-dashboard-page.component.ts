@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {Category, Tag, User} from "../../../interfaces";
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Article, Category, Tag, User} from "../../../interfaces";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {BaseDashboardPageComponent} from "../base-dashboard-page/base-dashboard-page.component";
@@ -7,14 +7,16 @@ import {UserService} from "../../../services/user.service";
 import {UserState} from "../../../states/user.state";
 import {CategoryState} from "../../../states/category.state";
 import {TagState} from "../../../states/tag.state";
+import {MatTable} from "@angular/material/table";
 
 @Component({
   selector: 'app-user-base-dashboard-page',
   templateUrl: './user-dashboard-page.component.html',
   styleUrls: ['./user-dashboard-page.component.scss']
 })
-export class UserDashboardPageComponent extends BaseDashboardPageComponent<User> implements OnInit {
+export class UserDashboardPageComponent extends BaseDashboardPageComponent<User> implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['id', 'role', 'createdAt', 'name', 'email', 'categories', 'tags', 'actions'];
+  @ViewChild(MatTable) table!: MatTable<Article>;
   categoriesList: Category[] = []
   tagsList: Tag[] = []
   constructor(
@@ -37,6 +39,12 @@ export class UserDashboardPageComponent extends BaseDashboardPageComponent<User>
       this.tagsList = data;
     })
     super.ngOnInit();
+  }
+
+  ngAfterViewInit(): void {
+    window.addEventListener('resize', () => {
+      this.table.updateStickyColumnStyles();
+    });
   }
 
 }

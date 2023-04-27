@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Article, Category, Tag} from '../../../interfaces';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ArticleService } from '../../../services/article.service';
@@ -7,18 +7,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AutocompleteOptionsFiler } from '../../../utils/autocomplete-options-filer';
 import {CategoryState} from "../../../states/category.state";
 import {FormTagService} from "../../../services/form-tag.service";
-import {ckeditorConfig} from "../../../configs/ckeditor-config";
+import {ckeditorConfig} from "../../../../configs/ckeditor-config";
 import {BaseEditPageComponent} from "../base-edit-page/base-edit-page.component";
 
 const ROUTE_TO_REDIRECT: string[] = ['/admin', 'articles'];
 
 interface ArticleForm {
-  mainTitle: FormControl<string>;
-  secondTitle: FormControl<string>;
-  photoPass: FormControl<string>;
-  photoText: FormControl<string>;
-  body: FormControl<string>;
-  category: FormControl<string>;
+  mainTitle: FormControl<string | null>;
+  secondTitle: FormControl<string | null>;
+  photoPass: FormControl<string | null>;
+  photoText: FormControl<string | null>;
+  body: FormControl<string | null>;
+  category: FormControl<string | null>;
   tags: FormArray<FormControl<string>>;
 }
 
@@ -47,6 +47,7 @@ export class ArticleEditPageComponent extends BaseEditPageComponent<Article> imp
     protected _activatedRoute: ActivatedRoute,
     protected override _router: Router,
     protected formTagService: FormTagService,
+    private _fb: FormBuilder,
   ) {
     super(_articleService, _router, ROUTE_TO_REDIRECT);
   }
@@ -73,30 +74,36 @@ export class ArticleEditPageComponent extends BaseEditPageComponent<Article> imp
   }
 
   createForm(){
-    this.form = new FormGroup<ArticleForm>({
-      mainTitle: new FormControl('', {
-        nonNullable: true,
-        validators: [Validators.required]
-      }),
-      secondTitle: new FormControl('', {
-        nonNullable: true,
-        validators: [Validators.required]
-      }),
-      photoPass: new FormControl('', {
-        nonNullable: true,
-        validators: [Validators.required]
-      }),
-      photoText: new FormControl('', {
-        nonNullable: true,
-        validators: [Validators.required]
-      }),
-      body: new FormControl('', {
-        nonNullable: true,
-        validators: [Validators.required]
-      }),
+    this.form = this._fb.nonNullable.group<ArticleForm>({
+      mainTitle: this._fb.control(
+        '',[
+          Validators.required,
+        ]
+      ),
+      secondTitle: this._fb.control(
+        '', [
+          Validators.required,
+        ]
+      ),
+      photoPass: this._fb.control(
+        '', [
+          Validators.required,
+        ]
+      ),
+      photoText: this._fb.control(
+        '', [
+          Validators.required,
+        ]
+      ),
+      body: this._fb.control(
+        '', [
+          Validators.required,
+        ]
+      ),
       category: this.categoryAutocompleteOptions.control,
       tags: this.tagsControls
     });
+
   }
 
   fillForm(){
@@ -118,12 +125,8 @@ export class ArticleEditPageComponent extends BaseEditPageComponent<Article> imp
     );
 
     const itemInstance: Article = {
+      ...this.form.value,
       category: category,
-      mainTitle: this.form.value.mainTitle,
-      secondTitle: this.form.value.secondTitle,
-      photoPass: this.form.value.photoPass,
-      photoText: this.form.value.photoText,
-      body: this.form.value.body,
       tags: [...tags]
     }
 

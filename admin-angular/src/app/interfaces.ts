@@ -22,6 +22,11 @@ export interface OperationResponse<T> {
   success: boolean,
   message: string,
 }
+
+export interface ErrorData {
+  [key: string]: string[];
+}
+
 export interface Category {
   id: number,
   name: string

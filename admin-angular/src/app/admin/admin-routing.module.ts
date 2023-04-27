@@ -12,6 +12,7 @@ import {LoginPageComponent} from "./components/login-page/login-page.component";
 import {ArticleDashboardPageComponent} from "./components/article-dashboard-page/article-dashboard-page.component";
 import {ArticleEditPageComponent} from "./components/article-edit-page/article-edit-page.component";
 import {UserDashboardPageComponent} from "./components/user-dashboard-page/user-dashboard-page.component";
+import {LoginGuard} from "../guards/login.guard";
 
 const routes: Routes = [
   {
@@ -20,8 +21,8 @@ const routes: Routes = [
       tags: TagResolver,
     }, children: [
       { path: '', redirectTo: '/admin/login', pathMatch: 'full' },
-      { path: 'login', component: LoginPageComponent },
-      { path: 'articles', component: ArticleDashboardPageComponent, canActivate: [AuthGuard] },
+      { path: 'login', component: LoginPageComponent, canActivate: [LoginGuard] },
+      { path: 'articles', component: ArticleDashboardPageComponent, canActivate: [AuthGuard]},
       { path: 'new-article', component: ArticleEditPageComponent, canActivate: [AuthGuard] },
       {
         path: 'article/:id', component: ArticleEditPageComponent, canActivate: [AuthGuard], resolve: {

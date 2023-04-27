@@ -39,7 +39,6 @@ class ArticleController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        Log::info('$request'. json_encode($request));
         // добавь типизации, лучше явно кастовать эти значения в int
         $pageSize = (int)$request->query('pageSize', 10);
         $page = (int)$request->query('page', 1);

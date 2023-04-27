@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Category, Tag, User} from "../../../interfaces";
 import * as bcrypt from 'bcryptjs';
 import {UserService} from "../../../services/user.service";
@@ -14,13 +14,13 @@ import {BaseEditPageComponent} from "../base-edit-page/base-edit-page.component"
 const ROUTE_TO_REDIRECT: string[] = ['/admin', 'users'];
 
 interface UserForm {
-  name: FormControl<string>;
-  email: FormControl<string>;
-  password: FormControl<string>;
-  confirmPassword: FormControl<string>;
+  name: FormControl<string | null>;
+  email: FormControl<string | null>;
+  password: FormControl<string | null>;
+  confirmPassword: FormControl<string | null>;
   categories: FormArray<FormControl<string>>;
   tags: FormArray<FormControl<string>>;
-  role: FormControl<string>;
+  role: FormControl<string | null>;
 }
 
 @Component({
@@ -47,6 +47,7 @@ export class UserEditPageComponent extends BaseEditPageComponent<User> implement
     protected override _router: Router,
     protected formTagService: FormTagService,
     protected formCategoryService: FormCategoryService,
+    private _fb: FormBuilder,
   ) {
     super(_usersService, _router, ROUTE_TO_REDIRECT);
   }
@@ -71,25 +72,30 @@ export class UserEditPageComponent extends BaseEditPageComponent<User> implement
   }
 
   createForm(){
-    this.form = new FormGroup<UserForm>({
-      role: new FormControl('user', {
-        nonNullable: true
-      }),
-      name: new FormControl('', {
-        nonNullable: true,
-        validators: [Validators.required]
-      }),
-      email: new FormControl('', {
-        nonNullable: true,
-        validators: [Validators.required, Validators.email]
-      }),
-      password: new FormControl('', {
-        nonNullable: true,
-        validators: [Validators.required]
-      }),
-      confirmPassword: new FormControl('', {
-        nonNullable: true
-      }),
+    this.form = this._fb.nonNullable.group<UserForm>({
+      role: this._fb.control(
+        'user',
+      ),
+      name: this._fb.control(
+        '', [
+          Validators.required,
+        ]
+      ),
+      email: this._fb.control(
+        '', [
+          Validators.required,
+          Validators.email
+        ]
+      ),
+      password: this._fb.control(
+        '', [
+          Validators.required,
+          Validators.minLength(6)
+        ]
+      ),
+      confirmPassword: this._fb.control(
+        '',
+      ),
       categories: this.categoriesControls,
       tags: this.tagsControls
     });
@@ -141,14 +147,12 @@ export class UserEditPageComponent extends BaseEditPageComponent<User> implement
       password = bcrypt.hashSync(password, salt);
     }
 
-    const itemInstance: User = {
-      role: this.form.value.role,
-      name: this.form.value.name,
-      email: this.form.value.email,
+    const itemInstance: User = omit({
+      ...this.form.value,
       password: password,
       categories: [...ignoredCategories],
       tags: [...ignoredTags],
-    }
+    }, ['confirmPassword'])
 
     return itemInstance;
   }
