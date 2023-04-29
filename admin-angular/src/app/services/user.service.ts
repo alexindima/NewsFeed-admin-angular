@@ -10,7 +10,7 @@ import {BaseArticleUserService} from "./base-article-user.service";
   providedIn: 'root'
 })
 export class UserService extends BaseArticleUserService<User>{
-
+  // лучше делать BASE_URL не в конструкторе, а через public override свойство, тогда не придётся конструкторы оверрайдить, будет меньше кода в твоих сервисах
   constructor(
     protected override _http: HttpClient,
     protected _userState: UserState,
