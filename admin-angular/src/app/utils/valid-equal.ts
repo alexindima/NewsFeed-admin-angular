@@ -1,5 +1,6 @@
 import {AbstractControl, FormGroup, ValidatorFn} from '@angular/forms';
 
+// спизжено, сразу видно руку мастера
 export function appValidEqualFactory(items: string[], key: string): ValidatorFn {
   return (control: AbstractControl) => {
     if (control instanceof FormGroup) {

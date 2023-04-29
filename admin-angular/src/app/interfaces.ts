@@ -1,5 +1,6 @@
 import {Observable} from "rxjs";
 
+// такие файлы недопустмы, т.к. это по сути свалка интерфейсов, надо дробить это на раздельные файлы по раздельным задачам
 export interface User {
   createdAt?: string;
   updatedAt?: string;
@@ -66,6 +67,7 @@ export interface NameableWithId {
   id?: number
 }
 
+// подробно описал в папке states проблему, надо всё-всё вот это наследование поудалять, оно совершенно бесполезно
 export interface ArticleUserService<T> {
   getItems(pageIndex: number, pageSize: number): Observable<T[]>;
   getSingleItem(id: number): Observable<T>;

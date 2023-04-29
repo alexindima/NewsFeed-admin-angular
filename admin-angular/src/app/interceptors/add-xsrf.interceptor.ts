@@ -2,6 +2,7 @@ import {HttpEvent, HttpHandler, HttpInterceptor, HttpXsrfTokenExtractor, HttpReq
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 
+// занятно, очень непривычно видеть не стандартный jwt токен, а другое решение, впрочем, имеет место быть
 @Injectable()
 export class AddXsrfInterceptor implements HttpInterceptor {
 
