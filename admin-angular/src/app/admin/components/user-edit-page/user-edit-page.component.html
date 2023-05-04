@@ -142,9 +142,8 @@
       *ngFor="let category of categoriesAutocompleteOptions; let i = index"
     >
       <app-custom-category-tag-input
-        [placeholder]="'Choose category or enter a new one'"
+        [name]="'category'"
         [class]="'form-control'"
-        [autocompleteOptions]="categoriesAutocompleteOptions[i]"
         [withRemove]="true"
         (removeClick)="formCategoryService.removeItem(i)"
       ></app-custom-category-tag-input>
@@ -160,9 +159,8 @@
       *ngFor="let tag of tagsAutocompleteOptions; let i = index"
     >
       <app-custom-category-tag-input
-        [placeholder]="'Choose tag or enter a new one'"
+        [name]="'tag'"
         [class]="'form-control'"
-        [autocompleteOptions]="tagsAutocompleteOptions[i]"
         [withRemove]="true"
         (removeClick)="formTagService.removeItem(i)"
       ></app-custom-category-tag-input>

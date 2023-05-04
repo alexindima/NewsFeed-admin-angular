@@ -9,6 +9,7 @@ import {CategoryState} from "../../../states/category.state";
 import {FormTagService} from "../../../services/form-tag.service";
 import {ckeditorConfig} from "../../../../configs/ckeditor-config";
 import {BaseEditPageComponent} from "../base-edit-page/base-edit-page.component";
+import {TagState} from "../../../states/tag.state";
 
 const ROUTE_TO_REDIRECT: string[] = ['/admin', 'articles'];
 
@@ -19,7 +20,7 @@ interface ArticleForm {
   photoText: FormControl<string | null>;
   body: FormControl<string | null>;
   category: FormControl<string | null>;
-  tags: FormArray<FormControl<string>>;
+  tags: FormArray<FormControl<any>>;
 }
 
 @Component({
@@ -37,12 +38,14 @@ export class ArticleEditPageComponent extends BaseEditPageComponent<Article> imp
   public Editor = ClassicEditor;
   CKEditorConfig = ckeditorConfig;
   categoriesList: Category[] = [];
+  tagsList: Tag[] = [];
   categoryAutocompleteOptions!: AutocompleteOptionsFiler<Category>;
   tagsAutocompleteOptions!: AutocompleteOptionsFiler<Tag>[];
-  tagsControls!: FormArray<FormControl<string>>;
+  tagsControls: FormArray<FormControl<string | any>> = new FormArray<FormControl<any>>([]);
 
   constructor(
     protected _categoryState: CategoryState,
+    protected _tagState: TagState,
     protected _articleService: ArticleService,
     protected _activatedRoute: ActivatedRoute,
     protected override _router: Router,
@@ -57,10 +60,9 @@ export class ArticleEditPageComponent extends BaseEditPageComponent<Article> imp
 
     this._subs.add = this._categoryState.items$.subscribe((data) => {
       this.categoriesList = data;
-      this.categoryAutocompleteOptions = new AutocompleteOptionsFiler(new FormControl('', {
-        nonNullable: true,
-        validators: [Validators.required]
-      }), this.categoriesList)
+    });
+    this._subs.add = this._tagState.items$.subscribe((data) => {
+      this.tagsList = data;
     });
 
     this._subs.add = this.formTagService.autocompleteOptions$.subscribe((data) => {
@@ -100,15 +102,20 @@ export class ArticleEditPageComponent extends BaseEditPageComponent<Article> imp
           Validators.required,
         ]
       ),
-      category: this.categoryAutocompleteOptions.control,
-      tags: this.tagsControls
+      category: this._fb.control(
+        '', [
+          Validators.required,
+        ]
+      ),
+      /*tags: this.tagsControls*/
+      tags: this._fb.array([])
     });
 
   }
 
   fillForm(){
     const tagsNames = this.item!.tags;
-    this.createAutocompleteInputs(tagsNames, this.formTagService)
+    //this.createAutocompleteInputs(tagsNames, this.formTagService)
 
     this.form.patchValue(this.item!);
     this.form.patchValue({
@@ -131,5 +138,9 @@ export class ArticleEditPageComponent extends BaseEditPageComponent<Article> imp
     }
 
     return itemInstance;
+  }
+
+  show(){
+    console.log(this.form.value)
   }
 }

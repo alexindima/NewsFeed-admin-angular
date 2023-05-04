@@ -24,6 +24,9 @@ import {
 import {DashboardPaginatorComponent} from "./admin/components/dashboard-paginator/dashboard-paginator.component";
 import {CommonModule} from "@angular/common";
 import {LoaderComponent} from "./shared-components/loader/loader.component";
+import {
+  CustomCategoryTagGroupComponent
+} from "./admin/components/custom-category-tag-group/custom-category-tag-group.component";
 
 @NgModule({
   declarations: [
@@ -32,6 +35,7 @@ import {LoaderComponent} from "./shared-components/loader/loader.component";
     NotFoundPageComponent,
     CustomCategoryTagInputComponent,
     CustomCategoryTagAddComponent,
+    CustomCategoryTagGroupComponent,
     DashboardPaginatorComponent,
     LoaderComponent,
   ],
@@ -86,6 +90,7 @@ import {LoaderComponent} from "./shared-components/loader/loader.component";
     CustomCategoryTagAddComponent,
     DashboardPaginatorComponent,
     LoaderComponent,
+    CustomCategoryTagGroupComponent,
   ]
 })
 export class SharedModule {

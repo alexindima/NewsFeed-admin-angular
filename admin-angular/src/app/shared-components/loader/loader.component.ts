@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {LoaderState} from "../../states/loader.state";
 
 @Component({
   selector: 'app-loader',
@@ -6,4 +7,8 @@ import {Component} from '@angular/core';
   styleUrls: ['./loader.component.scss']
 })
 export class LoaderComponent {
+  constructor(
+    public loaderState: LoaderState,
+  ) {
+  }
 }
