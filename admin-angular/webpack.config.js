@@ -11,6 +11,9 @@ module.exports = {
     extensions: ['.js', '.ts'],
     fallback: {
       "crypto": false,
+    },
+    alias: {
+      'bcryptjs': 'bcryptjs/dist/bcrypt.js'
     }
   },
   module: {

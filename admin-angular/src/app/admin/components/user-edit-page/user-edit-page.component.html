@@ -132,39 +132,19 @@
 
     <h2>Ignore settings</h2>
 
-    <app-custom-category-tag-add
-      [name]="'Add category'"
-      (addClick)="formCategoryService.addItem()"
-    ></app-custom-category-tag-add>
-
-    <div
-      formArrayName="tags"
-      *ngFor="let category of categoriesAutocompleteOptions; let i = index"
+    <app-custom-category-tag-group
+      formControlName="categories"
+      [name]="'category'"
+      [options]="categoriesList"
     >
-      <app-custom-category-tag-input
-        [name]="'category'"
-        [class]="'form-control'"
-        [withRemove]="true"
-        (removeClick)="formCategoryService.removeItem(i)"
-      ></app-custom-category-tag-input>
-    </div>
+    </app-custom-category-tag-group>
 
-    <app-custom-category-tag-add
-      [name]="'Add tag'"
-      (addClick)="formTagService.addItem()"
-    ></app-custom-category-tag-add>
-
-    <div
-      formArrayName="tags"
-      *ngFor="let tag of tagsAutocompleteOptions; let i = index"
+    <app-custom-category-tag-group
+      formControlName="tags"
+      [name]="'tag'"
+      [options]="tagsList"
     >
-      <app-custom-category-tag-input
-        [name]="'tag'"
-        [class]="'form-control'"
-        [withRemove]="true"
-        (removeClick)="formTagService.removeItem(i)"
-      ></app-custom-category-tag-input>
-    </div>
+    </app-custom-category-tag-group>
 
     <div class="mt-5 d-flex justify-content-center">
       <button

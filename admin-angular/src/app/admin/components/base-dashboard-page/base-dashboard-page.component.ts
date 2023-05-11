@@ -5,7 +5,9 @@ import { of, switchMap, take, tap } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { Subs } from '../../../utils/subs';
 import {ConfirmDialogModalComponent, ModalDialogData} from '../confirm-dialog-modal/confirm-dialog-modal.component';
-import {ArticleUserService, ArticleUserState, PaginatorSettings} from '../../../interfaces';
+import {PaginatorSettings} from "../../../entities/paginator.interface";
+import {ArticleUserService} from "../../../entities/service.interface";
+import {ArticleUserState} from "../../../entities/state.interface";
 
 @Injectable()
 export abstract class BaseDashboardPageComponent<T extends { id?: number }> implements OnInit, OnDestroy {
@@ -59,7 +61,7 @@ export abstract class BaseDashboardPageComponent<T extends { id?: number }> impl
       queryParamsHandling: 'merge',
     });
 
-    this._subs.add = this._service.getItems(this.paginatorSettings.pageIndex + 1, this.paginatorSettings.pageSize).subscribe((result: T[]) => {
+    this._subs.add = this._service.getPaginatedItems(this.paginatorSettings.pageIndex + 1, this.paginatorSettings.pageSize).subscribe((result: T[]) => {
       this.itemsList = result;
     });
   }

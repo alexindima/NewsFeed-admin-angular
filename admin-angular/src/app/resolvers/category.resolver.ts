@@ -1,17 +1,20 @@
 import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
-import {Category} from "../interfaces";
+import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from '@angular/router';
+import {Category} from "../entities/category-tag.interface";
 import {CategoryService} from "../services/category.service";
-import {BaseTagCategoryResolver} from "./base-tag-category.resolver";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
-export class CategoryResolver extends BaseTagCategoryResolver<Category> {
+export class CategoryResolver {
   constructor(
-    protected _categoryService: CategoryService,
-    protected override _router: Router
+    private _categoryService: CategoryService,
+    private _router: Router
   ) {
-    super(_categoryService, _router);
+  }
+
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Category[]> {
+    return this._categoryService.updateItemsList();
   }
 }

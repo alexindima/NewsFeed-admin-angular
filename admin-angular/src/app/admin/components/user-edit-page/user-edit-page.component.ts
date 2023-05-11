@@ -1,15 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {Category, Tag, User} from "../../../interfaces";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {Category, Tag} from "../../../entities/category-tag.interface";
 import * as bcrypt from 'bcryptjs';
 import {UserService} from "../../../services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {appValidEqualFactory} from '../../../utils/valid-equal'
-import {AutocompleteOptionsFiler} from "../../../utils/autocomplete-options-filer";
-import {FormTagService} from "../../../services/form-tag.service";
-import {FormCategoryService} from "../../../services/form-category.service";
 import { omit } from 'lodash-es';
 import {BaseEditPageComponent} from "../base-edit-page/base-edit-page.component";
+import {CategoryState} from "../../../states/category.state";
+import {TagState} from "../../../states/tag.state";
+import {trimmedNonEmptySet} from "../../../utils/set-utils";
+import {User} from "../../../entities/user.interface";
 
 const ROUTE_TO_REDIRECT: string[] = ['/admin', 'users'];
 
@@ -18,8 +19,8 @@ interface UserForm {
   email: FormControl<string | null>;
   password: FormControl<string | null>;
   confirmPassword: FormControl<string | null>;
-  categories: FormArray<FormControl<string>>;
-  tags: FormArray<FormControl<string>>;
+  categories: FormControl<string[] | null>;
+  tags: FormControl<string[] | null>;
   role: FormControl<string | null>;
 }
 
@@ -27,46 +28,27 @@ interface UserForm {
   selector: 'app-user-edit-page',
   templateUrl: './user-edit-page.component.html',
   styleUrls: ['./user-edit-page.component.scss'],
-  providers: [
-    FormCategoryService,
-    FormTagService,
-  ],
 })
 export class UserEditPageComponent extends BaseEditPageComponent<User> implements OnInit {
   item: User | undefined;
   form!: FormGroup;
   submitted = false;
-  categoriesAutocompleteOptions!: AutocompleteOptionsFiler<Category>[];
-  categoriesControls!: FormArray<FormControl<string>>;
-  tagsAutocompleteOptions!: AutocompleteOptionsFiler<Tag>[];
-  tagsControls!: FormArray<FormControl<string>>;
+  categoriesList: Category[] = [];
+  tagsList: Tag[] = [];
 
   constructor(
+    protected override _categoryState: CategoryState,
+    protected override _tagState: TagState,
     protected _usersService: UserService,
     protected _activatedRoute: ActivatedRoute,
     protected override _router: Router,
-    protected formTagService: FormTagService,
-    protected formCategoryService: FormCategoryService,
     private _fb: FormBuilder,
   ) {
-    super(_usersService, _router, ROUTE_TO_REDIRECT);
+    super(_categoryState, _tagState, _usersService, _router, ROUTE_TO_REDIRECT);
   }
 
   override ngOnInit() {
     this.item = this._activatedRoute.snapshot.data['user'];
-
-    this._subs.add = this.formTagService.autocompleteOptions$.subscribe((data) => {
-      this.tagsAutocompleteOptions = data;
-    });
-    this._subs.add = this.formTagService.controls$.subscribe((data) => {
-      this.tagsControls = data;
-    });
-    this._subs.add = this.formCategoryService.autocompleteOptions$.subscribe((data) => {
-      this.categoriesAutocompleteOptions = data;
-    });
-    this._subs.add = this.formCategoryService.controls$.subscribe((data) => {
-      this.categoriesControls = data;
-    });
 
     super.ngOnInit();
   }
@@ -96,8 +78,12 @@ export class UserEditPageComponent extends BaseEditPageComponent<User> implement
       confirmPassword: this._fb.control(
         '',
       ),
-      categories: this.categoriesControls,
-      tags: this.tagsControls
+      categories: this._fb.control(
+        []
+      ),
+      tags: this._fb.control(
+        []
+      ),
     });
 
     this.form.setValidators(appValidEqualFactory(['password', 'confirmPassword'], 'VALIDATION.PASSWORD_MISMATCH'))
@@ -116,30 +102,14 @@ export class UserEditPageComponent extends BaseEditPageComponent<User> implement
   }
 
   fillForm(){
-    const categoriesNames = this.item!.categories;
-    const tagsNames = this.item!.tags;
-
     const itemWithoutPassword = omit(this.item, ['password']);
-    this.createAutocompleteInputs(categoriesNames, this.formCategoryService);
-    this.createAutocompleteInputs(tagsNames, this.formTagService);
     this.form.patchValue(itemWithoutPassword);
-    this.form.patchValue({
-      categories: categoriesNames,
-      tags: tagsNames
-    })
     this.form.get('password')!.removeValidators([Validators.required]);
   }
 
   createItemInstance(){
-    const ignoredCategories = new Set<string>(
-      this.categoriesAutocompleteOptions.map(category => category.control.value.trim())
-        .filter(trimmedCategory => trimmedCategory != '')
-    );
-
-    const ignoredTags = new Set<string>(
-      this.tagsAutocompleteOptions.map(tag => tag.control.value.trim())
-        .filter(trimmedTag => trimmedTag != '')
-    );
+    const ignoredCategories = trimmedNonEmptySet(this.form.value.categories);
+    const ignoredTags = trimmedNonEmptySet(this.form.value.tags);
 
     let password = this.form.value.password;
     if(password){

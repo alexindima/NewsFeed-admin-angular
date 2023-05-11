@@ -11,48 +11,12 @@ import {
   FormControl,
   NG_VALUE_ACCESSOR,
 } from "@angular/forms";
-import {NameableWithId} from "../../../interfaces";
+import {NameableWithId} from "../../../entities/category-tag.interface";
 
 @Component({
   selector: 'app-custom-category-tag-input',
-  template: `
-    <div [ngClass]="{ 'input-group': withRemove }">
-      <input type="text"
-             [formControl]="control"
-             placeholder="Choose {{name}} or enter a new one"
-             class="form-control {{class}}"
-             [matAutocomplete]="auto"
-             (focus)="createFilteredOptions()"
-             (blur)="onTouch()"
-      >
-      <mat-autocomplete
-        #auto="matAutocomplete"
-      >
-        <mat-option
-          *ngFor="let option of filteredOptions"
-          [value]="option"
-        >
-          {{option}}
-        </mat-option>
-      </mat-autocomplete>
-      <div *ngIf="withRemove" class="input-group-append rou">
-        <button
-          type="button"
-          class="btn btn-danger fixed-width-150 ml-3"
-          [ngClass]="{ 'start-straight': withRemove }"
-          (click)="clickHandler()"
-        >
-          Remove
-        </button>
-      </div>
-    </div>
-  `,
-  styles: [`
-    .start-straight {
-      border-bottom-left-radius: 0;
-      border-top-left-radius: 0;
-    }
-  `],
+  templateUrl: './custom-category-tag-input.component.html',
+  styleUrls: ['./custom-category-tag-input.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -69,13 +33,13 @@ export class CustomCategoryTagInputComponent implements ControlValueAccessor, Af
   @Output() removeClick: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
   public control: FormControl<string | null> = new FormControl<string | null>('')
   public filteredOptions: string[] = [];
-  public onChange = (_: string | null) => {};
+  public onChange = (_: string) => {};
   public onTouch = () => {};
 
   ngAfterViewInit() {
     this.control.valueChanges.subscribe((value) => {
         this.createFilteredOptions();
-        this.onChange(value)
+        this.onChange(value ? value.trim() : '');
       }
     )
   }

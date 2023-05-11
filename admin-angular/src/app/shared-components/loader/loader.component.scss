@@ -1,5 +1,6 @@
 .loader {
+  position: absolute;
   top:0;
   left:0;
-  z-index: 1000 // тогда потерял position обязательный для этого css
+  z-index: 1000
 }

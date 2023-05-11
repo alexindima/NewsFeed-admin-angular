@@ -1,0 +1,18 @@
+<app-custom-category-tag-add
+  [name]="'Add ' + name"
+  (addClick)="addItem()"
+></app-custom-category-tag-add>
+
+<div
+  class="mb-3"
+  *ngFor="let tag of formArray.controls; let i = index"
+>
+  <app-custom-category-tag-input
+    [formControl]="tag"
+    [name]="name"
+    [options]="options"
+    [withRemove]="true"
+    (removeClick)="removeItem(i)"
+  ></app-custom-category-tag-input>
+</div>
+

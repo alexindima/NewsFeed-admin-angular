@@ -1,11 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {LoginUser} from "../../../interfaces";
 import {AuthService} from "../../../services/auth.service";
 import {Router} from "@angular/router";
 import {Subs} from "../../../utils/subs";
 import {AuthState} from "../../../states/auth.state";
 import {finalize} from "rxjs/operators";
+import {LoginUser} from "../../../entities/user.interface";
 
 interface LoginForm {
   email: FormControl<string | null>;

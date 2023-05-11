@@ -1,18 +1,18 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, ViewChild} from '@angular/core';
 import {ArticleService} from "../../../services/article.service";
-import {Article} from "../../../interfaces";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {BaseDashboardPageComponent} from "../base-dashboard-page/base-dashboard-page.component";
 import {ArticleState} from "../../../states/article.state";
 import {MatTable} from "@angular/material/table";
+import {Article} from "../../../entities/article.interface";
 
 @Component({
   selector: 'app-article-base-dashboard-page',
   templateUrl: './article-dashboard-page.component.html',
   styleUrls: ['./article-dashboard-page.component.scss']
 })
-export class ArticleDashboardPageComponent extends BaseDashboardPageComponent<Article> implements AfterViewInit{
+export class ArticleDashboardPageComponent extends BaseDashboardPageComponent<Article> implements AfterViewInit, OnDestroy{
   displayedColumns: string[] = ['id', 'createdAt', 'updatedAt', 'category', 'mainTitle', 'tags', 'actions'];
   @ViewChild(MatTable) table!: MatTable<Article>;
   constructor(
@@ -25,10 +25,17 @@ export class ArticleDashboardPageComponent extends BaseDashboardPageComponent<Ar
     super(_activatedRoute, _router, _matDialog, _articleService, _state);
   }
 
+  onWindowResize = () => {
+    this.table.updateStickyColumnStyles();
+  }
+
   ngAfterViewInit(): void {
-    window.addEventListener('resize', () => {
-      this.table.updateStickyColumnStyles();
-    });
+    window.addEventListener('resize', this.onWindowResize);
+  }
+
+  override ngOnDestroy() {
+    window.removeEventListener('resize', this.onWindowResize);
+    super.ngOnDestroy();
   }
 
 }

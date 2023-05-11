@@ -1,19 +1,28 @@
 import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRouteSnapshot, Router, RouterStateSnapshot} from '@angular/router';
 import {UserService} from "../services/user.service";
-import {User} from "../interfaces";
-import {BaseArticleUserResolver} from "./base-article-user.resolver";
+import {catchError, Observable, throwError} from "rxjs";
+import {User} from "../entities/user.interface";
 
 const ROUTE_TO_REDIRECT = ['/admin', 'users'];
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserResolver extends BaseArticleUserResolver<User>{
+export class UserResolver {
   constructor(
-    protected _userService: UserService,
-    protected override _router: Router
+    private _userService: UserService,
+    private _router: Router,
   ) {
-    super(_userService, _router, ROUTE_TO_REDIRECT)
+  }
+
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<User> {
+    const id: number = Number(route.paramMap.get('id'));
+    return this._userService.getSingleItem(id).pipe(
+      catchError((err) => {
+        this._router.navigate(ROUTE_TO_REDIRECT);
+        return throwError(err);
+      })
+    );
   }
 }

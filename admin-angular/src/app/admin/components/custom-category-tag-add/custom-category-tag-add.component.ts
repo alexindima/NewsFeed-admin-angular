@@ -2,17 +2,8 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
   selector: 'app-custom-category-tag-add',
-  template: `
-    <div class="mb-3 mt-4">
-      <button
-        type="button"
-        class="btn btn-info fixed-width-150"
-        (click)="clickHandler()"
-      >
-          {{name}}
-      </button>
-    </div>
-  `
+  templateUrl: './custom-category-tag-add.component.html',
+  styleUrls: ['./custom-category-tag-add.component.scss'],
 })
 export class CustomCategoryTagAddComponent {
   @Input() name!: string;

@@ -1,10 +1,10 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {LoginUser} from "../interfaces";
 import {Observable, tap, catchError, switchMap, of} from "rxjs";
 import {AuthState} from "../states/auth.state";
 import {Router} from "@angular/router";
 import {joinErrorMessages} from "../utils/error-utils";
+import {LoginUser} from "../entities/user.interface";
 
 const LOGIN_URL = '/auth/login';
 const LOGOUT_URL = '/auth/logout';

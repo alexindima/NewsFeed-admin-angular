@@ -3,8 +3,8 @@ import {HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse} from
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import {NotificationService} from "../services/notification.service";
-import {OperationResponse} from "../interfaces";
 import {AuthService} from "../services/auth.service";
+import {OperationResponse} from "../entities/response.interface";
 
 @Injectable()
 export class ResponseNotificationInterceptor implements HttpInterceptor {

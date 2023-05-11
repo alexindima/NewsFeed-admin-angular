@@ -37,7 +37,8 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": [
-              "@ckeditor/ckeditor5-build-classic"
+              "@ckeditor/ckeditor5-build-classic",
+              "bcryptjs"
             ],
             "outputPath": "dist/admin-angular",
             "index": "src/index.html",
@@ -96,7 +97,7 @@
           "defaultConfiguration": "development",
           "options": {
             "browserTarget": "admin-angular:build",
-            "proxyConfig": "src/configs/proxy.conf.json"
+            "proxyConfig": "proxy.conf.json"
           },
           "configurations": {
             "production": {

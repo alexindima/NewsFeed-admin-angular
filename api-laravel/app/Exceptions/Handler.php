@@ -98,9 +98,9 @@ class Handler extends ExceptionHandler
 
     private function processValidation(ValidationException $exception): JsonResponse
     {
-        return response()->json([
+        return response()->json(
             $exception->validator->errors()->messages()
-        ], 400);
+        , 400);
     }
 
     private function processMethodNotAllowed(MethodNotAllowedHttpException $e): JsonResponse

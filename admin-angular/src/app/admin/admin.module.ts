@@ -5,8 +5,6 @@ import {UserEditPageComponent} from './components/user-edit-page/user-edit-page.
 import {ArticleDashboardPageComponent} from './components/article-dashboard-page/article-dashboard-page.component';
 import {UserDashboardPageComponent} from './components/user-dashboard-page/user-dashboard-page.component';
 import {SharedModule} from "../shared.module";
-import {FormTagService} from "../services/form-tag.service";
-import {FormCategoryService} from "../services/form-category.service";
 import {AdminRoutingModule} from "./admin-routing.module";
 
 @NgModule({
@@ -14,10 +12,6 @@ import {AdminRoutingModule} from "./admin-routing.module";
         SharedModule,
         AdminRoutingModule,
     ],
-  providers:[
-    FormTagService,
-    FormCategoryService
-  ],
   declarations: [
     AdminLayoutComponent,
     ArticleDashboardPageComponent,

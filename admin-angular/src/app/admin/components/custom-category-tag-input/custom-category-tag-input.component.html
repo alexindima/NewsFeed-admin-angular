@@ -1,0 +1,30 @@
+<div [ngClass]="{ 'input-group': withRemove }">
+  <input type="text"
+         [formControl]="control"
+         placeholder="Choose {{name}} or enter a new one"
+         class="form-control {{class}}"
+         [matAutocomplete]="auto"
+         (focus)="createFilteredOptions()"
+         (blur)="onTouch()"
+  >
+  <mat-autocomplete
+    #auto="matAutocomplete"
+  >
+    <mat-option
+      *ngFor="let option of filteredOptions"
+      [value]="option"
+    >
+      {{option}}
+    </mat-option>
+  </mat-autocomplete>
+  <div *ngIf="withRemove" class="input-group-append rou">
+    <button
+      type="button"
+      class="btn btn-danger fixed-width-150 ml-3"
+      [ngClass]="{ 'start-straight': withRemove }"
+      (click)="clickHandler()"
+    >
+      Remove
+    </button>
+  </div>
+</div>

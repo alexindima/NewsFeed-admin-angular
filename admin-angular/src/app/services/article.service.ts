@@ -1,20 +1,45 @@
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {Article} from "../interfaces";
+import {map, Observable, tap} from "rxjs";
 import {ArticleState} from "../states/article.state";
-import {BaseArticleUserService} from "./base-article-user.service";
+import {BaseHttpService} from "./base-http.service";
+import {Article} from "../entities/article.interface";
+import {ArticleUserService} from "../entities/service.interface";
 
 const ARTICLE_URL = '/api/articles';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ArticleService extends BaseArticleUserService<Article>{
+export class ArticleService implements ArticleUserService<Article>{
+
   constructor(
-    protected override _http: HttpClient,
-    protected _articleState: ArticleState,
+    private _baseHttpService: BaseHttpService<Article>,
+    private _articleState: ArticleState,
   ) {
-    super(_http, _articleState, ARTICLE_URL);
   }
 
+  getPaginatedItems(page: number, pageSize: number, search: string | null = null): Observable<Article[]> {
+    return this._baseHttpService.getPaginatedItems(ARTICLE_URL, page, pageSize, search).pipe(
+      tap(response => {
+        this._articleState.setCount(response.total);
+      }),
+      map(response => response.data)
+    )
+  }
+
+  getSingleItem(id: number): Observable<Article> {
+    return this._baseHttpService.getSingleItem(ARTICLE_URL, id);
+  }
+
+  createItem(item: Article): Observable<Article> {
+    return this._baseHttpService.createItem(ARTICLE_URL, item);
+  }
+
+  editItem(id: number, item: Article): Observable<Article> {
+    return this._baseHttpService.editItem(ARTICLE_URL, id, item);
+  }
+
+  deleteItem(id: number): Observable<boolean> {
+    return this._baseHttpService.deleteItem(ARTICLE_URL, id);
+  }
 }
