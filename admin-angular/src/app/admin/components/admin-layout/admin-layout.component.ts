@@ -23,6 +23,8 @@ export class AdminLayoutComponent implements OnDestroy {
   ) {
   }
 
+  // здесь я могу предложить создать logout компонент и в него перенести фичу логаута с модалкой целиком.
+  // старайся из компонентов контейнеров/пейджей/лейаутов не устраивать свалки фич, лейауту пофиг на фичу логаута должно быть
   openLogoutModal() {
     const dialogRef = this._matDialog.open(ConfirmDialogModalComponent, {
       width: '600px',

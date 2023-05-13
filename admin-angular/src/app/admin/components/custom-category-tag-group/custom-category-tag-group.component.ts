@@ -39,6 +39,7 @@ export class CustomCategoryTagGroupComponent implements ControlValueAccessor, Af
   }
 
   ngAfterViewInit() {
+    // отписку потерял
     this.formArray.valueChanges.subscribe(() => {
       const result = this.formArray.controls.map(res => res.value)
       this.onChange(result);
@@ -46,6 +47,8 @@ export class CustomCategoryTagGroupComponent implements ControlValueAccessor, Af
   }
 
   writeValue(value: string[]): void {
+    // да, здесь норм, но я бы выносил всякие подготовки данных ко входу (и к выходу тоже!) в отельные функции,
+    // причем вижу пересечение с trimmedNonEmptySet (которое должно быть на выходе из компонента!)
     const checkedValue = value.filter(value => value.trim() != '').map(value => value.trim())
     this.formArray = new FormArray(
       checkedValue.map(value => {

@@ -30,6 +30,8 @@ export class ArticleDashboardPageComponent extends BaseDashboardPageComponent<Ar
   }
 
   ngAfterViewInit(): void {
+    // здесь сложный момент, но привычнее при rxjs будет видеть через
+    // fromEvent(window, 'resize'), т.к. тогда можно заюзать debounceTime и не нагружать так сильно приложение
     window.addEventListener('resize', this.onWindowResize);
   }
 

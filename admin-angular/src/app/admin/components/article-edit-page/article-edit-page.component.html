@@ -3,12 +3,17 @@
 
   <form class="pb-3 example-form" [formGroup]="form" (ngSubmit)="submit()">
     <h2>Category</h2>
+
+<!--    здесь плохо сделал class, это должно рассчитываться внутри компонента, ого вижу сколько дублирования этой фичи ниже!!-->
     <app-custom-category-tag-input
       formControlName="category"
       [name]="'category'"
       [class]="form.get('category')?.touched && form.get('category')?.invalid ? 'border-danger' : 'mb-3'"
       [options]="categoriesList"
     ></app-custom-category-tag-input>
+
+<!--    здесь плохо сделал валидацию, я вижу ты вообще по проекту надублировал валидацию, а это решается -->
+<!--    через компонент обёртку app-field вокруг контрола, совершил очень много дублирования-->
     <div
       id="categoryValidation"
       *ngIf="form.get('category') && form.get('category')?.touched && form.get('category')?.invalid"

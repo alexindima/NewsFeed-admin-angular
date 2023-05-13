@@ -6,6 +6,7 @@ const routes: Routes = [
   {
     path: '', redirectTo: 'admin', pathMatch: "full"
   },
+  // в твоём случае префикс /admin - лишний, так не делают, сразу должно быть приложение от корня
   {
     path: 'admin', loadChildren: () => import('./admin/admin.module').then(x => x.AdminModule)
   },

@@ -56,6 +56,7 @@ export class ArticleEditPageComponent extends BaseEditPageComponent<Article> imp
 
   createForm(){
     this.form = this._fb.nonNullable.group<ArticleForm>({
+      // здесь можно проще писать, без this._fb.control - перепиши с лучшим АПИ от ангуляра, слишком много лишнего текста сейчас
       mainTitle: this._fb.control(
         '',[
           Validators.required,
@@ -98,6 +99,8 @@ export class ArticleEditPageComponent extends BaseEditPageComponent<Article> imp
   }
 
   createItemInstance(){
+    // trimmedNonEmptySet идея понятная, но может быть это должно быть сделано частью компонента тегов
+    // тогда метод createItemInstance вообще не понадобится
     const tags = trimmedNonEmptySet(this.form.value.tags);
 
     const itemInstance: Article = {

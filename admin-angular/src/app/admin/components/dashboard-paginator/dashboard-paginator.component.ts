@@ -7,6 +7,7 @@ import {MatPaginator, PageEvent} from "@angular/material/paginator";
   styleUrls: ['./dashboard-paginator.component.scss']
 })
 export class DashboardPaginatorComponent {
+  // у тебя уже есть общий интерфейс PaginatorSettings, не надо его дробить на части, лишнее
   @Input() length!: number;
   @Input() pageSize!: number;
   @Input() pageIndex!: number;

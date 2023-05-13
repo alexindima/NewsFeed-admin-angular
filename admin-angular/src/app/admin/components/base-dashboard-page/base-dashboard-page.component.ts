@@ -61,11 +61,14 @@ export abstract class BaseDashboardPageComponent<T extends { id?: number }> impl
       queryParamsHandling: 'merge',
     });
 
+    // это можно сделать лучше, вместо передачи метода сервиса целиком надо создать абстрактный метод loadItems в этом классе и реализовывать его в потомках
     this._subs.add = this._service.getPaginatedItems(this.paginatorSettings.pageIndex + 1, this.paginatorSettings.pageSize).subscribe((result: T[]) => {
       this.itemsList = result;
     });
   }
 
+  // эта фича вообще не принадлежит пейдже, под неё надо создавать отдельный компонент, пейджи не должны являться свалкой фич
+  // профит будет в независимости фич и _service не придётся передавать в базовый класс
   openDeleteModal(item: T, type: string, name: string) {
     const dialogRef = this._matDialog.open(ConfirmDialogModalComponent, {
       width: '600px',
@@ -86,6 +89,7 @@ export abstract class BaseDashboardPageComponent<T extends { id?: number }> impl
     ).subscribe();
   }
 
+  // PaginatorSettings должно являться классов, где будет метод change(), сейчас ты избежал полезного ООП для пагинации
   pageChanged($event: PageEvent) {
     this.paginatorSettings.length = $event.length;
     this.paginatorSettings.pageSize = $event.pageSize;
