@@ -48,6 +48,7 @@ export class UserDashboardPageComponent extends BaseDashboardPageComponent<User>
   }
 
   ngAfterViewInit(): void {
+    // вижу копипасту этой фичи и на другой пейдже, это недопустимо вообще
     window.addEventListener('resize', this.onWindowResize);
   }
 

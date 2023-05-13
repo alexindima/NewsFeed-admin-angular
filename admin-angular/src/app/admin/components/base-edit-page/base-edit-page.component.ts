@@ -44,18 +44,22 @@ export abstract class BaseEditPageComponent<T extends { id?: number }> implement
   abstract fillForm(): void;
   abstract createItemInstance(): T;
 
+  // _service.createItem - абстрактный метод, избегай передачи _service в базовые классы
+  // я вижу дублирование finalize у двух методов, которое можно запросто избежать переписав метод submit()
   createItem(item: T) {
     this._subs.add = this._service.createItem(item).pipe(
       finalize(() => this.finish())
     ).subscribe();
   }
 
+  // _service.editItem - абстрактный метод, избегай передачи _service в базовые классы
   editItem(item: T) {
     this._subs.add = this._service.editItem(this.item!.id!, item).pipe(
       finalize(() => this.finish())
     ).subscribe();
   }
 
+  // _routeToRedirect - лучше константу напрямую юзать, не передавать через конструктор
   finish(){
     this._router.navigate(this._routeToRedirect);
   }

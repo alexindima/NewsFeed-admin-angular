@@ -22,6 +22,7 @@ const routes: Routes = [
     }, children: [
       { path: '', redirectTo: '/admin/login', pathMatch: 'full' },
       { path: 'login', component: LoginPageComponent, canActivate: [LoginGuard] },
+      // весь article - отдельный модуль, так же и с юзерами, у тебя нарушение REST именований в урлах, смотри как я делал на курсах
       { path: 'articles', component: ArticleDashboardPageComponent, canActivate: [AuthGuard]},
       { path: 'new-article', component: ArticleEditPageComponent, canActivate: [AuthGuard] },
       {

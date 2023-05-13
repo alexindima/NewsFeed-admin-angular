@@ -10,10 +10,11 @@ import {Observable} from "rxjs";
 export class CategoryResolver {
   constructor(
     private _categoryService: CategoryService,
-    private _router: Router
+    private _router: Router // лишняя зависимость
   ) {
   }
 
+  // отсутствует обработка ошибки!
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Category[]> {
     return this._categoryService.updateItemsList();
   }

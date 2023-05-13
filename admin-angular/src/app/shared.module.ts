@@ -41,10 +41,10 @@ import {
   ],
   imports: [
     CommonModule,
-    FormsModule,
+    FormsModule, // лишний, уже есть ReactiveFormsModule
     ReactiveFormsModule,
-    MatAutocompleteModule,
-    MatFormFieldModule,
+    MatAutocompleteModule, // трижды подключен! могу предложить материал модули в один массив скинуть
+    MatFormFieldModule, // тоже трижды, короче внимательно объедени
     MatFormFieldModule,
     MatAutocompleteModule,
     MatNativeDateModule,
