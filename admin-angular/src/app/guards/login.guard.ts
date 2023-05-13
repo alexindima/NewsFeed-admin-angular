@@ -22,7 +22,7 @@ export class LoginGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     if (this._auth.isAuthenticated()) {
-      this._router.navigate(['/admin', 'articles']).then();
+      this._router.navigate(['articles']).then();
       return false;
     } else {
       return true;

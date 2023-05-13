@@ -11,7 +11,7 @@ import {
   FormControl,
   NG_VALUE_ACCESSOR,
 } from "@angular/forms";
-import {NameableWithId} from "../../../entities/category-tag.interface";
+import {NameableWithId} from "../../entities/category-tag.interface";
 
 @Component({
   selector: 'app-custom-category-tag-input',

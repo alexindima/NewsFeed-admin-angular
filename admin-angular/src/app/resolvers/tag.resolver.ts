@@ -10,7 +10,6 @@ import {Tag} from "../entities/category-tag.interface";
 export class TagResolver {
   constructor(
     private _tagsService: TagService,
-    private _router: Router
   ) {
   }
 

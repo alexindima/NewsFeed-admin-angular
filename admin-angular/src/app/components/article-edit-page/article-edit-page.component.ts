@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Category, Tag} from '../../../entities/category-tag.interface';
+import {Category, Tag} from '../../entities/category-tag.interface';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { ArticleService } from '../../../services/article.service';
+import { ArticleService } from '../../services/article.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import {CategoryState} from "../../../states/category.state";
-import {ckeditorConfig} from "../../../../configs/ckeditor-config";
+import {CategoryState} from "../../states/category.state";
+import {ckeditorConfig} from "../../../configs/ckeditor-config";
 import {BaseEditPageComponent} from "../base-edit-page/base-edit-page.component";
-import {TagState} from "../../../states/tag.state";
-import {trimmedNonEmptySet} from "../../../utils/set-utils";
-import {Article} from "../../../entities/article.interface";
+import {TagState} from "../../states/tag.state";
+import {trimmedNonEmptySet} from "../../utils/set-utils";
+import {Article} from "../../entities/article.interface";
 
-const ROUTE_TO_REDIRECT: string[] = ['/admin', 'articles'];
+const ROUTE_TO_REDIRECT: string[] = ['articles'];
 
 interface ArticleForm {
   mainTitle: FormControl<string | null>;

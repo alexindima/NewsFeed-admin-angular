@@ -3,11 +3,11 @@ import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of, switchMap, take, tap } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { Subs } from '../../../utils/subs';
+import { Subs } from '../../utils/subs';
 import {ConfirmDialogModalComponent, ModalDialogData} from '../confirm-dialog-modal/confirm-dialog-modal.component';
-import {PaginatorSettings} from "../../../entities/paginator.interface";
-import {ArticleUserService} from "../../../entities/service.interface";
-import {ArticleUserState} from "../../../entities/state.interface";
+import {PaginatorSettings} from "../../entities/paginator.interface";
+import {ArticleUserService} from "../../entities/service.interface";
+import {ArticleUserState} from "../../entities/state.interface";
 
 @Injectable()
 export abstract class BaseDashboardPageComponent<T extends { id?: number }> implements OnInit, OnDestroy {

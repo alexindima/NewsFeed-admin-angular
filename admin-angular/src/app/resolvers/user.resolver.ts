@@ -4,7 +4,7 @@ import {UserService} from "../services/user.service";
 import {catchError, Observable, throwError} from "rxjs";
 import {User} from "../entities/user.interface";
 
-const ROUTE_TO_REDIRECT = ['/admin', 'users'];
+const ROUTE_TO_REDIRECT = ['users'];
 
 @Injectable({
   providedIn: 'root'

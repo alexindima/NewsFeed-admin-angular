@@ -1,12 +1,12 @@
 import {Injectable, OnDestroy, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
-import { Subs } from '../../../utils/subs';
+import { Subs } from '../../utils/subs';
 import {FormGroup} from "@angular/forms";
-import {Category, Tag} from "../../../entities/category-tag.interface";
+import {Category, Tag} from "../../entities/category-tag.interface";
 import {finalize} from "rxjs/operators";
-import {CategoryState} from "../../../states/category.state";
-import {TagState} from "../../../states/tag.state";
-import {ArticleUserService} from "../../../entities/service.interface";
+import {CategoryState} from "../../states/category.state";
+import {TagState} from "../../states/tag.state";
+import {ArticleUserService} from "../../entities/service.interface";
 
 @Injectable()
 export abstract class BaseEditPageComponent<T extends { id?: number }> implements OnInit, OnDestroy {

@@ -1,12 +1,13 @@
-@use "src/app/mixins" as mixins ;
+@use "../../mixins" as mixins ;
 
 @include mixins.mat-table-columns((
 
   id: (width: 3rem, min-width: 2rem, color: gray),
+  role: (width: 4rem, min-width: 4rem),
   createdAt: (width: 6rem, min-width: 5rem),
-  updatedAt: (width: 6rem, min-width: 5rem),
-  category: (width: 12rem, min-width: 5rem),
-  mainTitle: (width: 20rem),
+  name: (width: 8rem, min-width: 4rem),
+  email: (width: 20rem),
+  categories: (width: 12rem, min-width: 6rem),
   tags: (width: 12rem, min-width: 5rem),
   actions: (width: 10rem, min-width: 10rem),
 ));

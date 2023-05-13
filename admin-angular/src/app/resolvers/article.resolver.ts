@@ -4,7 +4,7 @@ import {ArticleService} from "../services/article.service";
 import {catchError, Observable, throwError} from "rxjs";
 import {Article} from "../entities/article.interface";
 
-const ROUTE_TO_REDIRECT = ['/admin', 'articles'];
+const ROUTE_TO_REDIRECT = ['articles'];
 
 @Injectable({
   providedIn: 'root'

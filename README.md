@@ -36,10 +36,10 @@ git clone https://github.com/alexindima/NewsFeed.git
 
 ****Prerequisites:****
 
-PHP >= 7.3
-Composer
-MySQL
-Git
+PHP >= 8.1
+- Composer
+- MySQL
+- Git
 
 **Installation**
 Navigate to the admin-angular directory:

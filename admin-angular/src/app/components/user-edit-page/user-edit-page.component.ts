@@ -1,18 +1,18 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {Category, Tag} from "../../../entities/category-tag.interface";
+import {Category, Tag} from "../../entities/category-tag.interface";
 import * as bcrypt from 'bcryptjs';
-import {UserService} from "../../../services/user.service";
+import {UserService} from "../../services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {appValidEqualFactory} from '../../../utils/valid-equal'
+import {appValidEqualFactory} from '../../utils/valid-equal'
 import { omit } from 'lodash-es';
 import {BaseEditPageComponent} from "../base-edit-page/base-edit-page.component";
-import {CategoryState} from "../../../states/category.state";
-import {TagState} from "../../../states/tag.state";
-import {trimmedNonEmptySet} from "../../../utils/set-utils";
-import {User} from "../../../entities/user.interface";
+import {CategoryState} from "../../states/category.state";
+import {TagState} from "../../states/tag.state";
+import {trimmedNonEmptySet} from "../../utils/set-utils";
+import {User} from "../../entities/user.interface";
 
-const ROUTE_TO_REDIRECT: string[] = ['/admin', 'users'];
+const ROUTE_TO_REDIRECT: string[] = ['users'];
 
 interface UserForm {
   name: FormControl<string | null>;

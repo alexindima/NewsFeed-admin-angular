@@ -1,2 +1,61 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-danger sticky-top" style="z-index: 99999">
+  <div class="container-fluid">
+    <a class="navbar-brand" [routerLink]="['/admin']">
+      Admin Panel
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent" *ngIf="auth.isAuthenticated()">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLinkActive="fw-bold"
+            [routerLink]="['articles']"
+            [routerLinkActiveOptions]="ignoreQueryMatchOptions"
+            skipLocationChange="true"
+          >
+            Articles
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLinkActive="fw-bold"
+            [routerLink]="['articles', 'create']"
+          >
+            New article
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLinkActive="fw-bold"
+            [routerLink]="['users']"
+            [routerLinkActiveOptions]="ignoreQueryMatchOptions"
+            skipLocationChange="true"
+          >
+            Users
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLinkActive="fw-bold"
+            [routerLink]="['users', 'create']"
+          >
+            New user
+          </a>
+        </li>
+      </ul>
+      <button type="button" class="btn bg-danger d-flex" (click)="openLogoutModal()">
+        Logout
+      </button>
+    </div>
+  </div>
+</nav>
+
 <router-outlet></router-outlet>
 <app-loader></app-loader>

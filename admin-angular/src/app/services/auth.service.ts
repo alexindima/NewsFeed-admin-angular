@@ -40,7 +40,7 @@ export class AuthService {
   logout() {
     this._http.post(LOGOUT_URL, {}).subscribe()
     localStorage.removeItem('isAuthenticated');
-    this._router.navigate(['/admin', 'login'])
+    this._router.navigate(['login'])
   }
 
   isAuthenticated(): boolean {

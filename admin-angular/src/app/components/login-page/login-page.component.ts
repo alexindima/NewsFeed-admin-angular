@@ -1,11 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {AuthService} from "../../../services/auth.service";
+import {AuthService} from "../../services/auth.service";
 import {Router} from "@angular/router";
-import {Subs} from "../../../utils/subs";
-import {AuthState} from "../../../states/auth.state";
+import {Subs} from "../../utils/subs";
+import {AuthState} from "../../states/auth.state";
 import {finalize} from "rxjs/operators";
-import {LoginUser} from "../../../entities/user.interface";
+import {LoginUser} from "../../entities/user.interface";
 
 interface LoginForm {
   email: FormControl<string | null>;
@@ -59,7 +59,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       finalize(() => this.submitted = false)
     ).subscribe(() => {
       this.form.reset();
-      this._router.navigate(['/admin', 'articles']).then();
+      this._router.navigate(['articles']).then();
     })
 
   }

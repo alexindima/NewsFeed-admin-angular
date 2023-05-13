@@ -10,7 +10,6 @@ import {Observable} from "rxjs";
 export class CategoryResolver {
   constructor(
     private _categoryService: CategoryService,
-    private _router: Router // лишняя зависимость
   ) {
   }
 

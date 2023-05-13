@@ -1,11 +1,11 @@
 import {AfterViewInit, Component, OnDestroy, ViewChild} from '@angular/core';
-import {ArticleService} from "../../../services/article.service";
+import {ArticleService} from "../../services/article.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {BaseDashboardPageComponent} from "../base-dashboard-page/base-dashboard-page.component";
-import {ArticleState} from "../../../states/article.state";
+import {ArticleState} from "../../states/article.state";
 import {MatTable} from "@angular/material/table";
-import {Article} from "../../../entities/article.interface";
+import {Article} from "../../entities/article.interface";
 
 @Component({
   selector: 'app-article-base-dashboard-page',

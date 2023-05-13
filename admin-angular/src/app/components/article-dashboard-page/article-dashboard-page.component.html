@@ -6,7 +6,7 @@
       <div class="col-auto align-self-center">
         <a
           class="btn btn-outline-primary"
-          [routerLink]="['/admin', 'new-article']"
+          [routerLink]="['create']"
         >
           Create an Article
         </a>
@@ -47,7 +47,7 @@
         <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
         <mat-cell *matCellDef="let article" class="text-nowrap">
           <a class="btn btn-outline-primary me-2"
-             [routerLink]="['/admin', 'article', article.id]">
+             [routerLink]="[article.id, 'edit']">
             Edit
           </a>
 
