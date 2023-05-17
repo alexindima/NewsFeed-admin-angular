@@ -1,8 +1,12 @@
-<!--этот компонент обёртка лишний, можешь сам внутренностями убедиться-->
-<app-custom-category-tag-add
-  [name]="'Add ' + name"
-  (addClick)="addItem()"
-></app-custom-category-tag-add>
+<div class="mb-3 mt-4">
+  <button
+    type="button"
+    class="btn btn-info fixed-width-150"
+    (click)="addItem()"
+  >
+    {{'Add ' + name}}
+  </button>
+</div>
 
 <div
   class="mb-3"

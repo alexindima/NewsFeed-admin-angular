@@ -15,7 +15,7 @@ import {SharedModule} from "./shared.module";
     RouterModule.forChild([
       { path: '', component: UserDashboardPageComponent },
       { path: 'create', component: UserEditPageComponent },
-      { path: ':id', component: UserEditPageComponent, resolve: { user: UserResolver } }
+      { path: ':id/edit', component: UserEditPageComponent, resolve: { user: UserResolver } }
     ])
   ]
 })

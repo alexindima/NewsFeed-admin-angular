@@ -16,8 +16,7 @@ const routes: Routes = [
     },
     canActivate: [AuthGuard],
     children: [
-      { path: '', redirectTo: '/admin/login', pathMatch: 'full' },
-      // весь article - отдельный модуль, так же и с юзерами, у тебя нарушение REST именований в урлах, смотри как я делал на курсах
+      { path: '', redirectTo: '/login', pathMatch: 'full' },
       { path: 'articles', loadChildren: () => import('./article.module').then(m => m.ArticleModule) },
       { path: 'users', loadChildren: () => import('./user.module').then(m => m.UsersModule) },
     ]

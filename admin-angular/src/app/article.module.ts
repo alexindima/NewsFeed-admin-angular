@@ -15,11 +15,11 @@ import {SharedModule} from "./shared.module";
     RouterModule.forChild([
       { path: '', component: ArticleDashboardPageComponent },
       { path: 'create', component: ArticleEditPageComponent },
-      { path: ':id', component: ArticleEditPageComponent, resolve: { article: ArticleResolver } }
+       { path: ':id/edit', component: ArticleEditPageComponent, resolve: { article: ArticleResolver } }
     ])
   ],
   exports: [
-    RouterModule
+    RouterModule,
   ]
 })
 export class ArticleModule { }

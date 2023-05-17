@@ -1,20 +1,13 @@
-import {AbstractControl, FormGroup, ValidatorFn} from '@angular/forms';
+import {AbstractControl, ValidationErrors, ValidatorFn} from '@angular/forms';
 
-export function appValidEqualFactory(items: string[], key: string): ValidatorFn {
-  return (control: AbstractControl) => {
-    if (control instanceof FormGroup) {
-      let first = control.controls[items[0]].value;
-      for (let i = 1; i < items.length; i++) {
-        let current = control.controls[items[i]].value;
-        if (current !== first) {
-          return {
-            customKey: {
-              key
-            }
-          };
-        }
-      }
+export function validEqual(controlNameToCompare: string): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const controlToCompare = control.parent!.get(controlNameToCompare);
+
+    if (controlToCompare && controlToCompare.value !== control.value && controlToCompare.dirty) {
+      return { 'validEqual': true };
     }
+
     return null;
   };
 }

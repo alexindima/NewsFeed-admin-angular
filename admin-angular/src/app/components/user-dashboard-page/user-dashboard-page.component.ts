@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Category, Tag} from "../../entities/category-tag.interface";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
@@ -7,18 +7,15 @@ import {UserService} from "../../services/user.service";
 import {UserState} from "../../states/user.state";
 import {CategoryState} from "../../states/category.state";
 import {TagState} from "../../states/tag.state";
-import {MatTable} from "@angular/material/table";
 import {User} from "../../entities/user.interface";
-import {Article} from "../../entities/article.interface";
 
 @Component({
   selector: 'app-user-base-dashboard-page',
   templateUrl: './user-dashboard-page.component.html',
   styleUrls: ['./user-dashboard-page.component.scss']
 })
-export class UserDashboardPageComponent extends BaseDashboardPageComponent<User> implements OnInit, AfterViewInit, OnDestroy {
+export class UserDashboardPageComponent extends BaseDashboardPageComponent<User> implements OnInit{
   displayedColumns: string[] = ['userId', 'role', 'createdAt', 'name', 'email', 'categories', 'tags', 'actions'];
-  @ViewChild(MatTable) table!: MatTable<Article>;
   categoriesList: Category[] = []
   tagsList: Tag[] = []
   constructor(
@@ -43,19 +40,6 @@ export class UserDashboardPageComponent extends BaseDashboardPageComponent<User>
     super.ngOnInit();
   }
 
-  onWindowResize = () => {
-    this.table.updateStickyColumnStyles();
-  }
-
-  ngAfterViewInit(): void {
-    // вижу копипасту этой фичи и на другой пейдже, это недопустимо вообще
-    window.addEventListener('resize', this.onWindowResize);
-  }
-
-  override ngOnDestroy() {
-    window.removeEventListener('resize', this.onWindowResize);
-    super.ngOnDestroy();
-  }
 
 }
 

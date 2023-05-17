@@ -4,7 +4,7 @@ import {Category, Tag} from "../../entities/category-tag.interface";
 import * as bcrypt from 'bcryptjs';
 import {UserService} from "../../services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {appValidEqualFactory} from '../../utils/valid-equal'
+import {validEqual} from '../../utils/valid-equal'
 import { omit } from 'lodash-es';
 import {BaseEditPageComponent} from "../base-edit-page/base-edit-page.component";
 import {CategoryState} from "../../states/category.state";
@@ -86,7 +86,7 @@ export class UserEditPageComponent extends BaseEditPageComponent<User> implement
       ),
     });
 
-    this.form.setValidators(appValidEqualFactory(['password', 'confirmPassword'], 'VALIDATION.PASSWORD_MISMATCH'))
+    this.form.controls['confirmPassword'].setValidators(validEqual('password'));
 
     this._subs.add = this.form.get('password')!.valueChanges.subscribe(() => {
       if (this.form.get('password')!.value || this.form.get('confirmPassword')!.value) {

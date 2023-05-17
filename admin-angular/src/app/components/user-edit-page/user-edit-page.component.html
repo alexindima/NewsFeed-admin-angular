@@ -6,7 +6,6 @@
     [formGroup]="form"
     (ngSubmit)="submit()">
 
-
     <h2>Personal data</h2>
     <div class="mb-3">
       <label
@@ -15,22 +14,15 @@
       >
         Name
       </label>
-      <input
-        id="name" class="form-control"
-        [ngClass]="{'border-danger': form.get('name')?.touched && form.get('name')?.invalid}"
-        placeholder="What is the name of the user?"
-        formControlName="name"
-
-      >
-      <div
-        id="nameValidation"
-        class="form-text"
-        *ngIf="form.get('name') && form.get('name')?.touched && form.get('name')?.invalid"
-      >
-        <small class="text-danger">
-          Field can not be empty
-        </small>
-      </div>
+      <app-field-validator>
+        <input
+          #forValidation
+          id="name"
+          class="form-control"
+          placeholder="What is the name of the user?"
+          formControlName="name"
+        >
+      </app-field-validator>
     </div>
 
     <div class="mb-3">
@@ -40,31 +32,15 @@
       >
         Email
       </label>
-      <input
-        id="email"
-        class="form-control"
-        [ngClass]="{'border-danger': form.get('email')?.touched && form.get('email')?.invalid}"
-        placeholder="What is the email of the user?"
-        formControlName="email"
-      >
-      <div
-        id="emailValidation"
-        class="form-text"
-        *ngIf="form.get('email') && form.get('email')?.touched && form.get('email')?.invalid"
-      >
-        <small
-          class="text-danger"
-          *ngIf="form.get('email')?.errors?.['required']"
+      <app-field-validator>
+        <input
+          #forValidation
+          id="email"
+          class="form-control"
+          placeholder="What is the email of the user?"
+          formControlName="email"
         >
-          Field can not be empty
-        </small>
-        <small
-          class="text-danger"
-          *ngIf="form.get('email')?.errors?.['email']"
-        >
-          Enter correct email
-        </small>
-      </div>
+      </app-field-validator>
     </div>
 
     <div class="mb-3">
@@ -74,50 +50,28 @@
       >
         Password
       </label>
-      <input
-        id="password"
-        class="form-control"
-        [ngClass]="{'border-danger': form.get('password')?.touched && form.get('password')?.invalid}"
-        placeholder="{{item ? 'Enter a new password or leave the field blank for not changing the password' : 'What is the user\'s password?'}}"
-        formControlName="password"
-      >
-      <div
-        id="passwordValidation"
-        class="form-text"
-        *ngIf="form.get('password') && form.get('password')?.touched && form.get('password')?.invalid"
-      >
-        <small
-          class="text-danger"
-          *ngIf="form.get('password')?.errors?.['required']"
+      <app-field-validator>
+        <input
+          #forValidation
+          id="password"
+          class="form-control"
+          placeholder="{{item ? 'Enter a new password or leave the field blank for not changing the password' : 'What is the user\'s password?'}}"
+          formControlName="password"
         >
-          Field can not be empty
-        </small>
-        <small
-          class="text-danger"
-          *ngIf="form.get('password')?.errors?.['minlength']"
-        >
-          Password must contain at least {{form.get('password')?.errors?.['minlength'].requiredLength}} symbols.
-          Now here only {{form.get('password')?.errors?.['minlength'].actualLength}}
-        </small>
-      </div>
+      </app-field-validator>
     </div>
 
     <div class="mb-3">
       <label for="confirmPassword" class="form-label">Confirm password</label>
-      <input
-        id="confirmPassword"
-        class="form-control"
-        [ngClass]="{'border-danger': form.get('confirmPassword')?.touched && form.errors}"
-        placeholder="{{item ? 'Repeat password or leave the field blank for not changing the password' : 'Repeat password'}}"
-        formControlName="confirmPassword"
-      >
-
-      <div id="confirmPasswordValidation"
-           *ngIf="form.get('confirmPassword')?.touched && form.errors"
-           class="form-text"
-      >
-        <small class="text-danger">Passwords mismatch</small>
-      </div>
+      <app-field-validator>
+        <input
+          #forValidation
+          id="confirmPassword"
+          class="form-control"
+          placeholder="{{item ? 'Repeat password or leave the field blank for not changing the password' : 'Repeat password'}}"
+          formControlName="confirmPassword"
+        >
+      </app-field-validator>
     </div>
 
     <h2>Role</h2>

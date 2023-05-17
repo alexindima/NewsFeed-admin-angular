@@ -6,7 +6,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {
   ConfirmDialogModalComponent,
   ModalDialogData
-} from "./components/confirm-dialog-modal/confirm-dialog-modal.component";
+} from "./shared-components/confirm-dialog-modal/confirm-dialog-modal.component";
 
 @Component({
   selector: 'app-root',

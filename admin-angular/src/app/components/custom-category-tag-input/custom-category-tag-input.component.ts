@@ -1,9 +1,9 @@
 import {
   AfterViewInit,
-  Component,
+  Component, DoCheck, ElementRef,
   EventEmitter,
   forwardRef,
-  Input,
+  Input, OnDestroy,
   Output,
 } from '@angular/core';
 import {
@@ -12,6 +12,7 @@ import {
   NG_VALUE_ACCESSOR,
 } from "@angular/forms";
 import {NameableWithId} from "../../entities/category-tag.interface";
+import {Subs} from "../../utils/subs";
 
 @Component({
   selector: 'app-custom-category-tag-input',
@@ -25,23 +26,31 @@ import {NameableWithId} from "../../entities/category-tag.interface";
     },
   ]
 })
-export class CustomCategoryTagInputComponent implements ControlValueAccessor, AfterViewInit {
+export class CustomCategoryTagInputComponent implements ControlValueAccessor, AfterViewInit, DoCheck, OnDestroy {
   @Input() name?: string = 'option';
-  @Input() class?: string;
   @Input() options!: NameableWithId[];
   @Input() withRemove: boolean = false;
   @Output() removeClick: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
+  private _subs = new Subs();
+  public classes = '';
   public control: FormControl<string | null> = new FormControl<string | null>('')
   public filteredOptions: string[] = [];
   public onChange = (_: string) => {};
   public onTouch = () => {};
 
+  constructor(private elementRef: ElementRef) {}
+
   ngAfterViewInit() {
-    this.control.valueChanges.subscribe((value) => {
+    this._subs.add = this.control.valueChanges.subscribe((value) => {
         this.createFilteredOptions();
         this.onChange(value ? value.trim() : '');
       }
-    )
+    );
+
+  }
+
+  ngDoCheck() {
+    this.classes = [...this.elementRef.nativeElement.classList].join(' ');
   }
 
   createFilteredOptions() {
@@ -69,6 +78,10 @@ export class CustomCategoryTagInputComponent implements ControlValueAccessor, Af
   }
 
   setDisabledState?(isDisabled: boolean): void {
+  }
+
+  ngOnDestroy() {
+    this._subs.unsubscribe();
   }
 
 }

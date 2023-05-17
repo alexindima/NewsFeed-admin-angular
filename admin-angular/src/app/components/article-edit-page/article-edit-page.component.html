@@ -4,25 +4,16 @@
   <form class="pb-3 example-form" [formGroup]="form" (ngSubmit)="submit()">
     <h2>Category</h2>
 
-<!--    здесь плохо сделал class, это должно рассчитываться внутри компонента, ого вижу сколько дублирования этой фичи ниже!!-->
-    <app-custom-category-tag-input
-      formControlName="category"
-      [name]="'category'"
-      [class]="form.get('category')?.touched && form.get('category')?.invalid ? 'border-danger' : 'mb-3'"
-      [options]="categoriesList"
-    ></app-custom-category-tag-input>
+    <app-field-validator>
+      <app-custom-category-tag-input
+        #forValidation
+        formControlName="category"
+        [name]="'category'"
+        [options]="categoriesList"
+      ></app-custom-category-tag-input>
+    </app-field-validator>
 
-<!--    здесь плохо сделал валидацию, я вижу ты вообще по проекту надублировал валидацию, а это решается -->
-<!--    через компонент обёртку app-field вокруг контрола, совершил очень много дублирования-->
-    <div
-      id="categoryValidation"
-      *ngIf="form.get('category') && form.get('category')?.touched && form.get('category')?.invalid"
-      class="form-text"
-    >
-      <small class="text-danger">Field can not be empty</small>
-    </div>
-
-    <h2>Header</h2>
+    <h2 class="mt-3">Header</h2>
     <div class="mb-3">
       <label
         for="mainTitle"
@@ -30,21 +21,16 @@
       >
         Main Title
       </label>
-      <textarea
-        id="mainTitle"
-        class="form-control"
-        [ngClass]="{'border-danger': form.get('mainTitle')?.touched && form.get('mainTitle')?.invalid}"
-        rows="2"
-        placeholder="What is the name of the article?"
-        formControlName="mainTitle"
-      ></textarea>
-      <div
-        id="mainTitleValidation"
-        *ngIf="form.get('mainTitle') && form.get('mainTitle')?.touched && form.get('mainTitle')?.invalid"
-        class="form-text"
-      >
-        <small class="text-danger">Field can not be empty</small>
-      </div>
+      <app-field-validator>
+        <textarea
+          #forValidation
+          id="mainTitle"
+          class="form-control"
+          rows="2"
+          placeholder="What is the name of the article?"
+          formControlName="mainTitle"
+        ></textarea>
+      </app-field-validator>
     </div>
 
     <div class="mb-3">
@@ -54,21 +40,16 @@
       >
         Second Title
       </label>
-      <textarea
-        id="secondTitle"
-        class="form-control"
-        [ngClass]="{'border-danger': form.get('secondTitle')?.touched && form.get('secondTitle')?.invalid}"
-        rows="2"
-        placeholder="What is the second title of the article?"
-        formControlName="secondTitle"
-      ></textarea>
-      <div
-        id="secondTitleValidation"
-        *ngIf="form.get('secondTitle') && form.get('secondTitle')?.touched && form.get('secondTitle')?.invalid"
-        class="form-text"
-      >
-        <small class="text-danger">Field can not be empty</small>
-      </div>
+      <app-field-validator>
+        <textarea
+          #forValidation
+          id="secondTitle"
+          class="form-control"
+          rows="2"
+          placeholder="What is the second title of the article?"
+          formControlName="secondTitle"
+        ></textarea>
+      </app-field-validator>
     </div>
 
     <h4>Photo</h4>
@@ -79,22 +60,16 @@
       >
         Photo URL
       </label>
-      <!-- <input type="file" class="form-control" id="photoUploader"
-              formControlName="photoUploader">-->
-      <input
-        type="text"
-        class="form-control"
-        [ngClass]="{'border-danger': form.get('photoPass')?.touched && form.get('photoPass')?.invalid}"
-        id="photoPass"
-        placeholder="What is the main photo of the article?"
-        formControlName="photoPass">
-      <div
-        id="photoUrlValidation"
-        *ngIf="form.get('photoPass') && form.get('photoPass')?.touched && form.get('photoPass')?.invalid"
-        class="form-text"
-      >
-        <small class="text-danger">Field can not be empty</small>
-      </div>
+      <app-field-validator>
+        <input
+          #forValidation
+          type="text"
+          class="form-control"
+          id="photoPass"
+          placeholder="What is the main photo of the article?"
+          formControlName="photoPass"
+        >
+      </app-field-validator>
     </div>
 
     <div class="mb-3">
@@ -104,34 +79,28 @@
       >
         Photo Text
       </label>
-      <textarea
-        id="photoText"
-        class="form-control"
-        [ngClass]="{'border-danger': form.get('photoText')?.touched && form.get('photoText')?.invalid}"
-        rows="2"
-        placeholder="What is the description of the photo?"
-        formControlName="photoText"></textarea>
-      <div
-        id="photoTextValidation"
-        *ngIf="form.get('photoText') && form.get('photoText')?.touched && form.get('photoText')?.invalid"
-        class="form-text"
-      >
-        <small class="text-danger">Field can not be empty</small>
-      </div>
+      <app-field-validator>
+        <textarea
+          #forValidation
+          id="photoText"
+          class="form-control"
+          rows="2"
+          placeholder="What is the description of the photo?"
+          formControlName="photoText"
+        ></textarea>
+      </app-field-validator>
     </div>
 
     <h2>Body</h2>
     <div class="mb-4">
-      <ckeditor
-        [config]="CKEditorConfig"
-        [editor]="Editor"
-        formControlName="body"
-      ></ckeditor>
-      <div id="bodyValidation"
-           *ngIf="form.get('body') && form.get('body')?.touched && form.get('body')?.invalid"
-           class="form-text">
-        <small class="text-danger">Field can not be empty</small>
-      </div>
+      <app-field-validator>
+        <ckeditor
+          #forValidation
+          [config]="CKEditorConfig"
+          [editor]="Editor"
+          formControlName="body"
+        ></ckeditor>
+      </app-field-validator>
     </div>
 
     <app-custom-category-tag-group
