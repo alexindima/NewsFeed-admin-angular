@@ -2,7 +2,7 @@ import {
   AfterViewInit,
   Component,
   forwardRef,
-  Input,
+  Input, OnDestroy,
 } from '@angular/core';
 import {
   ControlValueAccessor, FormArray,
@@ -10,6 +10,8 @@ import {
   NG_VALUE_ACCESSOR,
 } from "@angular/forms";
 import {NameableWithId} from "../../entities/category-tag.interface";
+import {Subs} from "../../utils/subs";
+import {trimmedNonEmptySet} from "../../utils/set-utils";
 
 @Component({
   selector: 'app-custom-category-tag-group',
@@ -23,9 +25,10 @@ import {NameableWithId} from "../../entities/category-tag.interface";
     },
   ]
 })
-export class CustomCategoryTagGroupComponent implements ControlValueAccessor, AfterViewInit {
+export class CustomCategoryTagGroupComponent implements ControlValueAccessor, AfterViewInit, OnDestroy {
   @Input() name?: string = 'option';
   @Input() options!: NameableWithId[];
+  private _subs = new Subs();
   public onChange = (_: string[]) => {};
   public onTouch = () =>{};
   public formArray: FormArray<FormControl<string>> = new FormArray<FormControl<string>>([]);
@@ -39,19 +42,15 @@ export class CustomCategoryTagGroupComponent implements ControlValueAccessor, Af
   }
 
   ngAfterViewInit() {
-    // отписку потерял
-    this.formArray.valueChanges.subscribe(() => {
+    this._subs.add = this.formArray.valueChanges.subscribe(() => {
       const result = this.formArray.controls.map(res => res.value)
-      this.onChange(result);
+      this.onChange([...trimmedNonEmptySet(result)]);
     });
   }
 
   writeValue(value: string[]): void {
-    // да, здесь норм, но я бы выносил всякие подготовки данных ко входу (и к выходу тоже!) в отельные функции,
-    // причем вижу пересечение с trimmedNonEmptySet (которое должно быть на выходе из компонента!)
-    const checkedValue = value.filter(value => value.trim() != '').map(value => value.trim())
     this.formArray = new FormArray(
-      checkedValue.map(value => {
+      [...trimmedNonEmptySet(value)].map(value => {
         return new FormControl(value, { nonNullable: true });
       })
     );
@@ -66,6 +65,10 @@ export class CustomCategoryTagGroupComponent implements ControlValueAccessor, Af
   }
 
   setDisabledState?(isDisabled: boolean): void {
+  }
+
+  ngOnDestroy() {
+    this._subs.unsubscribe();
   }
 
 }

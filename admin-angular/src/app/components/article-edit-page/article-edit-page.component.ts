@@ -8,10 +8,7 @@ import {CategoryState} from "../../states/category.state";
 import {ckeditorConfig} from "../../../configs/ckeditor-config";
 import {BaseEditPageComponent} from "../base-edit-page/base-edit-page.component";
 import {TagState} from "../../states/tag.state";
-import {trimmedNonEmptySet} from "../../utils/set-utils";
 import {Article} from "../../entities/article.interface";
-
-const ROUTE_TO_REDIRECT: string[] = ['articles'];
 
 interface ArticleForm {
   mainTitle: FormControl<string | null>;
@@ -29,10 +26,11 @@ interface ArticleForm {
   styleUrls: ['./article-edit-page.component.scss'],
 })
 export class ArticleEditPageComponent extends BaseEditPageComponent<Article> implements OnInit {
+  protected ROUTE_TO_REDIRECT: string[] = ['articles'];
   item: Article | undefined;
   form!: FormGroup;
   submitted = false;
-  public Editor = ClassicEditor;
+  Editor = ClassicEditor;
   CKEditorConfig = ckeditorConfig;
   categoriesList: Category[] = [];
   tagsList: Tag[] = [];
@@ -45,7 +43,7 @@ export class ArticleEditPageComponent extends BaseEditPageComponent<Article> imp
     protected override _router: Router,
     private _fb: FormBuilder,
   ) {
-    super(_categoryState, _tagState, _articleService, _router, ROUTE_TO_REDIRECT);
+    super(_categoryState, _tagState, _articleService, _router);
   }
 
   override ngOnInit() {
@@ -99,15 +97,7 @@ export class ArticleEditPageComponent extends BaseEditPageComponent<Article> imp
   }
 
   createItemInstance(){
-    // trimmedNonEmptySet идея понятная, но может быть это должно быть сделано частью компонента тегов
-    // тогда метод createItemInstance вообще не понадобится
-    const tags = trimmedNonEmptySet(this.form.value.tags);
-
-    const itemInstance: Article = {
-      ...this.form.value,
-      tags: [...tags]
-    }
-
+    const itemInstance: Article = this.form.value
     return itemInstance;
   }
 }

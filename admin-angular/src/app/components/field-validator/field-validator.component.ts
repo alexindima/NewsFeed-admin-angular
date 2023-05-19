@@ -5,39 +5,7 @@ import {Subs} from "../../utils/subs";
 
 @Component({
   selector: 'app-field-validator',
-  template: `
-    <ng-content></ng-content>
-    <div
-      class="form-text"
-      *ngIf="input.control?.touched && input.control?.invalid"
-    >
-      <small
-        class="text-danger"
-        *ngIf="input.control?.errors?.['required']"
-      >
-        Field can not be empty
-      </small>
-      <small
-        class="text-danger"
-        *ngIf="input.control?.errors?.['email']"
-      >
-        Enter correct email
-      </small>
-      <small
-        class="text-danger"
-        *ngIf="input.control?.errors?.['minlength']"
-      >
-        Password must contain at least {{input.control?.errors?.['minlength'].requiredLength}} symbols.
-        Now here only {{input.control?.errors?.['minlength'].actualLength}}
-      </small>
-      <div
-       *ngIf="input.control?.errors?.['validEqual']"
-       class="form-text"
-      >
-        <small class="text-danger">Passwords mismatch</small>
-      </div>
-    </div>
-  `,
+  templateUrl: './field-validator.component.html',
   styleUrls: ['./field-validator.component.scss']
 })
 export class FieldValidatorComponent implements AfterViewInit, OnDestroy {

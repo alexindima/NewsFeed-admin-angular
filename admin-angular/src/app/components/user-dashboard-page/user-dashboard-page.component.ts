@@ -8,6 +8,7 @@ import {UserState} from "../../states/user.state";
 import {CategoryState} from "../../states/category.state";
 import {TagState} from "../../states/tag.state";
 import {User} from "../../entities/user.interface";
+import {DeleteUserModalComponent} from "../delete-user-modal/delete-user-modal.component";
 
 @Component({
   selector: 'app-user-base-dashboard-page',
@@ -26,11 +27,12 @@ export class UserDashboardPageComponent extends BaseDashboardPageComponent<User>
     protected override _state: UserState,
     protected _categoryState: CategoryState,
     protected _tagState: TagState,
+    public deleteUserModal: DeleteUserModalComponent,
   ) {
   super(_activatedRoute, _router, _matDialog, _service, _state);
   }
-
   override ngOnInit(): void {
+    this._subs.add = this.deleteUserModal.needToUpdate$.subscribe(() => this.getItems())
     this._subs.add = this._categoryState.items$.subscribe((data) => {
       this.categoriesList = data;
     })

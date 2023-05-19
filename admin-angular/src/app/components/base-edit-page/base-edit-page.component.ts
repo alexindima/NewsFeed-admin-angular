@@ -10,6 +10,7 @@ import {ArticleUserService} from "../../entities/service.interface";
 
 @Injectable()
 export abstract class BaseEditPageComponent<T extends { id?: number }> implements OnInit, OnDestroy {
+  protected abstract ROUTE_TO_REDIRECT: string[];
   protected _subs = new Subs();
   abstract item: T | undefined;
   abstract form: FormGroup;
@@ -22,7 +23,6 @@ export abstract class BaseEditPageComponent<T extends { id?: number }> implement
     protected _tagState: TagState,
     protected _service: ArticleUserService<T>,
     protected _router: Router,
-    protected _routeToRedirect: string[],
   ) {
   }
 
@@ -59,9 +59,8 @@ export abstract class BaseEditPageComponent<T extends { id?: number }> implement
     ).subscribe();
   }
 
-  // _routeToRedirect - лучше константу напрямую юзать, не передавать через конструктор
   finish(){
-    this._router.navigate(this._routeToRedirect);
+    this._router.navigate(this.ROUTE_TO_REDIRECT);
   }
 
   submit() {

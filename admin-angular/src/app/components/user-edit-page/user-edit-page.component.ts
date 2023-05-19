@@ -9,10 +9,7 @@ import { omit } from 'lodash-es';
 import {BaseEditPageComponent} from "../base-edit-page/base-edit-page.component";
 import {CategoryState} from "../../states/category.state";
 import {TagState} from "../../states/tag.state";
-import {trimmedNonEmptySet} from "../../utils/set-utils";
 import {User} from "../../entities/user.interface";
-
-const ROUTE_TO_REDIRECT: string[] = ['users'];
 
 interface UserForm {
   name: FormControl<string | null>;
@@ -30,6 +27,7 @@ interface UserForm {
   styleUrls: ['./user-edit-page.component.scss'],
 })
 export class UserEditPageComponent extends BaseEditPageComponent<User> implements OnInit {
+  protected ROUTE_TO_REDIRECT: string[] = ['users'];
   item: User | undefined;
   form!: FormGroup;
   submitted = false;
@@ -44,7 +42,7 @@ export class UserEditPageComponent extends BaseEditPageComponent<User> implement
     protected override _router: Router,
     private _fb: FormBuilder,
   ) {
-    super(_categoryState, _tagState, _usersService, _router, ROUTE_TO_REDIRECT);
+    super(_categoryState, _tagState, _usersService, _router);
   }
 
   override ngOnInit() {
@@ -108,9 +106,6 @@ export class UserEditPageComponent extends BaseEditPageComponent<User> implement
   }
 
   createItemInstance(){
-    const ignoredCategories = trimmedNonEmptySet(this.form.value.categories);
-    const ignoredTags = trimmedNonEmptySet(this.form.value.tags);
-
     let password = this.form.value.password;
     if(password){
       const salt = bcrypt.genSaltSync(10);
@@ -120,8 +115,6 @@ export class UserEditPageComponent extends BaseEditPageComponent<User> implement
     const itemInstance: User = omit({
       ...this.form.value,
       password: password,
-      categories: [...ignoredCategories],
-      tags: [...ignoredTags],
     }, ['confirmPassword'])
 
     return itemInstance;

@@ -1,13 +1,13 @@
 import {Injectable, OnDestroy, OnInit} from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
-import { ActivatedRoute, Router } from '@angular/router';
-import {of, switchMap, take, tap} from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
-import { Subs } from '../../utils/subs';
-import {ConfirmDialogModalComponent, ModalDialogData} from '../../shared-components/confirm-dialog-modal/confirm-dialog-modal.component';
+import {PageEvent} from '@angular/material/paginator';
+import {ActivatedRoute, Router} from '@angular/router';
+import {take} from 'rxjs';
+import {MatDialog} from '@angular/material/dialog';
+import {Subs} from '../../utils/subs';
 import {PaginatorSettings} from "../../entities/paginator.interface";
 import {ArticleUserService} from "../../entities/service.interface";
 import {ArticleUserState} from "../../entities/state.interface";
+
 @Injectable()
 export abstract class BaseDashboardPageComponent<T extends { id?: number }> implements OnInit, OnDestroy {
   protected _subs = new Subs();
@@ -64,28 +64,6 @@ export abstract class BaseDashboardPageComponent<T extends { id?: number }> impl
     this._subs.add = this._service.getPaginatedItems(this.paginatorSettings.pageIndex + 1, this.paginatorSettings.pageSize).subscribe((result: T[]) => {
       this.itemsList = result;
     });
-  }
-
-  // эта фича вообще не принадлежит пейдже, под неё надо создавать отдельный компонент, пейджи не должны являться свалкой фич
-  // профит будет в независимости фич и _service не придётся передавать в базовый класс
-  openDeleteModal(item: T, type: string, name: string) {
-    const dialogRef = this._matDialog.open(ConfirmDialogModalComponent, {
-      width: '600px',
-      data: {
-        title: 'Confirm Delete',
-        text: `Are you sure you want to delete this ${type}: "${name}"?`,
-        button: 'Delete',
-      } as ModalDialogData,
-    });
-
-    this._subs.add = dialogRef.afterClosed().pipe(
-      switchMap((result) => {
-        if (result) {
-          return this._service.deleteItem(item.id!).pipe(tap(() => this.getItems()));
-        }
-        return of(null);
-      })
-    ).subscribe();
   }
 
   // PaginatorSettings должно являться классов, где будет метод change(), сейчас ты избежал полезного ООП для пагинации

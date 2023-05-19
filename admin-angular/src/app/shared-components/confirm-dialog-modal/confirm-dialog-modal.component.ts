@@ -1,11 +1,6 @@
 import {Component, Inject} from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-
-export interface ModalDialogData {
-  title: string,
-  text: string,
-  button: string
-}
+import {ModalDialogData} from "../../entities/modal-dialog.interface";
 
 @Component({
   selector: 'app-confirm-dialog-modal',
