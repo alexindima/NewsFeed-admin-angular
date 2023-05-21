@@ -1,9 +1,9 @@
 <mat-paginator
   class="bg-light demo-paginator"
   (page)="onPageChanged($event)"
-  [pageIndex]="pageIndex"
-  [length]="length"
-  [pageSize]="pageSize"
+  [pageIndex]="settings.pageIndex"
+  [length]="settings.length"
+  [pageSize]="settings.pageSize"
   [pageSizeOptions]=PAGE_SIZE_OPTIONS
   [disabled]=false
   [showFirstLastButtons]=true

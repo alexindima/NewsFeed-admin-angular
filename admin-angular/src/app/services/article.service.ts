@@ -3,7 +3,7 @@ import {map, Observable, tap} from "rxjs";
 import {ArticleState} from "../states/article.state";
 import {BaseHttpService} from "./base-http.service";
 import {Article} from "../entities/article.interface";
-import {ArticleUserService} from "../entities/service.interface";
+import {ArticleUserQueryPaginator, ArticleUserService} from "../entities/service.interface";
 
 const ARTICLE_URL = '/api/articles';
 
@@ -18,8 +18,8 @@ export class ArticleService implements ArticleUserService<Article>{
   ) {
   }
 
-  getPaginatedItems(page: number, pageSize: number, search: string | null = null): Observable<Article[]> {
-    return this._baseHttpService.getPaginatedItems(ARTICLE_URL, page, pageSize, search).pipe(
+  getPaginatedItems(query: ArticleUserQueryPaginator): Observable<Article[]> {
+    return this._baseHttpService.getPaginatedItems(ARTICLE_URL, query).pipe(
       tap(response => {
         this._articleState.setCount(response.total);
       }),

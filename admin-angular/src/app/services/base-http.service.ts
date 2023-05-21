@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import {map, Observable} from 'rxjs';
 import {Injectable} from "@angular/core";
 import {OperationResponse, Paginated} from "../entities/response.interface";
+import {ArticleUserQueryPaginator} from "../entities/service.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -12,12 +13,12 @@ export class BaseHttpService<T>{
   ) {
   }
 
-  getPaginatedItems(url: string, page: number, pageSize: number, search: string | null = null): Observable<Paginated<T>> {
+  getPaginatedItems(url: string, query: ArticleUserQueryPaginator): Observable<Paginated<T>> {
     let preparedUrl = `${url}?`;
-    if (search) {
-      preparedUrl += `q=${search.replace(/ /g, '+')}&`;
+    if (query.search) {
+      preparedUrl += `q=${query.search.replace(/ /g, '+')}&`;
     }
-    preparedUrl += `page=${page}&pageSize=${pageSize}`;
+    preparedUrl += `page=${query.pageIndex}&pageSize=${query.pageSize}`;
     return this._http.get<OperationResponse<Paginated<T>>>(preparedUrl).pipe(
       map(result => result.data)
     )

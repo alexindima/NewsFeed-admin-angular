@@ -1,7 +1,13 @@
 import {Observable} from "rxjs";
 
+export interface ArticleUserQueryPaginator{
+  pageIndex: number;
+  pageSize: number;
+  search?: string | null;
+}
+
 export interface ArticleUserService<T> {
-  getPaginatedItems(pageIndex: number, pageSize: number): Observable<T[]>;
+  getPaginatedItems(query: ArticleUserQueryPaginator): Observable<T[]>;
   getSingleItem(id: number): Observable<T>;
   createItem(item: T): Observable<T>;
   editItem(id: number, item: T): Observable<T>;

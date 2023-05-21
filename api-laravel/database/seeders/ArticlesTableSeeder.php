@@ -18,7 +18,7 @@ class ArticlesTableSeeder extends Seeder
     {
         $categoryIds = Category::pluck('id')->all();
 
-        Article::factory(10)->create([
+        Article::factory(60)->create([
             'category_id' => function () use ($categoryIds) {
                 return Arr::random($categoryIds);
             },

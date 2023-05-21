@@ -3,7 +3,7 @@ import {map, Observable, tap} from "rxjs";
 import {UserState} from "../states/user.state";
 import {BaseHttpService} from "./base-http.service";
 import {User} from "../entities/user.interface";
-import {ArticleUserService} from "../entities/service.interface";
+import {ArticleUserQueryPaginator, ArticleUserService} from "../entities/service.interface";
 
  const USER_URL = `/api/users`;
 
@@ -17,8 +17,8 @@ export class UserService implements ArticleUserService<User>{
   ) {
   }
 
-  getPaginatedItems(page: number, pageSize: number, search: string | null = null): Observable<User[]> {
-    return this._baseHttpService.getPaginatedItems(USER_URL, page, pageSize, search).pipe(
+  getPaginatedItems(query: ArticleUserQueryPaginator): Observable<User[]> {
+    return this._baseHttpService.getPaginatedItems(USER_URL, query).pipe(
       tap(response => {
         this._userState.setCount(response.total);
       }),
