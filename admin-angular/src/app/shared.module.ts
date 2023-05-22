@@ -4,7 +4,7 @@ import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 import {ReactiveFormsModule} from "@angular/forms";
 import {ConfirmDialogModalComponent} from "./shared-components/confirm-dialog-modal/confirm-dialog-modal.component";
 import {ArrayToStringPipe} from "./utils/array-to-string.pipe";
-import {NotFoundPageComponent} from "./components/not-found-page/not-found-page.component";
+import {NotFoundPageComponent} from "./shared-components/not-found-page/not-found-page.component";
 import {
   CustomCategoryTagInputComponent
 } from "./components/custom-category-tag-input/custom-category-tag-input.component";
@@ -17,12 +17,14 @@ import {
 import {MaterialModule} from "./material.module";
 import {FieldValidatorComponent} from "./shared-components/field-validator/field-validator.component";
 import {PasswordInputComponent} from "./shared-components/password-input/password-input.component";
+import {ServerErrorPageComponent} from "./shared-components/server-error-page/server-error-page.component";
 
 @NgModule({
   declarations: [
     ConfirmDialogModalComponent,
     ArrayToStringPipe,
     NotFoundPageComponent,
+    ServerErrorPageComponent,
     CustomCategoryTagInputComponent,
     CustomCategoryTagGroupComponent,
     DashboardPaginatorComponent,
@@ -48,6 +50,7 @@ import {PasswordInputComponent} from "./shared-components/password-input/passwor
     ConfirmDialogModalComponent,
     ArrayToStringPipe,
     NotFoundPageComponent,
+    ServerErrorPageComponent,
     CustomCategoryTagInputComponent,
     DashboardPaginatorComponent,
     LoaderComponent,
