@@ -48,15 +48,19 @@ export class ArticleDashboardPageComponent implements OnInit, OnDestroy{
       this.paginatorSettings = settings;
     });
     this._subs.add = this.dashboardPaginatorService.needToLoad$.subscribe((query) => {
+      this.setQueryParams(query);
       this.loadItem(query);
     })
   }
 
   loadItem(query: ArticleUserQueryPaginator) {
-    this._queryParamService.setQueryParams({page: query.pageIndex, pageSize: query.pageSize});
     this._subs.add = this._articleService.getPaginatedItems(query).subscribe((result: Article[]) => {
       this.itemsList = result;
     });
+  }
+
+  setQueryParams(query: ArticleUserQueryPaginator){
+    this._queryParamService.setQueryParams({page: query.pageIndex, pageSize: query.pageSize});
   }
 
   ngOnDestroy() {

@@ -33,8 +33,15 @@ export abstract class BaseEditPageComponent<T extends { id?: number }> implement
       this.tagsList = data;
     });
 
+    this.createForm();
+    if (this.item) {
+      this.fillForm();
+    }
+
   }
 
+  abstract createForm(): void;
+  abstract fillForm(): void;
   abstract createAction(item: T): Observable<T>;
 
   submit() {

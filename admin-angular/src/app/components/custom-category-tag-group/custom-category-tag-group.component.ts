@@ -48,7 +48,7 @@ export class CustomCategoryTagGroupComponent implements ControlValueAccessor, Af
     });
   }
 
-  writeValue(value: string[]): void {
+  writeValue(value: string[] | []): void {
     this.formArray = new FormArray(
       [...trimmedNonEmptySet(value)].map(value => {
         return new FormControl(value, { nonNullable: true });

@@ -1,15 +1,16 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
 import {Router} from "@angular/router";
 import {Subs} from "../../utils/subs";
 import {AuthState} from "../../states/auth.state";
 import {finalize} from "rxjs/operators";
 import {LoginUser} from "../../entities/user.interface";
+import {ConvertedToFormControls} from "../../utils/form-utils";
 
 interface LoginForm {
-  email: FormControl<string | null>;
-  password: FormControl<string | null>;
+  email: string;
+  password: string;
 }
 
 @Component({
@@ -20,7 +21,7 @@ interface LoginForm {
 export class LoginPageComponent implements OnInit, OnDestroy {
   private _subs = new Subs();
   submitted = false;
-  form!: FormGroup;
+  form!: FormGroup<ConvertedToFormControls<LoginForm>>;
 
   constructor(
     private _authService: AuthService,
@@ -31,19 +32,9 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.form = this._fb.nonNullable.group<LoginForm>({
-      email: this._fb.control(
-        '', [
-          Validators.required,
-          Validators.email
-        ]
-      ),
-      password: this._fb.control(
-        '', [
-          Validators.required,
-          Validators.minLength(6)
-        ]
-      )
+    this.form = this._fb.nonNullable.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
@@ -53,7 +44,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     }
 
     this.submitted = true;
-    const user: LoginUser = this.form.value;
+    const user: LoginUser = this.form.value as LoginUser;
 
     this._subs.add = this._authService.login(user).pipe(
       finalize(() => this.submitted = false)

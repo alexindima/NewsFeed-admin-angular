@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Category, Tag} from '../../entities/category-tag.interface';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ArticleService } from '../../services/article.service';
@@ -10,15 +10,16 @@ import {BaseEditPageComponent} from "../base-edit-page/base-edit-page.component"
 import {TagState} from "../../states/tag.state";
 import {Article} from "../../entities/article.interface";
 import {Observable} from "rxjs";
+import {ConvertedToFormControls} from "../../utils/form-utils";
 
 interface ArticleForm {
-  mainTitle: FormControl<string | null>;
-  secondTitle: FormControl<string | null>;
-  photoPass: FormControl<string | null>;
-  photoText: FormControl<string | null>;
-  body: FormControl<string | null>;
-  category: FormControl<string | null>;
-  tags: FormControl<string[] | null>;
+  mainTitle: string;
+  secondTitle: string;
+  photoPass: string;
+  photoText: string;
+  body: string;
+  category: string;
+  tags: string[];
 }
 @Component({
   selector: 'app-article-edit-page',
@@ -28,7 +29,7 @@ interface ArticleForm {
 export class ArticleEditPageComponent extends BaseEditPageComponent<Article> implements OnInit {
   protected ROUTE_TO_REDIRECT: string[] = ['articles'];
   item: Article | undefined;
-  form!: FormGroup<ArticleForm>;
+  form!: FormGroup<ConvertedToFormControls<ArticleForm>>;
   submitted = false;
   Editor = ClassicEditor;
   CKEditorConfig = ckeditorConfig;
@@ -48,52 +49,23 @@ export class ArticleEditPageComponent extends BaseEditPageComponent<Article> imp
 
   override ngOnInit() {
     this.item = this._activatedRoute.snapshot.data['article'];
-
     super.ngOnInit();
-
-    this.createForm();
-    if (this.item) {
-      this.form.patchValue(this.item!);
-    }
   }
 
   createForm(){
-    this.form = this._fb.nonNullable.group<ArticleForm>({
-      // здесь можно проще писать, без this._fb.control - перепиши с лучшим АПИ от ангуляра, слишком много лишнего текста сейчас
-      mainTitle: this._fb.control(
-        '',[
-          Validators.required,
-        ]
-      ),
-      secondTitle: this._fb.control(
-        '', [
-          Validators.required,
-        ]
-      ),
-      photoPass: this._fb.control(
-        '', [
-          Validators.required,
-        ]
-      ),
-      photoText: this._fb.control(
-        '', [
-          Validators.required,
-        ]
-      ),
-      body: this._fb.control(
-        '', [
-          Validators.required,
-        ]
-      ),
-      category: this._fb.control(
-        '', [
-          Validators.required,
-        ]
-      ),
-      tags: this._fb.control(
-        []
-      ),
+    this.form = this._fb.nonNullable.group({
+      mainTitle: ['', Validators.required],
+      secondTitle: ['', Validators.required],
+      photoPass: ['', Validators.required],
+      photoText: ['', Validators.required],
+      body: ['', Validators.required],
+      category: ['', Validators.required],
+      tags: [[] as string[]],
     });
+  }
+
+  override fillForm() {
+    this.form.patchValue(this.item!);
   }
 
   override createAction(item: Article): Observable<Article> {
