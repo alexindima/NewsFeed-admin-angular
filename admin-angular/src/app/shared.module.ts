@@ -15,7 +15,8 @@ import {
   CustomCategoryTagGroupComponent
 } from "./components/custom-category-tag-group/custom-category-tag-group.component";
 import {MaterialModule} from "./material.module";
-import {FieldValidatorComponent} from "./components/field-validator/field-validator.component";
+import {FieldValidatorComponent} from "./shared-components/field-validator/field-validator.component";
+import {PasswordInputComponent} from "./shared-components/password-input/password-input.component";
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import {FieldValidatorComponent} from "./components/field-validator/field-valida
     DashboardPaginatorComponent,
     LoaderComponent,
     FieldValidatorComponent,
+    PasswordInputComponent,
   ],
   imports: [
     CommonModule,
@@ -51,6 +53,7 @@ import {FieldValidatorComponent} from "./components/field-validator/field-valida
     LoaderComponent,
     CustomCategoryTagGroupComponent,
     FieldValidatorComponent,
+    PasswordInputComponent,
   ]
 })
 export class SharedModule {

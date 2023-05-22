@@ -28,7 +28,7 @@ interface ArticleForm {
 export class ArticleEditPageComponent extends BaseEditPageComponent<Article> implements OnInit {
   protected ROUTE_TO_REDIRECT: string[] = ['articles'];
   item: Article | undefined;
-  form!: FormGroup;
+  form!: FormGroup<ArticleForm>;
   submitted = false;
   Editor = ClassicEditor;
   CKEditorConfig = ckeditorConfig;
@@ -97,7 +97,6 @@ export class ArticleEditPageComponent extends BaseEditPageComponent<Article> imp
   }
 
   createItemInstance(){
-    const itemInstance: Article = this.form.value
-    return itemInstance;
+    return this.form.value as Article;
   }
 }

@@ -22,10 +22,10 @@
     Password must contain at least {{input.control?.errors?.['minlength'].requiredLength}} symbols.
     Now here only {{input.control?.errors?.['minlength'].actualLength}}
   </small>
-  <div
+  <small
+    class="text-danger"
     *ngIf="input.control?.errors?.['validEqual']"
-    class="form-text"
   >
-    <small class="text-danger">Passwords mismatch</small>
-  </div>
+    Passwords mismatch
+  </small>
 </div>
