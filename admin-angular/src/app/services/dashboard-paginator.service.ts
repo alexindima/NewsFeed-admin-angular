@@ -1,54 +1,49 @@
-import {Injectable, OnDestroy, OnInit} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {Subs} from "../utils/subs";
 import {PaginatorSettings} from "../entities/paginator.interface";
 import {PageEvent} from "@angular/material/paginator";
 import {QueryParamService} from "./query-param.service";
+import {ArticleUserQueryPaginator} from "../entities/service.interface";
 
-@Injectable({
-  providedIn: 'root'
-})
-export class DashboardPaginatorService implements OnInit, OnDestroy {
+@Injectable()
+export class DashboardPaginatorService{
   protected _subs = new Subs();
-  public settings: BehaviorSubject<PaginatorSettings> = new BehaviorSubject<PaginatorSettings>({
+  public settings$: BehaviorSubject<PaginatorSettings> = new BehaviorSubject<PaginatorSettings>({
     length: 0,
     pageSize: 25,
     pageIndex: 0,
   });
+  public needToLoad$: BehaviorSubject<ArticleUserQueryPaginator> = new BehaviorSubject<ArticleUserQueryPaginator>({
+    pageIndex: this.settings$.getValue().pageIndex,
+    pageSize: this.settings$.getValue().pageSize
+  });
 
-  protected constructor(
-    protected _queryParamService: QueryParamService,
+  constructor(
+    private _queryParamService: QueryParamService,
   ) {
   }
 
-  ngOnInit() {
-    const urlQueryParams = this._queryParamService.getAllQueryParams();
-    const pageIndex: number | null = +urlQueryParams['page'] - 1;
-    const pageSize: number | null = +urlQueryParams['pageSize'];
-
-    if(pageIndex || pageSize){
-      const currentSettings = this.settings.getValue();
-      currentSettings.pageSize = pageSize || currentSettings.pageSize;
-      currentSettings.pageIndex = pageIndex || currentSettings.pageIndex;
-      this.settings.next(currentSettings);
-    }
-  }
-
   change($event: PageEvent) {
-    const currentSettings = this.settings.getValue();
+    const currentSettings = this.settings$.getValue();
     currentSettings.length = $event.length;
     currentSettings.pageSize = $event.pageSize;
     currentSettings.pageIndex = $event.pageIndex;
-    this.settings.next(currentSettings);
+    this.settings$.next(currentSettings);
+    this.needToLoad$.next({pageIndex: currentSettings.pageIndex + 1, pageSize: currentSettings.pageSize});
+  }
+
+  setData(index: number | null, size: number | null) {
+    const currentSettings = this.settings$.getValue();
+    currentSettings.pageSize = size || currentSettings.pageSize;
+    currentSettings.pageIndex = index || currentSettings.pageIndex;
+    this.settings$.next(currentSettings);
+    this.needToLoad$.next({pageIndex: currentSettings.pageIndex + 1, pageSize: currentSettings.pageSize});
   }
 
   setLength(length: number) {
-    const currentSettings = this.settings.getValue();
+    const currentSettings = this.settings$.getValue();
     currentSettings.length = length;
-    this.settings.next(currentSettings);
-  }
-
-  ngOnDestroy() {
-    this._subs.unsubscribe();
+    this.settings$.next(currentSettings);
   }
 }

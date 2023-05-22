@@ -1,21 +1,19 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Category, Tag} from "../../entities/category-tag.interface";
-import * as bcrypt from 'bcryptjs';
 import {UserService} from "../../services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {validEqual} from '../../utils/valid-equal'
 import { omit } from 'lodash-es';
 import {BaseEditPageComponent} from "../base-edit-page/base-edit-page.component";
 import {CategoryState} from "../../states/category.state";
 import {TagState} from "../../states/tag.state";
 import {User} from "../../entities/user.interface";
+import {Observable} from "rxjs";
 
 interface UserForm {
   name: FormControl<string | null>;
   email: FormControl<string | null>;
   password: FormControl<string | null>;
-  confirmPassword: FormControl<string | null>;
   categories: FormControl<string[] | null>;
   tags: FormControl<string[] | null>;
   role: FormControl<string | null>;
@@ -29,7 +27,7 @@ interface UserForm {
 export class UserEditPageComponent extends BaseEditPageComponent<User> implements OnInit {
   protected ROUTE_TO_REDIRECT: string[] = ['users'];
   item: User | undefined;
-  form!: FormGroup;
+  form!: FormGroup<UserForm>;
   submitted = false;
   categoriesList: Category[] = [];
   tagsList: Tag[] = [];
@@ -42,13 +40,24 @@ export class UserEditPageComponent extends BaseEditPageComponent<User> implement
     protected override _router: Router,
     private _fb: FormBuilder,
   ) {
-    super(_categoryState, _tagState, _usersService, _router);
+    super(_categoryState, _tagState, _router);
   }
 
   override ngOnInit() {
     this.item = this._activatedRoute.snapshot.data['user'];
+    this._subs.add = this._categoryState.items$.subscribe((data) => {
+      this.categoriesList = data;
+    });
+    this._subs.add = this._tagState.items$.subscribe((data) => {
+      this.tagsList = data;
+    });
 
-    super.ngOnInit();
+    this.createForm();
+    if (this.item) {
+      const itemWithoutPassword = omit(this.item, ['password']);
+      this.form.patchValue(itemWithoutPassword);
+      this.form.get('password')!.removeValidators([Validators.required]);
+    }
   }
 
   createForm(){
@@ -73,9 +82,6 @@ export class UserEditPageComponent extends BaseEditPageComponent<User> implement
           Validators.minLength(6)
         ]
       ),
-      confirmPassword: this._fb.control(
-        '',
-      ),
       categories: this._fb.control(
         []
       ),
@@ -83,43 +89,13 @@ export class UserEditPageComponent extends BaseEditPageComponent<User> implement
         []
       ),
     });
-
-    this.form.controls['confirmPassword'].setValidators(validEqual('password'));
-
-    this._subs.add = this.form.get('password')!.valueChanges.subscribe(() => {
-      if (this.form.get('password')!.value || this.form.get('confirmPassword')!.value) {
-        this.form.get('password')!.addValidators([Validators.minLength(6)]);
-      } else {
-        this.form.get('password')!.removeValidators([Validators.minLength(6)]);
-      }
-      this.form.get('password')!.updateValueAndValidity({
-        onlySelf: true,
-        emitEvent: false
-      })
-    });
   }
 
-  fillForm(){
-    const itemWithoutPassword = omit(this.item, ['password']);
-    this.form.patchValue(itemWithoutPassword);
-    this.form.get('password')!.removeValidators([Validators.required]);
+  override createAction(item: User): Observable<User> {
+    return  this.item
+      ? this._usersService.editItem(this.item!.id!, item)
+      : this._usersService.createItem(item);
   }
-
-  createItemInstance(){
-    let password = this.form.value.password;
-    if(password){
-      const salt = bcrypt.genSaltSync(10);
-      password = bcrypt.hashSync(password, salt);
-    }
-
-    const itemInstance: User = omit({
-      ...this.form.value,
-      password: password,
-    }, ['confirmPassword'])
-
-    return itemInstance;
-  }
-
 }
 
 

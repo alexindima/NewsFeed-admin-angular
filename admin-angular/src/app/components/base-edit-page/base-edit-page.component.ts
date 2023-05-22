@@ -6,7 +6,7 @@ import {Category, Tag} from "../../entities/category-tag.interface";
 import {finalize} from "rxjs/operators";
 import {CategoryState} from "../../states/category.state";
 import {TagState} from "../../states/tag.state";
-import {ArticleUserService} from "../../entities/service.interface";
+import {Observable} from "rxjs";
 
 @Injectable()
 export abstract class BaseEditPageComponent<T extends { id?: number }> implements OnInit, OnDestroy {
@@ -21,7 +21,6 @@ export abstract class BaseEditPageComponent<T extends { id?: number }> implement
   protected constructor(
     protected _categoryState: CategoryState,
     protected _tagState: TagState,
-    protected _service: ArticleUserService<T>,
     protected _router: Router,
   ) {
   }
@@ -34,34 +33,9 @@ export abstract class BaseEditPageComponent<T extends { id?: number }> implement
       this.tagsList = data;
     });
 
-    this.createForm();
-    if (this.item) {
-      this.fillForm();
-    }
   }
 
-  abstract createForm(): void;
-  abstract fillForm(): void;
-  abstract createItemInstance(): T;
-
-  // _service.createItem - абстрактный метод, избегай передачи _service в базовые классы
-  // я вижу дублирование finalize у двух методов, которое можно запросто избежать переписав метод submit()
-  createItem(item: T) {
-    this._subs.add = this._service.createItem(item).pipe(
-      finalize(() => this.finish())
-    ).subscribe();
-  }
-
-  // _service.editItem - абстрактный метод, избегай передачи _service в базовые классы
-  editItem(item: T) {
-    this._subs.add = this._service.editItem(this.item!.id!, item).pipe(
-      finalize(() => this.finish())
-    ).subscribe();
-  }
-
-  finish(){
-    this._router.navigate(this.ROUTE_TO_REDIRECT);
-  }
+  abstract createAction(item: T): Observable<T>;
 
   submit() {
     if (this.form.invalid) {
@@ -69,14 +43,10 @@ export abstract class BaseEditPageComponent<T extends { id?: number }> implement
     }
     this.submitted = true;
 
-    const itemInstance = this.createItemInstance();
-
-    if (this.item) {
-      this.editItem(itemInstance);
-    } else {
-      this.createItem(itemInstance);
-    }
-
+    const action$ = this.createAction(this.form.value as T);
+    this._subs.add = action$.pipe(
+      finalize(() => this._router.navigate(this.ROUTE_TO_REDIRECT))
+    ).subscribe()
   }
 
   ngOnDestroy() {

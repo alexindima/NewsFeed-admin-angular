@@ -9,6 +9,7 @@ import {ckeditorConfig} from "../../../configs/ckeditor-config";
 import {BaseEditPageComponent} from "../base-edit-page/base-edit-page.component";
 import {TagState} from "../../states/tag.state";
 import {Article} from "../../entities/article.interface";
+import {Observable} from "rxjs";
 
 interface ArticleForm {
   mainTitle: FormControl<string | null>;
@@ -19,7 +20,6 @@ interface ArticleForm {
   category: FormControl<string | null>;
   tags: FormControl<string[] | null>;
 }
-
 @Component({
   selector: 'app-article-edit-page',
   templateUrl: './article-edit-page.component.html',
@@ -43,13 +43,18 @@ export class ArticleEditPageComponent extends BaseEditPageComponent<Article> imp
     protected override _router: Router,
     private _fb: FormBuilder,
   ) {
-    super(_categoryState, _tagState, _articleService, _router);
+    super(_categoryState, _tagState, _router);
   }
 
   override ngOnInit() {
     this.item = this._activatedRoute.snapshot.data['article'];
 
     super.ngOnInit();
+
+    this.createForm();
+    if (this.item) {
+      this.form.patchValue(this.item!);
+    }
   }
 
   createForm(){
@@ -89,14 +94,11 @@ export class ArticleEditPageComponent extends BaseEditPageComponent<Article> imp
         []
       ),
     });
-
   }
 
-  fillForm(){
-    this.form.patchValue(this.item!);
-  }
-
-  createItemInstance(){
-    return this.form.value as Article;
+  override createAction(item: Article): Observable<Article> {
+    return  this.item
+      ? this._articleService.editItem(this.item!.id!, item)
+      : this._articleService.createItem(item);
   }
 }

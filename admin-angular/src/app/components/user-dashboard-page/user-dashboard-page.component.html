@@ -68,7 +68,7 @@
   <div class="mt-4">
     <app-dashboard-paginator
       [settings]="paginatorSettings"
-      (pageChanged)="pageChanged($event)"
+      (pageChanged)="dashboardPaginatorService.change($event)"
     >
     </app-dashboard-paginator>
   </div>

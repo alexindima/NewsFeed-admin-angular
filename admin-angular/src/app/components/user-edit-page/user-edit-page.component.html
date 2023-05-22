@@ -43,38 +43,15 @@
       </app-field-validator>
     </div>
 
-    <div class="mb-3">
-      <label
-        for="password"
-        class="form-label"
-      >
-        Password
-      </label>
-      <app-field-validator>
-        <input
+    <app-field-validator>
+        <app-password-input
           #forValidation
-          id="password"
-          class="form-control"
-          placeholder="{{item ? 'Enter a new password or leave the field blank for not changing the password' : 'What is the user\'s password?'}}"
+          [isRequired]="!!item"
           formControlName="password"
-        >
-      </app-field-validator>
-    </div>
+        ></app-password-input>
+    </app-field-validator>
 
-    <div class="mb-3">
-      <label for="confirmPassword" class="form-label">Confirm password</label>
-      <app-field-validator>
-        <input
-          #forValidation
-          id="confirmPassword"
-          class="form-control"
-          placeholder="{{item ? 'Repeat password or leave the field blank for not changing the password' : 'Repeat password'}}"
-          formControlName="confirmPassword"
-        >
-      </app-field-validator>
-    </div>
-
-    <h2>Role</h2>
+    <h2 class="mt-3">Role</h2>
     <mat-radio-group
       aria-label="Select role"
       class="mb-3"

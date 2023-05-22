@@ -8,14 +8,17 @@ import {User} from "../../entities/user.interface";
 import {DeleteUserModalComponent} from "../delete-user-modal/delete-user-modal.component";
 import {DashboardPaginatorService} from "../../services/dashboard-paginator.service";
 import {ArticleUserQueryPaginator} from "../../entities/service.interface";
-import {PageEvent} from "@angular/material/paginator";
 import {Subs} from "../../utils/subs";
 import {PaginatorSettings} from "../../entities/paginator.interface";
+import {QueryParamService} from "../../services/query-param.service";
 
 @Component({
   selector: 'app-user-base-dashboard-page',
   templateUrl: './user-dashboard-page.component.html',
-  styleUrls: ['./user-dashboard-page.component.scss']
+  styleUrls: ['./user-dashboard-page.component.scss'],
+  providers: [
+    DashboardPaginatorService,
+  ]
 })
 export class UserDashboardPageComponent implements OnInit, OnDestroy{
   displayedColumns: string[] = ['userId', 'role', 'createdAt', 'name', 'email', 'categories', 'tags', 'actions'];
@@ -29,13 +32,21 @@ export class UserDashboardPageComponent implements OnInit, OnDestroy{
     private  _userState: UserState,
     private _categoryState: CategoryState,
     private _tagState: TagState,
-    private _dashboardPaginatorService: DashboardPaginatorService,
+    public dashboardPaginatorService: DashboardPaginatorService,
+    private _queryParamService: QueryParamService,
     public deleteUserModal: DeleteUserModalComponent,
-
   ) {
   }
   ngOnInit(): void {
-    this._subs.add = this.deleteUserModal.needToUpdate$.subscribe(() => this.loadItem())
+    const urlQueryParams = this._queryParamService.getAllQueryParams();
+    const pageIndex: number | null = +urlQueryParams['page'] - 1;
+    const pageSize: number | null = +urlQueryParams['pageSize'];
+    this.dashboardPaginatorService.setData(pageIndex, pageSize);
+
+    this._subs.add = this.deleteUserModal.needToUpdate$.subscribe(() => this.loadItem({
+      pageIndex: this.paginatorSettings.pageIndex + 1,
+      pageSize: this.paginatorSettings.pageSize
+    }));
     this._subs.add = this._categoryState.items$.subscribe((data) => {
       this.categoriesList = data;
     })
@@ -43,25 +54,19 @@ export class UserDashboardPageComponent implements OnInit, OnDestroy{
       this.tagsList = data;
     })
     this._subs.add = this._userState.count$.subscribe((count) => {
-      this._dashboardPaginatorService.setLength(count);
+      this.dashboardPaginatorService.setLength(count);
     });
-    this._subs.add = this._dashboardPaginatorService.settings.subscribe((settings) => {
+    this._subs.add = this.dashboardPaginatorService.settings$.subscribe((settings) => {
       this.paginatorSettings = settings;
     });
-    this.loadItem();
+    this._subs.add = this.dashboardPaginatorService.needToLoad$.subscribe((query) => {
+      this.loadItem(query);
+    })
   }
 
-  pageChanged($event: PageEvent) {
-    this._dashboardPaginatorService.change($event);
-    this.loadItem();
-  }
-
-  loadItem() {
-    const currentPagination: ArticleUserQueryPaginator = {
-      pageIndex: this.paginatorSettings.pageIndex + 1,
-      pageSize: this.paginatorSettings.pageSize,
-    }
-    this._subs.add = this._userService.getPaginatedItems(currentPagination).subscribe((result: User[]) => {
+  loadItem(query: ArticleUserQueryPaginator) {
+    this._queryParamService.setQueryParams({page: query.pageIndex, pageSize: query.pageSize});
+    this._subs.add = this._userService.getPaginatedItems(query).subscribe((result: User[]) => {
       this.itemsList = result;
     });
   }
