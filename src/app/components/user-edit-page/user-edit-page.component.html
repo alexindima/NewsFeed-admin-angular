@@ -1,0 +1,91 @@
+<div class="mt-3 container">
+  <h1 class="mb-3">{{item ? 'Edit the User' : 'Create a User'}}</h1>
+
+  <form
+    class="pb-3 example-form"
+    [formGroup]="form"
+    (ngSubmit)="submit()">
+
+    <h2>Personal data</h2>
+    <div class="mb-3">
+      <label
+        for="name"
+        class="form-label"
+      >
+        Name
+      </label>
+      <app-field-validator>
+        <input
+          #forValidation
+          id="name"
+          class="form-control"
+          placeholder="What is the name of the user?"
+          formControlName="name"
+        >
+      </app-field-validator>
+    </div>
+
+    <div class="mb-3">
+      <label
+        for="email"
+        class="form-label"
+      >
+        Email
+      </label>
+      <app-field-validator>
+        <input
+          #forValidation
+          id="email"
+          class="form-control"
+          placeholder="What is the email of the user?"
+          formControlName="email"
+        >
+      </app-field-validator>
+    </div>
+
+    <app-field-validator>
+        <app-password-input
+          #forValidation
+          [isRequired]="!item"
+          formControlName="password"
+        ></app-password-input>
+    </app-field-validator>
+
+    <h2 class="mt-3">Role</h2>
+    <mat-radio-group
+      aria-label="Select role"
+      class="mb-3"
+      formControlName="role"
+    >
+      <mat-radio-button value="user">User</mat-radio-button>
+      <mat-radio-button value="admin">Admin</mat-radio-button>
+    </mat-radio-group>
+
+    <h2>Ignore settings</h2>
+
+    <app-custom-category-tag-group
+      formControlName="categories"
+      [name]="'category'"
+      [options]="categoriesList"
+    >
+    </app-custom-category-tag-group>
+
+    <app-custom-category-tag-group
+      formControlName="tags"
+      [name]="'tag'"
+      [options]="tagsList"
+    >
+    </app-custom-category-tag-group>
+
+    <div class="mt-5 d-flex justify-content-center">
+      <button
+        type="submit"
+        class="btn btn-primary fixed-width-150"
+        [disabled]="form.invalid || submitted"
+      >
+        {{item ? 'Save changes' : 'Create User'}}
+      </button>
+    </div>
+
+  </form>
+</div>

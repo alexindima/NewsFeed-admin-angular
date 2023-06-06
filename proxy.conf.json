@@ -1,0 +1,28 @@
+{
+  "/api/*": {
+    "target": "https://newsfeed-api-laravel.herokuapp.com",
+    "secure": true,
+    "changeOrigin": true
+  },
+  "/auth/login": {
+    "target": "https://newsfeed-api-laravel.herokuapp.com",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/auth/login": "/login"
+    }
+  },
+  "/auth/logout": {
+    "target": "https://newsfeed-api-laravel.herokuapp.com",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/auth/logout": "/logout"
+    }
+  },
+  "/sanctum/csrf-cookie": {
+    "target": "https://newsfeed-api-laravel.herokuapp.com",
+    "secure": true,
+    "changeOrigin": true
+  }
+}
