@@ -11,6 +11,7 @@ import {AuthService} from "../services/auth.service";
 @Injectable({
   providedIn: 'root'
 })
+// тоже самое про CanActivate
 export class LoginGuard implements CanActivate {
   constructor(
     private _auth: AuthService,

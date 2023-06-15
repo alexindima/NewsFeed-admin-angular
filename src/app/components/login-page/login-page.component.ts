@@ -8,6 +8,7 @@ import {finalize} from "rxjs/operators";
 import {LoginUser} from "../../entities/user.interface";
 import {ConvertedToFormControls} from "../../utils/form-utils";
 
+// тут точно такой же интерфейс, что и LoginUser, можно использовать LoginUser
 interface LoginForm {
   email: string;
   password: string;
@@ -20,6 +21,7 @@ interface LoginForm {
 })
 export class LoginPageComponent implements OnInit, OnDestroy {
   private _subs = new Subs();
+  // тоже в loading бы переименовала как описала в BaseEditPageComponent
   submitted = false;
   form!: FormGroup<ConvertedToFormControls<LoginForm>>;
 

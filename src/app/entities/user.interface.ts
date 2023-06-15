@@ -1,7 +1,7 @@
 export interface User {
   createdAt?: string;
   updatedAt?: string;
-  id?: number,
+  id?: number, // снова опциональный id
   role: string;
   email: string,
   password?: string,

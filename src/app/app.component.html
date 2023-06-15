@@ -1,5 +1,17 @@
+<!--Стоит вынести навигацию в отдельный компонент, а тут только подключить-->
 <nav class="navbar navbar-expand-lg navbar-light bg-danger sticky-top" style="z-index: 99999">
   <div class="container-fluid">
+    <!--
+    Тоже не стоит оставлять такие строки в роутах, лучше создать объект-константу в отдельном файле, типо
+    export const routes = {
+      index: Routes.Index,
+      ...
+    }
+    и в ней также использовать значения из enum, подключив в ts файле:
+        public routes = routes;
+    а потом в html писать вот так: [routerLink]="routes.index"
+    так роуты можно легко переиспользовать + если роут изменится меньше вероятность ошибиться, т к менять придется только в одном файле
+    -->
     <a class="navbar-brand" [routerLink]="['/']">
       Admin Panel
     </a>
@@ -7,6 +19,24 @@
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+    <!--
+    Методы сервисов плохо вызывать в шаблоне, т к они будут вызываться при каждом перерендеривании компонента,
+    можешь проверить вызвав console.info() в методе auth.isAuthenticated(), будет очень много логов
+    Лучше создай переменную в ts файле и в хуке ngOnInit() вызывай этот метод
+    и присваивай значение в переменную, а сервисы сделай приватными:
+
+    public isAuth: boolean = false;
+
+    constructor(
+      private _auth: AuthService,
+      private _logout: LogoutModalComponent,
+    ) {
+    }
+
+    ngOnInit(): void {
+      this.isAuth = this._auth.isAuthenticated();
+    }
+    -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent" *ngIf="auth.isAuthenticated()">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
@@ -20,6 +50,16 @@
           </a>
         </li>
         <li class="nav-item">
+          <!--
+          Такие роуты тоже удобно делать при помощи объекта: [routerLink]="routes.articles.create"
+          export const routes = {
+            articles: {
+              create: [Routes.Articles, ArticleRoutes.Create]
+            }
+            ...
+          }
+          для роутов именно для статей можно сделать отдельный enum ArticleRoutes
+          -->
           <a
             class="nav-link"
             routerLinkActive="fw-bold"
@@ -48,6 +88,12 @@
           </a>
         </li>
       </ul>
+      <!--
+      Также лучше создай функцию logout() и в ней вызывай этот метод:
+        logout() {
+          this._logout.open();
+        }
+      -->
       <button type="button" class="btn bg-danger d-flex" (click)="logout.open()">
         Logout
       </button>

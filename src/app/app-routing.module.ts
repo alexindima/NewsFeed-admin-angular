@@ -8,7 +8,23 @@ import {CategoryResolver} from "./resolvers/category.resolver";
 import {TagResolver} from "./resolvers/tag.resolver";
 import {ServerErrorPageComponent} from "./shared-components/server-error-page/server-error-page.component";
 
+/*
+  Лучше вынести все строки с роутами в enum и перенести в отдельный файл, например, routes.ts
+  export enum Routes {
+      Login = 'login',
+      ...
+  }
+  и здесь уже вот так использовать: path: Routes.Login,
+  так будет удобнее менять роуты в случае чего
+*/
 const routes: Routes = [
+/* удобнее читать, когда каждое свойство с новой строчки
+  {
+    path: 'login',
+    component: LoginPageComponent,
+    canActivate: [LoginGuard]
+  },
+*/
   { path: 'login', component: LoginPageComponent, canActivate: [LoginGuard] },
   {
     path: '', resolve: {

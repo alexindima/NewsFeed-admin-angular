@@ -26,6 +26,7 @@ import {trimmedNonEmptySet} from "../../utils/set-utils";
   ]
 })
 export class CustomCategoryTagGroupComponent implements ControlValueAccessor, AfterViewInit, OnDestroy {
+  // если уже есть значение по умолчанию, можно не ставить опциональность свойства
   @Input() name?: string = 'option';
   @Input() options!: NameableWithId[];
   private _subs = new Subs();

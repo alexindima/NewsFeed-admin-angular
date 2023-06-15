@@ -25,6 +25,7 @@ export class UserDashboardPageComponent implements OnInit, OnDestroy{
   private _subs = new Subs();
   itemsList: User[] = [];
   paginatorSettings!: PaginatorSettings;
+  // а зачем здесь категории и тэги?, они же нигде ни в шаблоне, ни в коде не нужны
   categoriesList: Category[] = []
   tagsList: Tag[] = []
   constructor(

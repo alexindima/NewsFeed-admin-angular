@@ -14,6 +14,7 @@
     </div>
   </div>
 
+  <!--Шаблонная переменная не используется-->
   <mat-table #table
       class="mb-5"
       [dataSource]="itemsList"
@@ -51,6 +52,8 @@
             Edit
           </a>
 
+          <!--Стоит создать функцию deleteItem() и в ней вызывать метод сервиса или как написала в самом сервисе, здесь
+          генерировать данные, которые будут в модалке и тут же обращаться к сервису всплытия модалки, без доп. сервиса-->
           <button type="button" class="btn btn-danger"
                   (click)="deleteArticleModal.open(article)">
             Delete
@@ -63,6 +66,7 @@
     </mat-table>
 
   <div class="mt-3">
+    <!--Тоже по идее можно вынести в функцию changePage($event) и делать обращение к сервису уже в .ts файле-->
     <app-dashboard-paginator
       [settings]="paginatorSettings"
       (pageChanged)="dashboardPaginatorService.change($event)"

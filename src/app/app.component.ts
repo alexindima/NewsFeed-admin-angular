@@ -5,6 +5,7 @@ import {LogoutModalComponent} from "./components/logout-modal/logout-modal.compo
 
 @Component({
   selector: 'app-root',
+  // зачем-то убрал . перед путем, у меня компилятор ошибки в html файле выдает
   templateUrl: '/app.component.html',
   styleUrls: ['./app.component.scss'],
 })

@@ -26,6 +26,13 @@ export class DashboardPaginatorService{
 
   change($event: PageEvent) {
     const currentSettings = this.settings$.getValue();
+    // здесь ты делаешь мутацию объекта, так не надо
+    // лучше сразу создай новый объект:
+    // const currentSettings: PaginatorSettings = {
+    //   length: $event.length,
+    //   pageSize: $event.pageSize,
+    //   pageIndex: $event.pageIndex
+    // }
     currentSettings.length = $event.length;
     currentSettings.pageSize = $event.pageSize;
     currentSettings.pageIndex = $event.pageIndex;
@@ -35,6 +42,7 @@ export class DashboardPaginatorService{
 
   setData(index: number | null, size: number | null) {
     const currentSettings = this.settings$.getValue();
+    // снова мутация
     currentSettings.pageSize = size || currentSettings.pageSize;
     currentSettings.pageIndex = index || currentSettings.pageIndex;
     this.settings$.next(currentSettings);
@@ -43,6 +51,11 @@ export class DashboardPaginatorService{
 
   setLength(length: number) {
     const currentSettings = this.settings$.getValue();
+    // мутация, пересоздай объект:
+    // const currentSettings: PaginatorSettings  = {
+    //   ...this.settings$.getValue(),
+    //   length: length
+    // }
     currentSettings.length = length;
     this.settings$.next(currentSettings);
   }

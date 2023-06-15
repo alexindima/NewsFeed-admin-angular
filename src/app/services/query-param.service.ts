@@ -15,6 +15,7 @@ export class QueryParamService {
     return this.route.snapshot.queryParams;
   }
 
+  // не вижу нигде использование этого метода
   getQueryParam(param: string): string | null {
     return this.route.snapshot.queryParamMap.get(param);
   }

@@ -18,11 +18,14 @@ import {QueryParamService} from "../../services/query-param.service";
   ]
 })
 export class ArticleDashboardPageComponent implements OnInit, OnDestroy{
+  // Лучше сначала объявить публичные свойства, а потом приватные
+  // + будет легче читаться, если ставить пустую строку после каждого свойства
   displayedColumns: string[] = ['id', 'createdAt', 'updatedAt', 'category', 'mainTitle', 'tags', 'actions'];
   private _subs = new Subs();
   itemsList: Article[] = [];
   paginatorSettings!: PaginatorSettings;
   constructor(
+    // тоже самое сначала публичные, потом приватные, легче будет читаться
     private _articleService: ArticleService,
     private _articleState: ArticleState,
     public dashboardPaginatorService: DashboardPaginatorService,
@@ -32,7 +35,16 @@ export class ArticleDashboardPageComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
+    /*
+      В этом компоненте я вижу практически полное дублирование кода
+      из UserDashboardPageComponent, в таком случае лучше сделать
+      абстрактный класс DashboardComponent<T> и все общее вынести в него
+      а в качестве дженерика передавать нужный тип (User или Article в твоем случае),
+      так получится, что здесь ты только сделаешь оверайд loadItems(), добавишь одну подписку для _articleState и
+      сделаешь оверайд метода deleteItems(), а все остальное будет в базовом классе
+    */
     const urlQueryParams = this._queryParamService.getAllQueryParams();
+    // вместо +, используй функцию coerceNumberProperty() из cdk, иначе если в свойство придет undefined, то получим NaN
     const pageIndex: number | null = +urlQueryParams['page'] - 1;
     const pageSize: number | null = +urlQueryParams['pageSize'];
     this.dashboardPaginatorService.setData(pageIndex, pageSize);
@@ -53,6 +65,7 @@ export class ArticleDashboardPageComponent implements OnInit, OnDestroy{
     })
   }
 
+  // лучше loadItems(), здесь же все-таки массив приходит, а не один элемент
   loadItem(query: ArticleUserQueryPaginator) {
     this._subs.add = this._articleService.getPaginatedItems(query).subscribe((result: Article[]) => {
       this.itemsList = result;
