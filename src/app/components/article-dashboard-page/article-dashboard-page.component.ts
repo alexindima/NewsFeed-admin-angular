@@ -20,6 +20,7 @@ import {QueryParamService} from "../../services/query-param.service";
 export class ArticleDashboardPageComponent implements OnInit, OnDestroy{
   // Лучше сначала объявить публичные свойства, а потом приватные
   // + будет легче читаться, если ставить пустую строку после каждого свойства
+  // >> вторая вещь - удобная, если много работать с кодовой базой и рефакторить, но не принципиально
   displayedColumns: string[] = ['id', 'createdAt', 'updatedAt', 'category', 'mainTitle', 'tags', 'actions'];
   private _subs = new Subs();
   itemsList: Article[] = [];
@@ -42,6 +43,9 @@ export class ArticleDashboardPageComponent implements OnInit, OnDestroy{
       а в качестве дженерика передавать нужный тип (User или Article в твоем случае),
       так получится, что здесь ты только сделаешь оверайд loadItems(), добавишь одну подписку для _articleState и
       сделаешь оверайд метода deleteItems(), а все остальное будет в базовом классе
+
+      >> да, норм предложение, ещё почти всегда вместо базовых классов можно выносить в отдельные мелкие фичи отдельными компонентами
+       насколько это возможно, чем создавать монструозные компоненты
     */
     const urlQueryParams = this._queryParamService.getAllQueryParams();
     // вместо +, используй функцию coerceNumberProperty() из cdk, иначе если в свойство придет undefined, то получим NaN

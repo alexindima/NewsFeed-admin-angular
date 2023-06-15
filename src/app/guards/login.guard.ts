@@ -12,6 +12,7 @@ import {AuthService} from "../services/auth.service";
   providedIn: 'root'
 })
 // тоже самое про CanActivate
+// >> надо обновиться до 16го ангуляра и использовать новое апи
 export class LoginGuard implements CanActivate {
   constructor(
     private _auth: AuthService,

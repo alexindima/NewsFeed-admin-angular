@@ -9,6 +9,7 @@ import {LoginUser} from "../../entities/user.interface";
 import {ConvertedToFormControls} from "../../utils/form-utils";
 
 // тут точно такой же интерфейс, что и LoginUser, можно использовать LoginUser
+// >> здесь можно оставить как есть, это интерфейс конкретно под эту страницу, у нас также часто
 interface LoginForm {
   email: string;
   password: string;
@@ -22,6 +23,7 @@ interface LoginForm {
 export class LoginPageComponent implements OnInit, OnDestroy {
   private _subs = new Subs();
   // тоже в loading бы переименовала как описала в BaseEditPageComponent
+  // >> loading более универсальный, а здесь ещё вижу this.submitted = false, что выглядит некорректно раз форму уже отправили
   submitted = false;
   form!: FormGroup<ConvertedToFormControls<LoginForm>>;
 

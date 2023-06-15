@@ -11,6 +11,7 @@ import {Observable} from "rxjs";
 @Injectable()
 // не вижу смысла делать extends от объекта с опциональным id, может меня поправят, но здесь он сработает
 // для любого переданного дженерика, вне зависимости есть у него id или нет
+// >> соглашусь, но могу представить, чтобы код был описательнее, тогда { id?: number } стоит вынести в свой собственный тип, так делают, но редко
 export abstract class BaseEditPageComponent<T extends { id?: number }> implements OnInit, OnDestroy {
   protected abstract ROUTE_TO_REDIRECT: string[];
   protected _subs = new Subs();
