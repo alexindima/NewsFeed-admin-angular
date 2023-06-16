@@ -1,3 +1,13 @@
+/*
+Лучше сделать через @import "_mixins"; для этого в angular.json добавь настройки для препроцессора в секцию build
+"stylePreprocessorOptions": {
+  "includePaths": [
+    "src/app"
+  ]
+}
+вот тут подробнее https://stackoverflow.com/questions/57164159/stylepreprocessoroptions-angular-8
+и еще лучше перенести файл с миксинами в assets/scss и подключить его оттуда
+*/
 @use "../../mixins" as mixins ;
 
 @include mixins.mat-table-columns((

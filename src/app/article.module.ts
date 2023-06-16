@@ -12,6 +12,8 @@ import {SharedModule} from "./shared.module";
   ],
   imports: [
     SharedModule,
+    // такие же замечания везде по поводу форматирования, лучше когда на каждой строке новое свойство
+    // и тоже самое по поводу enum для строк
     RouterModule.forChild([
       { path: '', component: ArticleDashboardPageComponent },
       { path: 'create', component: ArticleEditPageComponent },

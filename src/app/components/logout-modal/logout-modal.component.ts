@@ -6,6 +6,35 @@ import {MatDialog} from "@angular/material/dialog";
 import {Subs} from "../../utils/subs";
 import {ModalDialogData} from "../../entities/modal-dialog.interface";
 
+/*
+ Этот сервис (тоже названный компонентом) по сути повторяет то, что делает DeleteModalService, поэтому как
+ и писала до этого, сделай из DeleteModalService просто ModalService и тоже используй его при открытии модального окна
+ для подтверждения логаута в AppComponent (или меню, про которое писала в AppComponent),
+ так получится, что этот сервис можно будет удалить, а в AppComponent
+ создать функцию logout() и получится что-то подобное:
+
+   constructor(
+      public modal: ModalService,
+      private _auth: AuthService,
+      private _router: Router,
+    ) {
+    }
+
+   logout() {
+      const data: ModalDialogData = {
+        title: 'Confirm LogOut',
+        text: `Are you sure you want to Log out?`,
+        button: 'LogOut',
+      };
+
+      this.modal.openConfirmationDialog(data, () => this._logout());
+   }
+
+   private _logout() {
+      this.auth.logout();
+      this._router.navigate(['login']).then();
+   }
+*/
 @Injectable({
   providedIn: "root"
 })

@@ -4,6 +4,7 @@ import {UserService} from '../../services/user.service';
 import {DeleteModalService} from "../../services/delete-modal.service";
 import {ModalDialogData} from "../../entities/modal-dialog.interface";
 
+// все тоже самое, что написала по поводу DeleteArticleModalComponent
 @Injectable({
   providedIn: 'root'
 })

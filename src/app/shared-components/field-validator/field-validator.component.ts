@@ -26,6 +26,8 @@ export class FieldValidatorComponent implements AfterViewInit, OnDestroy {
     });
   }
 
+  // не стоит называть методы двумя глаголами, в таком случае скорее всего это должны быть два разных метода на каждое действие
+  // но в данном случае можно назвать метод просто toggleClass(), а параметр не setClass, а class
   setRemoveClassOnError(setClass: string){
     if (this.input.touched && !this.input.valid) {
       this.inputRef.nativeElement.classList.add(setClass)

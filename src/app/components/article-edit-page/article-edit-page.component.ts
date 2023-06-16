@@ -26,6 +26,7 @@ interface ArticleForm {
   templateUrl: './article-edit-page.component.html',
   styleUrls: ['./article-edit-page.component.scss'],
 })
+// вот что-то подобное должно быть и в Dashboard
 export class ArticleEditPageComponent extends BaseEditPageComponent<Article> implements OnInit {
   protected ROUTE_TO_REDIRECT: string[] = ['articles'];
   item: Article | undefined;

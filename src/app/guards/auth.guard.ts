@@ -11,9 +11,12 @@ import {AuthService} from "../services/auth.service";
 @Injectable({
   providedIn: 'root'
 })
+// можно без implements CanActivate, оно уже deprecated
+// >> Нет, надо обновиться до 16го ангуляра и использовать новое апи
 export class AuthGuard implements CanActivate {
   constructor(
     private _auth: AuthService,
+    // _router не используется
     private _router: Router
   ) {
   }
