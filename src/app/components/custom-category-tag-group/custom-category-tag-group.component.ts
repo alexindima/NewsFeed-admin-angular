@@ -28,6 +28,8 @@ import {trimmedNonEmptySet} from "../../utils/set-utils";
 export class CustomCategoryTagGroupComponent implements ControlValueAccessor, AfterViewInit, OnDestroy {
   // если уже есть значение по умолчанию, можно не ставить опциональность свойства
   @Input() name?: string = 'option';
+
+  // >> вот кстати здесь должен зарешать angular 16, с их @Input({required: true})
   @Input() options!: NameableWithId[];
   private _subs = new Subs();
   public onChange = (_: string[]) => {};

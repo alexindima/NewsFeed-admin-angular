@@ -20,6 +20,9 @@ import {ModalDialogData} from "../../entities/modal-dialog.interface";
             () => this._articleService.deleteItem(article.id!)
         );
     }
+
+    >> да, соглашусь с комментом выше. Однако с ростом проекта потребуется сделать промежуточное решение через отдельный провайдер,
+    но он точно будет универсальным и не зависеть от _articleService
 */
 @Injectable({
   providedIn: 'root'
@@ -42,6 +45,8 @@ export class DeleteArticleModalComponent {
     this._deleteModalService.openConfirmationDialog(
       data,
       // а почему id необязательный атрибут? Так не может быть
+      // >> такое бывает, когда поленился создать отдельный интерфейс на СОЗДАНИЕ статьи, только у СОЗДАНИЯ нет айдишника
+        // в монстр проекте такого много, но в таких маленьких проектах это надо поправить
       () => this._articleService.deleteItem(article.id!)
     );
   }

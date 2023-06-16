@@ -26,6 +26,7 @@ export class UserDashboardPageComponent implements OnInit, OnDestroy{
   itemsList: User[] = [];
   paginatorSettings!: PaginatorSettings;
   // а зачем здесь категории и тэги?, они же нигде ни в шаблоне, ни в коде не нужны
+  // >> в итоге так и не реализовал ТАКСОНОМИЮ, эти две фичи - одинаковые совсем, происходит полное их дублирование
   categoriesList: Category[] = []
   tagsList: Tag[] = []
   constructor(

@@ -12,6 +12,7 @@ import {AuthService} from "../services/auth.service";
   providedIn: 'root'
 })
 // можно без implements CanActivate, оно уже deprecated
+// >> Нет, надо обновиться до 16го ангуляра и использовать новое апи
 export class AuthGuard implements CanActivate {
   constructor(
     private _auth: AuthService,
